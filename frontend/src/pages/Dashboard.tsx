@@ -81,6 +81,7 @@ import { CircularProgress } from '@/components/ui/Progress';
 import AnimatedNumber from '@/components/shared/AnimatedNumber';
 import StatusIndicator from '@/components/shared/StatusIndicator';
 import useStore from '@/lib/store';
+import { useAuthStore } from '@/lib/stores';
 import { systemApi, agentsApi } from '@/lib/api';
 import { useIsDemoAccount } from '@/hooks/useDemoData';
 
@@ -371,6 +372,7 @@ function WeeklyHeatmap() {
 /* ------------------------------------------------------------------ */
 export default function Dashboard() {
   const isDemo = useIsDemoAccount();
+  const user = useAuthStore((s) => s.user);
   const { resources, agents, setResources, setAgents, setCurrentPage } = useStore();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -405,13 +407,13 @@ export default function Dashboard() {
     };
   }, [setCurrentPage, setResources, setAgents]);
 
-  const cpu = resources?.cpu_percent ?? 32;
+  const cpu = resources?.cpu_percent ?? 0;
   const ram = resources
     ? Math.round(resources.memory_percent ?? ((resources.memory_used_gb / resources.memory_total_gb) * 100))
-    : 58;
+    : 0;
   const disk = resources
     ? Math.round(resources.disk_percent ?? ((resources.disk_used_gb / resources.disk_total_gb) * 100))
-    : 44;
+    : 0;
   const netMbps = resources?.network_speed_mbps
     ? Math.round(resources.network_speed_mbps)
     : 0;
@@ -442,7 +444,7 @@ export default function Dashboard() {
           <div>
             <h1 className="text-2xl font-bold text-nexus-text">
               {greeting.text},{' '}
-              <span className="gradient-text">Nexus User</span>
+              <span className="gradient-text">{user?.name || 'User'}</span>
             </h1>
             <p className="text-sm text-nexus-muted mt-0.5">
               <Sparkles size={14} className="inline mr-1 text-nexus-accent" />
@@ -498,7 +500,7 @@ export default function Dashboard() {
       </motion.div>
 
       {/* -- Middle row: Activity Timeline + Mini Widgets -- */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {isDemo && <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Activity Timeline */}
         <motion.div variants={item} className="lg:col-span-2">
           <Card
@@ -553,7 +555,7 @@ export default function Dashboard() {
         {/* Mini Widgets */}
         <motion.div variants={item} className="space-y-4">
           {/* Environment */}
-          <Card size="sm" hoverable>
+          {isDemo && <Card size="sm" hoverable>
             <div className="flex items-center justify-between mb-2 cursor-pointer" onClick={() => navigate('/home')}>
               <span className="text-xs font-semibold text-nexus-muted uppercase tracking-wider">Home Environment</span>
               <Home size={14} className="text-nexus-accent" />
@@ -574,10 +576,10 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
-          </Card>
+          </Card>}
 
           {/* Upcoming Tasks */}
-          <Card size="sm" hoverable>
+          {isDemo && <Card size="sm" hoverable>
             <div className="flex items-center justify-between mb-2 cursor-pointer" onClick={() => navigate('/tasks')}>
               <span className="text-xs font-semibold text-nexus-muted uppercase tracking-wider">Upcoming Tasks</span>
               <Calendar size={14} className="text-nexus-primary" />
@@ -593,10 +595,10 @@ export default function Dashboard() {
                 </div>
               ))}
             </div>
-          </Card>
+          </Card>}
 
           {/* Financial Summary */}
-          <Card size="sm" hoverable>
+          {isDemo && <Card size="sm" hoverable>
             <div className="flex items-center justify-between mb-2 cursor-pointer" onClick={() => navigate('/finance')}>
               <span className="text-xs font-semibold text-nexus-muted uppercase tracking-wider">Finance</span>
               <DollarSign size={14} className="text-emerald-400" />
@@ -608,10 +610,10 @@ export default function Dashboard() {
               </span>
             </div>
             <p className="text-[10px] text-nexus-muted mt-0.5">Monthly savings on track</p>
-          </Card>
+          </Card>}
 
           {/* Health Mood */}
-          <Card size="sm" hoverable>
+          {isDemo && <Card size="sm" hoverable>
             <div className="flex items-center justify-between mb-2 cursor-pointer" onClick={() => navigate('/health')}>
               <span className="text-xs font-semibold text-nexus-muted uppercase tracking-wider">Mood Today</span>
               <Heart size={14} className="text-pink-400" />
@@ -631,7 +633,7 @@ export default function Dashboard() {
                 <p className="text-[10px] text-nexus-muted">3-day streak</p>
               </div>
             </div>
-          </Card>
+          </Card>}
 
           {/* Agents Overview */}
           <Card size="sm" hoverable>
@@ -642,13 +644,13 @@ export default function Dashboard() {
             <div className="grid grid-cols-2 gap-3">
               <div className="text-center rounded-lg bg-nexus-surface/50 border border-nexus-border/30 p-2">
                 <p className="text-lg font-bold text-emerald-400">
-                  {agents.filter((a) => a.status === 'active').length || 10}
+                  {agents.filter((a) => a.status === 'active').length}
                 </p>
                 <p className="text-[9px] text-nexus-muted uppercase">Active</p>
               </div>
               <div className="text-center rounded-lg bg-nexus-surface/50 border border-nexus-border/30 p-2">
                 <p className="text-lg font-bold text-nexus-text">
-                  {agents.length || 15}
+                  {agents.length}
                 </p>
                 <p className="text-[9px] text-nexus-muted uppercase">Total</p>
               </div>
@@ -659,7 +661,7 @@ export default function Dashboard() {
             </div>
           </Card>
         </motion.div>
-      </div>
+      </div>}
 
       {/* -- Agent Status Panel -- */}
       <motion.div variants={item}>
@@ -678,7 +680,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {(agents.length
               ? agents
-              : [
+              : isDemo ? [
                   { name: 'orchestrator', display_name: 'Orchestrator', status: 'active' as const, tasks_completed: 142 },
                   { name: 'personal', display_name: 'Personal', status: 'active' as const, tasks_completed: 87 },
                   { name: 'home', display_name: 'Home', status: 'active' as const, tasks_completed: 234 },
@@ -689,7 +691,7 @@ export default function Dashboard() {
                   { name: 'voice', display_name: 'Voice', status: 'idle' as const, tasks_completed: 98 },
                   { name: 'learning', display_name: 'Learning', status: 'idle' as const, tasks_completed: 14 },
                   { name: 'report', display_name: 'Reports', status: 'active' as const, tasks_completed: 27 },
-                ]
+                ] : []
             ).map((ag) => (
               <motion.div
                 key={ag.name}
@@ -714,7 +716,7 @@ export default function Dashboard() {
       </motion.div>
 
       {/* -- Charts Row: System Resources & Task Trend -- */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {isDemo && <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Resource Usage Line Chart */}
         <motion.div variants={item}>
           <Card
@@ -772,10 +774,10 @@ export default function Dashboard() {
             </ResponsiveContainer>
           </Card>
         </motion.div>
-      </div>
+      </div>}
 
       {/* -- A. AI Model Performance Overview -- */}
-      <motion.div variants={item}>
+      {isDemo && <motion.div variants={item}>
         <Card
           header={
             <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/ai-models')}>
@@ -820,10 +822,10 @@ export default function Dashboard() {
             </LineChart>
           </ResponsiveContainer>
         </Card>
-      </motion.div>
+      </motion.div>}
 
       {/* -- B. Agent Performance Radar + Response Times -- */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {isDemo && <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Radar Chart */}
         <motion.div variants={item}>
           <Card
@@ -916,10 +918,10 @@ export default function Dashboard() {
             </ResponsiveContainer>
           </Card>
         </motion.div>
-      </div>
+      </div>}
 
       {/* -- C. Real-Time Inference Metrics (Sparklines) -- */}
-      <motion.div variants={item}>
+      {isDemo && <motion.div variants={item}>
         <h2 className="text-sm font-semibold text-nexus-muted uppercase tracking-wider mb-3">Real-Time Inference Metrics</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {inferenceMetrics.map((m) => (
@@ -969,10 +971,10 @@ export default function Dashboard() {
             </motion.div>
           ))}
         </div>
-      </motion.div>
+      </motion.div>}
 
       {/* -- D. Training Progress Overview -- */}
-      <motion.div variants={item}>
+      {isDemo && <motion.div variants={item}>
         <Card
           header={
             <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/ai-models')}>
@@ -1042,10 +1044,10 @@ export default function Dashboard() {
             })}
           </div>
         </Card>
-      </motion.div>
+      </motion.div>}
 
       {/* -- E. AI Pipeline Flow -- */}
-      <motion.div variants={item}>
+      {isDemo && <motion.div variants={item}>
         <Card
           header={
             <div className="flex items-center gap-2">
@@ -1130,10 +1132,10 @@ export default function Dashboard() {
             </div>
           </div>
         </Card>
-      </motion.div>
+      </motion.div>}
 
       {/* -- Weekly Activity Heatmap -- */}
-      <motion.div variants={item}>
+      {isDemo && <motion.div variants={item}>
         <Card
           header={
             <div className="flex items-center gap-2">
@@ -1145,7 +1147,7 @@ export default function Dashboard() {
         >
           <WeeklyHeatmap />
         </Card>
-      </motion.div>
+      </motion.div>}
     </motion.div>
   );
 }

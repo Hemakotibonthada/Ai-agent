@@ -320,8 +320,8 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   const rooms = storeRooms.length > 0 ? storeRooms : (isDemo ? mockRooms : []);
-  const devices = storeDevices.length > 0 ? storeDevices : mockDevices;
-  const sensors = storeSensors.length > 0 ? storeSensors : mockSensors;
+  const devices = storeDevices.length > 0 ? storeDevices : (isDemo ? mockDevices : []);
+  const sensors = storeSensors.length > 0 ? storeSensors : (isDemo ? mockSensors : []);
   const selectedRoom = selectedRoomId ?? 'r1';
 
   useEffect(() => {
@@ -349,10 +349,10 @@ export default function Home() {
   const onlineDevices = devices.filter((d) => d.status === 'online').length;
 
   /* ── Energy stats ── */
-  const totalWatts = 847;
-  const dailyKwh = 12.4;
-  const monthlyCost = 68;
-  const efficiencyScore = 78;
+  const totalWatts = isDemo ? 847 : 0;
+  const dailyKwh = isDemo ? 12.4 : 0;
+  const monthlyCost = isDemo ? 68 : 0;
+  const efficiencyScore = isDemo ? 78 : 0;
 
   return (
     <motion.div
@@ -465,6 +465,7 @@ export default function Home() {
           </Card>
 
           {/* Water Tank */}
+          {isDemo && (
           <Card
             header={
               <div className="flex items-center gap-2">
@@ -476,8 +477,10 @@ export default function Home() {
             <WaterTank level={72} />
             <p className="text-center text-xs text-nexus-muted mt-2">Level: 72% (540L / 750L)</p>
           </Card>
+          )}
 
           {/* Room Comfort Score */}
+          {isDemo && (
           <Card size="sm" hoverable>
             <div className="flex items-center gap-3">
               <CircularProgress value={85} size={48} strokeWidth={4} />
@@ -487,10 +490,12 @@ export default function Home() {
               </div>
             </div>
           </Card>
+          )}
         </motion.div>
       </div>
 
       {/* ── Power Consumption Chart ── */}
+      {isDemo && (
       <motion.div variants={item}>
         <Card
           header={
@@ -538,8 +543,10 @@ export default function Home() {
           </ResponsiveContainer>
         </Card>
       </motion.div>
+      )}
 
       {/* ── Smart Scenes + Energy Efficiency ── */}
+      {isDemo && (
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Scenes */}
         <motion.div variants={item} className="lg:col-span-2">
@@ -613,6 +620,7 @@ export default function Home() {
           </Card>
         </motion.div>
       </div>
+      )}
 
       {/* ── ESP32 Connection Status ── */}
       <motion.div variants={item}>

@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuthStore } from '../../lib/stores';
 import {
   LayoutDashboard,
   MessageSquare,
@@ -84,6 +85,7 @@ import {
   TerminalSquare,
   Hexagon,
   HardDrive,
+  LogOut,
   type LucideIcon,
 } from 'lucide-react';
 import Avatar from '../ui/Avatar';
@@ -225,6 +227,14 @@ const sidebarVariants = {
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const user = useAuthStore((s) => s.user);
+  const logout = useAuthStore((s) => s.logout);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
@@ -357,7 +367,7 @@ export default function Sidebar() {
       {/* ---- User profile ---- */}
       <div className="border-t border-nexus-border/30 p-3">
         <div className={`flex items-center gap-3 rounded-lg p-2 transition hover:bg-white/5 ${collapsed ? 'justify-center' : ''}`}>
-          <Avatar fallback="NX" size="sm" status="online" glow />
+          <Avatar fallback={user?.username?.slice(0, 2).toUpperCase() ?? 'NX'} size="sm" status="online" glow />
           <AnimatePresence>
             {!collapsed && (
               <motion.div
@@ -366,11 +376,35 @@ export default function Sidebar() {
                 exit={{ opacity: 0, x: -6 }}
                 className="flex-1 overflow-hidden"
               >
-                <p className="truncate text-sm font-medium text-nexus-text">Nexus User</p>
-                <p className="truncate text-[10px] text-nexus-muted">Pro Plan</p>
+                <p className="truncate text-sm font-medium text-nexus-text">{user?.username ?? 'Nexus User'}</p>
+                <p className="truncate text-[10px] text-nexus-muted capitalize">{user?.role ?? 'user'}</p>
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* Logout button */}
+          {!collapsed ? (
+            <button
+              onClick={handleLogout}
+              className="ml-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-lg
+                         text-nexus-muted transition-all duration-200
+                         hover:bg-red-500/10 hover:text-red-400"
+              title="Sign out"
+            >
+              <LogOut size={16} />
+            </button>
+          ) : (
+            <Tooltip content="Sign out" side="right">
+              <button
+                onClick={handleLogout}
+                className="absolute -bottom-1 left-1/2 -translate-x-1/2 flex h-6 w-6 items-center justify-center rounded-lg
+                           text-nexus-muted transition-all duration-200
+                           hover:bg-red-500/10 hover:text-red-400"
+              >
+                <LogOut size={14} />
+              </button>
+            </Tooltip>
+          )}
         </div>
       </div>
 

@@ -133,6 +133,7 @@ const statusConfig = {
 const COLORS = ['#6b7280', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444'];
 
 const ExperimentTracker: React.FC = () => {
+  const isDemo = useIsDemoAccount();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedExperiment, setSelectedExperiment] = useState<Experiment | null>(experiments[0]);
@@ -143,6 +144,15 @@ const ExperimentTracker: React.FC = () => {
       (search === '' || e.name.toLowerCase().includes(search.toLowerCase()))
     ),
   [search, statusFilter]);
+
+  if (!isDemo) return (
+    <div className="flex items-center justify-center h-[60vh]">
+      <div className="text-center space-y-2">
+        <p className="text-nexus-muted text-sm">No experiments available</p>
+        <p className="text-nexus-muted text-xs">Create an experiment to start tracking</p>
+      </div>
+    </div>
+  );
 
   const summaryStats = {
     total: experiments.length,

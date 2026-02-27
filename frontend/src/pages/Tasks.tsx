@@ -446,7 +446,7 @@ export default function Tasks() {
     setCurrentPage('/tasks');
     tasksApi.list()
       .then((data) => { if (Array.isArray(data) && data.length > 0) setTasks(data); })
-      .catch(() => setTasks(mockTasks));
+      .catch(() => { if (isDemo) setTasks(mockTasks); });
   }, [setCurrentPage, setTasks]);
 
   /* Filtered tasks */
@@ -542,6 +542,7 @@ export default function Tasks() {
           </p>
         </Card>
 
+        {isDemo && (
         <Card
           className="lg:col-span-2"
           header={
@@ -575,6 +576,7 @@ export default function Tasks() {
             </ResponsiveContainer>
           </div>
         </Card>
+        )}
       </div>
 
       {/* ── Toolbar ── */}

@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import {
   Brain,
   Eye,
@@ -162,8 +163,19 @@ export default function LoginPage() {
             Demo account comes with sample data to explore all features
           </p>
 
+          {/* Create account */}
+          <p className="text-center text-sm text-gray-400 mt-5">
+            Don't have an account?{' '}
+            <Link
+              to="/register"
+              className="text-purple-400 hover:text-purple-300 font-medium transition-colors"
+            >
+              Create one
+            </Link>
+          </p>
+
           {/* Admin hint */}
-          <div className="mt-6 pt-4 border-t border-white/5">
+          <div className="mt-4 pt-4 border-t border-white/5">
             <p className="text-xs text-gray-600 text-center">
               Admin: <span className="text-gray-500">admin</span> / <span className="text-gray-500">Admin@2024!</span>
             </p>

@@ -318,8 +318,8 @@ export default function Health() {
 
   useEffect(() => {
     setCurrentPage('/health');
-    setStreakDays(7);
-  }, [setCurrentPage, setStreakDays]);
+    if (isDemo) setStreakDays(7);
+  }, [setCurrentPage, setStreakDays, isDemo]);
 
   const handleLogMood = useCallback(() => {
     if (!selectedMood) return;
@@ -338,8 +338,8 @@ export default function Health() {
     setShowJournal(false);
   }, [selectedMood, journalText, addMoodEntry, setCurrentMood]);
 
-  const wellnessScore = 78;
-  const stressLevel = 35;
+  const wellnessScore = isDemo ? 78 : 0;
+  const stressLevel = isDemo ? 35 : 0;
 
   return (
     <motion.div
@@ -424,6 +424,7 @@ export default function Health() {
       </motion.div>
 
       {/* ── Daily Health Cards ── */}
+      {isDemo && (
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <HealthStatCard label="Sleep" value={7.5} unit="hrs" icon={Moon} color="#8B5CF6" trend={{ direction: 'up', value: '+0.5h' }} />
         <HealthStatCard label="Exercise" value={45} unit="min" icon={Dumbbell} color="#F59E0B" trend={{ direction: 'up', value: '+15m' }} />
@@ -431,8 +432,10 @@ export default function Health() {
         <HealthStatCard label="Steps" value={8420} unit="steps" icon={Footprints} color="#10B981" trend={{ direction: 'up', value: '+12%' }} />
         <HealthStatCard label="Calories" value={1820} unit="kcal" icon={Flame} color="#EF4444" />
       </div>
+      )}
 
       {/* ── Wellness Score + Mental Health ── */}
+      {isDemo && (
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Wellness Score Ring */}
         <motion.div variants={item}>
@@ -545,8 +548,10 @@ export default function Health() {
           </Card>
         </motion.div>
       </div>
+      )}
 
       {/* ── Charts Row ── */}
+      {isDemo && (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Mood Trend */}
         <motion.div variants={item}>
@@ -613,8 +618,10 @@ export default function Health() {
           </Card>
         </motion.div>
       </div>
+      )}
 
       {/* ── Heart Rate Monitor ── */}
+      {isDemo && (<>
       <motion.div variants={item}>
         <Card
           header={
@@ -872,8 +879,10 @@ export default function Health() {
           <HydrationTracker />
         </motion.div>
       </div>
+      </>)}
 
       {/* ── AI Recommendations ── */}
+      {isDemo && (
       <motion.div variants={item}>
         <Card
           variant="gradient"
@@ -910,6 +919,7 @@ export default function Health() {
           </div>
         </Card>
       </motion.div>
+      )}
     </motion.div>
   );
 }

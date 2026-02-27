@@ -58,6 +58,7 @@ const timelineEvents: TimelineEvent[] = [
 ];
 
 const ActivityFeed: React.FC = () => {
+  const isDemo = useIsDemoAccount();
   const [filter, setFilter] = useState<string>('all');
   const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
   const [performanceData] = useState(generatePerformanceData);
@@ -65,6 +66,16 @@ const ActivityFeed: React.FC = () => {
   const filteredEvents = useMemo(() =>
     timelineEvents.filter(e => filter === 'all' || e.type === filter),
   [filter]);
+
+  if (!isDemo) return (
+    <div className="flex items-center justify-center h-[60vh]">
+      <div className="text-center space-y-2">
+        <Activity size={32} className="mx-auto text-nexus-muted" />
+        <p className="text-nexus-muted text-sm">No activity data available</p>
+        <p className="text-nexus-muted text-xs">Connect services to see live activity feed</p>
+      </div>
+    </div>
+  );
 
   const agentActivity = [
     { name: 'Personal', interactions: 45, success: 98 },

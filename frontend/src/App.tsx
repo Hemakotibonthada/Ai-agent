@@ -7,6 +7,7 @@ import { useKeyboard } from './hooks/useKeyboard';
 import { useAuthStore } from './lib/stores';
 import Sidebar from './components/layout/Sidebar';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 /* ------------------------------------------------------------------ */
 /*  Lazy-loaded pages                                                  */
@@ -165,11 +166,14 @@ export default function App() {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   useKeyboard();
 
-  // Show login page when not authenticated
+  // Show login/register pages when not authenticated
   if (!isAuthenticated) {
     return (
       <div className={theme === 'dark' ? 'dark' : ''}>
-        <LoginPage />
+        <Routes>
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="*" element={<LoginPage />} />
+        </Routes>
         <Toaster
           position="bottom-right"
           toastOptions={{

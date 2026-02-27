@@ -9,6 +9,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell,
 } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface TagItem {
   id: string;
@@ -44,6 +45,7 @@ const sampleTags: TagItem[] = [
 const tagCategories = ['All', 'Tech', 'Type', 'Priority', 'Quality', 'Domain', 'DevOps'];
 
 export default function TagManager() {
+  const isDemo = useIsDemoAccount();
   const [tags, setTags] = useState(sampleTags);
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -69,6 +71,16 @@ export default function TagManager() {
   }, [tags]);
 
   const topTags = useMemo(() => [...tags].sort((a, b) => b.count - a.count).slice(0, 8), [tags]);
+
+  if (!isDemo) return (
+    <div className="flex items-center justify-center h-[60vh]">
+      <div className="text-center space-y-2">
+        <Tag size={32} className="mx-auto text-nexus-muted" />
+        <p className="text-nexus-muted text-sm">No tags available</p>
+        <p className="text-nexus-muted text-xs">Create tags to organize your items</p>
+      </div>
+    </div>
+  );
 
   const deleteTag = (id: string) => setTags(prev => prev.filter(t => t.id !== id));
 

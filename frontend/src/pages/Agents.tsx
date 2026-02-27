@@ -267,16 +267,16 @@ export default function Agents() {
         const normalized = list.map((a: Record<string, unknown>) => normalizeAgent(a as Record<string, unknown>));
         setAgentData(normalized);
         setAgents(normalized);
-      } else {
+      } else if (isDemo) {
         setAgentData(MOCK_AGENTS);
       }
     } catch {
-      setAgentData(MOCK_AGENTS);
+      if (isDemo) setAgentData(MOCK_AGENTS);
     } finally {
       setLoading(false);
       if (showRefresh) setTimeout(() => setRefreshing(false), 400);
     }
-  }, [setAgents]);
+  }, [setAgents, isDemo]);
 
   useEffect(() => {
     setCurrentPage('/agents');
@@ -717,6 +717,7 @@ export default function Agents() {
       </div>
 
       {/* ── 5. Training & Learning Section ── */}
+      {isDemo && (
       <motion.div variants={item}>
         <Card
           variant="glow"
@@ -824,8 +825,10 @@ export default function Agents() {
           </div>
         </Card>
       </motion.div>
+      )}
 
       {/* ── 6. Agent Activity Timeline ── */}
+      {isDemo && (
       <motion.div variants={item}>
         <Card
           header={
@@ -887,6 +890,7 @@ export default function Agents() {
           </div>
         </Card>
       </motion.div>
+      )}
 
       {/* ── 7. Agent Health Matrix ── */}
       <motion.div variants={item}>

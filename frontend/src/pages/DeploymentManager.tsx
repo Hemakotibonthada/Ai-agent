@@ -121,6 +121,7 @@ const envConfig = {
 };
 
 const DeploymentManager: React.FC = () => {
+  const isDemo = useIsDemoAccount();
   const [envFilter, setEnvFilter] = useState('all');
   const [selectedDeployment, setSelectedDeployment] = useState<Deployment | null>(deployments[0]);
   const [detailTab, setDetailTab] = useState<'overview' | 'health' | 'metrics' | 'logs'>('overview');
@@ -128,6 +129,15 @@ const DeploymentManager: React.FC = () => {
   const filtered = useMemo(() =>
     deployments.filter(d => envFilter === 'all' || d.environment === envFilter),
   [envFilter]);
+
+  if (!isDemo) return (
+    <div className="flex items-center justify-center h-[60vh]">
+      <div className="text-center space-y-2">
+        <p className="text-nexus-muted text-sm">No deployment data available</p>
+        <p className="text-nexus-muted text-xs">Connect your CI/CD pipeline to see deployments</p>
+      </div>
+    </div>
+  );
 
   const recentLogs = [
     { time: '14:32:01', level: 'info', message: 'Health check passed: HTTP /health (200 OK, 12ms)' },

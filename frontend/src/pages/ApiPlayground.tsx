@@ -61,6 +61,7 @@ const sampleHistory: RequestHistory[] = [
 ];
 
 const ApiPlayground: React.FC = () => {
+  const isDemo = useIsDemoAccount();
   const [method, setMethod] = useState<HttpMethod>('GET');
   const [url, setUrl] = useState('/api/agents');
   const [activeTab, setActiveTab] = useState<'params' | 'headers' | 'body' | 'auth'>('params');
@@ -77,7 +78,7 @@ const ApiPlayground: React.FC = () => {
   const [responseStatus, setResponseStatus] = useState<number | null>(null);
   const [responseTime, setResponseTime] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
-  const [history, setHistory] = useState<RequestHistory[]>(sampleHistory);
+  const [history, setHistory] = useState<RequestHistory[]>(isDemo ? sampleHistory : []);
   const [showEndpoints, setShowEndpoints] = useState(false);
   const [responseTab, setResponseTab] = useState<'body' | 'headers' | 'cookies'>('body');
 

@@ -45,6 +45,7 @@ const generateTimeData = (points: number, baseValue: number, variance: number) =
 };
 
 const SystemMonitor: React.FC = () => {
+  const isDemo = useIsDemoAccount();
   const [activeTab, setActiveTab] = useState<'overview' | 'processes' | 'network' | 'storage'>('overview');
   const [refreshing, setRefreshing] = useState(false);
   const [cpuData, setCpuData] = useState(() => generateTimeData(30, 35, 20));
@@ -53,6 +54,7 @@ const SystemMonitor: React.FC = () => {
 
   // Simulate real-time updates
   useEffect(() => {
+    if (!isDemo) return;
     const interval = setInterval(() => {
       const now = new Date();
       const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
@@ -76,7 +78,16 @@ const SystemMonitor: React.FC = () => {
       }]);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isDemo]);
+
+  if (!isDemo) return (
+    <div className="flex items-center justify-center h-[60vh]">
+      <div className="text-center space-y-2">
+        <p className="text-nexus-muted text-sm">No system monitoring data available</p>
+        <p className="text-nexus-muted text-xs">Connect to system metrics to see live monitoring</p>
+      </div>
+    </div>
+  );
 
   const currentCpu = cpuData[cpuData.length - 1]?.value || 0;
   const currentMem = memoryData[memoryData.length - 1]?.value || 0;

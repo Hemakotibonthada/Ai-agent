@@ -393,7 +393,7 @@ function GenerateReportModal({
 export default function Reports() {
   const isDemo = useIsDemoAccount();
   const { setCurrentPage } = useStore();
-  const [reports, setReports] = useState<Report[]>(mockReportHistory);
+  const [reports, setReports] = useState<Report[]>(isDemo ? mockReportHistory : []);
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState<typeof templateCards[0] | null>(null);
@@ -468,6 +468,7 @@ export default function Reports() {
       {/* ══════════════════════════════════════════════════════════════
           1. ANALYTICS OVERVIEW — 4 stat cards
          ══════════════════════════════════════════════════════════════ */}
+      {isDemo && (
       <motion.div variants={item}>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {analyticsStats.map((stat) => (
@@ -496,6 +497,7 @@ export default function Reports() {
           ))}
         </div>
       </motion.div>
+      )}
 
       {/* ── Template Cards ── */}
       <motion.div variants={item}>
@@ -525,6 +527,7 @@ export default function Reports() {
       {/* ══════════════════════════════════════════════════════════════
           2. REPORT GENERATION TREND — AreaChart (12 months)
          ══════════════════════════════════════════════════════════════ */}
+      {isDemo && (<>
       <motion.div variants={item}>
         <Card
           header={
@@ -809,6 +812,7 @@ export default function Reports() {
           </div>
         </Card>
       </motion.div>
+      </>)}
 
       {/* ── Report History ── */}
       <motion.div variants={item}>
@@ -948,6 +952,7 @@ export default function Reports() {
       </AnimatePresence>
 
       {/* ── Scheduled Reports ── */}
+      {isDemo && (
       <motion.div variants={item}>
         <Card
           header={
@@ -980,6 +985,7 @@ export default function Reports() {
           </div>
         </Card>
       </motion.div>
+      )}
 
       {/* ── Generate Modal ── */}
       <GenerateReportModal

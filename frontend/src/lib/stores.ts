@@ -27,6 +27,7 @@ interface AuthState {
   isDemoAccount: boolean;
 
   login: (username: string, password: string) => Promise<void>;
+  register: (username: string, email: string, password: string, displayName?: string) => Promise<void>;
   logout: () => void;
   refreshSession: () => Promise<void>;
   updateProfile: (updates: Partial<User>) => void;
@@ -79,6 +80,45 @@ export const useAuthStore = create<AuthState>()(
             });
           } catch (err: any) {
             const msg = err?.response?.data?.detail ?? err.message ?? 'Login failed';
+            set({ isLoading: false, error: msg });
+            throw new Error(msg);
+          }
+        },
+
+        register: async (username: string, email: string, password: string, displayName?: string) => {
+          set({ isLoading: true, error: null });
+          try {
+            // Step 1: Register the account
+            await axios.post(`${API_BASE}/auth/register`, {
+              username,
+              email,
+              password,
+              display_name: displayName || username,
+            });
+            // Step 2: Auto-login after successful registration
+            const res = await axios.post(`${API_BASE}/auth/login`, { username, password });
+            const { access_token, refresh_token, expires_in, user: profile } = res.data;
+            localStorage.setItem('nexus_token', access_token);
+            set({
+              user: {
+                id: profile.id,
+                name: profile.display_name || profile.username,
+                email: profile.email,
+                role: profile.role,
+                avatar: profile.avatar_url || profile.display_name?.split(' ').map((w: string) => w[0]).join('').toUpperCase(),
+                mfaEnabled: profile.two_factor_enabled ?? false,
+                permissions: profile.permissions ?? ['all'],
+              },
+              token: access_token,
+              refreshToken: refresh_token,
+              isAuthenticated: true,
+              isLoading: false,
+              isDemoAccount: false,
+              lastActivity: Date.now(),
+              sessionExpiresAt: Date.now() + (expires_in ?? 86400) * 1000,
+            });
+          } catch (err: any) {
+            const msg = err?.response?.data?.detail ?? err.message ?? 'Registration failed';
             set({ isLoading: false, error: msg });
             throw new Error(msg);
           }

@@ -406,7 +406,7 @@ export default function Finance() {
     [addTransaction],
   );
 
-  const financialHealthScore = 72;
+  const financialHealthScore = isDemo ? 72 : 0;
 
   return (
     <motion.div
@@ -470,6 +470,7 @@ export default function Finance() {
       </div>
 
       {/* ── Charts Row ── */}
+      {isDemo && (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Income vs Expense Bar */}
         <motion.div variants={item}>
@@ -542,8 +543,10 @@ export default function Finance() {
           </Card>
         </motion.div>
       </div>
+      )}
 
       {/* ── NEW: Cash Flow Waterfall + Net Worth Trend ── */}
+      {isDemo && (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Cash Flow Waterfall */}
         <motion.div variants={item}>
@@ -630,8 +633,10 @@ export default function Finance() {
           </Card>
         </motion.div>
       </div>
+      )}
 
       {/* ── NEW: Investment Portfolio ── */}
+      {isDemo && (
       <motion.div variants={item}>
         <Card
           header={
@@ -709,8 +714,10 @@ export default function Finance() {
           </div>
         </Card>
       </motion.div>
+      )}
 
       {/* ── NEW: Spending by Day + Expense Radar + Savings Rate ── */}
+      {isDemo && (
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Spending by Day of Week */}
         <motion.div variants={item}>
@@ -808,6 +815,7 @@ export default function Finance() {
           </Card>
         </motion.div>
       </div>
+      )}
 
       {/* ── Transactions + Budgets + Health Score ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -867,6 +875,7 @@ export default function Finance() {
         </motion.div>
 
         {/* Budget + Financial Health + Goals */}
+        {isDemo && (
         <motion.div variants={item} className="space-y-4">
           {/* Budget Progress */}
           <Card
@@ -946,9 +955,11 @@ export default function Finance() {
             </div>
           </Card>
         </motion.div>
+        )}
       </div>
 
       {/* ── AI Financial Recommendations ── */}
+      {isDemo && (
       <motion.div variants={item}>
         <Card
           variant="gradient"
@@ -983,6 +994,7 @@ export default function Finance() {
           </div>
         </Card>
       </motion.div>
+      )}
 
       {/* ── Modal ── */}
       <AddTransactionModal
