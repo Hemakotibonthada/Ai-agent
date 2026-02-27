@@ -15,6 +15,8 @@ from .file_service import FileService
 from .mqtt_service import MQTTService
 from .training_service import TrainingService
 from .system_service import SystemService
+from .vision_service import VisionService
+from .network_monitor_service import NetworkMonitorService
 
 __all__ = [
     "AIService",
@@ -26,4 +28,6 @@ __all__ = [
     "MQTTService",
     "TrainingService",
     "SystemService",
+    "VisionService",
+    "NetworkMonitorService",
 ]

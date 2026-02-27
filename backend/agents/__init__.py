@@ -19,6 +19,7 @@ from .learning_agent import LearningAgent
 from .security_agent import SecurityAgent
 from .memory_agent import MemoryAgent
 from .task_agent import TaskAgent
+from .vision_agent import VisionAgent
 
 __all__ = [
     "BaseAgent", "AgentCapability", "AgentStatus",
@@ -36,4 +37,5 @@ __all__ = [
     "SecurityAgent",
     "MemoryAgent",
     "TaskAgent",
+    "VisionAgent",
 ]

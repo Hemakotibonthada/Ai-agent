@@ -17,6 +17,8 @@ const Finance    = lazy(() => import('./pages/Finance'));
 const Reports    = lazy(() => import('./pages/Reports'));
 const Settings   = lazy(() => import('./pages/Settings'));
 const Voice      = lazy(() => import('./pages/Voice'));
+const Vision     = lazy(() => import('./pages/Vision'));
+const Network    = lazy(() => import('./pages/Network'));
 
 /* ------------------------------------------------------------------ */
 /*  Loading fallback                                                   */
@@ -102,6 +104,8 @@ export default function App() {
               <Route path="/reports"  element={<AnimatedPage><Reports /></AnimatedPage>} />
               <Route path="/settings" element={<AnimatedPage><Settings /></AnimatedPage>} />
               <Route path="/voice"    element={<AnimatedPage><Voice /></AnimatedPage>} />
+              <Route path="/vision"   element={<AnimatedPage><Vision /></AnimatedPage>} />
+              <Route path="/network"  element={<AnimatedPage><Network /></AnimatedPage>} />
             </Routes>
           </AnimatePresence>
         </Suspense>

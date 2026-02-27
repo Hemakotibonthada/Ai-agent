@@ -285,6 +285,66 @@ export const reportsApi = {
 };
 
 /* ------------------------------------------------------------------ */
+/*  Vision & Cameras                                                   */
+/* ------------------------------------------------------------------ */
+
+export const visionApi = {
+  cameras: () =>
+    api.get('/vision/cameras').then((r) => r.data),
+
+  cameraFeed: (cameraId: string) =>
+    api.get(`/vision/cameras/${cameraId}/feed`).then((r) => r.data),
+
+  detections: (params?: { camera_id?: string; type?: string; limit?: number }) =>
+    api.get('/vision/detections', { params }).then((r) => r.data),
+
+  zones: () =>
+    api.get('/vision/zones').then((r) => r.data),
+
+  alerts: (params?: { severity?: string; limit?: number }) =>
+    api.get('/vision/alerts', { params }).then((r) => r.data),
+
+  stats: () =>
+    api.get('/vision/stats').then((r) => r.data),
+
+  command: (cameraId: string, command: string, params?: Record<string, unknown>) =>
+    api.post(`/vision/cameras/${cameraId}/command`, { command, params }).then((r) => r.data),
+};
+
+/* ------------------------------------------------------------------ */
+/*  Network Security                                                   */
+/* ------------------------------------------------------------------ */
+
+export const networkApi = {
+  status: () =>
+    api.get('/network/status').then((r) => r.data),
+
+  interfaces: () =>
+    api.get('/network/interfaces').then((r) => r.data),
+
+  connections: (params?: { status?: string; limit?: number }) =>
+    api.get('/network/connections', { params }).then((r) => r.data),
+
+  threats: (params?: { severity?: string; limit?: number }) =>
+    api.get('/network/threats', { params }).then((r) => r.data),
+
+  anomalies: (params?: { limit?: number }) =>
+    api.get('/network/anomalies', { params }).then((r) => r.data),
+
+  devices: () =>
+    api.get('/network/devices').then((r) => r.data),
+
+  bandwidth: (params?: { period?: string }) =>
+    api.get('/network/bandwidth', { params }).then((r) => r.data),
+
+  firewall: () =>
+    api.get('/network/firewall').then((r) => r.data),
+
+  scan: () =>
+    api.post('/network/scan').then((r) => r.data),
+};
+
+/* ------------------------------------------------------------------ */
 /*  Default export                                                     */
 /* ------------------------------------------------------------------ */
 

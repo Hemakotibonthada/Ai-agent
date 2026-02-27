@@ -66,6 +66,7 @@ async def _init_agents():
         SecurityAgent,
         MemoryAgent,
         TaskAgent,
+        VisionAgent,
     )
 
     agent_classes = {
@@ -83,6 +84,7 @@ async def _init_agents():
         "security": SecurityAgent,
         "memory": MemoryAgent,
         "task": TaskAgent,
+        "vision": VisionAgent,
     }
 
     orchestrator = None
@@ -120,6 +122,8 @@ async def _init_services():
         MQTTService,
         TrainingService,
         SystemService,
+        VisionService,
+        NetworkMonitorService,
     )
 
     service_defs = [
@@ -132,6 +136,8 @@ async def _init_services():
         ("mqtt", MQTTService),
         ("training", TrainingService),
         ("system", SystemService),
+        ("vision", VisionService),
+        ("network_monitor", NetworkMonitorService),
     ]
 
     for name, cls in service_defs:
@@ -254,6 +260,8 @@ from api.routes.tasks import router as tasks_router
 from api.routes.system import router as system_router
 from api.routes.voice import router as voice_router
 from api.routes.reports import router as reports_router
+from api.routes.vision import router as vision_router
+from api.routes.network import router as network_router
 from api.websocket import ws_router
 
 app.include_router(chat_router)
@@ -265,6 +273,8 @@ app.include_router(tasks_router)
 app.include_router(system_router)
 app.include_router(voice_router)
 app.include_router(reports_router)
+app.include_router(vision_router)
+app.include_router(network_router)
 app.include_router(ws_router)
 
 

@@ -19,6 +19,8 @@ import {
   BookOpen,
   ChevronLeft,
   ChevronRight,
+  Camera,
+  Globe,
   type LucideIcon,
 } from 'lucide-react';
 import Avatar from '../ui/Avatar';
@@ -70,6 +72,8 @@ const sections: NavSection[] = [
       { label: 'Health',   path: '/health',   icon: Heart },
       { label: 'Finance',  path: '/finance',  icon: DollarSign },
       { label: 'Reports',  path: '/reports',  icon: FileText },
+      { label: 'Vision',   path: '/vision',   icon: Camera },
+      { label: 'Network',  path: '/network',  icon: Globe },
       { label: 'Settings', path: '/settings', icon: Settings },
     ],
   },
