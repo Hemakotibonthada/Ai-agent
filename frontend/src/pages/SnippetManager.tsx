@@ -71,7 +71,7 @@ const sampleSnippets: Snippet[] = [
   },
   {
     id: '8', title: 'Tailwind Glassmorphism Card', description: 'Reusable glass effect card component', language: 'typescript', folder: 'Frontend',
-    code: `export function GlassCard({ \n  children, \n  className = "" \n}: { \n  children: React.ReactNode; \n  className?: string; \n}) {\n  return (\n    <div className={\`\n      bg-white/5 backdrop-blur-xl \n      border border-white/10 \n      rounded-2xl shadow-xl \n      hover:bg-white/8 \n      transition-all duration-300 \n      \${className}\n    \`}>\n      {children}\n    </div>\n  );\n}`,
+    code: `export function GlassCard({ \n  children, \n  className = "" \n}: { \n  children: React.ReactNode; \n  className?: string; \n}) {\n  return (\n    <div className={\`\n      bg-nexus-card/5 backdrop-blur-xl \n      border border-white/10 \n      rounded-2xl shadow-xl \n      hover:bg-nexus-card/8 \n      transition-all duration-300 \n      \${className}\n    \`}>\n      {children}\n    </div>\n  );\n}`,
     tags: ['tailwind', 'glassmorphism', 'component'], starred: false, createdAt: '2024-03-10', updatedAt: '2024-03-10', usageCount: 12,
   },
 ];

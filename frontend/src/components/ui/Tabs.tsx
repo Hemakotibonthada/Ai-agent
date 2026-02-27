@@ -65,7 +65,7 @@ export default function Tabs({
               className={`
                 relative flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors
                 disabled:opacity-40 disabled:pointer-events-none
-                ${active ? 'text-nexus-primary' : 'text-nexus-muted hover:text-nexus-text hover:bg-white/5'}
+                ${active ? 'text-nexus-primary' : 'text-nexus-muted hover:text-nexus-text hover:bg-nexus-card/5'}
               `}
             >
               {item.icon && <item.icon size={16} />}

@@ -121,7 +121,7 @@ export default function SecretsVault() {
             </motion.div>
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Secrets Vault</h1>
-              <p className="text-gray-400 text-sm">Encrypted credential & secret management</p>
+              <p className="text-nexus-muted text-sm">Encrypted credential & secret management</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -144,7 +144,7 @@ export default function SecretsVault() {
                 <div className={`p-2 bg-${stat.color}-500/20 rounded-lg`}><span className={`text-${stat.color}-400`}>{stat.icon}</span></div>
                 <span className="text-2xl font-bold text-white">{stat.value}</span>
               </div>
-              <p className="text-xs text-gray-500 mt-2">{stat.label}</p>
+              <p className="text-xs text-nexus-muted mt-2">{stat.label}</p>
             </motion.div>
           ))}
         </div>
@@ -157,7 +157,7 @@ export default function SecretsVault() {
             { key: 'compliance' as const, label: 'Compliance', icon: <Shield className="w-4 h-4" /> },
           ].map(tab => (
             <motion.button key={tab.key} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setActiveView(tab.key)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeView === tab.key ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/25' : 'text-gray-400 hover:text-gray-200 hover:bg-gray-700/50'}`}>
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeView === tab.key ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/25' : 'text-nexus-muted hover:text-gray-200 hover:bg-nexus-surface/50'}`}>
               {tab.icon}<span>{tab.label}</span>
             </motion.button>
           ))}
@@ -169,13 +169,13 @@ export default function SecretsVault() {
               {/* Folder Sidebar */}
               <div className="w-56 space-y-1 shrink-0">
                 <motion.button whileHover={{ x: 4 }} onClick={() => setSelectedFolder('all')}
-                  className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all ${selectedFolder === 'all' ? 'bg-amber-600/20 text-amber-400' : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/50'}`}>
-                  <FolderOpen className="w-4 h-4" /> All Secrets <span className="ml-auto text-xs bg-gray-700/50 px-1.5 py-0.5 rounded">{secrets.length}</span>
+                  className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all ${selectedFolder === 'all' ? 'bg-amber-600/20 text-amber-400' : 'text-nexus-muted hover:text-gray-200 hover:bg-gray-800/50'}`}>
+                  <FolderOpen className="w-4 h-4" /> All Secrets <span className="ml-auto text-xs bg-nexus-surface/50 px-1.5 py-0.5 rounded">{secrets.length}</span>
                 </motion.button>
                 {folders.map(folder => (
                   <motion.button key={folder.id} whileHover={{ x: 4 }} onClick={() => setSelectedFolder(folder.name)}
-                    className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all ${selectedFolder === folder.name ? 'bg-amber-600/20 text-amber-400' : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/50'}`}>
-                    <Folder className="w-4 h-4" /> {folder.name} <span className="ml-auto text-xs bg-gray-700/50 px-1.5 py-0.5 rounded">{folder.count}</span>
+                    className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all ${selectedFolder === folder.name ? 'bg-amber-600/20 text-amber-400' : 'text-nexus-muted hover:text-gray-200 hover:bg-gray-800/50'}`}>
+                    <Folder className="w-4 h-4" /> {folder.name} <span className="ml-auto text-xs bg-nexus-surface/50 px-1.5 py-0.5 rounded">{folder.count}</span>
                   </motion.button>
                 ))}
               </div>
@@ -183,8 +183,8 @@ export default function SecretsVault() {
               {/* Secrets List */}
               <div className="flex-1 space-y-3">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-                  <input type="text" placeholder="Search secrets..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full pl-10 pr-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-lg text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-amber-500" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-nexus-muted" />
+                  <input type="text" placeholder="Search secrets..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full pl-10 pr-4 py-2.5 bg-gray-800/50 border border-nexus-border rounded-lg text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-amber-500" />
                 </div>
                 <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-2">
                   {filteredSecrets.map(secret => {
@@ -192,18 +192,18 @@ export default function SecretsVault() {
                     const urgent = daysUntil < 7;
                     const warning = daysUntil < 30;
                     return (
-                      <motion.div key={secret.id} variants={itemVariants} className={`p-4 bg-gray-800/30 border rounded-xl hover:border-gray-600 transition-all ${urgent ? 'border-red-500/50' : warning ? 'border-yellow-500/30' : 'border-gray-700/50'}`}>
+                      <motion.div key={secret.id} variants={itemVariants} className={`p-4 bg-gray-800/30 border rounded-xl hover:border-nexus-border transition-all ${urgent ? 'border-red-500/50' : warning ? 'border-yellow-500/30' : 'border-gray-700/50'}`}>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className={`p-2 rounded-lg ${urgent ? 'bg-red-500/20' : 'bg-gray-700/50'}`}>
+                            <div className={`p-2 rounded-lg ${urgent ? 'bg-red-500/20' : 'bg-nexus-surface/50'}`}>
                               <span className={urgent ? 'text-red-400' : 'text-amber-400'}>{typeIcons[secret.type] || <Key className="w-4 h-4" />}</span>
                             </div>
                             <div>
                               <div className="flex items-center gap-2">
                                 <code className="font-mono font-semibold text-white text-sm">{secret.key}</code>
-                                <span className={`px-1.5 py-0.5 rounded text-xs ${scopeColors[secret.scope] || 'bg-gray-700 text-gray-400'}`}>{secret.scope}</span>
+                                <span className={`px-1.5 py-0.5 rounded text-xs ${scopeColors[secret.scope] || 'bg-nexus-surface text-nexus-muted'}`}>{secret.scope}</span>
                               </div>
-                              <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
+                              <div className="flex items-center gap-3 mt-1 text-xs text-nexus-muted">
                                 <span className="flex items-center gap-1"><Folder className="w-3 h-3" /> {secret.folder}</span>
                                 <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> Rotated: {secret.last_rotated}</span>
                                 <span className={`flex items-center gap-1 ${urgent ? 'text-red-400' : warning ? 'text-yellow-400' : 'text-green-400'}`}>
@@ -214,15 +214,15 @@ export default function SecretsVault() {
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
-                            <div className="bg-gray-900/50 border border-gray-700/50 rounded-lg px-3 py-1.5 font-mono text-xs text-gray-400 min-w-[180px]">
+                            <div className="bg-gray-900/50 border border-gray-700/50 rounded-lg px-3 py-1.5 font-mono text-xs text-nexus-muted min-w-[180px]">
                               {showValues[secret.id] ? 'real-value-hidden-demo' : secret.masked_value}
                             </div>
-                            <motion.button whileHover={{ scale: 1.1 }} onClick={() => toggleValue(secret.id)} className="p-1.5 hover:bg-gray-700/50 rounded-lg">
-                              {showValues[secret.id] ? <EyeOff className="w-3.5 h-3.5 text-gray-400" /> : <Eye className="w-3.5 h-3.5 text-gray-400" />}
+                            <motion.button whileHover={{ scale: 1.1 }} onClick={() => toggleValue(secret.id)} className="p-1.5 hover:bg-nexus-surface/50 rounded-lg">
+                              {showValues[secret.id] ? <EyeOff className="w-3.5 h-3.5 text-nexus-muted" /> : <Eye className="w-3.5 h-3.5 text-nexus-muted" />}
                             </motion.button>
-                            <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-gray-700/50 rounded-lg"><Copy className="w-3.5 h-3.5 text-gray-400" /></motion.button>
+                            <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-nexus-surface/50 rounded-lg"><Copy className="w-3.5 h-3.5 text-nexus-muted" /></motion.button>
                             <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-amber-500/20 rounded-lg"><RefreshCw className="w-3.5 h-3.5 text-amber-400" /></motion.button>
-                            <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-red-500/20 rounded-lg"><Trash2 className="w-3.5 h-3.5 text-gray-400" /></motion.button>
+                            <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-red-500/20 rounded-lg"><Trash2 className="w-3.5 h-3.5 text-nexus-muted" /></motion.button>
                           </div>
                         </div>
                       </motion.div>
@@ -237,7 +237,7 @@ export default function SecretsVault() {
             <motion.div key="audit" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <div className="bg-gray-800/30 border border-gray-700/50 rounded-xl overflow-hidden">
                 <table className="w-full">
-                  <thead><tr className="border-b border-gray-700/50 text-xs text-gray-500 uppercase tracking-wider">
+                  <thead><tr className="border-b border-gray-700/50 text-xs text-nexus-muted uppercase tracking-wider">
                     <th className="text-left p-4">Action</th><th className="text-left p-4">Secret</th><th className="text-left p-4">User</th><th className="text-left p-4">IP</th><th className="text-right p-4">Time</th>
                   </tr></thead>
                   <tbody>
@@ -245,9 +245,9 @@ export default function SecretsVault() {
                       <motion.tr key={entry.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="border-b border-gray-700/30 hover:bg-gray-800/50 transition-colors">
                         <td className="p-4"><span className={`px-2 py-0.5 rounded-full text-xs ${entry.action === 'rotated' ? 'bg-blue-500/20 text-blue-400' : entry.action === 'accessed' ? 'bg-green-500/20 text-green-400' : entry.action === 'created' ? 'bg-purple-500/20 text-purple-400' : 'bg-yellow-500/20 text-yellow-400'}`}>{entry.action}</span></td>
                         <td className="p-4"><code className="font-mono text-sm text-amber-300">{entry.secret_key}</code></td>
-                        <td className="p-4 text-sm text-gray-400">{entry.user}</td>
-                        <td className="p-4"><code className="text-xs text-gray-500">{entry.ip}</code></td>
-                        <td className="p-4 text-right text-sm text-gray-500">{new Date(entry.timestamp).toLocaleString()}</td>
+                        <td className="p-4 text-sm text-nexus-muted">{entry.user}</td>
+                        <td className="p-4"><code className="text-xs text-nexus-muted">{entry.ip}</code></td>
+                        <td className="p-4 text-right text-sm text-nexus-muted">{new Date(entry.timestamp).toLocaleString()}</td>
                       </motion.tr>
                     ))}
                   </tbody>
@@ -270,11 +270,11 @@ export default function SecretsVault() {
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
                     <span className="text-4xl font-bold text-white">{complianceScore}%</span>
-                    <span className="text-xs text-gray-500">Compliance Score</span>
+                    <span className="text-xs text-nexus-muted">Compliance Score</span>
                   </div>
                 </div>
                 <h3 className="text-lg font-semibold text-white">Vault Compliance Report</h3>
-                <p className="text-sm text-gray-400 mt-1">Last scanned: {new Date().toLocaleDateString()}</p>
+                <p className="text-sm text-nexus-muted mt-1">Last scanned: {new Date().toLocaleDateString()}</p>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 {[
@@ -291,7 +291,7 @@ export default function SecretsVault() {
                       {check.status === 'pass' ? <Check className="w-5 h-5 text-green-400" /> : check.status === 'warning' ? <AlertTriangle className="w-5 h-5 text-yellow-400" /> : <X className="w-5 h-5 text-red-400" />}
                       <div>
                         <p className="font-medium text-white text-sm">{check.label}</p>
-                        <p className="text-xs text-gray-500 mt-0.5">{check.detail}</p>
+                        <p className="text-xs text-nexus-muted mt-0.5">{check.detail}</p>
                       </div>
                     </div>
                   </motion.div>

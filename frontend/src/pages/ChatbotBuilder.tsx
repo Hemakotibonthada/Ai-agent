@@ -94,13 +94,13 @@ export default function ChatbotBuilder() {
             </motion.div>
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Chatbot Builder</h1>
-              <p className="text-gray-400 text-sm">Visual flow designer for conversational AI</p>
+              <p className="text-nexus-muted text-sm">Visual flow designer for conversational AI</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             {['bots', 'builder', 'preview'].map(v => (
               <button key={v} onClick={() => setView(v as typeof view)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${view === v ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' : 'text-gray-500 hover:text-gray-300'}`}>
+                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${view === v ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' : 'text-nexus-muted hover:text-nexus-muted'}`}>
                 {v === 'bots' ? 'My Bots' : v === 'builder' ? 'Flow Builder' : 'Preview'}
               </button>
             ))}
@@ -111,7 +111,7 @@ export default function ChatbotBuilder() {
           {view === 'bots' && (
             <motion.div key="bots" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-sm text-gray-400">{bots.length} chatbots</h3>
+                <h3 className="text-sm text-nexus-muted">{bots.length} chatbots</h3>
                 <button className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium rounded-lg transition-colors">
                   <Plus className="w-3.5 h-3.5" /> New Chatbot
                 </button>
@@ -125,15 +125,15 @@ export default function ChatbotBuilder() {
                         <div className="p-2 bg-purple-500/15 rounded-lg"><Bot className="w-5 h-5 text-purple-400" /></div>
                         <div>
                           <h3 className="text-white font-medium text-sm">{bot.name}</h3>
-                          <span className="text-xs text-gray-500">Edited {bot.lastEdited}</span>
+                          <span className="text-xs text-nexus-muted">Edited {bot.lastEdited}</span>
                         </div>
                       </div>
-                      <span className={`px-1.5 py-0.5 text-[10px] font-medium rounded ${bot.status === 'active' ? 'bg-green-500/20 text-green-400' : bot.status === 'draft' ? 'bg-gray-500/20 text-gray-400' : 'bg-amber-500/20 text-amber-400'}`}>{bot.status}</span>
+                      <span className={`px-1.5 py-0.5 text-[10px] font-medium rounded ${bot.status === 'active' ? 'bg-green-500/20 text-green-400' : bot.status === 'draft' ? 'bg-gray-500/20 text-nexus-muted' : 'bg-amber-500/20 text-amber-400'}`}>{bot.status}</span>
                     </div>
                     <div className="grid grid-cols-3 gap-3 text-center">
-                      <div><span className="text-base font-bold text-white">{(bot.messages / 1000).toFixed(1)}k</span><span className="block text-[10px] text-gray-500">Messages</span></div>
-                      <div><span className="text-base font-bold text-white">{(bot.users / 1000).toFixed(1)}k</span><span className="block text-[10px] text-gray-500">Users</span></div>
-                      <div><span className="text-base font-bold text-white">{bot.nodes}</span><span className="block text-[10px] text-gray-500">Nodes</span></div>
+                      <div><span className="text-base font-bold text-white">{(bot.messages / 1000).toFixed(1)}k</span><span className="block text-[10px] text-nexus-muted">Messages</span></div>
+                      <div><span className="text-base font-bold text-white">{(bot.users / 1000).toFixed(1)}k</span><span className="block text-[10px] text-nexus-muted">Users</span></div>
+                      <div><span className="text-base font-bold text-white">{bot.nodes}</span><span className="block text-[10px] text-nexus-muted">Nodes</span></div>
                     </div>
                   </motion.div>
                 ))}
@@ -145,13 +145,13 @@ export default function ChatbotBuilder() {
             <motion.div key="builder" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex gap-4">
               {/* Node Palette */}
               <div className="w-48 bg-gray-800/30 border border-gray-700/50 rounded-xl p-3 space-y-2 shrink-0">
-                <h4 className="text-xs text-gray-500 uppercase tracking-wider mb-2">Nodes</h4>
+                <h4 className="text-xs text-nexus-muted uppercase tracking-wider mb-2">Nodes</h4>
                 {NODE_TYPES.map(nt => (
                   <div key={nt.type} draggable onDragStart={() => setDragging(nt.type)} onDragEnd={() => setDragging(null)}
-                    className="flex items-center gap-2 px-2.5 py-2 bg-gray-700/30 rounded-lg cursor-grab hover:bg-gray-700/50 transition-colors text-sm">
-                    <GripVertical className="w-3 h-3 text-gray-600" />
+                    className="flex items-center gap-2 px-2.5 py-2 bg-gray-700/30 rounded-lg cursor-grab hover:bg-nexus-surface/50 transition-colors text-sm">
+                    <GripVertical className="w-3 h-3 text-nexus-muted" />
                     <span style={{ color: nt.color }}>{nt.icon}</span>
-                    <span className="text-gray-300 text-xs">{nt.label}</span>
+                    <span className="text-nexus-muted text-xs">{nt.label}</span>
                   </div>
                 ))}
                 <hr className="border-gray-700/50" />
@@ -177,15 +177,15 @@ export default function ChatbotBuilder() {
                   <motion.div key={node.id} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
                     onClick={() => setSelectedNode(node)}
                     style={{ position: 'absolute', left: node.x, top: node.y, zIndex: 2 }}
-                    className={`w-[130px] p-3 bg-gray-800 border rounded-lg cursor-pointer transition-all ${selectedNode?.id === node.id ? 'border-purple-500 shadow-lg shadow-purple-500/20' : 'border-gray-700 hover:border-gray-600'}`}>
+                    className={`w-[130px] p-3 bg-nexus-card border rounded-lg cursor-pointer transition-all ${selectedNode?.id === node.id ? 'border-purple-500 shadow-lg shadow-purple-500/20' : 'border-nexus-border hover:border-nexus-border'}`}>
                     <div className="flex items-center gap-1.5 mb-1">
                       <span style={{ color: getNodeColor(node.type) }}>{getNodeIcon(node.type)}</span>
-                      <span className="text-[10px] uppercase tracking-wider text-gray-500">{node.type}</span>
+                      <span className="text-[10px] uppercase tracking-wider text-nexus-muted">{node.type}</span>
                     </div>
                     <p className="text-xs text-white font-medium truncate">{node.label}</p>
                     {node.connections.length > 0 && (
                       <div className="mt-1.5 flex gap-1">
-                        {node.connections.map(c => (<span key={c} className="text-[8px] bg-gray-700 text-gray-400 px-1 rounded">{c}</span>))}
+                        {node.connections.map(c => (<span key={c} className="text-[8px] bg-nexus-surface text-nexus-muted px-1 rounded">{c}</span>))}
                       </div>
                     )}
                   </motion.div>
@@ -193,20 +193,20 @@ export default function ChatbotBuilder() {
 
                 {selectedNode && (
                   <motion.div initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }}
-                    className="absolute right-4 top-4 w-56 bg-gray-800 border border-gray-700 rounded-xl p-4 z-10">
+                    className="absolute right-4 top-4 w-56 bg-nexus-card border border-nexus-border rounded-xl p-4 z-10">
                     <div className="flex items-center justify-between mb-3">
                       <h4 className="text-sm font-medium text-white">{selectedNode.label}</h4>
-                      <button onClick={() => setSelectedNode(null)} className="text-gray-500 hover:text-gray-300"><X className="w-4 h-4" /></button>
+                      <button onClick={() => setSelectedNode(null)} className="text-nexus-muted hover:text-nexus-muted"><X className="w-4 h-4" /></button>
                     </div>
                     <div className="space-y-3 text-xs">
-                      <div><span className="text-gray-500 block mb-1">Type</span><span className="text-gray-300">{selectedNode.type}</span></div>
+                      <div><span className="text-nexus-muted block mb-1">Type</span><span className="text-nexus-muted">{selectedNode.type}</span></div>
                       {Object.entries(selectedNode.config).map(([key, val]) => (
                         <div key={key}>
-                          <span className="text-gray-500 block mb-1">{key}</span>
-                          <input value={val} readOnly className="w-full bg-gray-700/50 border border-gray-600 rounded px-2 py-1 text-gray-300 text-xs focus:outline-none" />
+                          <span className="text-nexus-muted block mb-1">{key}</span>
+                          <input value={val} readOnly className="w-full bg-nexus-surface/50 border border-nexus-border rounded px-2 py-1 text-nexus-muted text-xs focus:outline-none" />
                         </div>
                       ))}
-                      <div className="flex gap-2 pt-2 border-t border-gray-700">
+                      <div className="flex gap-2 pt-2 border-t border-nexus-border">
                         <button className="flex-1 flex items-center justify-center gap-1 px-2 py-1 bg-blue-600/30 text-blue-300 rounded hover:bg-blue-600/40"><Copy className="w-3 h-3" /> Clone</button>
                         <button className="flex-1 flex items-center justify-center gap-1 px-2 py-1 bg-red-600/30 text-red-300 rounded hover:bg-red-600/40"><Trash2 className="w-3 h-3" /> Delete</button>
                       </div>
@@ -230,7 +230,7 @@ export default function ChatbotBuilder() {
                     {previewMessages.map((msg, i) => (
                       <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                         className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`max-w-[80%] px-3 py-2 rounded-xl text-sm ${msg.role === 'user' ? 'bg-purple-600 text-white' : 'bg-gray-700 text-gray-200'}`}>
+                        <div className={`max-w-[80%] px-3 py-2 rounded-xl text-sm ${msg.role === 'user' ? 'bg-purple-600 text-white' : 'bg-nexus-surface text-gray-200'}`}>
                           {msg.text}
                         </div>
                       </motion.div>
@@ -239,7 +239,7 @@ export default function ChatbotBuilder() {
                 </div>
                 <div className="p-3 border-t border-gray-700/50 flex gap-2">
                   <input value={previewInput} onChange={e => setPreviewInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && sendPreviewMessage()}
-                    placeholder="Type a message..." className="flex-1 bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500" />
+                    placeholder="Type a message..." className="flex-1 bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500" />
                   <button onClick={sendPreviewMessage} className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition-colors flex items-center gap-1.5">
                     <ArrowRight className="w-4 h-4" />
                   </button>

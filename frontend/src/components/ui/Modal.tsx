@@ -116,7 +116,7 @@ export default function Modal({
                 {/* Close button */}
                 <Dialog.Close asChild>
                   <button
-                    className="absolute right-4 top-4 rounded-lg p-1 text-nexus-muted transition hover:bg-white/10 hover:text-nexus-text focus-ring"
+                    className="absolute right-4 top-4 rounded-lg p-1 text-nexus-muted transition hover:bg-nexus-card/10 hover:text-nexus-text focus-ring"
                     aria-label="Close"
                   >
                     <X size={18} />

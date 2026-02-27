@@ -251,7 +251,7 @@ export default function CommandPalette({
                         onMouseEnter={() => setActiveIndex(idx)}
                         className={`
                           flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors
-                          ${isActive ? 'bg-nexus-primary/15 text-nexus-primary' : 'text-nexus-text hover:bg-white/5'}
+                          ${isActive ? 'bg-nexus-primary/15 text-nexus-primary' : 'text-nexus-text hover:bg-nexus-card/5'}
                         `}
                       >
                         <Icon size={16} className={isActive ? 'text-nexus-primary' : 'text-nexus-muted'} />

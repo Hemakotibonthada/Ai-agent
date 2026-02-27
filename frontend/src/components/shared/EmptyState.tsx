@@ -31,11 +31,11 @@ export default function EmptyState({
       className="flex flex-1 items-center justify-center p-12"
     >
       <div className="text-center max-w-md">
-        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/5 border border-white/10">
-          {icon || <Database className="text-gray-500" size={28} />}
+        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-nexus-card/5 border border-white/10">
+          {icon || <Database className="text-nexus-muted" size={28} />}
         </div>
-        <h3 className="text-lg font-semibold text-gray-300">{title}</h3>
-        <p className="mt-2 text-sm text-gray-500 leading-relaxed">{description}</p>
+        <h3 className="text-lg font-semibold text-nexus-muted">{title}</h3>
+        <p className="mt-2 text-sm text-nexus-muted leading-relaxed">{description}</p>
         {action && (
           <button
             onClick={action.onClick}

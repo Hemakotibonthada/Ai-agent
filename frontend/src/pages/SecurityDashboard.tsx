@@ -23,11 +23,11 @@ interface SecurityEvent {
 }
 
 const SEVERITY_CONFIG = {
-  critical: { color: 'text-red-600', bg: 'bg-red-100 dark:bg-red-900/30', border: 'border-red-500' },
+  critical: { color: 'text-red-600', bg: 'bg-nexus-error/15', border: 'border-red-500' },
   high: { color: 'text-orange-600', bg: 'bg-orange-100 dark:bg-orange-900/30', border: 'border-orange-500' },
-  medium: { color: 'text-yellow-600', bg: 'bg-yellow-100 dark:bg-yellow-900/30', border: 'border-yellow-500' },
+  medium: { color: 'text-yellow-600', bg: 'bg-nexus-warning/15', border: 'border-yellow-500' },
   low: { color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/30', border: 'border-blue-500' },
-  info: { color: 'text-gray-600', bg: 'bg-gray-100 dark:bg-gray-700/50', border: 'border-gray-500' },
+  info: { color: 'text-nexus-muted', bg: 'bg-nexus-surface/50', border: 'border-gray-500' },
 };
 
 const threatData = Array.from({ length: 24 }, (_, i) => ({
@@ -115,11 +115,11 @@ const SecurityDashboard: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <Shield className="text-green-500" size={32} />
               Security Dashboard
             </h1>
-            <p className="text-gray-500 mt-1">Real-time security monitoring and threat analysis</p>
+            <p className="text-nexus-muted mt-1">Real-time security monitoring and threat analysis</p>
           </div>
           <div className="flex items-center gap-2">
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
@@ -127,7 +127,7 @@ const SecurityDashboard: React.FC = () => {
               <AlertTriangle size={14} /> {stats.activeThreats} Active Threats
             </motion.button>
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-sm font-medium">
+              className="flex items-center gap-2 px-4 py-2 bg-nexus-surface text-nexus-text rounded-xl text-sm font-medium">
               <Download size={14} /> Export
             </motion.button>
           </div>
@@ -135,11 +135,11 @@ const SecurityDashboard: React.FC = () => {
       </FadeIn>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-gray-100 dark:bg-gray-800 rounded-xl p-1 w-fit">
+      <div className="flex gap-1 bg-nexus-surface rounded-xl p-1 w-fit">
         {(['overview', 'events', 'compliance', 'threats'] as const).map(tab => (
           <button key={tab} onClick={() => setActiveTab(tab)}
             className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-colors ${
-              activeTab === tab ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500'
+              activeTab === tab ? 'bg-nexus-card text-nexus-text shadow-sm' : 'text-nexus-muted'
             }`}>{tab}</button>
         ))}
       </div>
@@ -149,8 +149,8 @@ const SecurityDashboard: React.FC = () => {
           {/* Security Score + Stats */}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <FadeIn delay={0.05} className="md:col-span-2">
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 text-center">
-                <h3 className="text-sm font-semibold text-gray-500 mb-4">Security Score</h3>
+              <div className="bg-nexus-card rounded-2xl p-6 border border-nexus-border text-center">
+                <h3 className="text-sm font-semibold text-nexus-muted mb-4">Security Score</h3>
                 <div className="relative w-32 h-32 mx-auto mb-4">
                   <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 120 120">
                     <circle cx="60" cy="60" r="52" fill="none" stroke="#e5e7eb" strokeWidth="10" />
@@ -163,10 +163,10 @@ const SecurityDashboard: React.FC = () => {
                     />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-3xl font-bold text-gray-900 dark:text-white">{securityScore}</span>
+                    <span className="text-3xl font-bold text-nexus-text">{securityScore}</span>
                   </div>
                 </div>
-                <span className="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded-lg text-sm font-medium">Good</span>
+                <span className="px-3 py-1 bg-nexus-success/15 text-nexus-success rounded-lg text-sm font-medium">Good</span>
               </div>
             </FadeIn>
             {[
@@ -175,10 +175,10 @@ const SecurityDashboard: React.FC = () => {
               { label: 'Threats Blocked', value: stats.blocked, icon: <Shield size={18} />, color: 'text-green-500', bg: 'from-green-500 to-emerald-500' },
             ].map((stat, i) => (
               <FadeIn key={stat.label} delay={0.1 + i * 0.05}>
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
+                <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
                   <div className={`p-2 rounded-xl bg-gradient-to-br ${stat.bg} text-white w-fit mb-3`}>{stat.icon}</div>
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
-                  <div className="text-xs text-gray-500 mt-1">{stat.label}</div>
+                  <div className="text-2xl font-bold text-nexus-text">{stat.value}</div>
+                  <div className="text-xs text-nexus-muted mt-1">{stat.label}</div>
                 </div>
               </FadeIn>
             ))}
@@ -187,8 +187,8 @@ const SecurityDashboard: React.FC = () => {
           {/* Charts */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <FadeIn delay={0.15}>
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+              <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+                <h3 className="font-semibold text-nexus-text mb-4 flex items-center gap-2">
                   <Activity size={16} className="text-red-500" /> Threat Activity (24h)
                 </h3>
                 <ResponsiveContainer width="100%" height={200}>
@@ -205,8 +205,8 @@ const SecurityDashboard: React.FC = () => {
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+              <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+                <h3 className="font-semibold text-nexus-text mb-4 flex items-center gap-2">
                   <Lock size={16} className="text-blue-500" /> Login Activity (7 days)
                 </h3>
                 <ResponsiveContainer width="100%" height={200}>
@@ -225,22 +225,22 @@ const SecurityDashboard: React.FC = () => {
 
           {/* Recent Events Preview */}
           <FadeIn delay={0.25}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-              <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-                <h3 className="font-semibold text-gray-900 dark:text-white">Recent Security Events</h3>
+            <div className="bg-nexus-card rounded-2xl border border-nexus-border overflow-hidden">
+              <div className="px-5 py-4 border-b border-nexus-border flex items-center justify-between">
+                <h3 className="font-semibold text-nexus-text">Recent Security Events</h3>
                 <button onClick={() => setActiveTab('events')} className="text-xs text-blue-500 hover:text-blue-600 flex items-center gap-1">
                   View All <ChevronRight size={12} />
                 </button>
               </div>
-              <div className="divide-y divide-gray-100 dark:divide-gray-700">
+              <div className="divide-y divide-nexus-border">
                 {securityEvents.slice(0, 5).map(event => (
-                  <div key={event.id} className="px-5 py-3 flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-700/30">
+                  <div key={event.id} className="px-5 py-3 flex items-center gap-3 hover:bg-nexus-surface/60/30">
                     <div className={`w-2 h-2 rounded-full ${SEVERITY_CONFIG[event.severity].border.replace('border', 'bg')}`} />
                     <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${SEVERITY_CONFIG[event.severity].bg} ${SEVERITY_CONFIG[event.severity].color}`}>
                       {event.severity.toUpperCase()}
                     </span>
-                    <span className="text-sm text-gray-900 dark:text-white flex-1 truncate">{event.message}</span>
-                    <span className="text-xs text-gray-500">{event.timestamp}</span>
+                    <span className="text-sm text-nexus-text flex-1 truncate">{event.message}</span>
+                    <span className="text-xs text-nexus-muted">{event.timestamp}</span>
                   </div>
                 ))}
               </div>
@@ -257,29 +257,29 @@ const SecurityDashboard: React.FC = () => {
                 <button key={sev} onClick={() => setSeverityFilter(sev)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-colors ${
                     severityFilter === sev
-                      ? sev === 'all' ? 'bg-gray-800 text-white dark:bg-white dark:text-gray-900'
+                      ? sev === 'all' ? 'bg-nexus-card text-white dark:bg-white dark:text-nexus-text'
                       : `${SEVERITY_CONFIG[sev as keyof typeof SEVERITY_CONFIG].bg} ${SEVERITY_CONFIG[sev as keyof typeof SEVERITY_CONFIG].color}`
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-500'
+                      : 'bg-nexus-surface text-nexus-muted'
                   }`}>{sev} {sev !== 'all' && `(${securityEvents.filter(e => e.severity === sev).length})`}</button>
               ))}
             </div>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 divide-y divide-gray-100 dark:divide-gray-700">
+            <div className="bg-nexus-card rounded-2xl border border-nexus-border divide-y divide-nexus-border">
               {filteredEvents.map(event => (
                 <motion.div key={event.id}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   onClick={() => setSelectedEvent(selectedEvent?.id === event.id ? null : event)}
-                  className={`px-5 py-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/30 border-l-3 ${SEVERITY_CONFIG[event.severity].border}`}
+                  className={`px-5 py-4 cursor-pointer hover:bg-nexus-surface/60/30 border-l-3 ${SEVERITY_CONFIG[event.severity].border}`}
                   style={{ borderLeftWidth: '3px' }}
                 >
                   <div className="flex items-center gap-3">
                     <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${SEVERITY_CONFIG[event.severity].bg} ${SEVERITY_CONFIG[event.severity].color}`}>
                       {event.severity.toUpperCase()}
                     </span>
-                    <span className="text-sm font-medium text-gray-900 dark:text-white flex-1">{event.message}</span>
-                    <span className="text-xs text-gray-500 flex-shrink-0">{event.timestamp}</span>
+                    <span className="text-sm font-medium text-nexus-text flex-1">{event.message}</span>
+                    <span className="text-xs text-nexus-muted flex-shrink-0">{event.timestamp}</span>
                   </div>
-                  <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
+                  <div className="flex items-center gap-3 mt-1 text-xs text-nexus-muted">
                     <span className="flex items-center gap-1"><Globe size={10} /> {event.source}</span>
                     <span className="capitalize">{event.type.replace('_', ' ')}</span>
                   </div>
@@ -287,7 +287,7 @@ const SecurityDashboard: React.FC = () => {
                     {selectedEvent?.id === event.id && event.details && (
                       <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden">
-                        <div className="mt-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50 text-sm text-gray-600 dark:text-gray-400">
+                        <div className="mt-3 p-3 rounded-lg bg-nexus-surface/50 text-sm text-nexus-muted">
                           {event.details}
                         </div>
                       </motion.div>
@@ -302,12 +302,12 @@ const SecurityDashboard: React.FC = () => {
 
       {activeTab === 'compliance' && (
         <FadeIn delay={0.1}>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-            <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white">Security Compliance Checklist</h3>
-              <p className="text-xs text-gray-500 mt-1">Overall compliance: {Math.round(complianceItems.reduce((s, i) => s + i.score, 0) / complianceItems.length)}%</p>
+          <div className="bg-nexus-card rounded-2xl border border-nexus-border overflow-hidden">
+            <div className="px-5 py-4 border-b border-nexus-border">
+              <h3 className="font-semibold text-nexus-text">Security Compliance Checklist</h3>
+              <p className="text-xs text-nexus-muted mt-1">Overall compliance: {Math.round(complianceItems.reduce((s, i) => s + i.score, 0) / complianceItems.length)}%</p>
             </div>
-            <div className="divide-y divide-gray-100 dark:divide-gray-700">
+            <div className="divide-y divide-nexus-border">
               {complianceItems.map(item => (
                 <div key={item.name} className="px-5 py-4 flex items-center gap-4">
                   {item.status === 'pass' ? (
@@ -317,13 +317,13 @@ const SecurityDashboard: React.FC = () => {
                   )}
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-900 dark:text-white">{item.name}</span>
+                      <span className="text-sm font-medium text-nexus-text">{item.name}</span>
                       <span className={`text-sm font-bold ${item.score >= 90 ? 'text-green-500' : item.score >= 70 ? 'text-yellow-500' : 'text-red-500'}`}>
                         {item.score}%
                       </span>
                     </div>
-                    <p className="text-xs text-gray-500 mt-0.5">{item.detail}</p>
-                    <div className="h-1 bg-gray-100 dark:bg-gray-700 rounded-full mt-2 overflow-hidden">
+                    <p className="text-xs text-nexus-muted mt-0.5">{item.detail}</p>
+                    <div className="h-1 bg-nexus-surface rounded-full mt-2 overflow-hidden">
                       <motion.div initial={{ width: 0 }} animate={{ width: `${item.score}%` }} transition={{ duration: 1 }}
                         className={`h-full rounded-full ${item.score >= 90 ? 'bg-green-500' : item.score >= 70 ? 'bg-yellow-500' : 'bg-red-500'}`} />
                     </div>
@@ -338,8 +338,8 @@ const SecurityDashboard: React.FC = () => {
       {activeTab === 'threats' && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <FadeIn delay={0.1}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Attack Types Distribution</h3>
+            <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+              <h3 className="font-semibold text-nexus-text mb-4">Attack Types Distribution</h3>
               <ResponsiveContainer width="100%" height={250}>
                 <PieChart>
                   <Pie data={attackTypeData} dataKey="value" cx="50%" cy="50%" innerRadius={50} outerRadius={90} paddingAngle={3}>
@@ -350,7 +350,7 @@ const SecurityDashboard: React.FC = () => {
               </ResponsiveContainer>
               <div className="flex flex-wrap justify-center gap-3">
                 {attackTypeData.map(item => (
-                  <span key={item.name} className="flex items-center gap-1.5 text-xs text-gray-500">
+                  <span key={item.name} className="flex items-center gap-1.5 text-xs text-nexus-muted">
                     <div className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }} />
                     {item.name} ({item.value}%)
                   </span>
@@ -360,20 +360,20 @@ const SecurityDashboard: React.FC = () => {
           </FadeIn>
 
           <FadeIn delay={0.15}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+              <h3 className="font-semibold text-nexus-text mb-4 flex items-center gap-2">
                 <MapPin size={16} className="text-red-500" /> Threats by Origin
               </h3>
               <div className="space-y-3">
                 {geoData.map(item => (
                   <div key={item.country} className="flex items-center gap-3">
                     <span className="text-lg">{item.flag}</span>
-                    <span className="text-sm text-gray-900 dark:text-white flex-1">{item.country}</span>
-                    <div className="w-24 h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <span className="text-sm text-nexus-text flex-1">{item.country}</span>
+                    <div className="w-24 h-2 bg-nexus-surface rounded-full overflow-hidden">
                       <div className="h-full bg-red-500 rounded-full"
                         style={{ width: `${(item.attacks / geoData[0].attacks) * 100}%` }} />
                     </div>
-                    <span className="text-sm text-gray-500 w-8 text-right">{item.attacks}</span>
+                    <span className="text-sm text-nexus-muted w-8 text-right">{item.attacks}</span>
                   </div>
                 ))}
               </div>

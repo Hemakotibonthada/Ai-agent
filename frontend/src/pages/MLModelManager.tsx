@@ -89,7 +89,7 @@ const statusConfig = {
   training: { color: 'text-blue-400', bg: 'bg-blue-500/10', label: 'Training' },
   ready: { color: 'text-yellow-400', bg: 'bg-yellow-500/10', label: 'Ready' },
   failed: { color: 'text-red-400', bg: 'bg-red-500/10', label: 'Failed' },
-  archived: { color: 'text-gray-400', bg: 'bg-gray-500/10', label: 'Archived' },
+  archived: { color: 'text-nexus-muted', bg: 'bg-gray-500/10', label: 'Archived' },
 };
 
 export default function MLModelManager() {

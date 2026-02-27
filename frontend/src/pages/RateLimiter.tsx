@@ -108,7 +108,7 @@ export default function RateLimiter() {
             <motion.div whileHover={{ scale: 1.1 }} className="p-3 bg-violet-500/20 rounded-xl"><Gauge className="w-7 h-7 text-violet-400" /></motion.div>
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-violet-400 to-purple-400 bg-clip-text text-transparent">Rate Limiter</h1>
-              <p className="text-gray-400 text-sm">API rate limiting & quota management</p>
+              <p className="text-nexus-muted text-sm">API rate limiting & quota management</p>
             </div>
           </div>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="px-4 py-2 bg-violet-600 hover:bg-violet-500 text-white rounded-lg text-sm font-medium flex items-center gap-2"><Plus className="w-4 h-4" /> New Rule</motion.button>
@@ -128,10 +128,10 @@ export default function RateLimiter() {
                 <div className={`p-2 bg-${stat.color}-500/20 rounded-lg`}><span className={`text-${stat.color}-400`}>{stat.icon}</span></div>
                 <div className="text-right">
                   <span className="text-2xl font-bold text-white">{stat.value}</span>
-                  <p className="text-xs text-gray-500">{stat.sub}</p>
+                  <p className="text-xs text-nexus-muted">{stat.sub}</p>
                 </div>
               </div>
-              <p className="text-xs text-gray-500 mt-2">{stat.label}</p>
+              <p className="text-xs text-nexus-muted mt-2">{stat.label}</p>
             </motion.div>
           ))}
         </div>
@@ -145,9 +145,9 @@ export default function RateLimiter() {
             { key: 'quotas' as const, label: 'Quota Plans', icon: <Users className="w-4 h-4" />, count: quotaPlans.length },
           ].map(tab => (
             <motion.button key={tab.key} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setActiveTab(tab.key)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === tab.key ? 'bg-violet-600 text-white shadow-lg shadow-violet-600/25' : 'text-gray-400 hover:text-gray-200 hover:bg-gray-700/50'}`}>
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === tab.key ? 'bg-violet-600 text-white shadow-lg shadow-violet-600/25' : 'text-nexus-muted hover:text-gray-200 hover:bg-nexus-surface/50'}`}>
               {tab.icon}<span>{tab.label}</span>
-              {'count' in tab && tab.count !== undefined && <span className={`px-1.5 py-0.5 rounded-full text-xs ${activeTab === tab.key ? 'bg-violet-500/50' : 'bg-gray-700/50'}`}>{tab.count}</span>}
+              {'count' in tab && tab.count !== undefined && <span className={`px-1.5 py-0.5 rounded-full text-xs ${activeTab === tab.key ? 'bg-violet-500/50' : 'bg-nexus-surface/50'}`}>{tab.count}</span>}
             </motion.button>
           ))}
         </div>
@@ -159,18 +159,18 @@ export default function RateLimiter() {
               {rules.map(rule => {
                 const usagePercent = rule.requests_per_window > 0 ? (rule.current_hits / rule.requests_per_window) * 100 : 0;
                 return (
-                  <motion.div key={rule.id} variants={itemVariants} className={`p-4 bg-gray-800/30 border rounded-xl transition-all ${!rule.enabled ? 'border-gray-800 opacity-60' : usagePercent > 80 ? 'border-red-500/30' : 'border-gray-700/50 hover:border-gray-600'}`}>
+                  <motion.div key={rule.id} variants={itemVariants} className={`p-4 bg-gray-800/30 border rounded-xl transition-all ${!rule.enabled ? 'border-gray-800 opacity-60' : usagePercent > 80 ? 'border-red-500/30' : 'border-gray-700/50 hover:border-nexus-border'}`}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3 flex-1">
-                        <motion.button whileHover={{ scale: 1.1 }} className={`p-2 rounded-lg ${rule.enabled ? 'bg-violet-500/20' : 'bg-gray-700/50'}`}>
-                          {rule.enabled ? <ToggleRight className="w-5 h-5 text-violet-400" /> : <ToggleLeft className="w-5 h-5 text-gray-500" />}
+                        <motion.button whileHover={{ scale: 1.1 }} className={`p-2 rounded-lg ${rule.enabled ? 'bg-violet-500/20' : 'bg-nexus-surface/50'}`}>
+                          {rule.enabled ? <ToggleRight className="w-5 h-5 text-violet-400" /> : <ToggleLeft className="w-5 h-5 text-nexus-muted" />}
                         </motion.button>
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
                             <span className="font-semibold text-white text-sm">{rule.name}</span>
-                            {!rule.enabled && <span className="px-1.5 py-0.5 bg-gray-700 text-gray-400 text-xs rounded">disabled</span>}
+                            {!rule.enabled && <span className="px-1.5 py-0.5 bg-nexus-surface text-nexus-muted text-xs rounded">disabled</span>}
                           </div>
-                          <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
+                          <div className="flex items-center gap-3 mt-1 text-xs text-nexus-muted">
                             <code className="font-mono text-violet-300">{rule.endpoint_pattern}</code>
                             <span>{rule.requests_per_window} req/{rule.window_seconds}s</span>
                             <span>Burst: {rule.burst_limit}</span>
@@ -181,25 +181,25 @@ export default function RateLimiter() {
                         <div className="flex items-center gap-6">
                           <div className="w-40">
                             <div className="flex justify-between text-xs mb-1">
-                              <span className="text-gray-500">Usage</span>
+                              <span className="text-nexus-muted">Usage</span>
                               <span className={usagePercent > 80 ? 'text-red-400' : usagePercent > 50 ? 'text-yellow-400' : 'text-green-400'}>
                                 {rule.current_hits}/{rule.requests_per_window}
                               </span>
                             </div>
-                            <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                            <div className="h-1.5 bg-nexus-surface rounded-full overflow-hidden">
                               <motion.div initial={{ width: 0 }} animate={{ width: `${Math.min(usagePercent, 100)}%` }} transition={{ duration: 1 }}
                                 className={`h-full rounded-full ${usagePercent > 80 ? 'bg-red-500' : usagePercent > 50 ? 'bg-yellow-500' : 'bg-violet-500'}`} />
                             </div>
                           </div>
                           <div className="text-right min-w-[80px]">
                             <span className="text-sm font-medium text-red-400">{rule.blocked_count}</span>
-                            <p className="text-xs text-gray-500">blocked</p>
+                            <p className="text-xs text-nexus-muted">blocked</p>
                           </div>
                         </div>
                       )}
                       <div className="flex items-center gap-1 ml-4">
-                        <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-gray-700/50 rounded-lg"><Edit className="w-3.5 h-3.5 text-gray-400" /></motion.button>
-                        <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-red-500/20 rounded-lg"><Trash2 className="w-3.5 h-3.5 text-gray-400" /></motion.button>
+                        <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-nexus-surface/50 rounded-lg"><Edit className="w-3.5 h-3.5 text-nexus-muted" /></motion.button>
+                        <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-red-500/20 rounded-lg"><Trash2 className="w-3.5 h-3.5 text-nexus-muted" /></motion.button>
                       </div>
                     </div>
                   </motion.div>
@@ -213,17 +213,17 @@ export default function RateLimiter() {
             <motion.div key="events" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-3">
               <div className="flex gap-3">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-                  <input type="text" placeholder="Search events..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full pl-10 pr-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-violet-500" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-nexus-muted" />
+                  <input type="text" placeholder="Search events..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full pl-10 pr-4 py-2 bg-gray-800/50 border border-nexus-border rounded-lg text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-violet-500" />
                 </div>
                 <motion.button whileHover={{ scale: 1.05 }} onClick={() => setShowBlockedOnly(!showBlockedOnly)}
-                  className={`px-3 py-2 rounded-lg text-sm flex items-center gap-2 transition-all ${showBlockedOnly ? 'bg-red-600/50 text-red-200' : 'bg-gray-800/50 text-gray-400 border border-gray-700'}`}>
+                  className={`px-3 py-2 rounded-lg text-sm flex items-center gap-2 transition-all ${showBlockedOnly ? 'bg-red-600/50 text-red-200' : 'bg-gray-800/50 text-nexus-muted border border-nexus-border'}`}>
                   <Ban className="w-4 h-4" /> Blocked Only
                 </motion.button>
               </div>
               <div className="bg-gray-800/30 border border-gray-700/50 rounded-xl overflow-hidden">
                 <table className="w-full">
-                  <thead><tr className="border-b border-gray-700/50 text-xs text-gray-500 uppercase tracking-wider">
+                  <thead><tr className="border-b border-gray-700/50 text-xs text-nexus-muted uppercase tracking-wider">
                     <th className="text-left p-3">Status</th><th className="text-left p-3">Endpoint</th><th className="text-left p-3">Key</th><th className="text-left p-3">Rule</th><th className="text-right p-3">Remaining</th><th className="text-right p-3">Time</th>
                   </tr></thead>
                   <tbody>
@@ -231,10 +231,10 @@ export default function RateLimiter() {
                       <motion.tr key={evt.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="border-b border-gray-700/30 hover:bg-gray-800/50 text-sm">
                         <td className="p-3">{evt.blocked ? <span className="flex items-center gap-1 text-red-400"><Ban className="w-3.5 h-3.5" /> Blocked</span> : <span className="flex items-center gap-1 text-green-400"><Check className="w-3.5 h-3.5" /> Allowed</span>}</td>
                         <td className="p-3"><code className="font-mono text-xs text-violet-300">{evt.endpoint}</code></td>
-                        <td className="p-3 text-gray-400">{evt.key}</td>
-                        <td className="p-3 text-gray-400">{evt.rule_name}</td>
-                        <td className="p-3 text-right text-gray-400">{evt.remaining}</td>
-                        <td className="p-3 text-right text-gray-500 text-xs">{new Date(evt.timestamp).toLocaleTimeString()}</td>
+                        <td className="p-3 text-nexus-muted">{evt.key}</td>
+                        <td className="p-3 text-nexus-muted">{evt.rule_name}</td>
+                        <td className="p-3 text-right text-nexus-muted">{evt.remaining}</td>
+                        <td className="p-3 text-right text-nexus-muted text-xs">{new Date(evt.timestamp).toLocaleTimeString()}</td>
                       </motion.tr>
                     ))}
                   </tbody>
@@ -294,11 +294,11 @@ export default function RateLimiter() {
                 <motion.div key={plan.id} variants={itemVariants} className={`p-6 bg-gray-800/30 border rounded-xl relative overflow-hidden ${i === 2 ? 'border-violet-500/50' : 'border-gray-700/50'}`}>
                   {i === 2 && <div className="absolute top-0 right-0 px-3 py-1 bg-violet-600 text-white text-xs font-medium rounded-bl-lg">Popular</div>}
                   <h3 className="text-xl font-bold text-white">{plan.name}</h3>
-                  <p className="text-sm text-gray-500 mt-1">{plan.active_users.toLocaleString()} active users</p>
+                  <p className="text-sm text-nexus-muted mt-1">{plan.active_users.toLocaleString()} active users</p>
                   <div className="mt-6 space-y-3">
-                    <div className="flex justify-between text-sm"><span className="text-gray-400">Daily requests</span><span className="text-white font-medium">{plan.requests_per_day.toLocaleString()}</span></div>
-                    <div className="flex justify-between text-sm"><span className="text-gray-400">Per minute</span><span className="text-white font-medium">{plan.requests_per_minute}</span></div>
-                    <div className="flex justify-between text-sm"><span className="text-gray-400">Burst limit</span><span className="text-white font-medium">{plan.burst_limit}</span></div>
+                    <div className="flex justify-between text-sm"><span className="text-nexus-muted">Daily requests</span><span className="text-white font-medium">{plan.requests_per_day.toLocaleString()}</span></div>
+                    <div className="flex justify-between text-sm"><span className="text-nexus-muted">Per minute</span><span className="text-white font-medium">{plan.requests_per_minute}</span></div>
+                    <div className="flex justify-between text-sm"><span className="text-nexus-muted">Burst limit</span><span className="text-white font-medium">{plan.burst_limit}</span></div>
                   </div>
                   <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                     className="w-full mt-6 py-2 bg-violet-600/50 hover:bg-violet-600 text-white rounded-lg text-sm font-medium transition-colors">

@@ -142,16 +142,16 @@ export default function TeamChat() {
             Team Chat
           </h2>
           <div className="relative mt-3">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-nexus-muted" />
             <input type="text" value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Search channels..." className="w-full pl-9 pr-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs text-white placeholder:text-gray-500" />
+              placeholder="Search channels..." className="w-full pl-9 pr-3 py-1.5 bg-nexus-card/5 border border-white/10 rounded-lg text-xs text-white placeholder:text-nexus-muted" />
           </div>
         </div>
 
         <div className="flex border-b border-white/10">
           {(['channels', 'dms'] as const).map(s => (
             <button key={s} onClick={() => setChannelSection(s)}
-              className={`flex-1 py-2 text-xs font-medium transition-all ${channelSection === s ? 'text-white border-b-2 border-purple-500' : 'text-gray-500'}`}>
+              className={`flex-1 py-2 text-xs font-medium transition-all ${channelSection === s ? 'text-white border-b-2 border-purple-500' : 'text-nexus-muted'}`}>
               {s === 'channels' ? 'Channels' : 'Direct Messages'}
             </button>
           ))}
@@ -161,16 +161,16 @@ export default function TeamChat() {
           {filteredChannels.map(ch => (
             <button key={ch.id} onClick={() => setActiveChannel(ch)}
               className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all ${
-                activeChannel.id === ch.id ? 'bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                activeChannel.id === ch.id ? 'bg-nexus-card/10 text-white' : 'text-nexus-muted hover:bg-nexus-card/5 hover:text-white'
               }`}>
               {ch.type === 'dm' ? (
                 <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-[10px] font-bold text-white shrink-0">
                   {ch.name.split(' ').map(w => w[0]).join('')}
                 </div>
               ) : ch.type === 'private' ? (
-                <Lock className="w-4 h-4 shrink-0 text-gray-500" />
+                <Lock className="w-4 h-4 shrink-0 text-nexus-muted" />
               ) : (
-                <Hash className="w-4 h-4 shrink-0 text-gray-500" />
+                <Hash className="w-4 h-4 shrink-0 text-nexus-muted" />
               )}
               <div className="flex-1 min-w-0 text-left">
                 <div className="truncate text-xs font-medium">{ch.name}</div>
@@ -185,10 +185,10 @@ export default function TeamChat() {
 
         {/* Online Members */}
         <div className="border-t border-white/10 p-3">
-          <div className="text-xs text-gray-500 mb-2">Online — {teamMembers.filter(m => m.status === 'online').length}</div>
+          <div className="text-xs text-nexus-muted mb-2">Online — {teamMembers.filter(m => m.status === 'online').length}</div>
           <div className="space-y-1">
             {teamMembers.filter(m => m.status === 'online').slice(0, 4).map(m => (
-              <div key={m.id} className="flex items-center gap-2 px-2 py-1 rounded hover:bg-white/5 cursor-pointer">
+              <div key={m.id} className="flex items-center gap-2 px-2 py-1 rounded hover:bg-nexus-card/5 cursor-pointer">
                 <div className="relative">
                   <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-[10px] font-bold">
                     {m.avatar}
@@ -213,19 +213,19 @@ export default function TeamChat() {
                 {activeChannel.name.split(' ').map(w => w[0]).join('')}
               </div>
             ) : (
-              <Hash className="w-5 h-5 text-gray-400" />
+              <Hash className="w-5 h-5 text-nexus-muted" />
             )}
             <div>
               <h3 className="font-semibold text-sm">{activeChannel.name}</h3>
-              {activeChannel.description && <p className="text-xs text-gray-500">{activeChannel.description}</p>}
+              {activeChannel.description && <p className="text-xs text-nexus-muted">{activeChannel.description}</p>}
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <button className="p-2 hover:bg-white/5 rounded-lg"><Phone className="w-4 h-4 text-gray-400" /></button>
-            <button className="p-2 hover:bg-white/5 rounded-lg"><Video className="w-4 h-4 text-gray-400" /></button>
-            <button className="p-2 hover:bg-white/5 rounded-lg"><Pin className="w-4 h-4 text-gray-400" /></button>
-            <button onClick={() => setShowMembers(!showMembers)} className={`p-2 rounded-lg ${showMembers ? 'bg-white/10' : 'hover:bg-white/5'}`}>
-              <Users className="w-4 h-4 text-gray-400" />
+            <button className="p-2 hover:bg-nexus-card/5 rounded-lg"><Phone className="w-4 h-4 text-nexus-muted" /></button>
+            <button className="p-2 hover:bg-nexus-card/5 rounded-lg"><Video className="w-4 h-4 text-nexus-muted" /></button>
+            <button className="p-2 hover:bg-nexus-card/5 rounded-lg"><Pin className="w-4 h-4 text-nexus-muted" /></button>
+            <button onClick={() => setShowMembers(!showMembers)} className={`p-2 rounded-lg ${showMembers ? 'bg-nexus-card/10' : 'hover:bg-nexus-card/5'}`}>
+              <Users className="w-4 h-4 text-nexus-muted" />
             </button>
           </div>
         </div>
@@ -237,15 +237,15 @@ export default function TeamChat() {
               {sampleMessages.map((msg, i) => (
                 <motion.div key={msg.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="group flex gap-3 hover:bg-white/[0.02] rounded-lg p-2 -mx-2">
+                  className="group flex gap-3 hover:bg-nexus-card/[0.02] rounded-lg p-2 -mx-2">
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
                     {msg.avatar}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-0.5">
                       <span className="font-semibold text-sm">{msg.userName}</span>
-                      <span className="text-xs text-gray-500">{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                      {msg.isEdited && <span className="text-xs text-gray-600">(edited)</span>}
+                      <span className="text-xs text-nexus-muted">{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                      {msg.isEdited && <span className="text-xs text-nexus-muted">(edited)</span>}
                       {msg.isPinned && <Pin className="w-3 h-3 text-yellow-400" />}
                     </div>
                     <p className="text-sm text-gray-200 leading-relaxed">{msg.content}</p>
@@ -253,10 +253,10 @@ export default function TeamChat() {
                     {msg.attachments.length > 0 && (
                       <div className="flex flex-wrap gap-2 mt-2">
                         {msg.attachments.map((att, j) => (
-                          <div key={j} className="flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg cursor-pointer hover:bg-white/10">
-                            <Paperclip className="w-3.5 h-3.5 text-gray-400" />
+                          <div key={j} className="flex items-center gap-2 px-3 py-1.5 bg-nexus-card/5 border border-white/10 rounded-lg cursor-pointer hover:bg-nexus-card/10">
+                            <Paperclip className="w-3.5 h-3.5 text-nexus-muted" />
                             <span className="text-xs font-medium">{att.name}</span>
-                            <span className="text-xs text-gray-500">{att.size}</span>
+                            <span className="text-xs text-nexus-muted">{att.size}</span>
                           </div>
                         ))}
                       </div>
@@ -266,10 +266,10 @@ export default function TeamChat() {
                       <div className="flex flex-wrap gap-1.5 mt-2">
                         {msg.reactions.map((r, j) => (
                           <button key={j} className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-xs transition-all ${
-                            r.reacted ? 'bg-purple-500/20 border border-purple-500/30' : 'bg-white/5 border border-white/10 hover:bg-white/10'
+                            r.reacted ? 'bg-purple-500/20 border border-purple-500/30' : 'bg-nexus-card/5 border border-white/10 hover:bg-nexus-card/10'
                           }`}>
                             <span>{r.emoji}</span>
-                            <span className={r.reacted ? 'text-purple-300' : 'text-gray-400'}>{r.count}</span>
+                            <span className={r.reacted ? 'text-purple-300' : 'text-nexus-muted'}>{r.count}</span>
                           </button>
                         ))}
                       </div>
@@ -283,11 +283,11 @@ export default function TeamChat() {
                     )}
 
                     {/* Hover actions */}
-                    <div className="absolute right-2 top-1 opacity-0 group-hover:opacity-100 transition-opacity flex gap-0.5 bg-gray-800 border border-white/10 rounded-lg p-0.5">
-                      <button className="p-1 hover:bg-white/10 rounded"><Smile className="w-3.5 h-3.5 text-gray-400" /></button>
-                      <button className="p-1 hover:bg-white/10 rounded"><Reply className="w-3.5 h-3.5 text-gray-400" /></button>
-                      <button className="p-1 hover:bg-white/10 rounded"><Pin className="w-3.5 h-3.5 text-gray-400" /></button>
-                      <button className="p-1 hover:bg-white/10 rounded"><MoreHorizontal className="w-3.5 h-3.5 text-gray-400" /></button>
+                    <div className="absolute right-2 top-1 opacity-0 group-hover:opacity-100 transition-opacity flex gap-0.5 bg-nexus-card border border-white/10 rounded-lg p-0.5">
+                      <button className="p-1 hover:bg-nexus-card/10 rounded"><Smile className="w-3.5 h-3.5 text-nexus-muted" /></button>
+                      <button className="p-1 hover:bg-nexus-card/10 rounded"><Reply className="w-3.5 h-3.5 text-nexus-muted" /></button>
+                      <button className="p-1 hover:bg-nexus-card/10 rounded"><Pin className="w-3.5 h-3.5 text-nexus-muted" /></button>
+                      <button className="p-1 hover:bg-nexus-card/10 rounded"><MoreHorizontal className="w-3.5 h-3.5 text-nexus-muted" /></button>
                     </div>
                   </div>
                 </motion.div>
@@ -296,17 +296,17 @@ export default function TeamChat() {
 
             {/* Message Input */}
             <div className="p-4 border-t border-white/10">
-              <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+              <div className="bg-nexus-card/5 border border-white/10 rounded-xl p-3">
                 <div className="flex items-center gap-2 mb-2">
-                  <button className="p-1.5 hover:bg-white/10 rounded-lg"><Plus className="w-4 h-4 text-gray-400" /></button>
-                  <button className="p-1.5 hover:bg-white/10 rounded-lg"><Image className="w-4 h-4 text-gray-400" /></button>
-                  <button className="p-1.5 hover:bg-white/10 rounded-lg"><Paperclip className="w-4 h-4 text-gray-400" /></button>
-                  <button className="p-1.5 hover:bg-white/10 rounded-lg"><AtSign className="w-4 h-4 text-gray-400" /></button>
+                  <button className="p-1.5 hover:bg-nexus-card/10 rounded-lg"><Plus className="w-4 h-4 text-nexus-muted" /></button>
+                  <button className="p-1.5 hover:bg-nexus-card/10 rounded-lg"><Image className="w-4 h-4 text-nexus-muted" /></button>
+                  <button className="p-1.5 hover:bg-nexus-card/10 rounded-lg"><Paperclip className="w-4 h-4 text-nexus-muted" /></button>
+                  <button className="p-1.5 hover:bg-nexus-card/10 rounded-lg"><AtSign className="w-4 h-4 text-nexus-muted" /></button>
                 </div>
                 <div className="flex items-end gap-2">
                   <textarea value={messageInput} onChange={e => setMessageInput(e.target.value)}
                     placeholder={`Message #${activeChannel.name}`}
-                    className="flex-1 bg-transparent text-sm text-white placeholder:text-gray-500 resize-none outline-none min-h-[20px] max-h-[120px]"
+                    className="flex-1 bg-transparent text-sm text-white placeholder:text-nexus-muted resize-none outline-none min-h-[20px] max-h-[120px]"
                     rows={1} />
                   <button className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg hover:opacity-90 transition-opacity shrink-0">
                     <Send className="w-4 h-4" />
@@ -325,7 +325,7 @@ export default function TeamChat() {
                   <h3 className="font-semibold text-sm mb-4">Members — {activeChannel.members}</h3>
                   <div className="space-y-1">
                     {teamMembers.map(m => (
-                      <div key={m.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 cursor-pointer">
+                      <div key={m.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-nexus-card/5 cursor-pointer">
                         <div className="relative">
                           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-xs font-bold">
                             {m.avatar}
@@ -335,7 +335,7 @@ export default function TeamChat() {
                         </div>
                         <div className="min-w-0">
                           <div className="text-xs font-medium truncate">{m.name}</div>
-                          <div className="text-[10px] text-gray-500 truncate">{m.role}</div>
+                          <div className="text-[10px] text-nexus-muted truncate">{m.role}</div>
                         </div>
                       </div>
                     ))}

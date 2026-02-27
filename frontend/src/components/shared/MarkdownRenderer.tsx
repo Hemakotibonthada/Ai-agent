@@ -25,7 +25,7 @@ function CopyButton({ text }: { text: string }) {
     <button
       onClick={copy}
       className="absolute right-2 top-2 rounded border border-nexus-border bg-nexus-surface px-2 py-0.5
-                 text-[10px] text-nexus-muted transition hover:bg-white/10 hover:text-nexus-text"
+                 text-[10px] text-nexus-muted transition hover:bg-nexus-card/10 hover:text-nexus-text"
     >
       {copied ? 'Copied!' : 'Copy'}
     </button>

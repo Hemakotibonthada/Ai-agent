@@ -96,7 +96,7 @@ const temperatureHistory = Array.from({ length: 30 }, (_, i) => ({
 const conditionIcons = {
   'Sunny': <Sun size={20} className="text-yellow-400" />,
   'Partly Cloudy': <CloudSun size={20} className="text-blue-300" />,
-  'Cloudy': <Cloud size={20} className="text-gray-400" />,
+  'Cloudy': <Cloud size={20} className="text-nexus-muted" />,
   'Rain': <CloudRain size={20} className="text-blue-400" />,
   'Thunderstorm': <CloudLightning size={20} className="text-purple-400" />,
   'Snow': <CloudSnow size={20} className="text-blue-200" />,
@@ -345,7 +345,7 @@ export default function WeatherWidget() {
           {[
             { trigger: 'Temperature > 28°C', action: 'Turn on AC, close blinds', status: 'Armed', color: 'text-green-400' },
             { trigger: 'Rain probability > 70%', action: 'Close windows, retract awning', status: 'Armed', color: 'text-green-400' },
-            { trigger: 'UV Index > 8', action: 'Close outdoor blinds, notification', status: 'Disabled', color: 'text-gray-400' },
+            { trigger: 'UV Index > 8', action: 'Close outdoor blinds, notification', status: 'Disabled', color: 'text-nexus-muted' },
           ].map((auto, i) => (
             <div key={i} className="bg-nexus-surface rounded-xl p-4">
               <p className="text-sm font-medium text-nexus-text mb-1">{auto.trigger}</p>

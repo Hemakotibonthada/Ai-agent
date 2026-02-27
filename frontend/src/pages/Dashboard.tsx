@@ -526,7 +526,7 @@ export default function Dashboard() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
                     onClick={() => navigate(agentRoute[a.agent] || '/agents')}
-                    className="flex items-start gap-3 rounded-lg p-2 hover:bg-white/5 transition-colors cursor-pointer"
+                    className="flex items-start gap-3 rounded-lg p-2 hover:bg-nexus-card/5 transition-colors cursor-pointer"
                   >
                     <div className="mt-1">
                       {a.type === 'success' ? (

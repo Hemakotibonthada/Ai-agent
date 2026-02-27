@@ -71,23 +71,23 @@ const AccordionContent: React.FC<{
 const variantStyles = {
   default: {
     container: 'divide-y divide-white/10',
-    item: 'bg-white/5',
-    header: 'hover:bg-white/5',
+    item: 'bg-nexus-card/5',
+    header: 'hover:bg-nexus-card/5',
   },
   bordered: {
     container: 'border border-white/10 rounded-xl divide-y divide-white/10 overflow-hidden',
     item: '',
-    header: 'hover:bg-white/5',
+    header: 'hover:bg-nexus-card/5',
   },
   separated: {
     container: 'space-y-2',
     item: 'border border-white/10 rounded-xl overflow-hidden',
-    header: 'hover:bg-white/5',
+    header: 'hover:bg-nexus-card/5',
   },
   ghost: {
     container: '',
     item: '',
-    header: 'hover:bg-white/5 rounded-lg',
+    header: 'hover:bg-nexus-card/5 rounded-lg',
   },
 };
 

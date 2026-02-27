@@ -193,7 +193,7 @@ const ToastItem: React.FC<{
                     'px-3 py-1.5 rounded-lg text-xs font-medium transition-colors',
                     action.variant === 'primary' && 'bg-cyan-500 text-white hover:bg-cyan-600',
                     action.variant === 'danger' && 'bg-red-500 text-white hover:bg-red-600',
-                    (!action.variant || action.variant === 'default') && 'bg-white/10 text-white/80 hover:bg-white/20'
+                    (!action.variant || action.variant === 'default') && 'bg-nexus-card/10 text-white/80 hover:bg-nexus-card/20'
                   )}
                 >
                   {action.label}
@@ -205,7 +205,7 @@ const ToastItem: React.FC<{
         {(toast.dismissible ?? true) && (
           <button
             onClick={onDismiss}
-            className="flex-shrink-0 p-1 rounded-lg hover:bg-white/10 transition-colors"
+            className="flex-shrink-0 p-1 rounded-lg hover:bg-nexus-card/10 transition-colors"
           >
             <X className="w-3.5 h-3.5 text-white/40" />
           </button>
@@ -214,7 +214,7 @@ const ToastItem: React.FC<{
 
       {/* Progress bar */}
       {(toast.progress ?? true) && toast.type !== 'loading' && toast.duration !== Infinity && (
-        <div className="h-0.5 bg-white/5">
+        <div className="h-0.5 bg-nexus-card/5">
           <motion.div
             className={cn('h-full', progressColors[toast.type])}
             style={{ width: `${progress}%` }}

@@ -140,13 +140,13 @@ export default function SSHTerminal() {
             </motion.div>
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">SSH Terminal</h1>
-              <p className="text-gray-400 text-sm">Secure shell connection manager</p>
+              <p className="text-nexus-muted text-sm">Secure shell connection manager</p>
             </div>
           </div>
           <div className="flex gap-2">
             {(['terminal', 'sftp', 'keys'] as const).map(v => (
               <button key={v} onClick={() => setView(v)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${view === v ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'text-gray-500 hover:text-gray-300'}`}>
+                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${view === v ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'text-nexus-muted hover:text-nexus-muted'}`}>
                 {v === 'terminal' ? 'Terminal' : v === 'sftp' ? 'SFTP' : 'SSH Keys'}
               </button>
             ))}
@@ -157,9 +157,9 @@ export default function SSHTerminal() {
           {/* Server List */}
           <div className="w-64 bg-gray-800/30 border border-gray-700/50 rounded-xl p-3 shrink-0 space-y-3">
             <div className="relative">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-nexus-muted" />
               <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search servers..."
-                className="w-full pl-8 pr-3 py-1.5 bg-gray-700/50 border border-gray-600 rounded-lg text-xs text-white placeholder-gray-500 focus:outline-none" />
+                className="w-full pl-8 pr-3 py-1.5 bg-nexus-surface/50 border border-nexus-border rounded-lg text-xs text-white placeholder-gray-500 focus:outline-none" />
             </div>
             <button onClick={() => setShowNewConnection(true)} className="w-full flex items-center gap-1.5 px-3 py-2 bg-emerald-600/30 text-emerald-300 text-xs rounded-lg hover:bg-emerald-600/40 transition-colors">
               <Plus className="w-3.5 h-3.5" /> New Connection
@@ -170,15 +170,15 @@ export default function SSHTerminal() {
                   onClick={() => connectToServer(conn)}
                   className={`w-full text-left p-2.5 rounded-lg transition-all ${activeConnection?.id === conn.id ? 'bg-emerald-500/15 border border-emerald-500/30' : 'bg-gray-700/20 border border-transparent hover:bg-gray-700/40'}`}>
                   <div className="flex items-center gap-2">
-                    {conn.status === 'connected' ? <Wifi className="w-3.5 h-3.5 text-green-400" /> : <WifiOff className="w-3.5 h-3.5 text-gray-500" />}
+                    {conn.status === 'connected' ? <Wifi className="w-3.5 h-3.5 text-green-400" /> : <WifiOff className="w-3.5 h-3.5 text-nexus-muted" />}
                     <div className="flex-1 min-w-0">
                       <span className="text-xs text-white font-medium block truncate">{conn.name}</span>
-                      <span className="text-[10px] text-gray-500 font-mono">{conn.host}:{conn.port}</span>
+                      <span className="text-[10px] text-nexus-muted font-mono">{conn.host}:{conn.port}</span>
                     </div>
                   </div>
                   <div className="flex items-center justify-between mt-1.5">
-                    <span className="text-[10px] text-gray-600">{conn.group}</span>
-                    <span className="text-[10px] text-gray-600">{conn.lastConnected}</span>
+                    <span className="text-[10px] text-nexus-muted">{conn.group}</span>
+                    <span className="text-[10px] text-nexus-muted">{conn.lastConnected}</span>
                   </div>
                 </motion.button>
               ))}
@@ -190,7 +190,7 @@ export default function SSHTerminal() {
             <AnimatePresence mode="wait">
               {view === 'terminal' && (
                 <motion.div key="terminal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                  className={`bg-gray-900 border border-gray-700/50 rounded-xl overflow-hidden ${isFullscreen ? 'fixed inset-4 z-50' : ''}`}>
+                  className={`bg-nexus-bg border border-gray-700/50 rounded-xl overflow-hidden ${isFullscreen ? 'fixed inset-4 z-50' : ''}`}>
                   {/* Terminal Header */}
                   <div className="px-4 py-2 bg-gray-800/80 border-b border-gray-700/50 flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -199,12 +199,12 @@ export default function SSHTerminal() {
                         <div className="w-3 h-3 rounded-full bg-amber-500" />
                         <div className="w-3 h-3 rounded-full bg-green-500" />
                       </div>
-                      <span className="text-xs text-gray-400 ml-2">
+                      <span className="text-xs text-nexus-muted ml-2">
                         {activeConnection ? `${activeConnection.username}@${activeConnection.host}` : 'No connection'}
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <button onClick={() => setIsFullscreen(!isFullscreen)} className="p-1 text-gray-500 hover:text-gray-300">
+                      <button onClick={() => setIsFullscreen(!isFullscreen)} className="p-1 text-nexus-muted hover:text-nexus-muted">
                         {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
                       </button>
                     </div>
@@ -212,7 +212,7 @@ export default function SSHTerminal() {
                   {/* Terminal Body */}
                   <div ref={terminalRef} className="p-4 h-[450px] overflow-y-auto font-mono text-sm space-y-0.5">
                     {!activeConnection ? (
-                      <div className="h-full flex items-center justify-center text-gray-600">
+                      <div className="h-full flex items-center justify-center text-nexus-muted">
                         <div className="text-center">
                           <Terminal className="w-12 h-12 mx-auto mb-3 opacity-50" />
                           <p>Select a server to connect</p>
@@ -220,7 +220,7 @@ export default function SSHTerminal() {
                       </div>
                     ) : (
                       terminalLines.map((line, i) => (
-                        <div key={i} className={`${line.type === 'input' ? 'text-green-400' : line.type === 'error' ? 'text-red-400' : line.type === 'system' ? 'text-cyan-400 italic' : 'text-gray-300'}`}>
+                        <div key={i} className={`${line.type === 'input' ? 'text-green-400' : line.type === 'error' ? 'text-red-400' : line.type === 'system' ? 'text-cyan-400 italic' : 'text-nexus-muted'}`}>
                           <span className="whitespace-pre-wrap">{line.text}</span>
                         </div>
                       ))
@@ -245,7 +245,7 @@ export default function SSHTerminal() {
                     <div className="flex items-center gap-2">
                       <Folder className="w-4 h-4 text-emerald-400" />
                       <span className="text-sm font-medium text-white">SFTP File Browser</span>
-                      <span className="text-xs text-gray-500 font-mono">/home/{activeConnection?.username || 'user'}/</span>
+                      <span className="text-xs text-nexus-muted font-mono">/home/{activeConnection?.username || 'user'}/</span>
                     </div>
                     <div className="flex gap-2">
                       <button className="flex items-center gap-1 px-2 py-1 bg-blue-600/30 text-blue-300 text-xs rounded hover:bg-blue-600/40"><Upload className="w-3 h-3" /> Upload</button>
@@ -253,19 +253,19 @@ export default function SSHTerminal() {
                     </div>
                   </div>
                   <table className="w-full">
-                    <thead><tr className="text-xs text-gray-500 uppercase tracking-wider border-b border-gray-700/30">
+                    <thead><tr className="text-xs text-nexus-muted uppercase tracking-wider border-b border-gray-700/30">
                       <th className="text-left p-3">Name</th><th className="text-left p-3">Permissions</th><th className="text-right p-3">Size</th><th className="text-right p-3">Modified</th>
                     </tr></thead>
                     <tbody>
                       {sftpFiles.map(f => (
                         <tr key={f.name} className="border-b border-gray-700/20 hover:bg-gray-800/40 cursor-pointer text-sm">
                           <td className="p-3 flex items-center gap-2">
-                            {f.type === 'dir' ? <Folder className="w-4 h-4 text-amber-400" /> : <FileText className="w-4 h-4 text-gray-400" />}
+                            {f.type === 'dir' ? <Folder className="w-4 h-4 text-amber-400" /> : <FileText className="w-4 h-4 text-nexus-muted" />}
                             <span className={f.type === 'dir' ? 'text-blue-400' : 'text-white'}>{f.name}</span>
                           </td>
-                          <td className="p-3 text-gray-500 font-mono text-xs">{f.perms}</td>
-                          <td className="p-3 text-right text-gray-400">{f.size}</td>
-                          <td className="p-3 text-right text-xs text-gray-500">{f.modified}</td>
+                          <td className="p-3 text-nexus-muted font-mono text-xs">{f.perms}</td>
+                          <td className="p-3 text-right text-nexus-muted">{f.size}</td>
+                          <td className="p-3 text-right text-xs text-nexus-muted">{f.modified}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -276,7 +276,7 @@ export default function SSHTerminal() {
               {view === 'keys' && (
                 <motion.div key="keys" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-sm text-gray-400">SSH Keys</h3>
+                    <h3 className="text-sm text-nexus-muted">SSH Keys</h3>
                     <button className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium rounded-lg transition-colors">
                       <Plus className="w-3.5 h-3.5" /> Generate Key
                     </button>
@@ -287,7 +287,7 @@ export default function SSHTerminal() {
                       <div className="p-2.5 bg-emerald-500/15 rounded-lg"><Key className="w-5 h-5 text-emerald-400" /></div>
                       <div className="flex-1">
                         <h4 className="text-sm text-white font-medium">{key.name}</h4>
-                        <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
+                        <div className="flex items-center gap-3 mt-1 text-xs text-nexus-muted">
                           <span className="font-mono">{key.type}</span>
                           <span className="font-mono">{key.fingerprint}</span>
                           <span>Created: {key.created}</span>
@@ -295,8 +295,8 @@ export default function SSHTerminal() {
                         </div>
                       </div>
                       <div className="flex gap-2">
-                        <button className="p-1.5 text-gray-500 hover:text-blue-400"><Copy className="w-4 h-4" /></button>
-                        <button className="p-1.5 text-gray-500 hover:text-red-400"><Trash2 className="w-4 h-4" /></button>
+                        <button className="p-1.5 text-nexus-muted hover:text-blue-400"><Copy className="w-4 h-4" /></button>
+                        <button className="p-1.5 text-nexus-muted hover:text-red-400"><Trash2 className="w-4 h-4" /></button>
                       </div>
                     </motion.div>
                   ))}
@@ -312,29 +312,29 @@ export default function SSHTerminal() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               className="fixed inset-0 bg-black/60 flex items-center justify-center z-50" onClick={() => setShowNewConnection(false)}>
               <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
-                className="bg-gray-800 border border-gray-700 rounded-xl p-6 w-96" onClick={e => e.stopPropagation()}>
+                className="bg-nexus-card border border-nexus-border rounded-xl p-6 w-96" onClick={e => e.stopPropagation()}>
                 <h3 className="text-lg font-medium text-white mb-4">New SSH Connection</h3>
                 <div className="space-y-3">
-                  <div><label className="text-xs text-gray-500 block mb-1">Name</label>
+                  <div><label className="text-xs text-nexus-muted block mb-1">Name</label>
                     <input value={newConn.name} onChange={e => setNewConn(p => ({ ...p, name: e.target.value }))} placeholder="My Server"
-                      className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
+                      className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
                   </div>
                   <div className="flex gap-3">
-                    <div className="flex-1"><label className="text-xs text-gray-500 block mb-1">Host</label>
+                    <div className="flex-1"><label className="text-xs text-nexus-muted block mb-1">Host</label>
                       <input value={newConn.host} onChange={e => setNewConn(p => ({ ...p, host: e.target.value }))} placeholder="192.168.1.1"
-                        className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
+                        className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
                     </div>
-                    <div className="w-20"><label className="text-xs text-gray-500 block mb-1">Port</label>
+                    <div className="w-20"><label className="text-xs text-nexus-muted block mb-1">Port</label>
                       <input value={newConn.port} onChange={e => setNewConn(p => ({ ...p, port: e.target.value }))} placeholder="22"
-                        className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
+                        className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
                     </div>
                   </div>
-                  <div><label className="text-xs text-gray-500 block mb-1">Username</label>
+                  <div><label className="text-xs text-nexus-muted block mb-1">Username</label>
                     <input value={newConn.username} onChange={e => setNewConn(p => ({ ...p, username: e.target.value }))} placeholder="root"
-                      className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
+                      className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
                   </div>
                   <div className="flex gap-3 pt-2">
-                    <button onClick={() => setShowNewConnection(false)} className="flex-1 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 text-sm rounded-lg transition-colors">Cancel</button>
+                    <button onClick={() => setShowNewConnection(false)} className="flex-1 py-2 bg-nexus-surface hover:bg-gray-600 text-nexus-muted text-sm rounded-lg transition-colors">Cancel</button>
                     <button onClick={() => setShowNewConnection(false)} className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm rounded-lg transition-colors">Connect</button>
                   </div>
                 </div>

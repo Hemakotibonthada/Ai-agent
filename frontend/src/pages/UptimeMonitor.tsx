@@ -163,7 +163,7 @@ export default function UptimeMonitor() {
             <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
               Uptime Monitor
             </h1>
-            <p className="text-gray-400 mt-1">Real-time service availability and incident tracking</p>
+            <p className="text-nexus-muted mt-1">Real-time service availability and incident tracking</p>
           </div>
           <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg text-sm font-medium hover:opacity-90">
             <Plus className="w-4 h-4" /> Add Monitor
@@ -183,10 +183,10 @@ export default function UptimeMonitor() {
           const Icon = stat.icon;
           return (
             <motion.div key={stat.label} whileHover={{ y: -2 }}
-              className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-4">
+              className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Icon className="w-4 h-4" style={{ color: stat.color }} />
-                <span className="text-xs text-gray-400">{stat.label}</span>
+                <span className="text-xs text-nexus-muted">{stat.label}</span>
               </div>
               <div className="text-2xl font-bold" style={{ color: stat.color }}>{stat.value}</div>
             </motion.div>
@@ -195,7 +195,7 @@ export default function UptimeMonitor() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-white/5 rounded-xl p-1 mb-6 border border-white/10 w-fit">
+      <div className="flex gap-1 bg-nexus-card/5 rounded-xl p-1 mb-6 border border-white/10 w-fit">
         {([
           { id: 'monitors' as const, label: 'Monitors' },
           { id: 'incidents' as const, label: 'Incidents' },
@@ -203,7 +203,7 @@ export default function UptimeMonitor() {
         ]).map(tab => (
           <button key={tab.id} onClick={() => setActiveTab(tab.id)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              activeTab === tab.id ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'
+              activeTab === tab.id ? 'bg-nexus-card/10 text-white' : 'text-nexus-muted hover:text-white'
             }`}>{tab.label}</button>
         ))}
       </div>
@@ -211,10 +211,10 @@ export default function UptimeMonitor() {
       {/* Monitors Tab */}
       {activeTab === 'monitors' && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <div className="flex gap-1 bg-white/5 rounded-lg p-1 border border-white/10 mb-6 w-fit">
+          <div className="flex gap-1 bg-nexus-card/5 rounded-lg p-1 border border-white/10 mb-6 w-fit">
             {(['all', 'up', 'down', 'degraded', 'maintenance'] as const).map(f => (
               <button key={f} onClick={() => setFilter(f)}
-                className={`px-3 py-1 text-xs rounded-md font-medium transition-all capitalize ${filter === f ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'}`}>
+                className={`px-3 py-1 text-xs rounded-md font-medium transition-all capitalize ${filter === f ? 'bg-nexus-card/10 text-white' : 'text-nexus-muted hover:text-white'}`}>
                 {f}
               </button>
             ))}
@@ -228,7 +228,7 @@ export default function UptimeMonitor() {
                 <motion.div key={mon.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
                   onClick={() => setSelectedMonitor(selectedMonitor?.id === mon.id ? null : mon)}
-                  className={`bg-white/5 backdrop-blur-sm rounded-xl border p-5 cursor-pointer transition-all hover:bg-white/[0.07] ${
+                  className={`bg-nexus-card/5 backdrop-blur-sm rounded-xl border p-5 cursor-pointer transition-all hover:bg-nexus-card/[0.07] ${
                     selectedMonitor?.id === mon.id ? 'border-emerald-500/50 ring-1 ring-emerald-500/20' : 'border-white/10'
                   }`}>
                   <div className="flex items-start justify-between mb-3">
@@ -238,13 +238,13 @@ export default function UptimeMonitor() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-sm">{mon.name}</h3>
-                        <div className="text-xs text-gray-500 font-mono truncate max-w-[250px]">{mon.url}</div>
+                        <div className="text-xs text-nexus-muted font-mono truncate max-w-[250px]">{mon.url}</div>
                       </div>
                     </div>
                     <div className="text-right">
                       <span className="text-xs px-2 py-0.5 rounded-full font-medium"
                         style={{ backgroundColor: `${color}15`, color }}>{statusConfig[mon.status].label}</span>
-                      <div className="text-xs text-gray-500 mt-1">Checked {mon.lastChecked}</div>
+                      <div className="text-xs text-nexus-muted mt-1">Checked {mon.lastChecked}</div>
                     </div>
                   </div>
 
@@ -256,7 +256,7 @@ export default function UptimeMonitor() {
                     ))}
                   </div>
 
-                  <div className="flex items-center justify-between text-xs text-gray-500">
+                  <div className="flex items-center justify-between text-xs text-nexus-muted">
                     <div className="flex gap-4">
                       <span>{mon.type}</span>
                       <span>{mon.responseTime > 0 ? `${mon.responseTime}ms` : '—'}</span>
@@ -287,20 +287,20 @@ export default function UptimeMonitor() {
 
                         {mon.alerts.length > 0 && (
                           <div className="space-y-2">
-                            <h4 className="text-xs font-semibold text-gray-400">Active Alerts</h4>
+                            <h4 className="text-xs font-semibold text-nexus-muted">Active Alerts</h4>
                             {mon.alerts.map((alert, j) => (
                               <div key={j} className="flex items-center gap-2 p-2 bg-red-500/5 border border-red-500/10 rounded-lg text-xs">
                                 <AlertTriangle className="w-3.5 h-3.5 text-red-400 shrink-0" />
-                                <span className="text-gray-300">{alert.message}</span>
+                                <span className="text-nexus-muted">{alert.message}</span>
                               </div>
                             ))}
                           </div>
                         )}
 
                         <div className="grid grid-cols-3 gap-3 text-xs">
-                          <div><span className="text-gray-500 block">Check Interval</span>{mon.checkInterval}s</div>
-                          {mon.sslExpiry && <div><span className="text-gray-500 block">SSL Expiry</span>{mon.sslExpiry}</div>}
-                          <div><span className="text-gray-500 block">Region</span>{mon.region}</div>
+                          <div><span className="text-nexus-muted block">Check Interval</span>{mon.checkInterval}s</div>
+                          {mon.sslExpiry && <div><span className="text-nexus-muted block">SSL Expiry</span>{mon.sslExpiry}</div>}
+                          <div><span className="text-nexus-muted block">Region</span>{mon.region}</div>
                         </div>
                       </motion.div>
                     )}
@@ -318,13 +318,13 @@ export default function UptimeMonitor() {
           {incidents.map((inc, i) => (
             <motion.div key={inc.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-5">
+              className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 p-5">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: incidentColors[inc.type] }} />
                   <div>
                     <h3 className="font-semibold text-sm">{inc.monitorName}</h3>
-                    <p className="text-xs text-gray-500 capitalize">{inc.type} · Duration: {inc.duration}</p>
+                    <p className="text-xs text-nexus-muted capitalize">{inc.type} · Duration: {inc.duration}</p>
                   </div>
                 </div>
                 <span className="text-xs px-2 py-0.5 rounded-full capitalize" style={{
@@ -332,9 +332,9 @@ export default function UptimeMonitor() {
                 }}>{inc.type}</span>
               </div>
               {inc.rootCause && (
-                <p className="text-sm text-gray-400 mb-2"><strong className="text-gray-300">Root cause:</strong> {inc.rootCause}</p>
+                <p className="text-sm text-nexus-muted mb-2"><strong className="text-nexus-muted">Root cause:</strong> {inc.rootCause}</p>
               )}
-              <div className="flex items-center gap-4 text-xs text-gray-500">
+              <div className="flex items-center gap-4 text-xs text-nexus-muted">
                 <span>Started: {new Date(inc.startTime).toLocaleString()}</span>
                 <span>Regions: {inc.affectedRegions.join(', ')}</span>
               </div>
@@ -346,21 +346,21 @@ export default function UptimeMonitor() {
       {/* Status Page Tab */}
       {activeTab === 'statuspage' && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 mb-6 text-center">
+          <div className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 mb-6 text-center">
             <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-2 ${
               downCount > 0 ? 'bg-red-500/15 text-red-400' : degradedCount > 0 ? 'bg-yellow-500/15 text-yellow-400' : 'bg-green-500/15 text-green-400'
             }`}>
               {downCount > 0 ? <XCircle className="w-4 h-4" /> : degradedCount > 0 ? <AlertTriangle className="w-4 h-4" /> : <CheckCircle className="w-4 h-4" />}
               {downCount > 0 ? 'Partial Outage' : degradedCount > 0 ? 'Degraded Performance' : 'All Systems Operational'}
             </div>
-            <p className="text-xs text-gray-500">Last updated: {new Date().toLocaleString()}</p>
+            <p className="text-xs text-nexus-muted">Last updated: {new Date().toLocaleString()}</p>
           </div>
 
           <div className="space-y-2">
             {monitors.map(mon => {
               const color = statusConfig[mon.status].color;
               return (
-                <div key={mon.id} className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10">
+                <div key={mon.id} className="flex items-center justify-between p-4 bg-nexus-card/5 rounded-xl border border-white/10">
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 rounded-full" style={{ backgroundColor: color }} />
                     <span className="text-sm font-medium">{mon.name}</span>

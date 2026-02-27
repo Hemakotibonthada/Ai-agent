@@ -147,15 +147,15 @@ export default function DesignSystem() {
             <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
               Design System
             </h1>
-            <p className="text-gray-400 mt-1">Customize themes, colors, typography, and components</p>
+            <p className="text-nexus-muted mt-1">Customize themes, colors, typography, and components</p>
           </div>
           <div className="flex gap-2">
             <button onClick={exportTheme}
-              className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors text-sm">
+              className="flex items-center gap-2 px-4 py-2 bg-nexus-card/5 border border-white/10 rounded-lg hover:bg-nexus-card/10 transition-colors text-sm">
               <Download className="w-4 h-4" /> Export
             </button>
             <button onClick={handleResetColors}
-              className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors text-sm">
+              className="flex items-center gap-2 px-4 py-2 bg-nexus-card/5 border border-white/10 rounded-lg hover:bg-nexus-card/10 transition-colors text-sm">
               <RotateCcw className="w-4 h-4" /> Reset
             </button>
           </div>
@@ -163,13 +163,13 @@ export default function DesignSystem() {
       </motion.div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-white/5 rounded-xl p-1 mb-8 border border-white/10">
+      <div className="flex gap-1 bg-nexus-card/5 rounded-xl p-1 mb-8 border border-white/10">
         {tabs.map(tab => {
           const Icon = tab.icon;
           return (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all flex-1 justify-center ${
-                activeTab === tab.id ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'
+                activeTab === tab.id ? 'bg-nexus-card/10 text-white' : 'text-nexus-muted hover:text-white'
               }`}>
               <Icon className="w-4 h-4" /> {tab.label}
             </button>
@@ -189,7 +189,7 @@ export default function DesignSystem() {
                 }`}>
                 <div className="h-24 relative" style={{ background: `linear-gradient(135deg, ${preset.primary}, ${preset.secondary}, ${preset.accent})` }}>
                   {activePreset.id === preset.id && (
-                    <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+                    <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-nexus-card/20 flex items-center justify-center">
                       <Check className="w-4 h-4 text-white" />
                     </div>
                   )}
@@ -269,10 +269,10 @@ export default function DesignSystem() {
             const categoryColors = colors.filter(c => c.category === category);
             return (
               <div key={category} className="mb-8">
-                <h3 className="text-sm font-semibold text-gray-300 mb-4">{category} Colors</h3>
+                <h3 className="text-sm font-semibold text-nexus-muted mb-4">{category} Colors</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {categoryColors.map(color => (
-                    <div key={color.name} className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
+                    <div key={color.name} className="bg-nexus-card/5 rounded-xl border border-white/10 overflow-hidden">
                       <div className="h-20 relative cursor-pointer group" style={{ backgroundColor: color.value }}
                         onClick={() => handleCopyColor(color.value)}>
                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30">
@@ -290,8 +290,8 @@ export default function DesignSystem() {
                             onChange={e => handleColorChange(color.name, e.target.value)}
                             className="w-6 h-6 rounded cursor-pointer border-none bg-transparent" />
                         </div>
-                        <div className="text-xs text-gray-500 font-mono mt-1">{color.value}</div>
-                        <div className="text-xs text-gray-600 font-mono">{color.variable}</div>
+                        <div className="text-xs text-nexus-muted font-mono mt-1">{color.value}</div>
+                        <div className="text-xs text-nexus-muted font-mono">{color.variable}</div>
                       </div>
                     </div>
                   ))}
@@ -306,33 +306,33 @@ export default function DesignSystem() {
       {activeTab === 'typography' && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-              <h3 className="text-sm font-semibold text-gray-300 mb-4">Font Family</h3>
+            <div className="bg-nexus-card/5 rounded-xl border border-white/10 p-6">
+              <h3 className="text-sm font-semibold text-nexus-muted mb-4">Font Family</h3>
               <div className="space-y-2">
                 {fontOptions.map(font => (
                   <button key={font.name} onClick={() => setFontFamily(font.value)}
                     className={`w-full text-left p-3 rounded-lg border transition-all ${
-                      fontFamily === font.value ? 'border-purple-500 bg-purple-500/10' : 'border-white/10 hover:bg-white/5'
+                      fontFamily === font.value ? 'border-purple-500 bg-purple-500/10' : 'border-white/10 hover:bg-nexus-card/5'
                     }`}>
                     <span className="text-sm font-medium" style={{ fontFamily: font.value }}>{font.name}</span>
-                    <span className="text-xs text-gray-500 ml-2">{font.category}</span>
+                    <span className="text-xs text-nexus-muted ml-2">{font.category}</span>
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-              <h3 className="text-sm font-semibold text-gray-300 mb-4">Font Size: {fontSize}px</h3>
+            <div className="bg-nexus-card/5 rounded-xl border border-white/10 p-6">
+              <h3 className="text-sm font-semibold text-nexus-muted mb-4">Font Size: {fontSize}px</h3>
               <input type="range" min="10" max="20" value={fontSize}
                 onChange={e => setFontSize(Number(e.target.value))}
                 className="w-full mb-6" />
 
-              <h3 className="text-sm font-semibold text-gray-300 mb-4">Border Radius</h3>
+              <h3 className="text-sm font-semibold text-nexus-muted mb-4">Border Radius</h3>
               <div className="grid grid-cols-3 gap-2">
                 {borderRadiusOptions.map(br => (
                   <button key={br.name} onClick={() => setBorderRadius(br.value)}
                     className={`p-2 text-xs rounded-lg border transition-all ${
-                      borderRadius === br.value ? 'border-purple-500 bg-purple-500/10' : 'border-white/10 hover:bg-white/5'
+                      borderRadius === br.value ? 'border-purple-500 bg-purple-500/10' : 'border-white/10 hover:bg-nexus-card/5'
                     }`}>
                     <div className="w-8 h-8 bg-purple-500/20 border border-purple-500/30 mx-auto mb-1"
                       style={{ borderRadius: br.value }} />
@@ -343,15 +343,15 @@ export default function DesignSystem() {
 
               <div className="mt-6 space-y-3">
                 <label className="flex items-center justify-between cursor-pointer" onClick={() => setGlassmorphism(!glassmorphism)}>
-                  <span className="text-sm text-gray-300 flex items-center gap-2"><Sparkles className="w-4 h-4" /> Glassmorphism</span>
+                  <span className="text-sm text-nexus-muted flex items-center gap-2"><Sparkles className="w-4 h-4" /> Glassmorphism</span>
                   <div className={`w-10 h-5 rounded-full transition-colors ${glassmorphism ? 'bg-purple-500' : 'bg-gray-600'}`}>
-                    <div className={`w-4 h-4 rounded-full bg-white mt-0.5 transition-transform ${glassmorphism ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                    <div className={`w-4 h-4 rounded-full bg-nexus-card mt-0.5 transition-transform ${glassmorphism ? 'translate-x-5' : 'translate-x-0.5'}`} />
                   </div>
                 </label>
                 <label className="flex items-center justify-between cursor-pointer" onClick={() => setAnimations(!animations)}>
-                  <span className="text-sm text-gray-300 flex items-center gap-2"><Layers className="w-4 h-4" /> Animations</span>
+                  <span className="text-sm text-nexus-muted flex items-center gap-2"><Layers className="w-4 h-4" /> Animations</span>
                   <div className={`w-10 h-5 rounded-full transition-colors ${animations ? 'bg-purple-500' : 'bg-gray-600'}`}>
-                    <div className={`w-4 h-4 rounded-full bg-white mt-0.5 transition-transform ${animations ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                    <div className={`w-4 h-4 rounded-full bg-nexus-card mt-0.5 transition-transform ${animations ? 'translate-x-5' : 'translate-x-0.5'}`} />
                   </div>
                 </label>
               </div>
@@ -359,8 +359,8 @@ export default function DesignSystem() {
           </div>
 
           {/* Type Scale Preview */}
-          <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-            <h3 className="text-sm font-semibold text-gray-300 mb-4">Type Scale</h3>
+          <div className="bg-nexus-card/5 rounded-xl border border-white/10 p-6">
+            <h3 className="text-sm font-semibold text-nexus-muted mb-4">Type Scale</h3>
             <div className="space-y-4" style={{ fontFamily }}>
               {[
                 { level: 'H1', size: fontSize * 2.5, weight: 800, sample: 'The quick brown fox' },
@@ -372,8 +372,8 @@ export default function DesignSystem() {
                 { level: 'Caption', size: fontSize * 0.75, weight: 400, sample: 'CAPTION TEXT · ALL CAPS · MONOSPACE ALTERNATIVE' },
               ].map(item => (
                 <div key={item.level} className="flex items-baseline gap-4 border-b border-white/5 pb-4">
-                  <span className="text-xs text-gray-500 w-16 shrink-0 font-mono">{item.level}</span>
-                  <span className="text-xs text-gray-600 w-16 shrink-0">{item.size.toFixed(0)}px</span>
+                  <span className="text-xs text-nexus-muted w-16 shrink-0 font-mono">{item.level}</span>
+                  <span className="text-xs text-nexus-muted w-16 shrink-0">{item.size.toFixed(0)}px</span>
                   <span style={{ fontSize: item.size, fontWeight: item.weight }}>{item.sample}</span>
                 </div>
               ))}
@@ -387,8 +387,8 @@ export default function DesignSystem() {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Buttons */}
-            <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-              <h3 className="text-sm font-semibold text-gray-300 mb-4">Buttons</h3>
+            <div className="bg-nexus-card/5 rounded-xl border border-white/10 p-6">
+              <h3 className="text-sm font-semibold text-nexus-muted mb-4">Buttons</h3>
               <div className="space-y-3">
                 <button className="w-full py-2 rounded-lg text-sm font-medium text-white"
                   style={{ backgroundColor: activePreset.primary, borderRadius }}>Primary</button>
@@ -404,19 +404,19 @@ export default function DesignSystem() {
             </div>
 
             {/* Inputs */}
-            <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-              <h3 className="text-sm font-semibold text-gray-300 mb-4">Inputs</h3>
+            <div className="bg-nexus-card/5 rounded-xl border border-white/10 p-6">
+              <h3 className="text-sm font-semibold text-nexus-muted mb-4">Inputs</h3>
               <div className="space-y-3">
-                <input type="text" placeholder="Default input" className="w-full px-3 py-2 bg-white/5 border border-white/10 text-white placeholder:text-gray-500"
+                <input type="text" placeholder="Default input" className="w-full px-3 py-2 bg-nexus-card/5 border border-white/10 text-white placeholder:text-nexus-muted"
                   style={{ borderRadius, fontSize }} />
-                <input type="text" value="Filled input" readOnly className="w-full px-3 py-2 bg-white/5 border text-white"
+                <input type="text" value="Filled input" readOnly className="w-full px-3 py-2 bg-nexus-card/5 border text-white"
                   style={{ borderRadius, borderColor: activePreset.primary, fontSize }} />
                 <div className="relative">
-                  <input type="text" placeholder="With icon" className="w-full pl-9 pr-3 py-2 bg-white/5 border border-white/10 text-white placeholder:text-gray-500"
+                  <input type="text" placeholder="With icon" className="w-full pl-9 pr-3 py-2 bg-nexus-card/5 border border-white/10 text-white placeholder:text-nexus-muted"
                     style={{ borderRadius, fontSize }} />
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-nexus-muted" />
                 </div>
-                <select className="w-full px-3 py-2 bg-white/5 border border-white/10 text-white"
+                <select className="w-full px-3 py-2 bg-nexus-card/5 border border-white/10 text-white"
                   style={{ borderRadius, fontSize }}>
                   <option>Select option</option>
                   <option>Option A</option>
@@ -426,8 +426,8 @@ export default function DesignSystem() {
             </div>
 
             {/* Cards */}
-            <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-              <h3 className="text-sm font-semibold text-gray-300 mb-4">Cards</h3>
+            <div className="bg-nexus-card/5 rounded-xl border border-white/10 p-6">
+              <h3 className="text-sm font-semibold text-nexus-muted mb-4">Cards</h3>
               <div className="space-y-3">
                 <div className="p-4 border" style={{
                   backgroundColor: glassmorphism ? 'rgba(255,255,255,0.03)' : activePreset.surface,
@@ -450,8 +450,8 @@ export default function DesignSystem() {
             </div>
 
             {/* Badges */}
-            <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-              <h3 className="text-sm font-semibold text-gray-300 mb-4">Badges & Tags</h3>
+            <div className="bg-nexus-card/5 rounded-xl border border-white/10 p-6">
+              <h3 className="text-sm font-semibold text-nexus-muted mb-4">Badges & Tags</h3>
               <div className="flex flex-wrap gap-2">
                 {[
                   { label: 'Active', color: '#10b981' },
@@ -472,8 +472,8 @@ export default function DesignSystem() {
             </div>
 
             {/* Alerts */}
-            <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-              <h3 className="text-sm font-semibold text-gray-300 mb-4">Alerts</h3>
+            <div className="bg-nexus-card/5 rounded-xl border border-white/10 p-6">
+              <h3 className="text-sm font-semibold text-nexus-muted mb-4">Alerts</h3>
               <div className="space-y-3">
                 {[
                   { type: 'Success', color: '#10b981', icon: Check },
@@ -497,16 +497,16 @@ export default function DesignSystem() {
             </div>
 
             {/* Progress */}
-            <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-              <h3 className="text-sm font-semibold text-gray-300 mb-4">Progress</h3>
+            <div className="bg-nexus-card/5 rounded-xl border border-white/10 p-6">
+              <h3 className="text-sm font-semibold text-nexus-muted mb-4">Progress</h3>
               <div className="space-y-4">
                 {[30, 60, 85].map(pct => (
                   <div key={pct}>
-                    <div className="flex justify-between text-xs text-gray-400 mb-1">
+                    <div className="flex justify-between text-xs text-nexus-muted mb-1">
                       <span>Progress</span>
                       <span>{pct}%</span>
                     </div>
-                    <div className="h-2 bg-white/5 overflow-hidden" style={{ borderRadius }}>
+                    <div className="h-2 bg-nexus-card/5 overflow-hidden" style={{ borderRadius }}>
                       <motion.div initial={{ width: 0 }} animate={{ width: `${pct}%` }}
                         transition={{ duration: 1, ease: 'easeOut' }}
                         className="h-full"
@@ -519,16 +519,16 @@ export default function DesignSystem() {
           </div>
 
           {/* CSS Output */}
-          <div className="bg-white/5 rounded-xl border border-white/10 p-6">
+          <div className="bg-nexus-card/5 rounded-xl border border-white/10 p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-gray-300 flex items-center gap-2"><Code2 className="w-4 h-4" /> CSS Variables</h3>
+              <h3 className="text-sm font-semibold text-nexus-muted flex items-center gap-2"><Code2 className="w-4 h-4" /> CSS Variables</h3>
               <button onClick={() => navigator.clipboard.writeText(
                 `:root {\n${colors.map(c => `  ${c.variable}: ${c.value};`).join('\n')}\n  --font-family: ${fontFamily};\n  --font-size: ${fontSize}px;\n  --radius: ${borderRadius};\n}`
               )} className="text-xs text-purple-400 hover:text-purple-300 flex items-center gap-1">
                 <Copy className="w-3 h-3" /> Copy
               </button>
             </div>
-            <pre className="text-xs font-mono text-gray-400 bg-black/20 rounded-lg p-4 overflow-x-auto">
+            <pre className="text-xs font-mono text-nexus-muted bg-black/20 rounded-lg p-4 overflow-x-auto">
               {`:root {\n${colors.map(c => `  ${c.variable}: ${c.value};`).join('\n')}\n  --font-family: ${fontFamily};\n  --font-size: ${fontSize}px;\n  --radius: ${borderRadius};\n}`}
             </pre>
           </div>
@@ -538,8 +538,8 @@ export default function DesignSystem() {
       {/* Spacing Tab */}
       {activeTab === 'spacing' && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
-          <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-            <h3 className="text-sm font-semibold text-gray-300 mb-6">Spacing Scale</h3>
+          <div className="bg-nexus-card/5 rounded-xl border border-white/10 p-6">
+            <h3 className="text-sm font-semibold text-nexus-muted mb-6">Spacing Scale</h3>
             <div className="space-y-3">
               {[
                 { name: 'xs', value: 4 }, { name: 'sm', value: 8 }, { name: 'md', value: 16 },
@@ -547,8 +547,8 @@ export default function DesignSystem() {
                 { name: '3xl', value: 64 }, { name: '4xl', value: 96 },
               ].map(space => (
                 <div key={space.name} className="flex items-center gap-4">
-                  <span className="text-xs text-gray-500 w-8 font-mono">{space.name}</span>
-                  <span className="text-xs text-gray-600 w-12">{space.value}px</span>
+                  <span className="text-xs text-nexus-muted w-8 font-mono">{space.name}</span>
+                  <span className="text-xs text-nexus-muted w-12">{space.value}px</span>
                   <div className="h-4 rounded" style={{
                     width: space.value * 2,
                     backgroundColor: activePreset.primary,
@@ -560,15 +560,15 @@ export default function DesignSystem() {
             </div>
           </div>
 
-          <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-            <h3 className="text-sm font-semibold text-gray-300 mb-6">Grid System</h3>
+          <div className="bg-nexus-card/5 rounded-xl border border-white/10 p-6">
+            <h3 className="text-sm font-semibold text-nexus-muted mb-6">Grid System</h3>
             <div className="space-y-4">
               {[12, 6, 4, 3, 2].map(cols => (
                 <div key={cols}>
-                  <div className="text-xs text-gray-500 mb-1">{cols} columns</div>
+                  <div className="text-xs text-nexus-muted mb-1">{cols} columns</div>
                   <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
                     {Array.from({ length: cols }, (_, i) => (
-                      <div key={i} className="h-8 flex items-center justify-center text-xs text-gray-400" style={{
+                      <div key={i} className="h-8 flex items-center justify-center text-xs text-nexus-muted" style={{
                         backgroundColor: `${activePreset.primary}15`,
                         border: `1px solid ${activePreset.primary}30`,
                         borderRadius,

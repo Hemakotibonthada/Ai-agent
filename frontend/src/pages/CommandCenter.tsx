@@ -134,23 +134,23 @@ export default function CommandCenter() {
         <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent flex items-center gap-3">
           <Command className="w-8 h-8 text-indigo-400" /> Command Center
         </h1>
-        <p className="text-gray-400 mt-1">Quick access to all commands, shortcuts, and actions</p>
+        <p className="text-nexus-muted mt-1">Quick access to all commands, shortcuts, and actions</p>
       </motion.div>
 
       {/* Search */}
       <div className="relative mb-6">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-nexus-muted" />
         <input type="text" value={search} onChange={e => setSearch(e.target.value)}
           placeholder="Search commands, shortcuts, and actions..."
-          className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder:text-gray-500 focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500/50 transition-all" />
+          className="w-full pl-12 pr-4 py-3 bg-nexus-card/5 border border-white/10 rounded-xl text-sm text-white placeholder:text-nexus-muted focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500/50 transition-all" />
         <div className="absolute right-4 top-1/2 -translate-y-1/2 flex gap-1">
-          <span className="px-1.5 py-0.5 bg-white/5 rounded text-[10px] text-gray-500 font-mono">Ctrl</span>
-          <span className="px-1.5 py-0.5 bg-white/5 rounded text-[10px] text-gray-500 font-mono">K</span>
+          <span className="px-1.5 py-0.5 bg-nexus-card/5 rounded text-[10px] text-nexus-muted font-mono">Ctrl</span>
+          <span className="px-1.5 py-0.5 bg-nexus-card/5 rounded text-[10px] text-nexus-muted font-mono">K</span>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-white/5 rounded-xl p-1 mb-6 border border-white/10 w-fit">
+      <div className="flex gap-1 bg-nexus-card/5 rounded-xl p-1 mb-6 border border-white/10 w-fit">
         {([
           { id: 'commands' as const, label: 'Commands', icon: Zap },
           { id: 'shortcuts' as const, label: 'Shortcuts', icon: Keyboard },
@@ -160,7 +160,7 @@ export default function CommandCenter() {
           return (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                activeTab === tab.id ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'
+                activeTab === tab.id ? 'bg-nexus-card/10 text-white' : 'text-nexus-muted hover:text-white'
               }`}>
               <Icon className="w-4 h-4" /> {tab.label}
             </button>
@@ -176,7 +176,7 @@ export default function CommandCenter() {
             {categories.map(cat => (
               <button key={cat} onClick={() => setCategoryFilter(cat)}
                 className={`px-3 py-1 rounded-full text-xs font-medium transition-all capitalize ${
-                  categoryFilter === cat ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-white bg-white/[0.03]'
+                  categoryFilter === cat ? 'bg-nexus-card/10 text-white' : 'text-nexus-muted hover:text-white bg-nexus-card/[0.03]'
                 }`}
                 style={categoryFilter === cat && cat !== 'all' ? { backgroundColor: `${categoryColors[cat]}20`, color: categoryColors[cat] } : {}}>
                 {cat}
@@ -193,7 +193,7 @@ export default function CommandCenter() {
                   transition={{ delay: i * 0.03 }}
                   whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}
                   onClick={() => setSelectedCommand(selectedCommand?.id === cmd.id ? null : cmd)}
-                  className={`bg-white/5 backdrop-blur-sm rounded-xl border p-4 cursor-pointer transition-all ${
+                  className={`bg-nexus-card/5 backdrop-blur-sm rounded-xl border p-4 cursor-pointer transition-all ${
                     selectedCommand?.id === cmd.id ? 'border-indigo-500/50 ring-1 ring-indigo-500/20' : 'border-white/10 hover:border-white/20'
                   }`}>
                   <div className="flex items-start justify-between mb-3">
@@ -206,7 +206,7 @@ export default function CommandCenter() {
                           <h3 className="font-semibold text-sm">{cmd.title}</h3>
                           {cmd.isPinned && <Pin className="w-3 h-3 text-yellow-400" />}
                         </div>
-                        <p className="text-xs text-gray-500 mt-0.5">{cmd.description}</p>
+                        <p className="text-xs text-nexus-muted mt-0.5">{cmd.description}</p>
                       </div>
                     </div>
                   </div>
@@ -217,7 +217,7 @@ export default function CommandCenter() {
                     {cmd.shortcut && (
                       <div className="flex gap-1">
                         {cmd.shortcut.split('+').map(key => (
-                          <span key={key} className="px-1.5 py-0.5 bg-white/5 rounded text-[10px] text-gray-400 font-mono border border-white/10">{key}</span>
+                          <span key={key} className="px-1.5 py-0.5 bg-nexus-card/5 rounded text-[10px] text-nexus-muted font-mono border border-white/10">{key}</span>
                         ))}
                       </div>
                     )}
@@ -233,18 +233,18 @@ export default function CommandCenter() {
       {activeTab === 'shortcuts' && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
           {shortcutGroups.map(group => (
-            <div key={group.name} className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
+            <div key={group.name} className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
               <div className="px-4 py-3 border-b border-white/10">
                 <h3 className="font-semibold text-sm">{group.name}</h3>
               </div>
               <div className="divide-y divide-white/5">
                 {group.shortcuts.map((shortcut, i) => (
                   <motion.div key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.03 }}
-                    className="flex items-center justify-between px-4 py-3 hover:bg-white/[0.02]">
-                    <span className="text-sm text-gray-300">{shortcut.description}</span>
+                    className="flex items-center justify-between px-4 py-3 hover:bg-nexus-card/[0.02]">
+                    <span className="text-sm text-nexus-muted">{shortcut.description}</span>
                     <div className="flex gap-1">
                       {shortcut.keys.map(key => (
-                        <span key={key} className="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono text-gray-400 min-w-[28px] text-center">{key}</span>
+                        <span key={key} className="px-2 py-1 bg-nexus-card/5 border border-white/10 rounded text-xs font-mono text-nexus-muted min-w-[28px] text-center">{key}</span>
                       ))}
                     </div>
                   </motion.div>
@@ -264,26 +264,26 @@ export default function CommandCenter() {
             return (
               <motion.div key={cmd.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="flex items-center gap-4 p-3 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/[0.07] cursor-pointer transition-all">
+                className="flex items-center gap-4 p-3 bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-nexus-card/[0.07] cursor-pointer transition-all">
                 <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${color}15` }}>
                   <Icon className="w-4 h-4" style={{ color }} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="font-medium text-sm">{cmd.title}</h3>
-                  <p className="text-xs text-gray-500">{cmd.description}</p>
+                  <p className="text-xs text-nexus-muted">{cmd.description}</p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="text-xs text-gray-500 flex items-center gap-1">
+                  <div className="text-xs text-nexus-muted flex items-center gap-1">
                     <Activity className="w-3 h-3" /> {cmd.frequency}x
                   </div>
                   {cmd.shortcut && (
                     <div className="flex gap-1">
                       {cmd.shortcut.split('+').map(key => (
-                        <span key={key} className="px-1.5 py-0.5 bg-white/5 rounded text-[10px] text-gray-400 font-mono">{key}</span>
+                        <span key={key} className="px-1.5 py-0.5 bg-nexus-card/5 rounded text-[10px] text-nexus-muted font-mono">{key}</span>
                       ))}
                     </div>
                   )}
-                  <ChevronRight className="w-4 h-4 text-gray-600" />
+                  <ChevronRight className="w-4 h-4 text-nexus-muted" />
                 </div>
               </motion.div>
             );

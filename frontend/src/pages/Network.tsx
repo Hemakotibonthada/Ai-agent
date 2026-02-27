@@ -342,19 +342,19 @@ export default function NetworkPage() {
 
               {/* Metrics row */}
               <div className="grid w-full grid-cols-2 gap-2 text-center text-xs">
-                <div className="rounded-lg bg-white/5 p-2">
+                <div className="rounded-lg bg-nexus-card/5 p-2">
                   <p className="text-nexus-muted">Latency</p>
                   <p className="text-sm font-bold text-nexus-text">12 ms</p>
                 </div>
-                <div className="rounded-lg bg-white/5 p-2">
+                <div className="rounded-lg bg-nexus-card/5 p-2">
                   <p className="text-nexus-muted">Packet Loss</p>
                   <p className="text-sm font-bold text-nexus-text">0.02%</p>
                 </div>
-                <div className="rounded-lg bg-white/5 p-2">
+                <div className="rounded-lg bg-nexus-card/5 p-2">
                   <p className="text-nexus-muted">Jitter</p>
                   <p className="text-sm font-bold text-nexus-text">3.1 ms</p>
                 </div>
-                <div className="rounded-lg bg-white/5 p-2">
+                <div className="rounded-lg bg-nexus-card/5 p-2">
                   <p className="text-nexus-muted">BW Util</p>
                   <p className="text-sm font-bold text-nexus-text">34%</p>
                 </div>
@@ -381,7 +381,7 @@ export default function NetworkPage() {
                 <motion.div
                   key={iface.id}
                   whileHover={{ scale: 1.02 }}
-                  className="rounded-xl border border-nexus-border bg-white/5 p-3 transition-all hover:border-nexus-primary/30"
+                  className="rounded-xl border border-nexus-border bg-nexus-card/5 p-3 transition-all hover:border-nexus-primary/30"
                 >
                   <div className="flex items-center gap-2">
                     <span className={`flex h-8 w-8 items-center justify-center rounded-lg ${iface.status === 'up' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
@@ -434,7 +434,7 @@ export default function NetworkPage() {
                     placeholder="Filter..."
                     value={connFilter}
                     onChange={(e) => setConnFilter(e.target.value)}
-                    className="h-8 w-48 rounded-lg border border-nexus-border bg-white/5 pl-8 pr-3 text-xs text-nexus-text placeholder-nexus-muted outline-none focus:border-nexus-primary/50"
+                    className="h-8 w-48 rounded-lg border border-nexus-border bg-nexus-card/5 pl-8 pr-3 text-xs text-nexus-text placeholder-nexus-muted outline-none focus:border-nexus-primary/50"
                   />
                 </div>
                 <Badge variant="info">{filteredConnections.length}</Badge>
@@ -456,7 +456,7 @@ export default function NetworkPage() {
               </thead>
               <tbody>
                 {filteredConnections.map((conn) => (
-                  <tr key={conn.id} className="border-b border-nexus-border/30 transition-colors hover:bg-white/5">
+                  <tr key={conn.id} className="border-b border-nexus-border/30 transition-colors hover:bg-nexus-card/5">
                     <td className="py-1.5 pr-3 font-mono text-nexus-text">{conn.localAddr}</td>
                     <td className="py-1.5 pr-3 font-mono text-nexus-muted">{conn.remoteAddr}</td>
                     <td className="py-1.5 pr-3"><Badge variant="neutral">{conn.protocol}</Badge></td>
@@ -491,7 +491,7 @@ export default function NetworkPage() {
                 <motion.div
                   key={threat.id}
                   whileHover={{ x: 4 }}
-                  className="flex items-center gap-3 rounded-lg bg-white/5 p-3 transition-colors hover:bg-white/10"
+                  className="flex items-center gap-3 rounded-lg bg-nexus-card/5 p-3 transition-colors hover:bg-nexus-card/10"
                 >
                   <span
                     className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
@@ -543,7 +543,7 @@ export default function NetworkPage() {
                 <motion.div
                   key={anomaly.id}
                   whileHover={{ x: 4 }}
-                  className="rounded-lg bg-white/5 p-3 transition-colors hover:bg-white/10"
+                  className="rounded-lg bg-nexus-card/5 p-3 transition-colors hover:bg-nexus-card/10"
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-nexus-text">{anomaly.metric}</span>
@@ -566,7 +566,7 @@ export default function NetworkPage() {
                     </div>
                   </div>
                   {/* Deviation bar */}
-                  <div className="mt-2 h-1.5 rounded-full bg-white/10">
+                  <div className="mt-2 h-1.5 rounded-full bg-nexus-card/10">
                     <div
                       className="h-full rounded-full transition-all"
                       style={{
@@ -625,7 +625,7 @@ export default function NetworkPage() {
               <div className="space-y-1.5">
                 {topTalkers.map((t, i) => (
                   <div key={t.ip} className="flex items-center gap-3 text-xs">
-                    <span className="flex h-5 w-5 items-center justify-center rounded text-[10px] font-bold text-nexus-muted bg-white/10">
+                    <span className="flex h-5 w-5 items-center justify-center rounded text-[10px] font-bold text-nexus-muted bg-nexus-card/10">
                       {i + 1}
                     </span>
                     <span className="font-mono text-nexus-text flex-1">{t.ip}</span>
@@ -666,7 +666,7 @@ export default function NetworkPage() {
                 </thead>
                 <tbody>
                   {mockFirewallRules.map((rule) => (
-                    <tr key={rule.id} className="border-b border-nexus-border/30 transition-colors hover:bg-white/5">
+                    <tr key={rule.id} className="border-b border-nexus-border/30 transition-colors hover:bg-nexus-card/5">
                       <td className="py-1.5 pr-2">
                         <Badge variant={fwActionColor(rule.action) as any}>{rule.action}</Badge>
                       </td>
@@ -708,7 +708,7 @@ export default function NetworkPage() {
                 whileHover={{ scale: 1.02, y: -2 }}
                 className={`rounded-xl border p-3 transition-all ${
                   dev.trusted
-                    ? 'border-nexus-border hover:border-nexus-primary/30 bg-white/5'
+                    ? 'border-nexus-border hover:border-nexus-primary/30 bg-nexus-card/5'
                     : 'border-red-500/30 bg-red-500/5 hover:border-red-500/50'
                 }`}
               >
@@ -755,7 +755,7 @@ export default function NetworkPage() {
                 key={action.label}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 rounded-xl border border-nexus-border bg-white/5 px-4 py-2.5 text-sm font-medium text-nexus-text transition-colors hover:border-nexus-primary/40 hover:bg-white/10"
+                className="flex items-center gap-2 rounded-xl border border-nexus-border bg-nexus-card/5 px-4 py-2.5 text-sm font-medium text-nexus-text transition-colors hover:border-nexus-primary/40 hover:bg-nexus-card/10"
               >
                 <action.icon size={16} style={{ color: action.color }} />
                 {action.label}

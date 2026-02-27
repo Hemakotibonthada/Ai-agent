@@ -146,7 +146,7 @@ const SystemMonitor: React.FC = () => {
   const TrendIcon = ({ trend }: { trend: string }) => {
     if (trend === 'up') return <ArrowUp size={12} className="text-green-500" />;
     if (trend === 'down') return <ArrowDown size={12} className="text-red-500" />;
-    return <Minus size={12} className="text-gray-400" />;
+    return <Minus size={12} className="text-nexus-muted" />;
   };
 
   return (
@@ -154,11 +154,11 @@ const SystemMonitor: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <Monitor className="text-blue-500" size={32} />
               System Monitor
             </h1>
-            <p className="text-gray-500 mt-1">Real-time system performance metrics</p>
+            <p className="text-nexus-muted mt-1">Real-time system performance metrics</p>
           </div>
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1.5 text-sm text-green-500">
@@ -168,7 +168,7 @@ const SystemMonitor: React.FC = () => {
             </span>
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
               onClick={() => { setRefreshing(true); setTimeout(() => setRefreshing(false), 1000); }}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-sm font-medium">
+              className="flex items-center gap-2 px-4 py-2 bg-nexus-surface text-nexus-text rounded-xl text-sm font-medium">
               <RefreshCw size={14} className={refreshing ? 'animate-spin' : ''} /> Refresh
             </motion.button>
           </div>
@@ -176,11 +176,11 @@ const SystemMonitor: React.FC = () => {
       </FadeIn>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-gray-100 dark:bg-gray-800 rounded-xl p-1 w-fit">
+      <div className="flex gap-1 bg-nexus-surface rounded-xl p-1 w-fit">
         {(['overview', 'processes', 'network', 'storage'] as const).map(tab => (
           <button key={tab} onClick={() => setActiveTab(tab)}
             className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-colors ${
-              activeTab === tab ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500'
+              activeTab === tab ? 'bg-nexus-card text-nexus-text shadow-sm' : 'text-nexus-muted'
             }`}>{tab}</button>
         ))}
       </div>
@@ -192,18 +192,18 @@ const SystemMonitor: React.FC = () => {
             {metrics.map((metric, i) => (
               <FadeIn key={metric.name} delay={i * 0.05}>
                 <motion.div whileHover={{ y: -4 }}
-                  className={`bg-white dark:bg-gray-800 rounded-2xl p-4 border border-gray-200 dark:border-gray-700 ${metric.warning ? 'ring-2 ring-yellow-400' : ''} ${metric.critical ? 'ring-2 ring-red-500' : ''}`}>
+                  className={`bg-nexus-card rounded-2xl p-4 border border-nexus-border ${metric.warning ? 'ring-2 ring-yellow-400' : ''} ${metric.critical ? 'ring-2 ring-red-500' : ''}`}>
                   <div className="flex items-center justify-between mb-3">
                     <div className={`p-2 rounded-xl bg-gradient-to-br ${metric.color} text-white`}>{metric.icon}</div>
                     <div className="flex items-center gap-0.5 text-xs">
                       <TrendIcon trend={metric.trend} />
-                      <span className="text-gray-500">{metric.trendValue}</span>
+                      <span className="text-nexus-muted">{metric.trendValue}</span>
                     </div>
                   </div>
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{metric.value}<span className="text-sm text-gray-400 ml-1">{metric.unit}</span></div>
-                  <div className="text-xs text-gray-500 mt-1">{metric.name}</div>
+                  <div className="text-2xl font-bold text-nexus-text">{metric.value}<span className="text-sm text-nexus-muted ml-1">{metric.unit}</span></div>
+                  <div className="text-xs text-nexus-muted mt-1">{metric.name}</div>
                   {(metric.name === 'CPU Usage' || metric.name === 'Memory') && (
-                    <div className="mt-2 h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div className="mt-2 h-1.5 bg-nexus-surface rounded-full overflow-hidden">
                       <motion.div animate={{ width: `${metric.value}%` }} transition={{ duration: 0.5 }}
                         className={`h-full rounded-full bg-gradient-to-r ${metric.color}`} />
                     </div>
@@ -216,8 +216,8 @@ const SystemMonitor: React.FC = () => {
           {/* Charts */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <FadeIn delay={0.15}>
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+              <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+                <h3 className="font-semibold text-nexus-text mb-4 flex items-center gap-2">
                   <Cpu size={16} className="text-blue-500" /> CPU & Memory Usage
                 </h3>
                 <ResponsiveContainer width="100%" height={200}>
@@ -234,8 +234,8 @@ const SystemMonitor: React.FC = () => {
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+              <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+                <h3 className="font-semibold text-nexus-text mb-4 flex items-center gap-2">
                   <Wifi size={16} className="text-orange-500" /> Network Traffic
                 </h3>
                 <ResponsiveContainer width="100%" height={200}>
@@ -254,36 +254,36 @@ const SystemMonitor: React.FC = () => {
 
           {/* Services Grid */}
           <FadeIn delay={0.25}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-              <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-700">
-                <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+            <div className="bg-nexus-card rounded-2xl border border-nexus-border overflow-hidden">
+              <div className="px-5 py-4 border-b border-nexus-border">
+                <h3 className="font-semibold text-nexus-text flex items-center gap-2">
                   <Server size={16} className="text-blue-500" /> Services
-                  <span className="ml-auto text-xs text-gray-500">
+                  <span className="ml-auto text-xs text-nexus-muted">
                     {services.filter(s => s.status === 'running').length}/{services.length} running
                   </span>
                 </h3>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 divide-x divide-y divide-gray-100 dark:divide-gray-700">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 divide-x divide-y divide-nexus-border">
                 {services.map(service => (
                   <div key={service.name} className="p-4">
                     <div className="flex items-center gap-2 mb-2">
                       <StatusIcon status={service.status} />
-                      <span className="text-sm font-medium text-gray-900 dark:text-white truncate">{service.name}</span>
+                      <span className="text-sm font-medium text-nexus-text truncate">{service.name}</span>
                     </div>
                     <div className="space-y-1">
                       <div className="flex justify-between text-xs">
-                        <span className="text-gray-500">CPU</span>
-                        <span className="text-gray-900 dark:text-white">{service.cpu}%</span>
+                        <span className="text-nexus-muted">CPU</span>
+                        <span className="text-nexus-text">{service.cpu}%</span>
                       </div>
-                      <div className="h-1 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div className="h-1 bg-nexus-surface rounded-full overflow-hidden">
                         <div className="h-full bg-blue-500 rounded-full" style={{ width: `${Math.min(service.cpu * 2, 100)}%` }} />
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-gray-500">RAM</span>
-                        <span className="text-gray-900 dark:text-white">{service.memory}MB</span>
+                        <span className="text-nexus-muted">RAM</span>
+                        <span className="text-nexus-text">{service.memory}MB</span>
                       </div>
                       {service.port && (
-                        <div className="text-[10px] text-gray-400 mt-1">Port: {service.port}</div>
+                        <div className="text-[10px] text-nexus-muted mt-1">Port: {service.port}</div>
                       )}
                     </div>
                   </div>
@@ -296,43 +296,43 @@ const SystemMonitor: React.FC = () => {
 
       {activeTab === 'processes' && (
         <FadeIn delay={0.1}>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div className="bg-nexus-card rounded-2xl border border-nexus-border overflow-hidden">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">PID</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Name</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">CPU %</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Memory</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Status</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">User</th>
+                <tr className="border-b border-nexus-border bg-nexus-surface/50">
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-nexus-muted uppercase">PID</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-nexus-muted uppercase">Name</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-nexus-muted uppercase">CPU %</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-nexus-muted uppercase">Memory</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-nexus-muted uppercase">Status</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-nexus-muted uppercase">User</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
+              <tbody className="divide-y divide-nexus-border">
                 {processes.sort((a, b) => b.cpu - a.cpu).map(proc => (
                   <motion.tr key={proc.pid}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                    <td className="px-4 py-3 text-sm text-gray-500 font-mono">{proc.pid}</td>
-                    <td className="px-4 py-3 text-sm font-medium text-gray-900 dark:text-white font-mono">{proc.name}</td>
+                    className="hover:bg-nexus-surface/60/30">
+                    <td className="px-4 py-3 text-sm text-nexus-muted font-mono">{proc.pid}</td>
+                    <td className="px-4 py-3 text-sm font-medium text-nexus-text font-mono">{proc.name}</td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <div className="w-16 h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                        <div className="w-16 h-1.5 bg-nexus-surface rounded-full overflow-hidden">
                           <div className={`h-full rounded-full ${proc.cpu > 30 ? 'bg-red-500' : proc.cpu > 15 ? 'bg-yellow-500' : 'bg-green-500'}`}
                             style={{ width: `${Math.min(proc.cpu * 2, 100)}%` }} />
                         </div>
-                        <span className="text-sm text-gray-900 dark:text-white">{proc.cpu}%</span>
+                        <span className="text-sm text-nexus-text">{proc.cpu}%</span>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">{proc.memory.toFixed(1)} MB</td>
+                    <td className="px-4 py-3 text-sm text-nexus-text">{proc.memory.toFixed(1)} MB</td>
                     <td className="px-4 py-3">
                       <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                        proc.status === 'running' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
+                        proc.status === 'running' ? 'bg-nexus-success/15 text-nexus-success' :
                         'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
                       }`}>{proc.status}</span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-500">{proc.user}</td>
+                    <td className="px-4 py-3 text-sm text-nexus-muted">{proc.user}</td>
                   </motion.tr>
                 ))}
               </tbody>
@@ -344,8 +344,8 @@ const SystemMonitor: React.FC = () => {
       {activeTab === 'network' && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <FadeIn delay={0.1}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Network Interfaces</h3>
+            <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+              <h3 className="font-semibold text-nexus-text mb-4">Network Interfaces</h3>
               <div className="space-y-3">
                 {[
                   { name: 'eth0', ip: '192.168.1.100', speed: '1 Gbps', status: 'active', rx: '2.4 GB', tx: '1.1 GB' },
@@ -353,14 +353,14 @@ const SystemMonitor: React.FC = () => {
                   { name: 'lo', ip: '127.0.0.1', speed: '-', status: 'active', rx: '45 MB', tx: '45 MB' },
                   { name: 'docker0', ip: '172.17.0.1', speed: '-', status: 'active', rx: '1.2 GB', tx: '890 MB' },
                 ].map(iface => (
-                  <div key={iface.name} className="p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700">
+                  <div key={iface.name} className="p-3 rounded-xl bg-nexus-surface/50 border border-nexus-border">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-sm font-semibold text-gray-900 dark:text-white">{iface.name}</span>
-                      <span className="px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-xs">{iface.status}</span>
+                      <span className="font-mono text-sm font-semibold text-nexus-text">{iface.name}</span>
+                      <span className="px-2 py-0.5 bg-nexus-success/15 text-nexus-success rounded text-xs">{iface.status}</span>
                     </div>
-                    <div className="grid grid-cols-2 gap-2 text-xs text-gray-500">
-                      <span>IP: <span className="text-gray-900 dark:text-gray-300">{iface.ip}</span></span>
-                      <span>Speed: <span className="text-gray-900 dark:text-gray-300">{iface.speed}</span></span>
+                    <div className="grid grid-cols-2 gap-2 text-xs text-nexus-muted">
+                      <span>IP: <span className="text-nexus-text">{iface.ip}</span></span>
+                      <span>Speed: <span className="text-nexus-text">{iface.speed}</span></span>
                       <span>RX: <span className="text-green-500">{iface.rx}</span></span>
                       <span>TX: <span className="text-blue-500">{iface.tx}</span></span>
                     </div>
@@ -370,8 +370,8 @@ const SystemMonitor: React.FC = () => {
             </div>
           </FadeIn>
           <FadeIn delay={0.15}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Active Connections</h3>
+            <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+              <h3 className="font-semibold text-nexus-text mb-4">Active Connections</h3>
               <div className="space-y-2">
                 {[
                   { proto: 'TCP', local: ':8000', remote: '192.168.1.50:49812', state: 'ESTABLISHED' },
@@ -381,13 +381,13 @@ const SystemMonitor: React.FC = () => {
                   { proto: 'WS', local: ':8000/ws', remote: '192.168.1.50:49816', state: 'OPEN' },
                   { proto: 'TCP', local: ':5432', remote: '127.0.0.1:49820', state: 'ESTABLISHED' },
                 ].map((conn, i) => (
-                  <div key={i} className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/30 text-xs font-mono">
+                  <div key={i} className="flex items-center gap-3 p-2 rounded-lg hover:bg-nexus-surface/60/30 text-xs font-mono">
                     <span className="px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-[10px]">{conn.proto}</span>
-                    <span className="text-gray-500">{conn.local}</span>
-                    <span className="text-gray-300">→</span>
-                    <span className="text-gray-900 dark:text-gray-300">{conn.remote}</span>
+                    <span className="text-nexus-muted">{conn.local}</span>
+                    <span className="text-nexus-muted">→</span>
+                    <span className="text-nexus-text">{conn.remote}</span>
                     <span className={`ml-auto px-1.5 py-0.5 rounded text-[10px] ${
-                      conn.state === 'ESTABLISHED' || conn.state === 'OPEN' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
+                      conn.state === 'ESTABLISHED' || conn.state === 'OPEN' ? 'bg-nexus-success/15 text-nexus-success' :
                       'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
                     }`}>{conn.state}</span>
                   </div>
@@ -401,8 +401,8 @@ const SystemMonitor: React.FC = () => {
       {activeTab === 'storage' && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <FadeIn delay={0.1}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Disk Usage Distribution</h3>
+            <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+              <h3 className="font-semibold text-nexus-text mb-4">Disk Usage Distribution</h3>
               <ResponsiveContainer width="100%" height={250}>
                 <PieChart>
                   <Pie data={diskUsage} dataKey="value" cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={3}>
@@ -413,7 +413,7 @@ const SystemMonitor: React.FC = () => {
               </ResponsiveContainer>
               <div className="flex flex-wrap justify-center gap-3 mt-2">
                 {diskUsage.map(item => (
-                  <span key={item.name} className="flex items-center gap-1.5 text-xs text-gray-500">
+                  <span key={item.name} className="flex items-center gap-1.5 text-xs text-nexus-muted">
                     <div className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }} />
                     {item.name}: {item.value}GB
                   </span>
@@ -422,8 +422,8 @@ const SystemMonitor: React.FC = () => {
             </div>
           </FadeIn>
           <FadeIn delay={0.15}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Volumes</h3>
+            <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+              <h3 className="font-semibold text-nexus-text mb-4">Volumes</h3>
               <div className="space-y-4">
                 {[
                   { mount: '/', total: '100 GB', used: '45.2 GB', pct: 45 },
@@ -433,10 +433,10 @@ const SystemMonitor: React.FC = () => {
                 ].map(vol => (
                   <div key={vol.mount}>
                     <div className="flex justify-between mb-1">
-                      <span className="text-sm font-mono text-gray-900 dark:text-white">{vol.mount}</span>
-                      <span className="text-xs text-gray-500">{vol.used} / {vol.total}</span>
+                      <span className="text-sm font-mono text-nexus-text">{vol.mount}</span>
+                      <span className="text-xs text-nexus-muted">{vol.used} / {vol.total}</span>
                     </div>
-                    <div className="h-3 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div className="h-3 bg-nexus-surface rounded-full overflow-hidden">
                       <motion.div initial={{ width: 0 }} animate={{ width: `${vol.pct}%` }} transition={{ duration: 1 }}
                         className={`h-full rounded-full ${vol.pct > 75 ? 'bg-red-500' : vol.pct > 50 ? 'bg-yellow-500' : 'bg-blue-500'}`} />
                     </div>

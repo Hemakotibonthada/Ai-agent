@@ -147,11 +147,11 @@ const Automations: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <Zap className="text-yellow-500" size={32} />
               Automations
             </h1>
-            <p className="text-gray-500 mt-1">{stats.active}/{stats.total} active · {stats.totalRuns.toLocaleString()} total runs</p>
+            <p className="text-nexus-muted mt-1">{stats.active}/{stats.total} active · {stats.totalRuns.toLocaleString()} total runs</p>
           </div>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-xl text-sm font-medium">
@@ -168,10 +168,10 @@ const Automations: React.FC = () => {
             { label: 'Active', value: stats.active, icon: <CheckCircle size={16} />, color: 'text-green-500' },
             { label: 'Total Runs', value: stats.totalRuns.toLocaleString(), icon: <Repeat size={16} />, color: 'text-blue-500' },
           ].map(stat => (
-            <div key={stat.label} className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+            <div key={stat.label} className="bg-nexus-card rounded-xl p-4 border border-nexus-border">
               <div className={`${stat.color} mb-1`}>{stat.icon}</div>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
-              <div className="text-xs text-gray-500">{stat.label}</div>
+              <div className="text-2xl font-bold text-nexus-text">{stat.value}</div>
+              <div className="text-xs text-nexus-muted">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -181,15 +181,15 @@ const Automations: React.FC = () => {
       <FadeIn delay={0.1}>
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-muted" />
             <input type="text" placeholder="Search automations..." value={search} onChange={e => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500" />
+              className="w-full pl-9 pr-4 py-2 rounded-xl bg-nexus-card border border-nexus-border text-sm text-nexus-text outline-none focus:ring-2 focus:ring-nexus-primary" />
           </div>
           <div className="flex gap-1 flex-wrap">
             {CATEGORIES.map(cat => (
               <button key={cat} onClick={() => setCategory(cat)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                  category === cat ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500'
+                  category === cat ? 'bg-blue-500 text-white' : 'bg-nexus-surface text-nexus-muted'
                 }`}>{cat}</button>
             ))}
           </div>
@@ -201,16 +201,16 @@ const Automations: React.FC = () => {
         {filteredAutomations.map((auto, i) => (
           <FadeIn key={auto.id} delay={0.15 + i * 0.03}>
             <motion.div whileHover={{ y: -2 }}
-              className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+              className="bg-nexus-card rounded-2xl border border-nexus-border overflow-hidden">
               <div className="p-5">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <div className={`p-2 rounded-xl ${auto.enabled ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600' : 'bg-gray-100 dark:bg-gray-700 text-gray-400'}`}>
+                    <div className={`p-2 rounded-xl ${auto.enabled ? 'bg-nexus-warning/15 text-yellow-600' : 'bg-nexus-surface text-nexus-muted'}`}>
                       <Zap size={18} />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white">{auto.name}</h3>
-                      <p className="text-xs text-gray-500">{auto.description}</p>
+                      <h3 className="font-semibold text-nexus-text">{auto.name}</h3>
+                      <p className="text-xs text-nexus-muted">{auto.description}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -218,12 +218,12 @@ const Automations: React.FC = () => {
                       auto.category === 'Security' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
                       auto.category === 'Daily' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' :
                       auto.category === 'System' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400' :
-                      'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
+                      'bg-nexus-surface text-nexus-text'
                     }`}>{auto.category}</span>
                     <button onClick={() => toggleEnabled(auto.id)}
-                      className={`relative w-10 h-5 rounded-full transition-colors ${auto.enabled ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-600'}`}>
+                      className={`relative w-10 h-5 rounded-full transition-colors ${auto.enabled ? 'bg-green-500' : 'bg-nexus-border'}`}>
                       <motion.div animate={{ x: auto.enabled ? 20 : 2 }}
-                        className="absolute top-0.5 w-4 h-4 bg-white rounded-full shadow" />
+                        className="absolute top-0.5 w-4 h-4 bg-nexus-card rounded-full shadow" />
                     </button>
                   </div>
                 </div>
@@ -239,7 +239,7 @@ const Automations: React.FC = () => {
                   {/* Conditions */}
                   {auto.conditions.map((cond, ci) => (
                     <React.Fragment key={ci}>
-                      <ArrowRight size={14} className="text-gray-300 flex-shrink-0" />
+                      <ArrowRight size={14} className="text-nexus-muted flex-shrink-0" />
                       <div className="px-3 py-1.5 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 flex-shrink-0">
                         <span className="text-xs text-yellow-700 dark:text-yellow-300">{cond.label} {cond.operator} {cond.value}</span>
                       </div>
@@ -247,7 +247,7 @@ const Automations: React.FC = () => {
                   ))}
 
                   {/* Actions */}
-                  <ArrowRight size={14} className="text-gray-300 flex-shrink-0" />
+                  <ArrowRight size={14} className="text-nexus-muted flex-shrink-0" />
                   <div className="flex items-center gap-1">
                     {auto.actions.map((action, ai) => (
                       <div key={ai} className={`w-7 h-7 rounded-lg ${action.color} text-white flex items-center justify-center flex-shrink-0`}
@@ -258,7 +258,7 @@ const Automations: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 mt-3 text-xs text-gray-500">
+                <div className="flex items-center gap-4 mt-3 text-xs text-nexus-muted">
                   {auto.lastRun && <span className="flex items-center gap-1"><Clock size={10} /> Last: {auto.lastRun}</span>}
                   <span className="flex items-center gap-1"><Repeat size={10} /> {auto.runs} runs</span>
                   <button onClick={() => setSelectedAutomation(auto)} className="ml-auto text-blue-500 hover:text-blue-600 flex items-center gap-1">
@@ -279,18 +279,18 @@ const Automations: React.FC = () => {
             onClick={() => setSelectedAutomation(null)}>
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
               onClick={e => e.stopPropagation()}
-              className="bg-white dark:bg-gray-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl max-h-[80vh] overflow-y-auto">
+              className="bg-nexus-card rounded-2xl max-w-lg w-full p-6 shadow-2xl max-h-[80vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white">{selectedAutomation.name}</h3>
-                <button onClick={() => setSelectedAutomation(null)} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-                  <XCircle size={16} className="text-gray-400" />
+                <h3 className="text-lg font-bold text-nexus-text">{selectedAutomation.name}</h3>
+                <button onClick={() => setSelectedAutomation(null)} className="p-1.5 rounded-lg hover:bg-nexus-surface">
+                  <XCircle size={16} className="text-nexus-muted" />
                 </button>
               </div>
-              <p className="text-sm text-gray-500 mb-4">{selectedAutomation.description}</p>
+              <p className="text-sm text-nexus-muted mb-4">{selectedAutomation.description}</p>
 
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-xs font-semibold text-gray-500 uppercase mb-2">Trigger</h4>
+                  <h4 className="text-xs font-semibold text-nexus-muted uppercase mb-2">Trigger</h4>
                   <div className="p-3 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
                     <div className="flex items-center gap-2">
                       <span className="text-blue-500">{selectedAutomation.trigger.icon}</span>
@@ -302,7 +302,7 @@ const Automations: React.FC = () => {
 
                 {selectedAutomation.conditions.length > 0 && (
                   <div>
-                    <h4 className="text-xs font-semibold text-gray-500 uppercase mb-2">Conditions</h4>
+                    <h4 className="text-xs font-semibold text-nexus-muted uppercase mb-2">Conditions</h4>
                     {selectedAutomation.conditions.map((cond, i) => (
                       <div key={i} className="p-3 rounded-xl bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 text-sm text-yellow-700 dark:text-yellow-300">
                         {cond.label} {cond.operator} {cond.value}
@@ -312,14 +312,14 @@ const Automations: React.FC = () => {
                 )}
 
                 <div>
-                  <h4 className="text-xs font-semibold text-gray-500 uppercase mb-2">Actions ({selectedAutomation.actions.length})</h4>
+                  <h4 className="text-xs font-semibold text-nexus-muted uppercase mb-2">Actions ({selectedAutomation.actions.length})</h4>
                   <div className="space-y-2">
                     {selectedAutomation.actions.map((action, i) => (
-                      <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50">
+                      <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-nexus-surface/50">
                         <div className={`p-1.5 rounded-lg ${action.color} text-white`}>{action.icon}</div>
                         <div>
-                          <div className="text-sm font-medium text-gray-900 dark:text-white">{action.label}</div>
-                          <div className="text-xs text-gray-500">{action.detail}</div>
+                          <div className="text-sm font-medium text-nexus-text">{action.label}</div>
+                          <div className="text-xs text-nexus-muted">{action.detail}</div>
                         </div>
                       </div>
                     ))}
@@ -331,10 +331,10 @@ const Automations: React.FC = () => {
                 <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-green-500 text-white rounded-xl text-sm font-medium">
                   <Play size={14} /> Run Now
                 </button>
-                <button className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-sm font-medium">
+                <button className="px-4 py-2 bg-nexus-surface text-nexus-text rounded-xl text-sm font-medium">
                   <Edit3 size={14} />
                 </button>
-                <button className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-red-500 rounded-xl text-sm font-medium">
+                <button className="px-4 py-2 bg-nexus-surface text-red-500 rounded-xl text-sm font-medium">
                   <Trash2 size={14} />
                 </button>
               </div>

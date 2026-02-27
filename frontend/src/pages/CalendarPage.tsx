@@ -26,9 +26,9 @@ interface CalendarEvent {
 const eventColors: Record<string, { bg: string; text: string; dot: string }> = {
   meeting: { bg: 'bg-blue-100 dark:bg-blue-900/30', text: 'text-blue-700 dark:text-blue-400', dot: 'bg-blue-500' },
   task: { bg: 'bg-purple-100 dark:bg-purple-900/30', text: 'text-purple-700 dark:text-purple-400', dot: 'bg-purple-500' },
-  reminder: { bg: 'bg-yellow-100 dark:bg-yellow-900/30', text: 'text-yellow-700 dark:text-yellow-400', dot: 'bg-yellow-500' },
-  event: { bg: 'bg-green-100 dark:bg-green-900/30', text: 'text-green-700 dark:text-green-400', dot: 'bg-green-500' },
-  deadline: { bg: 'bg-red-100 dark:bg-red-900/30', text: 'text-red-700 dark:text-red-400', dot: 'bg-red-500' },
+  reminder: { bg: 'bg-nexus-warning/15', text: 'text-nexus-warning', dot: 'bg-yellow-500' },
+  event: { bg: 'bg-nexus-success/15', text: 'text-nexus-success', dot: 'bg-green-500' },
+  deadline: { bg: 'bg-nexus-error/15', text: 'text-nexus-error', dot: 'bg-red-500' },
 };
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -122,18 +122,18 @@ const CalendarPage: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <CalendarIcon className="text-blue-500" size={32} />
               Calendar
             </h1>
-            <p className="text-gray-500 mt-1">Manage your schedule, events, and reminders</p>
+            <p className="text-nexus-muted mt-1">Manage your schedule, events, and reminders</p>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex items-center bg-gray-100 dark:bg-gray-700 rounded-xl p-1">
+            <div className="flex items-center bg-nexus-surface rounded-xl p-1">
               {(['month', 'week', 'day'] as const).map(v => (
                 <button key={v} onClick={() => setView(v)}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium capitalize transition-all ${
-                    view === v ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500'}`}>
+                    view === v ? 'bg-white text-nexus-text shadow-sm' : 'text-nexus-muted'}`}>
                   {v}
                 </button>
               ))}
@@ -150,10 +150,10 @@ const CalendarPage: React.FC = () => {
         {/* Calendar Grid */}
         <div className="xl:col-span-3">
           <FadeIn delay={0.1}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-nexus-card rounded-2xl border border-nexus-border p-6">
               {/* Month Navigation */}
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                <h2 className="text-xl font-bold text-nexus-text">
                   {months[month]} {year}
                 </h2>
                 <div className="flex items-center gap-2">
@@ -161,11 +161,11 @@ const CalendarPage: React.FC = () => {
                     className="px-3 py-1.5 text-sm font-medium text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg">
                     Today
                   </button>
-                  <button onClick={prevMonth} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <ChevronLeft size={18} className="text-gray-500" />
+                  <button onClick={prevMonth} className="p-2 rounded-lg hover:bg-nexus-surface">
+                    <ChevronLeft size={18} className="text-nexus-muted" />
                   </button>
-                  <button onClick={nextMonth} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <ChevronRight size={18} className="text-gray-500" />
+                  <button onClick={nextMonth} className="p-2 rounded-lg hover:bg-nexus-surface">
+                    <ChevronRight size={18} className="text-nexus-muted" />
                   </button>
                 </div>
               </div>
@@ -173,7 +173,7 @@ const CalendarPage: React.FC = () => {
               {/* Week Day Headers */}
               <div className="grid grid-cols-7 gap-1 mb-2">
                 {weekDays.map(d => (
-                  <div key={d} className="text-center text-xs font-semibold text-gray-400 uppercase py-2">{d}</div>
+                  <div key={d} className="text-center text-xs font-semibold text-nexus-muted uppercase py-2">{d}</div>
                 ))}
               </div>
 
@@ -194,13 +194,13 @@ const CalendarPage: React.FC = () => {
                       className={`h-24 rounded-lg p-1.5 cursor-pointer border transition-all ${
                         isSelected ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-900/10' :
                         isToday ? 'border-blue-200 dark:border-blue-800 bg-blue-50/30 dark:bg-blue-900/5' :
-                        'border-transparent hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                        'border-transparent hover:bg-nexus-surface/60/50'
                       }`}
                     >
                       <div className={`text-sm font-medium mb-1 ${
                         isToday ? 'text-blue-500' :
                         isSelected ? 'text-blue-600 dark:text-blue-400' :
-                        'text-gray-700 dark:text-gray-300'
+                        'text-nexus-text'
                       }`}>
                         {isToday ? (
                           <span className="inline-flex items-center justify-center w-6 h-6 bg-blue-500 text-white rounded-full text-xs">{day}</span>
@@ -213,7 +213,7 @@ const CalendarPage: React.FC = () => {
                           </div>
                         ))}
                         {dayEvents.length > 2 && (
-                          <div className="text-xs text-gray-400 pl-1">+{dayEvents.length - 2} more</div>
+                          <div className="text-xs text-nexus-muted pl-1">+{dayEvents.length - 2} more</div>
                         )}
                       </div>
                     </motion.div>
@@ -229,12 +229,12 @@ const CalendarPage: React.FC = () => {
           {/* Selected Day Events */}
           {selectedDate && (
             <FadeIn delay={0.15}>
-              <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5">
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+              <div className="bg-nexus-card rounded-2xl border border-nexus-border p-5">
+                <h3 className="font-semibold text-nexus-text mb-4">
                   {new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
                 </h3>
                 {selectedDayEvents.length === 0 ? (
-                  <p className="text-sm text-gray-500 text-center py-6">No events</p>
+                  <p className="text-sm text-nexus-muted text-center py-6">No events</p>
                 ) : (
                   <div className="space-y-2">
                     {selectedDayEvents.map(ev => (
@@ -247,12 +247,12 @@ const CalendarPage: React.FC = () => {
                         className={`p-3 rounded-xl cursor-pointer border-l-4 ${eventColors[ev.type]?.bg}`}
                         style={{ borderLeftColor: ev.type === 'meeting' ? '#3b82f6' : ev.type === 'task' ? '#8b5cf6' : ev.type === 'deadline' ? '#ef4444' : ev.type === 'event' ? '#10b981' : '#f59e0b' }}
                       >
-                        <div className="font-medium text-sm text-gray-900 dark:text-white">{ev.title}</div>
-                        <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
+                        <div className="font-medium text-sm text-nexus-text">{ev.title}</div>
+                        <div className="flex items-center gap-2 text-xs text-nexus-muted mt-1">
                           <Clock size={12} /> {ev.startTime} - {ev.endTime}
                         </div>
                         {ev.location && (
-                          <div className="flex items-center gap-1 text-xs text-gray-400 mt-0.5">
+                          <div className="flex items-center gap-1 text-xs text-nexus-muted mt-0.5">
                             <MapPin size={10} /> {ev.location}
                           </div>
                         )}
@@ -266,8 +266,8 @@ const CalendarPage: React.FC = () => {
 
           {/* Upcoming Events */}
           <FadeIn delay={0.2}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <div className="bg-nexus-card rounded-2xl border border-nexus-border p-5">
+              <h3 className="font-semibold text-nexus-text mb-4 flex items-center gap-2">
                 <Clock size={16} className="text-blue-500" /> Upcoming
               </h3>
               <div className="space-y-3">
@@ -276,8 +276,8 @@ const CalendarPage: React.FC = () => {
                     className="flex items-start gap-3 cursor-pointer group" onClick={() => setSelectedEvent(ev)}>
                     <div className={`w-2 h-2 rounded-full mt-1.5 ${eventColors[ev.type]?.dot}`} />
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-blue-500 transition-colors truncate">{ev.title}</div>
-                      <div className="text-xs text-gray-400">{ev.date} · {ev.startTime}</div>
+                      <div className="text-sm font-medium text-nexus-text group-hover:text-blue-500 transition-colors truncate">{ev.title}</div>
+                      <div className="text-xs text-nexus-muted">{ev.date} · {ev.startTime}</div>
                     </div>
                     <span className={`px-1.5 py-0.5 rounded text-xs capitalize ${eventColors[ev.type]?.bg} ${eventColors[ev.type]?.text}`}>
                       {ev.type}
@@ -290,13 +290,13 @@ const CalendarPage: React.FC = () => {
 
           {/* Legend */}
           <FadeIn delay={0.25}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-3 text-sm">Event Types</h3>
+            <div className="bg-nexus-card rounded-2xl border border-nexus-border p-5">
+              <h3 className="font-semibold text-nexus-text mb-3 text-sm">Event Types</h3>
               <div className="space-y-2">
                 {Object.entries(eventColors).map(([type, colors]) => (
                   <div key={type} className="flex items-center gap-2 text-sm">
                     <div className={`w-3 h-3 rounded-full ${colors.dot}`} />
-                    <span className="text-gray-600 dark:text-gray-400 capitalize">{type}</span>
+                    <span className="text-nexus-muted capitalize">{type}</span>
                   </div>
                 ))}
               </div>
@@ -313,47 +313,47 @@ const CalendarPage: React.FC = () => {
             onClick={() => setSelectedEvent(null)}>
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
               onClick={e => e.stopPropagation()}
-              className="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full p-6 shadow-2xl">
+              className="bg-nexus-card rounded-2xl max-w-md w-full p-6 shadow-2xl">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <div className={`w-3 h-3 rounded-full ${eventColors[selectedEvent.type]?.dot}`} />
                   <span className={`text-xs font-medium capitalize ${eventColors[selectedEvent.type]?.text}`}>{selectedEvent.type}</span>
                 </div>
-                <button onClick={() => setSelectedEvent(null)} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-                  <X size={16} className="text-gray-400" />
+                <button onClick={() => setSelectedEvent(null)} className="p-1.5 rounded-lg hover:bg-nexus-surface">
+                  <X size={16} className="text-nexus-muted" />
                 </button>
               </div>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{selectedEvent.title}</h2>
-              <p className="text-gray-500 mb-4">{selectedEvent.description}</p>
+              <h2 className="text-xl font-bold text-nexus-text mb-2">{selectedEvent.title}</h2>
+              <p className="text-nexus-muted mb-4">{selectedEvent.description}</p>
               <div className="space-y-3">
-                <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
-                  <CalendarIcon size={16} className="text-gray-400" />
+                <div className="flex items-center gap-3 text-sm text-nexus-text">
+                  <CalendarIcon size={16} className="text-nexus-muted" />
                   <span>{new Date(selectedEvent.date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
-                  <Clock size={16} className="text-gray-400" />
+                <div className="flex items-center gap-3 text-sm text-nexus-text">
+                  <Clock size={16} className="text-nexus-muted" />
                   <span>{selectedEvent.startTime} - {selectedEvent.endTime}</span>
                 </div>
                 {selectedEvent.location && (
-                  <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
-                    <MapPin size={16} className="text-gray-400" />
+                  <div className="flex items-center gap-3 text-sm text-nexus-text">
+                    <MapPin size={16} className="text-nexus-muted" />
                     <span>{selectedEvent.location}</span>
                   </div>
                 )}
                 {selectedEvent.attendees && (
-                  <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
-                    <Users size={16} className="text-gray-400" />
+                  <div className="flex items-center gap-3 text-sm text-nexus-text">
+                    <Users size={16} className="text-nexus-muted" />
                     <span>{selectedEvent.attendees} attendees</span>
                   </div>
                 )}
                 {selectedEvent.recurring && (
-                  <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
-                    <Repeat size={16} className="text-gray-400" />
+                  <div className="flex items-center gap-3 text-sm text-nexus-text">
+                    <Repeat size={16} className="text-nexus-muted" />
                     <span>Recurring</span>
                   </div>
                 )}
                 <div className="flex items-center gap-3 text-sm">
-                  <AlertCircle size={16} className="text-gray-400" />
+                  <AlertCircle size={16} className="text-nexus-muted" />
                   <span className={`capitalize font-medium ${
                     selectedEvent.priority === 'high' ? 'text-red-500' :
                     selectedEvent.priority === 'medium' ? 'text-yellow-500' : 'text-green-500'
@@ -363,7 +363,7 @@ const CalendarPage: React.FC = () => {
               <div className="flex gap-3 mt-6">
                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                   className="flex-1 px-4 py-2.5 bg-blue-500 text-white rounded-xl font-medium">Edit</motion.button>
-                <button className="px-4 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-medium">Delete</button>
+                <button className="px-4 py-2.5 bg-nexus-surface text-nexus-text rounded-xl font-medium">Delete</button>
               </div>
             </motion.div>
           </motion.div>

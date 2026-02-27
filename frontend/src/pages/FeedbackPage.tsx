@@ -44,7 +44,7 @@ const statusConfig = {
   'in-review': { color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
   planned: { color: 'text-purple-400', bg: 'bg-purple-500/10' },
   resolved: { color: 'text-green-400', bg: 'bg-green-500/10' },
-  closed: { color: 'text-gray-400', bg: 'bg-gray-500/10' },
+  closed: { color: 'text-nexus-muted', bg: 'bg-gray-500/10' },
 };
 
 const sampleFeedback: FeedbackItem[] = [

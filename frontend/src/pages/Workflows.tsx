@@ -162,7 +162,7 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
   const styles: Record<string, string> = {
     active: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
     paused: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
-    draft: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300',
+    draft: 'bg-nexus-surface text-nexus-text',
     error: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
   };
   const icons: Record<string, React.ReactNode> = {
@@ -214,7 +214,7 @@ const WorkflowCard: React.FC<{
     transition={{ delay: index * 0.05 }}
     whileHover={{ y: -4, boxShadow: '0 12px 40px rgba(0,0,0,0.12)' }}
     onClick={onClick}
-    className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 cursor-pointer group"
+    className="bg-nexus-card rounded-2xl p-6 border border-nexus-border cursor-pointer group"
   >
     <div className="flex items-start justify-between mb-4">
       <div className="flex items-center gap-3">
@@ -222,10 +222,10 @@ const WorkflowCard: React.FC<{
           <Workflow size={20} className="text-indigo-500" />
         </div>
         <div>
-          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-indigo-500 transition-colors">
+          <h3 className="font-semibold text-nexus-text group-hover:text-indigo-500 transition-colors">
             {workflow.name}
           </h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1">
+          <p className="text-sm text-nexus-muted mt-0.5 line-clamp-1">
             {workflow.description}
           </p>
         </div>
@@ -246,7 +246,7 @@ const WorkflowCard: React.FC<{
             <span className="max-w-[80px] truncate">{node.name}</span>
           </motion.div>
           {i < workflow.nodes.length - 1 && (
-            <ArrowRight size={14} className="text-gray-300 dark:text-gray-600 flex-shrink-0" />
+            <ArrowRight size={14} className="text-nexus-muted dark:text-nexus-muted flex-shrink-0" />
           )}
         </React.Fragment>
       ))}
@@ -254,23 +254,23 @@ const WorkflowCard: React.FC<{
 
     {/* Stats */}
     <div className="grid grid-cols-3 gap-3 mb-4">
-      <div className="text-center p-2 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-        <div className="text-lg font-bold text-gray-900 dark:text-white">{workflow.runs}</div>
-        <div className="text-xs text-gray-500">Total Runs</div>
+      <div className="text-center p-2 rounded-lg bg-nexus-surface/50">
+        <div className="text-lg font-bold text-nexus-text">{workflow.runs}</div>
+        <div className="text-xs text-nexus-muted">Total Runs</div>
       </div>
-      <div className="text-center p-2 rounded-lg bg-gray-50 dark:bg-gray-700/50">
+      <div className="text-center p-2 rounded-lg bg-nexus-surface/50">
         <div className="text-lg font-bold text-green-500">{workflow.successRate}%</div>
-        <div className="text-xs text-gray-500">Success</div>
+        <div className="text-xs text-nexus-muted">Success</div>
       </div>
-      <div className="text-center p-2 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-        <div className="text-lg font-bold text-gray-900 dark:text-white">{workflow.avgDuration}</div>
-        <div className="text-xs text-gray-500">Avg Time</div>
+      <div className="text-center p-2 rounded-lg bg-nexus-surface/50">
+        <div className="text-lg font-bold text-nexus-text">{workflow.avgDuration}</div>
+        <div className="text-xs text-nexus-muted">Avg Time</div>
       </div>
     </div>
 
     {/* Footer */}
-    <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-700">
-      <div className="flex items-center gap-2 text-sm text-gray-500">
+    <div className="flex items-center justify-between pt-3 border-t border-nexus-border">
+      <div className="flex items-center gap-2 text-sm text-nexus-muted">
         <Clock size={14} />
         <span>Last: {workflow.lastRun}</span>
       </div>
@@ -284,7 +284,7 @@ const WorkflowCard: React.FC<{
     </div>
 
     {/* Action Buttons */}
-    <div className="flex items-center gap-2 mt-4 pt-3 border-t border-gray-100 dark:border-gray-700">
+    <div className="flex items-center gap-2 mt-4 pt-3 border-t border-nexus-border">
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -296,19 +296,19 @@ const WorkflowCard: React.FC<{
       </motion.button>
       <button
         onClick={(e) => e.stopPropagation()}
-        className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+        className="p-1.5 rounded-lg text-nexus-muted hover:text-nexus-muted hover:bg-nexus-surface transition-colors"
       >
         <Copy size={14} />
       </button>
       <button
         onClick={(e) => e.stopPropagation()}
-        className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+        className="p-1.5 rounded-lg text-nexus-muted hover:text-nexus-muted hover:bg-nexus-surface transition-colors"
       >
         <Settings2 size={14} />
       </button>
       <button
         onClick={(e) => e.stopPropagation()}
-        className="p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+        className="p-1.5 rounded-lg text-nexus-muted hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
       >
         <Trash2 size={14} />
       </button>
@@ -325,26 +325,26 @@ const WorkflowDetail: React.FC<{
     initial={{ opacity: 0, x: 300 }}
     animate={{ opacity: 1, x: 0 }}
     exit={{ opacity: 0, x: 300 }}
-    className="fixed inset-y-0 right-0 w-full max-w-lg bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 shadow-2xl z-50 overflow-y-auto"
+    className="fixed inset-y-0 right-0 w-full max-w-lg bg-nexus-card border-l border-nexus-border shadow-2xl z-50 overflow-y-auto"
   >
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white">{workflow.name}</h2>
-        <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-          <XCircle size={20} className="text-gray-400" />
+        <h2 className="text-xl font-bold text-nexus-text">{workflow.name}</h2>
+        <button onClick={onClose} className="p-2 rounded-lg hover:bg-nexus-surface transition-colors">
+          <XCircle size={20} className="text-nexus-muted" />
         </button>
       </div>
 
-      <p className="text-gray-500 dark:text-gray-400 mb-6">{workflow.description}</p>
+      <p className="text-nexus-muted mb-6">{workflow.description}</p>
 
       <div className="flex items-center gap-3 mb-6">
         <StatusBadge status={workflow.status} />
-        <span className="text-sm text-gray-500">Created by {workflow.createdBy}</span>
+        <span className="text-sm text-nexus-muted">Created by {workflow.createdBy}</span>
       </div>
 
       {/* Pipeline Visualization */}
       <div className="mb-6">
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">Pipeline Steps</h3>
+        <h3 className="text-sm font-semibold text-nexus-text mb-4 uppercase tracking-wider">Pipeline Steps</h3>
         <div className="space-y-3">
           {workflow.nodes.map((node, i) => (
             <motion.div
@@ -355,17 +355,17 @@ const WorkflowDetail: React.FC<{
               className="relative"
             >
               {i > 0 && (
-                <div className="absolute -top-3 left-5 w-0.5 h-3 bg-gray-200 dark:bg-gray-600" />
+                <div className="absolute -top-3 left-5 w-0.5 h-3 bg-nexus-surface" />
               )}
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-nexus-surface/50 border border-nexus-border">
                 <div className={`p-2 rounded-lg ${nodeTypeColors[node.type]} text-white`}>
                   {nodeTypeIcons[node.type]}
                 </div>
                 <div className="flex-1">
-                  <div className="font-medium text-sm text-gray-900 dark:text-white">{node.name}</div>
-                  <div className="text-xs text-gray-500 capitalize">{node.type}</div>
+                  <div className="font-medium text-sm text-nexus-text">{node.name}</div>
+                  <div className="text-xs text-nexus-muted capitalize">{node.type}</div>
                 </div>
-                <div className="text-xs text-gray-400">Step {i + 1}</div>
+                <div className="text-xs text-nexus-muted">Step {i + 1}</div>
               </div>
             </motion.div>
           ))}
@@ -374,45 +374,45 @@ const WorkflowDetail: React.FC<{
 
       {/* Stats */}
       <div className="mb-6">
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">Statistics</h3>
+        <h3 className="text-sm font-semibold text-nexus-text mb-4 uppercase tracking-wider">Statistics</h3>
         <div className="grid grid-cols-2 gap-3">
-          <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50">
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{workflow.runs}</div>
-            <div className="text-sm text-gray-500">Total Runs</div>
+          <div className="p-4 rounded-xl bg-nexus-surface/50">
+            <div className="text-2xl font-bold text-nexus-text">{workflow.runs}</div>
+            <div className="text-sm text-nexus-muted">Total Runs</div>
           </div>
-          <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50">
+          <div className="p-4 rounded-xl bg-nexus-surface/50">
             <div className="text-2xl font-bold text-green-500">{workflow.successRate}%</div>
-            <div className="text-sm text-gray-500">Success Rate</div>
+            <div className="text-sm text-nexus-muted">Success Rate</div>
           </div>
-          <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50">
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{workflow.avgDuration}</div>
-            <div className="text-sm text-gray-500">Avg Duration</div>
+          <div className="p-4 rounded-xl bg-nexus-surface/50">
+            <div className="text-2xl font-bold text-nexus-text">{workflow.avgDuration}</div>
+            <div className="text-sm text-nexus-muted">Avg Duration</div>
           </div>
-          <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50">
+          <div className="p-4 rounded-xl bg-nexus-surface/50">
             <div className="text-2xl font-bold text-indigo-500">{workflow.nodes.length}</div>
-            <div className="text-sm text-gray-500">Steps</div>
+            <div className="text-sm text-nexus-muted">Steps</div>
           </div>
         </div>
       </div>
 
       {/* Schedule Info */}
       <div className="mb-6">
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 uppercase tracking-wider">Schedule</h3>
+        <h3 className="text-sm font-semibold text-nexus-text mb-3 uppercase tracking-wider">Schedule</h3>
         <div className="space-y-2">
-          <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-            <span className="text-sm text-gray-500">Last Run</span>
-            <span className="text-sm font-medium text-gray-900 dark:text-white">{workflow.lastRun}</span>
+          <div className="flex items-center justify-between p-3 rounded-lg bg-nexus-surface/50">
+            <span className="text-sm text-nexus-muted">Last Run</span>
+            <span className="text-sm font-medium text-nexus-text">{workflow.lastRun}</span>
           </div>
-          <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-            <span className="text-sm text-gray-500">Next Run</span>
-            <span className="text-sm font-medium text-gray-900 dark:text-white">{workflow.nextRun}</span>
+          <div className="flex items-center justify-between p-3 rounded-lg bg-nexus-surface/50">
+            <span className="text-sm text-nexus-muted">Next Run</span>
+            <span className="text-sm font-medium text-nexus-text">{workflow.nextRun}</span>
           </div>
         </div>
       </div>
 
       {/* Tags */}
       <div className="mb-6">
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 uppercase tracking-wider">Tags</h3>
+        <h3 className="text-sm font-semibold text-nexus-text mb-3 uppercase tracking-wider">Tags</h3>
         <div className="flex flex-wrap gap-2">
           {workflow.tags.map(tag => (
             <span key={tag} className="px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-sm">
@@ -434,7 +434,7 @@ const WorkflowDetail: React.FC<{
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="flex items-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+          className="flex items-center gap-2 px-4 py-3 bg-nexus-surface text-nexus-text rounded-xl font-medium hover:bg-nexus-surface transition-colors"
         >
           <Edit3 size={18} /> Edit
         </motion.button>
@@ -476,11 +476,11 @@ const Workflows: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <Workflow className="text-indigo-500" size={32} />
               Workflow Builder
             </h1>
-            <p className="text-gray-500 dark:text-gray-400 mt-1">
+            <p className="text-nexus-muted mt-1">
               Create, manage, and monitor automated workflows
             </p>
           </div>
@@ -508,13 +508,13 @@ const Workflows: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700"
+              className="bg-nexus-card rounded-xl p-4 border border-nexus-border"
             >
               <div className="flex items-center gap-3">
                 <div className={`p-2 rounded-lg ${stat.color}`}>{stat.icon}</div>
                 <div>
-                  <div className="text-xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
-                  <div className="text-xs text-gray-500">{stat.label}</div>
+                  <div className="text-xl font-bold text-nexus-text">{stat.value}</div>
+                  <div className="text-xs text-nexus-muted">{stat.label}</div>
                 </div>
               </div>
             </motion.div>
@@ -526,24 +526,24 @@ const Workflows: React.FC = () => {
       <FadeIn delay={0.2}>
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-nexus-muted" />
             <input
               type="text"
               placeholder="Search workflows..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-nexus-card border border-nexus-border text-nexus-text focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
             />
           </div>
-          <div className="flex items-center bg-gray-100 dark:bg-gray-700 rounded-xl p-1">
+          <div className="flex items-center bg-nexus-surface rounded-xl p-1">
             {['all', 'active', 'paused', 'draft'].map((status) => (
               <button
                 key={status}
                 onClick={() => setFilterStatus(status)}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all capitalize ${
                   filterStatus === status
-                    ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                    : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                    ? 'bg-white text-nexus-text shadow-sm'
+                    : 'text-nexus-muted hover:text-nexus-text dark:hover:text-nexus-muted'
                 }`}
               >
                 {status}
@@ -568,9 +568,9 @@ const Workflows: React.FC = () => {
 
       {filteredWorkflows.length === 0 && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-16">
-          <Workflow size={48} className="text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No workflows found</h3>
-          <p className="text-gray-500">Try adjusting your search or create a new workflow.</p>
+          <Workflow size={48} className="text-nexus-muted dark:text-nexus-muted mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-nexus-text mb-2">No workflows found</h3>
+          <p className="text-nexus-muted">Try adjusting your search or create a new workflow.</p>
         </motion.div>
       )}
 

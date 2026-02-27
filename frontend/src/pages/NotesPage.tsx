@@ -26,7 +26,7 @@ interface Note {
 }
 
 const noteColors = [
-  'bg-white dark:bg-gray-800', 'bg-yellow-50 dark:bg-yellow-900/20',
+  'bg-nexus-card', 'bg-yellow-50 dark:bg-yellow-900/20',
   'bg-blue-50 dark:bg-blue-900/20', 'bg-green-50 dark:bg-green-900/20',
   'bg-pink-50 dark:bg-pink-900/20', 'bg-purple-50 dark:bg-purple-900/20',
   'bg-orange-50 dark:bg-orange-900/20', 'bg-cyan-50 dark:bg-cyan-900/20',
@@ -86,11 +86,11 @@ const NotesPage: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <StickyNote className="text-yellow-500" size={32} />
               Notes
             </h1>
-            <p className="text-gray-500 mt-1">{stats.total} notes · {stats.pinned} pinned · {stats.starred} starred</p>
+            <p className="text-nexus-muted mt-1">{stats.total} notes · {stats.pinned} pinned · {stats.starred} starred</p>
           </div>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-5 py-2.5 bg-yellow-500 text-white rounded-xl font-medium hover:bg-yellow-600 shadow-lg shadow-yellow-500/25">
@@ -103,23 +103,23 @@ const NotesPage: React.FC = () => {
       <FadeIn delay={0.1}>
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1 max-w-md">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-muted" />
             <input type="text" placeholder="Search notes..." value={search} onChange={e => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 outline-none" />
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-nexus-card border border-nexus-border text-nexus-text focus:ring-2 focus:ring-yellow-500 outline-none" />
           </div>
           <select value={filterCategory} onChange={e => setFilterCategory(e.target.value)}
-            className="px-3 py-2.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm outline-none text-gray-700 dark:text-gray-300">
+            className="px-3 py-2.5 rounded-xl bg-nexus-card border border-nexus-border text-sm outline-none text-nexus-text">
             {categories.map(c => <option key={c} value={c}>{c === 'all' ? 'All Categories' : c}</option>)}
           </select>
           <div className="flex items-center gap-2">
-            <button onClick={() => setView('grid')} className={`p-2 rounded-lg ${view === 'grid' ? 'bg-gray-200 dark:bg-gray-700' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}>
-              <Grid3X3 size={16} className={view === 'grid' ? 'text-gray-900 dark:text-white' : 'text-gray-400'} />
+            <button onClick={() => setView('grid')} className={`p-2 rounded-lg ${view === 'grid' ? 'bg-nexus-surface' : 'hover:bg-nexus-surface'}`}>
+              <Grid3X3 size={16} className={view === 'grid' ? 'text-nexus-text' : 'text-nexus-muted'} />
             </button>
-            <button onClick={() => setView('list')} className={`p-2 rounded-lg ${view === 'list' ? 'bg-gray-200 dark:bg-gray-700' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}>
-              <List size={16} className={view === 'list' ? 'text-gray-900 dark:text-white' : 'text-gray-400'} />
+            <button onClick={() => setView('list')} className={`p-2 rounded-lg ${view === 'list' ? 'bg-nexus-surface' : 'hover:bg-nexus-surface'}`}>
+              <List size={16} className={view === 'list' ? 'text-nexus-text' : 'text-nexus-muted'} />
             </button>
             <button onClick={() => setShowArchived(!showArchived)}
-              className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm ${showArchived ? 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white' : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700'}`}>
+              className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm ${showArchived ? 'bg-nexus-surface text-nexus-text' : 'text-nexus-muted hover:bg-nexus-surface'}`}>
               <Archive size={14} /> {showArchived ? 'Archived' : 'Active'}
             </button>
           </div>
@@ -137,7 +137,7 @@ const NotesPage: React.FC = () => {
               transition={{ delay: i * 0.03 }}
               whileHover={{ y: -4, boxShadow: '0 8px 30px rgba(0,0,0,0.1)' }}
               onClick={() => setSelectedNote(note)}
-              className={`${note.color} rounded-2xl p-5 border border-gray-200 dark:border-gray-700 cursor-pointer group relative`}
+              className={`${note.color} rounded-2xl p-5 border border-nexus-border cursor-pointer group relative`}
             >
               {note.pinned && (
                 <div className="absolute -top-1.5 -right-1.5">
@@ -145,23 +145,23 @@ const NotesPage: React.FC = () => {
                 </div>
               )}
               <div className="flex items-start justify-between mb-3">
-                <h3 className="font-semibold text-gray-900 dark:text-white text-sm line-clamp-1 flex-1">{note.title}</h3>
+                <h3 className="font-semibold text-nexus-text text-sm line-clamp-1 flex-1">{note.title}</h3>
                 <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button onClick={(e) => { e.stopPropagation(); toggleStar(note.id); }}
-                    className={note.starred ? 'text-yellow-400' : 'text-gray-300'}>
+                    className={note.starred ? 'text-yellow-400' : 'text-nexus-muted'}>
                     <Star size={14} fill={note.starred ? 'currentColor' : 'none'} />
                   </button>
                 </div>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-3 mb-3">{note.preview}</p>
+              <p className="text-xs text-nexus-muted line-clamp-3 mb-3">{note.preview}</p>
               <div className="flex flex-wrap gap-1 mb-3">
                 {note.tags.map(tag => (
-                  <span key={tag} className="px-1.5 py-0.5 rounded bg-gray-200/50 dark:bg-gray-600/50 text-gray-600 dark:text-gray-400 text-xs">
+                  <span key={tag} className="px-1.5 py-0.5 rounded bg-nexus-border/30 text-nexus-muted text-xs">
                     #{tag}
                   </span>
                 ))}
               </div>
-              <div className="flex items-center justify-between pt-2 border-t border-gray-200/50 dark:border-gray-600/50 text-xs text-gray-400">
+              <div className="flex items-center justify-between pt-2 border-t border-nexus-border/50 text-xs text-nexus-muted">
                 <span className="flex items-center gap-1"><Clock size={10} /> {note.updatedAt}</span>
                 <span>{note.wordCount} words</span>
               </div>
@@ -169,7 +169,7 @@ const NotesPage: React.FC = () => {
           ))}
         </div>
       ) : (
-        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 divide-y divide-gray-100 dark:divide-gray-700">
+        <div className="bg-nexus-card rounded-2xl border border-nexus-border divide-y divide-nexus-border">
           {filtered.map((note, i) => (
             <motion.div
               key={note.id}
@@ -177,18 +177,18 @@ const NotesPage: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: i * 0.02 }}
               onClick={() => setSelectedNote(note)}
-              className="flex items-center gap-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-700/30 cursor-pointer group transition-colors"
+              className="flex items-center gap-4 p-4 hover:bg-nexus-surface/60/30 cursor-pointer group transition-colors"
             >
               {note.pinned && <Pin size={14} className="text-red-500 fill-red-500 rotate-45 flex-shrink-0" />}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h4 className="font-medium text-sm text-gray-900 dark:text-white truncate">{note.title}</h4>
+                  <h4 className="font-medium text-sm text-nexus-text truncate">{note.title}</h4>
                   {note.starred && <Star size={12} className="text-yellow-400 fill-yellow-400 flex-shrink-0" />}
                 </div>
-                <p className="text-xs text-gray-500 truncate mt-0.5">{note.preview}</p>
+                <p className="text-xs text-nexus-muted truncate mt-0.5">{note.preview}</p>
               </div>
-              <span className="text-xs text-gray-400 px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 flex-shrink-0">{note.category}</span>
-              <span className="text-xs text-gray-400 flex-shrink-0">{note.updatedAt}</span>
+              <span className="text-xs text-nexus-muted px-2 py-0.5 rounded-full bg-nexus-surface flex-shrink-0">{note.category}</span>
+              <span className="text-xs text-nexus-muted flex-shrink-0">{note.updatedAt}</span>
             </motion.div>
           ))}
         </div>
@@ -196,9 +196,9 @@ const NotesPage: React.FC = () => {
 
       {filtered.length === 0 && (
         <div className="text-center py-16">
-          <StickyNote size={48} className="text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No notes found</h3>
-          <p className="text-gray-500">Create a new note or adjust your filters.</p>
+          <StickyNote size={48} className="text-nexus-muted mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-nexus-text mb-2">No notes found</h3>
+          <p className="text-nexus-muted">Create a new note or adjust your filters.</p>
         </div>
       )}
 
@@ -210,45 +210,45 @@ const NotesPage: React.FC = () => {
             onClick={() => setSelectedNote(null)}>
             <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
               onClick={e => e.stopPropagation()}
-              className={`${selectedNote.color} rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-2xl border border-gray-200 dark:border-gray-700`}>
+              className={`${selectedNote.color} rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-2xl border border-nexus-border`}>
               <div className="p-6">
                 {/* Toolbar */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
                     <button onClick={() => togglePin(selectedNote.id)}
-                      className={`p-1.5 rounded-lg ${selectedNote.pinned ? 'text-red-500' : 'text-gray-400 hover:text-gray-600'}`}>
+                      className={`p-1.5 rounded-lg ${selectedNote.pinned ? 'text-red-500' : 'text-nexus-muted hover:text-nexus-muted'}`}>
                       <Pin size={16} className={selectedNote.pinned ? 'fill-red-500 rotate-45' : ''} />
                     </button>
                     <button onClick={() => toggleStar(selectedNote.id)}
-                      className={`p-1.5 rounded-lg ${selectedNote.starred ? 'text-yellow-400' : 'text-gray-400 hover:text-gray-600'}`}>
+                      className={`p-1.5 rounded-lg ${selectedNote.starred ? 'text-yellow-400' : 'text-nexus-muted hover:text-nexus-muted'}`}>
                       <Star size={16} fill={selectedNote.starred ? 'currentColor' : 'none'} />
                     </button>
-                    <span className="text-xs text-gray-400 px-2 py-0.5 bg-gray-200/50 dark:bg-gray-600/50 rounded-full">{selectedNote.category}</span>
+                    <span className="text-xs text-nexus-muted px-2 py-0.5 bg-nexus-border/30 rounded-full">{selectedNote.category}</span>
                   </div>
                   <button onClick={() => setSelectedNote(null)} className="p-1.5 rounded-lg hover:bg-gray-200/50 dark:hover:bg-gray-600/50">
-                    <X size={16} className="text-gray-400" />
+                    <X size={16} className="text-nexus-muted" />
                   </button>
                 </div>
                 {/* Formatting Toolbar */}
-                <div className="flex items-center gap-1 mb-4 pb-3 border-b border-gray-200/50 dark:border-gray-600/50">
+                <div className="flex items-center gap-1 mb-4 pb-3 border-b border-nexus-border/50">
                   {[Bold, Italic, Underline, Code, Link, Image, ListOrdered, AlignLeft].map((Icon, i) => (
-                    <button key={i} className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-200/50 dark:hover:bg-gray-600/50">
+                    <button key={i} className="p-1.5 rounded-lg text-nexus-muted hover:text-nexus-muted hover:bg-gray-200/50 dark:hover:bg-gray-600/50">
                       <Icon size={14} />
                     </button>
                   ))}
                 </div>
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{selectedNote.title}</h1>
+                <h1 className="text-2xl font-bold text-nexus-text mb-4">{selectedNote.title}</h1>
                 <div className="prose prose-sm dark:prose-invert max-w-none mb-6">
-                  <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">{selectedNote.content}</p>
+                  <p className="text-nexus-text whitespace-pre-wrap leading-relaxed">{selectedNote.content}</p>
                 </div>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {selectedNote.tags.map(tag => (
-                    <span key={tag} className="px-2 py-1 rounded-full bg-gray-200/50 dark:bg-gray-600/50 text-gray-600 dark:text-gray-400 text-xs">
+                    <span key={tag} className="px-2 py-1 rounded-full bg-nexus-border/30 text-nexus-muted text-xs">
                       #{tag}
                     </span>
                   ))}
                 </div>
-                <div className="flex items-center justify-between text-xs text-gray-400 pt-3 border-t border-gray-200/50 dark:border-gray-600/50">
+                <div className="flex items-center justify-between text-xs text-nexus-muted pt-3 border-t border-nexus-border/50">
                   <span>Created: {selectedNote.createdAt}</span>
                   <span>Updated: {selectedNote.updatedAt}</span>
                   <span>{selectedNote.wordCount} words</span>

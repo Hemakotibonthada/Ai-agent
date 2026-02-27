@@ -48,7 +48,7 @@ const MenuItem: React.FC<{
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   if (item.type === 'separator') {
-    return <div className="my-1 h-px bg-white/10" />;
+    return <div className="my-1 h-px bg-nexus-card/10" />;
   }
 
   if (item.type === 'label') {
@@ -87,7 +87,7 @@ const MenuItem: React.FC<{
         disabled={item.disabled}
         className={cn(
           'w-full flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg transition-colors text-left',
-          isFocused && !item.disabled && 'bg-white/10',
+          isFocused && !item.disabled && 'bg-nexus-card/10',
           item.disabled && 'opacity-40 cursor-not-allowed',
           item.danger && 'text-red-400 hover:text-red-300',
           !item.danger && 'text-white/80'
@@ -290,7 +290,7 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Search..."
-                    className="w-full pl-8 pr-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-sm text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                    className="w-full pl-8 pr-3 py-1.5 bg-nexus-card/5 border border-white/10 rounded-lg text-sm text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-cyan-500"
                   />
                 </div>
               </div>

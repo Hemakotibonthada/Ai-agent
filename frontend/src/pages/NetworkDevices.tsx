@@ -149,7 +149,7 @@ export default function NetworkDevices() {
         <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
           Network Devices
         </h1>
-        <p className="text-gray-400 mt-1">Monitor and manage all network-connected devices</p>
+        <p className="text-nexus-muted mt-1">Monitor and manage all network-connected devices</p>
       </motion.div>
 
       {/* Stats */}
@@ -166,14 +166,14 @@ export default function NetworkDevices() {
           return (
             <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className="bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 p-4">
+              className="bg-nexus-card/5 backdrop-blur-xl rounded-xl border border-white/10 p-4">
               <div className="flex items-center gap-3">
                 <div className={`p-2 rounded-lg bg-gradient-to-br ${stat.color}`}>
                   <Icon className="w-4 h-4 text-white" />
                 </div>
                 <div>
                   <div className="text-lg font-bold">{stat.value}</div>
-                  <div className="text-xs text-gray-400">{stat.label}</div>
+                  <div className="text-xs text-nexus-muted">{stat.label}</div>
                 </div>
               </div>
             </motion.div>
@@ -184,28 +184,28 @@ export default function NetworkDevices() {
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-4 mb-6">
         <div className="relative flex-1 min-w-[200px] max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-nexus-muted" />
           <input type="text" value={search} onChange={e => setSearch(e.target.value)}
-            placeholder="Search devices..." className="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50" />
+            placeholder="Search devices..." className="w-full pl-10 pr-4 py-2 bg-nexus-card/5 border border-white/10 rounded-lg text-white placeholder:text-nexus-muted focus:outline-none focus:ring-2 focus:ring-cyan-500/50" />
         </div>
         <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)}
-          className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white">
+          className="bg-nexus-card/5 border border-white/10 rounded-lg px-3 py-2 text-white">
           <option value="all">All Types</option>
           {['server', 'desktop', 'laptop', 'router', 'iot', 'nas', 'printer'].map(t => (
             <option key={t} value={t}>{t}</option>
           ))}
         </select>
         <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
-          className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white">
+          className="bg-nexus-card/5 border border-white/10 rounded-lg px-3 py-2 text-white">
           <option value="all">All Status</option>
           {['online', 'offline', 'warning', 'maintenance'].map(s => (
             <option key={s} value={s}>{s}</option>
           ))}
         </select>
-        <div className="flex bg-white/5 border border-white/10 rounded-lg overflow-hidden">
+        <div className="flex bg-nexus-card/5 border border-white/10 rounded-lg overflow-hidden">
           {['grid', 'list'].map(v => (
             <button key={v} onClick={() => setView(v as 'grid' | 'list')}
-              className={`px-3 py-2 text-sm ${view === v ? 'bg-cyan-500/20 text-cyan-400' : 'text-gray-400'}`}>
+              className={`px-3 py-2 text-sm ${view === v ? 'bg-cyan-500/20 text-cyan-400' : 'text-nexus-muted'}`}>
               {v === 'grid' ? '▦' : '☰'}
             </button>
           ))}
@@ -225,57 +225,57 @@ export default function NetworkDevices() {
                       animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ delay: i * 0.03 }}
                       onClick={() => setSelectedDevice(device)}
-                      className={`bg-white/5 backdrop-blur-xl rounded-xl border cursor-pointer transition-all hover:bg-white/8 ${
+                      className={`bg-nexus-card/5 backdrop-blur-xl rounded-xl border cursor-pointer transition-all hover:bg-nexus-card/8 ${
                         selectedDevice?.id === device.id ? 'border-cyan-500/50 ring-1 ring-cyan-500/20' : 'border-white/10'
                       }`}>
                       <div className="p-4">
                         <div className="flex items-start justify-between mb-3">
                           <div className="flex items-center gap-3">
-                            <div className="p-2 bg-white/5 rounded-lg">
+                            <div className="p-2 bg-nexus-card/5 rounded-lg">
                               <Icon className="w-5 h-5 text-cyan-400" />
                             </div>
                             <div>
                               <div className="font-semibold text-sm">{device.name}</div>
-                              <div className="text-xs text-gray-400">{device.ip}</div>
+                              <div className="text-xs text-nexus-muted">{device.ip}</div>
                             </div>
                           </div>
                           <div className="flex items-center gap-1.5">
                             <div className="w-2 h-2 rounded-full" style={{ backgroundColor: statusColors[device.status] }} />
-                            <span className="text-xs text-gray-400 capitalize">{device.status}</span>
+                            <span className="text-xs text-nexus-muted capitalize">{device.status}</span>
                           </div>
                         </div>
 
                         {device.status === 'online' && (
                           <div className="grid grid-cols-2 gap-3 mt-3">
                             <div>
-                              <div className="text-xs text-gray-500 mb-1">CPU</div>
-                              <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                              <div className="text-xs text-nexus-muted mb-1">CPU</div>
+                              <div className="h-1.5 bg-nexus-card/5 rounded-full overflow-hidden">
                                 <div className="h-full rounded-full transition-all" style={{
                                   width: `${device.cpu}%`,
                                   backgroundColor: device.cpu > 80 ? '#ef4444' : device.cpu > 60 ? '#f59e0b' : '#10b981'
                                 }} />
                               </div>
-                              <div className="text-xs text-gray-400 mt-0.5">{device.cpu}%</div>
+                              <div className="text-xs text-nexus-muted mt-0.5">{device.cpu}%</div>
                             </div>
                             <div>
-                              <div className="text-xs text-gray-500 mb-1">Memory</div>
-                              <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                              <div className="text-xs text-nexus-muted mb-1">Memory</div>
+                              <div className="h-1.5 bg-nexus-card/5 rounded-full overflow-hidden">
                                 <div className="h-full rounded-full transition-all" style={{
                                   width: `${device.memory}%`,
                                   backgroundColor: device.memory > 85 ? '#ef4444' : device.memory > 70 ? '#f59e0b' : '#10b981'
                                 }} />
                               </div>
-                              <div className="text-xs text-gray-400 mt-0.5">{device.memory}%</div>
+                              <div className="text-xs text-nexus-muted mt-0.5">{device.memory}%</div>
                             </div>
                           </div>
                         )}
 
                         <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/5">
-                          <div className="flex items-center gap-3 text-xs text-gray-500">
+                          <div className="flex items-center gap-3 text-xs text-nexus-muted">
                             <span className="flex items-center gap-1"><Download className="w-3 h-3" />{device.networkIn} MB/s</span>
                             <span className="flex items-center gap-1"><Upload className="w-3 h-3" />{device.networkOut} MB/s</span>
                           </div>
-                          <span className="text-xs text-gray-500">{device.os}</span>
+                          <span className="text-xs text-nexus-muted">{device.os}</span>
                         </div>
                       </div>
                     </motion.div>
@@ -284,12 +284,12 @@ export default function NetworkDevices() {
               </AnimatePresence>
             </div>
           ) : (
-            <div className="bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 overflow-hidden">
+            <div className="bg-nexus-card/5 backdrop-blur-xl rounded-xl border border-white/10 overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/10">
                     {['Device', 'IP', 'Status', 'CPU', 'Memory', 'Network', 'OS'].map(h => (
-                      <th key={h} className="text-left text-xs text-gray-400 font-medium p-3">{h}</th>
+                      <th key={h} className="text-left text-xs text-nexus-muted font-medium p-3">{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -298,7 +298,7 @@ export default function NetworkDevices() {
                     const Icon = getIcon(device.type);
                     return (
                       <tr key={device.id} onClick={() => setSelectedDevice(device)}
-                        className={`border-b border-white/5 cursor-pointer hover:bg-white/5 ${
+                        className={`border-b border-white/5 cursor-pointer hover:bg-nexus-card/5 ${
                           selectedDevice?.id === device.id ? 'bg-cyan-500/5' : ''
                         }`}>
                         <td className="p-3">
@@ -307,17 +307,17 @@ export default function NetworkDevices() {
                             <span className="font-medium">{device.name}</span>
                           </div>
                         </td>
-                        <td className="p-3 text-gray-400 font-mono text-xs">{device.ip}</td>
+                        <td className="p-3 text-nexus-muted font-mono text-xs">{device.ip}</td>
                         <td className="p-3">
                           <span className="flex items-center gap-1">
                             <div className="w-2 h-2 rounded-full" style={{ backgroundColor: statusColors[device.status] }} />
                             <span className="text-xs capitalize">{device.status}</span>
                           </span>
                         </td>
-                        <td className="p-3 text-gray-400">{device.cpu > 0 ? `${device.cpu}%` : '-'}</td>
-                        <td className="p-3 text-gray-400">{device.memory > 0 ? `${device.memory}%` : '-'}</td>
-                        <td className="p-3 text-gray-400 text-xs">{device.networkIn > 0 ? `↓${device.networkIn} ↑${device.networkOut}` : '-'}</td>
-                        <td className="p-3 text-gray-400 text-xs">{device.os}</td>
+                        <td className="p-3 text-nexus-muted">{device.cpu > 0 ? `${device.cpu}%` : '-'}</td>
+                        <td className="p-3 text-nexus-muted">{device.memory > 0 ? `${device.memory}%` : '-'}</td>
+                        <td className="p-3 text-nexus-muted text-xs">{device.networkIn > 0 ? `↓${device.networkIn} ↑${device.networkOut}` : '-'}</td>
+                        <td className="p-3 text-nexus-muted text-xs">{device.os}</td>
                       </tr>
                     );
                   })}
@@ -331,14 +331,14 @@ export default function NetworkDevices() {
         <div className="space-y-4">
           {selectedDevice ? (
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-              className="bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 p-5">
+              className="bg-nexus-card/5 backdrop-blur-xl rounded-xl border border-white/10 p-5">
               <div className="flex items-center gap-3 mb-4">
                 {React.createElement(getIcon(selectedDevice.type), { className: 'w-6 h-6 text-cyan-400' })}
                 <div>
                   <h3 className="font-bold text-lg">{selectedDevice.name}</h3>
                   <div className="flex items-center gap-2 mt-0.5">
                     <div className="w-2 h-2 rounded-full" style={{ backgroundColor: statusColors[selectedDevice.status] }} />
-                    <span className="text-sm text-gray-400 capitalize">{selectedDevice.status}</span>
+                    <span className="text-sm text-nexus-muted capitalize">{selectedDevice.status}</span>
                   </div>
                 </div>
               </div>
@@ -354,7 +354,7 @@ export default function NetworkDevices() {
                   ['Last Seen', selectedDevice.lastSeen],
                 ].map(([label, value]) => (
                   <div key={label} className="flex justify-between">
-                    <span className="text-gray-400">{label}</span>
+                    <span className="text-nexus-muted">{label}</span>
                     <span className="font-mono text-xs">{value}</span>
                   </div>
                 ))}
@@ -362,7 +362,7 @@ export default function NetworkDevices() {
 
               {selectedDevice.services.length > 0 && (
                 <div className="mt-4 pt-4 border-t border-white/10">
-                  <div className="text-xs text-gray-400 mb-2">Services</div>
+                  <div className="text-xs text-nexus-muted mb-2">Services</div>
                   <div className="flex flex-wrap gap-1">
                     {selectedDevice.services.map(s => (
                       <span key={s} className="px-2 py-0.5 bg-cyan-500/10 text-cyan-400 rounded text-xs">{s}</span>
@@ -373,10 +373,10 @@ export default function NetworkDevices() {
 
               {selectedDevice.openPorts.length > 0 && (
                 <div className="mt-3">
-                  <div className="text-xs text-gray-400 mb-2">Open Ports</div>
+                  <div className="text-xs text-nexus-muted mb-2">Open Ports</div>
                   <div className="flex flex-wrap gap-1">
                     {selectedDevice.openPorts.map(p => (
-                      <span key={p} className="px-2 py-0.5 bg-white/5 text-gray-300 rounded text-xs font-mono">{p}</span>
+                      <span key={p} className="px-2 py-0.5 bg-nexus-card/5 text-nexus-muted rounded text-xs font-mono">{p}</span>
                     ))}
                   </div>
                 </div>
@@ -386,21 +386,21 @@ export default function NetworkDevices() {
                 <button className="flex-1 px-3 py-2 bg-cyan-500/10 text-cyan-400 rounded-lg text-sm hover:bg-cyan-500/20 transition-colors">
                   Terminal
                 </button>
-                <button className="flex-1 px-3 py-2 bg-white/5 text-gray-300 rounded-lg text-sm hover:bg-white/10 transition-colors">
+                <button className="flex-1 px-3 py-2 bg-nexus-card/5 text-nexus-muted rounded-lg text-sm hover:bg-nexus-card/10 transition-colors">
                   Details
                 </button>
               </div>
             </motion.div>
           ) : (
-            <div className="bg-white/5 rounded-xl border border-white/10 p-8 text-center text-gray-500">
+            <div className="bg-nexus-card/5 rounded-xl border border-white/10 p-8 text-center text-nexus-muted">
               <Info className="w-8 h-8 mx-auto mb-2 opacity-50" />
               <p className="text-sm">Select a device to view details</p>
             </div>
           )}
 
           {/* Traffic Chart */}
-          <div className="bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 p-5">
-            <h3 className="text-sm font-semibold text-gray-300 mb-4">Network Traffic (24h)</h3>
+          <div className="bg-nexus-card/5 backdrop-blur-xl rounded-xl border border-white/10 p-5">
+            <h3 className="text-sm font-semibold text-nexus-muted mb-4">Network Traffic (24h)</h3>
             <ResponsiveContainer width="100%" height={200}>
               <AreaChart data={trafficData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#ffffff08" />
@@ -414,8 +414,8 @@ export default function NetworkDevices() {
           </div>
 
           {/* Protocol Distribution */}
-          <div className="bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 p-5">
-            <h3 className="text-sm font-semibold text-gray-300 mb-4">Protocol Distribution</h3>
+          <div className="bg-nexus-card/5 backdrop-blur-xl rounded-xl border border-white/10 p-5">
+            <h3 className="text-sm font-semibold text-nexus-muted mb-4">Protocol Distribution</h3>
             <ResponsiveContainer width="100%" height={200}>
               <PieChart>
                 <Pie data={protocolData} cx="50%" cy="50%" innerRadius={40} outerRadius={70} dataKey="value" paddingAngle={2}>

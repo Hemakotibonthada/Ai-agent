@@ -310,7 +310,7 @@ const TerminalPage: React.FC = () => {
 
   const lineColors: Record<string, string> = {
     input: 'text-green-400',
-    output: 'text-gray-300',
+    output: 'text-nexus-muted',
     error: 'text-red-400',
     info: 'text-blue-400',
     success: 'text-green-400',
@@ -322,24 +322,24 @@ const TerminalPage: React.FC = () => {
       <FadeIn>
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <TerminalIcon className="text-green-500" size={32} />
               Terminal
             </h1>
-            <p className="text-gray-500 mt-1">Interactive system terminal with command execution</p>
+            <p className="text-nexus-muted mt-1">Interactive system terminal with command execution</p>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={() => setIsFullscreen(!isFullscreen)} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-              {isFullscreen ? <Minimize2 size={18} className="text-gray-500" /> : <Maximize2 size={18} className="text-gray-500" />}
+            <button onClick={() => setIsFullscreen(!isFullscreen)} className="p-2 rounded-lg hover:bg-nexus-surface">
+              {isFullscreen ? <Minimize2 size={18} className="text-nexus-muted" /> : <Maximize2 size={18} className="text-nexus-muted" />}
             </button>
           </div>
         </div>
       </FadeIn>
 
       <FadeIn delay={0.1}>
-        <div className={`bg-gray-900 rounded-2xl overflow-hidden border border-gray-700 ${isFullscreen ? 'fixed inset-4 z-50' : ''}`}>
+        <div className={`bg-nexus-bg rounded-2xl overflow-hidden border border-nexus-border ${isFullscreen ? 'fixed inset-4 z-50' : ''}`}>
           {/* Title Bar */}
-          <div className="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700">
+          <div className="flex items-center justify-between px-4 py-2 bg-nexus-card border-b border-nexus-border">
             <div className="flex items-center gap-2">
               <div className="flex gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 cursor-pointer" />
@@ -353,7 +353,7 @@ const TerminalPage: React.FC = () => {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-3 py-1 rounded-lg text-xs transition-colors ${
-                    activeTab === tab.id ? 'bg-gray-700 text-white' : 'text-gray-400 hover:text-gray-300 hover:bg-gray-700/50'
+                    activeTab === tab.id ? 'bg-nexus-surface text-white' : 'text-nexus-muted hover:text-nexus-muted hover:bg-nexus-surface/50'
                   }`}
                 >
                   <TerminalIcon size={12} />
@@ -363,11 +363,11 @@ const TerminalPage: React.FC = () => {
                   )}
                 </button>
               ))}
-              <button onClick={addTab} className="p-1 rounded text-gray-400 hover:text-white hover:bg-gray-700">
+              <button onClick={addTab} className="p-1 rounded text-nexus-muted hover:text-white hover:bg-nexus-surface">
                 <Plus size={14} />
               </button>
             </div>
-            <div className="text-xs text-gray-500 font-mono">nexus@ai-agent</div>
+            <div className="text-xs text-nexus-muted font-mono">nexus@ai-agent</div>
           </div>
 
           {/* Terminal Content */}
@@ -377,7 +377,7 @@ const TerminalPage: React.FC = () => {
             className={`font-mono text-sm p-4 overflow-y-auto cursor-text ${isFullscreen ? 'h-[calc(100%-80px)]' : 'h-[500px]'}`}
           >
             {activeTerminal?.lines.map((line) => (
-              <div key={line.id} className={`leading-6 ${lineColors[line.type] || 'text-gray-300'}`}>
+              <div key={line.id} className={`leading-6 ${lineColors[line.type] || 'text-nexus-muted'}`}>
                 <span className="select-text whitespace-pre-wrap">{line.content}</span>
               </div>
             ))}
@@ -400,7 +400,7 @@ const TerminalPage: React.FC = () => {
           </div>
 
           {/* Status Bar */}
-          <div className="flex items-center justify-between px-4 py-1.5 bg-gray-800 border-t border-gray-700 text-xs text-gray-500">
+          <div className="flex items-center justify-between px-4 py-1.5 bg-nexus-card border-t border-nexus-border text-xs text-nexus-muted">
             <div className="flex items-center gap-3">
               <span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-green-400" /> Connected</span>
               <span>cwd: {activeTerminal?.currentDir}</span>
@@ -416,8 +416,8 @@ const TerminalPage: React.FC = () => {
 
       {/* Quick Commands */}
       <FadeIn delay={0.2}>
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-          <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+        <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+          <h3 className="font-semibold text-nexus-text mb-3 flex items-center gap-2">
             <Zap size={16} className="text-green-500" /> Quick Commands
           </h3>
           <div className="flex flex-wrap gap-2">
@@ -427,7 +427,7 @@ const TerminalPage: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => { setInput(cmd); executeCommand(cmd); }}
-                className="px-3 py-1.5 bg-gray-100 dark:bg-gray-700 rounded-lg text-sm font-mono text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                className="px-3 py-1.5 bg-nexus-surface rounded-lg text-sm font-mono text-nexus-text hover:bg-nexus-surface transition-colors"
               >
                 $ {cmd}
               </motion.button>

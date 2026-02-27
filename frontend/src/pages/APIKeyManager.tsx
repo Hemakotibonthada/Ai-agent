@@ -31,7 +31,7 @@ interface ApiKey {
 
 const statusConfig = {
   active: { color: 'text-green-400', bg: 'bg-green-500/10', dot: '#10B981' },
-  expired: { color: 'text-gray-400', bg: 'bg-gray-500/10', dot: '#6B7280' },
+  expired: { color: 'text-nexus-muted', bg: 'bg-gray-500/10', dot: '#6B7280' },
   revoked: { color: 'text-red-400', bg: 'bg-red-500/10', dot: '#EF4444' },
   'rate-limited': { color: 'text-yellow-400', bg: 'bg-yellow-500/10', dot: '#F59E0B' },
 };

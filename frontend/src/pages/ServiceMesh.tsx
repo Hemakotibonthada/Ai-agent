@@ -107,13 +107,13 @@ export default function ServiceMesh() {
             </motion.div>
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-violet-400 to-purple-400 bg-clip-text text-transparent">Service Mesh</h1>
-              <p className="text-gray-400 text-sm">Microservice topology & health monitoring</p>
+              <p className="text-nexus-muted text-sm">Microservice topology & health monitoring</p>
             </div>
           </div>
           <div className="flex gap-2">
             {(['topology', 'services', 'traffic', 'policies'] as const).map(v => (
               <button key={v} onClick={() => setView(v)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${view === v ? 'bg-violet-500/20 text-violet-300 border border-violet-500/30' : 'text-gray-500 hover:text-gray-300'}`}>
+                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${view === v ? 'bg-violet-500/20 text-violet-300 border border-violet-500/30' : 'text-nexus-muted hover:text-nexus-muted'}`}>
                 {v.charAt(0).toUpperCase() + v.slice(1)}
               </button>
             ))}
@@ -133,7 +133,7 @@ export default function ServiceMesh() {
             <motion.div key={s.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
               className="p-3 bg-gray-800/30 border border-gray-700/50 rounded-xl text-center">
               <span className={`text-lg font-bold ${s.color}`}>{s.value}</span>
-              <span className="block text-[10px] text-gray-500 mt-0.5">{s.label}</span>
+              <span className="block text-[10px] text-nexus-muted mt-0.5">{s.label}</span>
             </motion.div>
           ))}
         </div>
@@ -162,8 +162,8 @@ export default function ServiceMesh() {
                   <motion.div key={svc.id} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
                     onClick={() => setSelectedService(svc)}
                     style={{ position: 'absolute', left: svc.x, top: svc.y, zIndex: 2 }}
-                    className={`w-[130px] p-3 bg-gray-800 border rounded-lg cursor-pointer transition-all hover:shadow-lg ${
-                      selectedService?.id === svc.id ? 'border-violet-500 shadow-violet-500/20' : svc.status === 'down' ? 'border-red-500/50' : svc.status === 'degraded' ? 'border-amber-500/50' : 'border-gray-700 hover:border-gray-600'
+                    className={`w-[130px] p-3 bg-nexus-card border rounded-lg cursor-pointer transition-all hover:shadow-lg ${
+                      selectedService?.id === svc.id ? 'border-violet-500 shadow-violet-500/20' : svc.status === 'down' ? 'border-red-500/50' : svc.status === 'degraded' ? 'border-amber-500/50' : 'border-nexus-border hover:border-nexus-border'
                     }`}>
                     <div className="flex items-center gap-1.5 mb-1.5">
                       <span style={{ color: statusColor(svc.status) }}>{typeIcon(svc.type)}</span>
@@ -172,7 +172,7 @@ export default function ServiceMesh() {
                       </div>
                     </div>
                     <p className="text-xs text-white font-medium truncate">{svc.name}</p>
-                    <div className="flex items-center gap-2 mt-1 text-[10px] text-gray-500">
+                    <div className="flex items-center gap-2 mt-1 text-[10px] text-nexus-muted">
                       <span>{svc.instances}x</span>
                       <span>{svc.requestsPerSec} rps</span>
                       <span>{svc.avgLatency}ms</span>
@@ -196,23 +196,23 @@ export default function ServiceMesh() {
                     ].map(m => (
                       <div key={m.label} className="p-2 bg-gray-700/30 rounded-lg">
                         <span className="text-sm font-bold text-white">{m.value}</span>
-                        <span className="block text-[10px] text-gray-500">{m.label}</span>
+                        <span className="block text-[10px] text-nexus-muted">{m.label}</span>
                       </div>
                     ))}
                   </div>
                   <div>
-                    <h4 className="text-xs text-gray-500 mb-2">Dependencies</h4>
+                    <h4 className="text-xs text-nexus-muted mb-2">Dependencies</h4>
                     <div className="space-y-1">
                       {selectedService.dependencies.map(depId => {
                         const dep = services.find(s => s.id === depId);
                         return dep ? (
                           <div key={depId} className="flex items-center gap-2 px-2 py-1 bg-gray-700/30 rounded text-xs">
                             {statusIcon(dep.status)}
-                            <span className="text-gray-300">{dep.name}</span>
+                            <span className="text-nexus-muted">{dep.name}</span>
                           </div>
                         ) : null;
                       })}
-                      {selectedService.dependencies.length === 0 && <span className="text-xs text-gray-600">No dependencies</span>}
+                      {selectedService.dependencies.length === 0 && <span className="text-xs text-nexus-muted">No dependencies</span>}
                     </div>
                   </div>
                 </motion.div>
@@ -224,7 +224,7 @@ export default function ServiceMesh() {
             <motion.div key="services" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               className="bg-gray-800/30 border border-gray-700/50 rounded-xl overflow-hidden">
               <table className="w-full">
-                <thead><tr className="text-xs text-gray-500 uppercase tracking-wider border-b border-gray-700/30">
+                <thead><tr className="text-xs text-nexus-muted uppercase tracking-wider border-b border-gray-700/30">
                   <th className="text-left p-3">Service</th><th className="text-center p-3">Status</th><th className="text-center p-3">Instances</th>
                   <th className="text-right p-3">RPS</th><th className="text-right p-3">Latency</th><th className="text-right p-3">Error Rate</th>
                 </tr></thead>
@@ -234,13 +234,13 @@ export default function ServiceMesh() {
                       <td className="p-3 flex items-center gap-2">
                         <span style={{ color: statusColor(svc.status) }}>{typeIcon(svc.type)}</span>
                         <span className="text-white font-medium">{svc.name}</span>
-                        <span className="text-[10px] text-gray-600">{svc.type}</span>
+                        <span className="text-[10px] text-nexus-muted">{svc.type}</span>
                       </td>
                       <td className="p-3 text-center">{statusIcon(svc.status)}</td>
-                      <td className="p-3 text-center text-gray-400">{svc.instances}</td>
-                      <td className="p-3 text-right text-gray-400">{svc.requestsPerSec.toLocaleString()}</td>
-                      <td className="p-3 text-right"><span className={svc.avgLatency > 100 ? 'text-amber-400' : 'text-gray-400'}>{svc.avgLatency}ms</span></td>
-                      <td className="p-3 text-right"><span className={svc.errorRate > 1 ? 'text-red-400' : 'text-gray-400'}>{svc.errorRate}%</span></td>
+                      <td className="p-3 text-center text-nexus-muted">{svc.instances}</td>
+                      <td className="p-3 text-right text-nexus-muted">{svc.requestsPerSec.toLocaleString()}</td>
+                      <td className="p-3 text-right"><span className={svc.avgLatency > 100 ? 'text-amber-400' : 'text-nexus-muted'}>{svc.avgLatency}ms</span></td>
+                      <td className="p-3 text-right"><span className={svc.errorRate > 1 ? 'text-red-400' : 'text-nexus-muted'}>{svc.errorRate}%</span></td>
                     </motion.tr>
                   ))}
                 </tbody>
@@ -306,11 +306,11 @@ export default function ServiceMesh() {
                     <div className="p-2 bg-violet-500/15 rounded-lg"><Shield className="w-5 h-5 text-violet-400" /></div>
                     <div className="flex-1">
                       <h4 className="text-sm text-white font-medium">{p.name}</h4>
-                      <span className="text-xs text-gray-500">Target: {p.target}</span>
+                      <span className="text-xs text-nexus-muted">Target: {p.target}</span>
                     </div>
-                    <div className="text-xs text-gray-400 text-right">
+                    <div className="text-xs text-nexus-muted text-right">
                       <span className="block">{p.threshold}</span>
-                      <span className="text-gray-600">{p.action}</span>
+                      <span className="text-nexus-muted">{p.action}</span>
                     </div>
                     <span className="px-1.5 py-0.5 bg-green-500/20 text-green-400 text-[10px] rounded">{p.status}</span>
                   </motion.div>

@@ -46,7 +46,7 @@ const flagsData: FeatureFlag[] = [
 const typeConfig: Record<string, { icon: React.ReactNode; color: string; label: string }> = {
   boolean: { icon: <ToggleRight size={14} />, color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400', label: 'Boolean' },
   percentage: { icon: <Percent size={14} />, color: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400', label: 'Percentage' },
-  user_list: { icon: <Users size={14} />, color: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400', label: 'User List' },
+  user_list: { icon: <Users size={14} />, color: 'bg-nexus-success/15 text-nexus-success', label: 'User List' },
   ab_test: { icon: <FlaskConical size={14} />, color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400', label: 'A/B Test' },
   gradual_rollout: { icon: <TrendingUp size={14} />, color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400', label: 'Gradual Rollout' },
   time_based: { icon: <Clock size={14} />, color: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400', label: 'Time-Based' },
@@ -89,11 +89,11 @@ const FeatureFlags: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <Flag className="text-orange-500" size={32} />
               Feature Flags
             </h1>
-            <p className="text-gray-500 mt-1">Manage feature rollouts, A/B tests, and configurations</p>
+            <p className="text-nexus-muted mt-1">Manage feature rollouts, A/B tests, and configurations</p>
           </div>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-5 py-2.5 bg-orange-500 text-white rounded-xl font-medium hover:bg-orange-600 shadow-lg shadow-orange-500/25">
@@ -111,12 +111,12 @@ const FeatureFlags: React.FC = () => {
             { label: 'Rollouts', value: stats.rollouts, icon: <TrendingUp size={18} className="text-cyan-500" />, bg: 'bg-cyan-500/10' },
           ].map((s, i) => (
             <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-              className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+              className="bg-nexus-card rounded-xl p-4 border border-nexus-border">
               <div className="flex items-center gap-3">
                 <div className={`p-2 rounded-lg ${s.bg}`}>{s.icon}</div>
                 <div>
-                  <div className="text-xl font-bold text-gray-900 dark:text-white">{s.value}</div>
-                  <div className="text-xs text-gray-500">{s.label}</div>
+                  <div className="text-xl font-bold text-nexus-text">{s.value}</div>
+                  <div className="text-xs text-nexus-muted">{s.label}</div>
                 </div>
               </div>
             </motion.div>
@@ -126,8 +126,8 @@ const FeatureFlags: React.FC = () => {
 
       {/* A/B Test Results Chart */}
       <FadeIn delay={0.15}>
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-          <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+        <div className="bg-nexus-card rounded-2xl p-6 border border-nexus-border">
+          <h3 className="font-semibold text-nexus-text mb-4 flex items-center gap-2">
             <FlaskConical size={18} className="text-orange-500" />
             A/B Test: New Dashboard — Conversion Results
           </h3>
@@ -149,19 +149,19 @@ const FeatureFlags: React.FC = () => {
       <FadeIn delay={0.2}>
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1 max-w-md">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-muted" />
             <input type="text" placeholder="Search flags..." value={search} onChange={e => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-orange-500 outline-none" />
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-nexus-card border border-nexus-border text-nexus-text focus:ring-2 focus:ring-orange-500 outline-none" />
           </div>
           <select value={filterType} onChange={e => setFilterType(e.target.value)}
-            className="px-3 py-2.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm outline-none text-gray-700 dark:text-gray-300">
+            className="px-3 py-2.5 rounded-xl bg-nexus-card border border-nexus-border text-sm outline-none text-nexus-text">
             <option value="all">All Types</option>
             {Object.entries(typeConfig).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
           </select>
-          <div className="flex items-center bg-gray-100 dark:bg-gray-700 rounded-xl p-1">
+          <div className="flex items-center bg-nexus-surface rounded-xl p-1">
             {(['all', 'enabled', 'disabled'] as const).map(s => (
               <button key={s} onClick={() => setFilterEnabled(s)}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium capitalize transition-all ${filterEnabled === s ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500'}`}>
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium capitalize transition-all ${filterEnabled === s ? 'bg-white text-nexus-text shadow-sm' : 'text-nexus-muted'}`}>
                 {s}
               </button>
             ))}
@@ -170,33 +170,33 @@ const FeatureFlags: React.FC = () => {
       </FadeIn>
 
       {/* Flags Table */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div className="bg-nexus-card rounded-2xl border border-nexus-border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50">
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Flag</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Type</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Rollout</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Tags</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Updated</th>
-                <th className="text-right px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+              <tr className="border-b border-nexus-border bg-nexus-surface/50">
+                <th className="text-left px-6 py-3 text-xs font-semibold text-nexus-muted uppercase tracking-wider">Flag</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-nexus-muted uppercase tracking-wider">Type</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-nexus-muted uppercase tracking-wider">Status</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-nexus-muted uppercase tracking-wider">Rollout</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-nexus-muted uppercase tracking-wider">Tags</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-nexus-muted uppercase tracking-wider">Updated</th>
+                <th className="text-right px-6 py-3 text-xs font-semibold text-nexus-muted uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
+            <tbody className="divide-y divide-nexus-border">
               {filtered.map((flag, i) => (
                 <motion.tr
                   key={flag.id}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: i * 0.02 }}
-                  className="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors cursor-pointer"
+                  className="hover:bg-nexus-surface/60/30 transition-colors cursor-pointer"
                   onClick={() => setSelectedFlag(flag)}
                 >
                   <td className="px-6 py-4">
-                    <div className="font-medium text-gray-900 dark:text-white text-sm">{flag.name}</div>
-                    <div className="text-xs text-gray-500 line-clamp-1 max-w-xs">{flag.description}</div>
+                    <div className="font-medium text-nexus-text text-sm">{flag.name}</div>
+                    <div className="text-xs text-nexus-muted line-clamp-1 max-w-xs">{flag.description}</div>
                   </td>
                   <td className="px-4 py-4">
                     <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${typeConfig[flag.type]?.color || ''}`}>
@@ -206,39 +206,39 @@ const FeatureFlags: React.FC = () => {
                   </td>
                   <td className="px-4 py-4">
                     <button onClick={e => { e.stopPropagation(); toggleFlag(flag.id); }}
-                      className={`relative inline-flex h-6 w-11 rounded-full transition-colors ${flag.enabled ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-600'}`}>
+                      className={`relative inline-flex h-6 w-11 rounded-full transition-colors ${flag.enabled ? 'bg-green-500' : 'bg-nexus-border'}`}>
                       <motion.span animate={{ x: flag.enabled ? 20 : 2 }}
-                        className="inline-block w-5 h-5 bg-white rounded-full shadow-md mt-0.5" />
+                        className="inline-block w-5 h-5 bg-nexus-card rounded-full shadow-md mt-0.5" />
                     </button>
                   </td>
                   <td className="px-4 py-4">
                     {flag.percentage !== undefined && (
                       <div className="flex items-center gap-2">
-                        <div className="w-16 h-1.5 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
+                        <div className="w-16 h-1.5 bg-nexus-surface rounded-full overflow-hidden">
                           <motion.div initial={{ width: 0 }} animate={{ width: `${flag.percentage}%` }}
                             className="h-full bg-orange-500 rounded-full" />
                         </div>
-                        <span className="text-xs text-gray-500">{flag.percentage}%</span>
+                        <span className="text-xs text-nexus-muted">{flag.percentage}%</span>
                       </div>
                     )}
-                    {flag.targetUsers && <span className="text-xs text-gray-500">{flag.targetUsers} users</span>}
-                    {flag.environment && <span className="text-xs text-gray-500">{flag.environment}</span>}
-                    {flag.type === 'boolean' && <span className="text-xs text-gray-500">{flag.enabled ? '100%' : '0%'}</span>}
-                    {flag.variants && <span className="text-xs text-gray-500">{flag.variants.length} variants</span>}
+                    {flag.targetUsers && <span className="text-xs text-nexus-muted">{flag.targetUsers} users</span>}
+                    {flag.environment && <span className="text-xs text-nexus-muted">{flag.environment}</span>}
+                    {flag.type === 'boolean' && <span className="text-xs text-nexus-muted">{flag.enabled ? '100%' : '0%'}</span>}
+                    {flag.variants && <span className="text-xs text-nexus-muted">{flag.variants.length} variants</span>}
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex gap-1">
                       {flag.tags.slice(0, 2).map(t => (
-                        <span key={t} className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs">{t}</span>
+                        <span key={t} className="px-2 py-0.5 rounded-full bg-nexus-surface text-nexus-muted text-xs">{t}</span>
                       ))}
                     </div>
                   </td>
-                  <td className="px-4 py-4 text-xs text-gray-500">{flag.updatedAt}</td>
+                  <td className="px-4 py-4 text-xs text-nexus-muted">{flag.updatedAt}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-end gap-1">
-                      <button onClick={e => e.stopPropagation()} className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"><Edit3 size={14} /></button>
-                      <button onClick={e => e.stopPropagation()} className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"><Copy size={14} /></button>
-                      <button onClick={e => e.stopPropagation()} className="p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"><Trash2 size={14} /></button>
+                      <button onClick={e => e.stopPropagation()} className="p-1.5 rounded-lg text-nexus-muted hover:text-nexus-muted hover:bg-nexus-surface"><Edit3 size={14} /></button>
+                      <button onClick={e => e.stopPropagation()} className="p-1.5 rounded-lg text-nexus-muted hover:text-nexus-muted hover:bg-nexus-surface"><Copy size={14} /></button>
+                      <button onClick={e => e.stopPropagation()} className="p-1.5 rounded-lg text-nexus-muted hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"><Trash2 size={14} /></button>
                     </div>
                   </td>
                 </motion.tr>
@@ -250,9 +250,9 @@ const FeatureFlags: React.FC = () => {
 
       {filtered.length === 0 && (
         <div className="text-center py-16">
-          <Flag size={48} className="text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No flags found</h3>
-          <p className="text-gray-500">Try adjusting your filters.</p>
+          <Flag size={48} className="text-nexus-muted mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-nexus-text mb-2">No flags found</h3>
+          <p className="text-nexus-muted">Try adjusting your filters.</p>
         </div>
       )}
 
@@ -264,40 +264,40 @@ const FeatureFlags: React.FC = () => {
             onClick={() => setSelectedFlag(null)}>
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
               onClick={e => e.stopPropagation()}
-              className="bg-white dark:bg-gray-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl">
+              className="bg-nexus-card rounded-2xl max-w-lg w-full p-6 shadow-2xl">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">{selectedFlag.name}</h2>
-                <button onClick={() => setSelectedFlag(null)} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-                  <X size={18} className="text-gray-400" />
+                <h2 className="text-xl font-bold text-nexus-text">{selectedFlag.name}</h2>
+                <button onClick={() => setSelectedFlag(null)} className="p-2 rounded-lg hover:bg-nexus-surface">
+                  <X size={18} className="text-nexus-muted" />
                 </button>
               </div>
-              <p className="text-gray-500 mb-4">{selectedFlag.description}</p>
+              <p className="text-nexus-muted mb-4">{selectedFlag.description}</p>
               <div className="space-y-3 mb-6">
-                <div className="flex justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-                  <span className="text-sm text-gray-500">Type</span>
+                <div className="flex justify-between p-3 rounded-lg bg-nexus-surface/50">
+                  <span className="text-sm text-nexus-muted">Type</span>
                   <span className={`text-sm font-medium ${typeConfig[selectedFlag.type]?.color}`}>{typeConfig[selectedFlag.type]?.label}</span>
                 </div>
-                <div className="flex justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-                  <span className="text-sm text-gray-500">Status</span>
+                <div className="flex justify-between p-3 rounded-lg bg-nexus-surface/50">
+                  <span className="text-sm text-nexus-muted">Status</span>
                   <span className={`text-sm font-medium ${selectedFlag.enabled ? 'text-green-500' : 'text-red-500'}`}>{selectedFlag.enabled ? 'Enabled' : 'Disabled'}</span>
                 </div>
-                <div className="flex justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-                  <span className="text-sm text-gray-500">Created</span>
-                  <span className="text-sm text-gray-900 dark:text-white">{selectedFlag.createdAt}</span>
+                <div className="flex justify-between p-3 rounded-lg bg-nexus-surface/50">
+                  <span className="text-sm text-nexus-muted">Created</span>
+                  <span className="text-sm text-nexus-text">{selectedFlag.createdAt}</span>
                 </div>
-                <div className="flex justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-                  <span className="text-sm text-gray-500">Created By</span>
-                  <span className="text-sm text-gray-900 dark:text-white">{selectedFlag.createdBy}</span>
+                <div className="flex justify-between p-3 rounded-lg bg-nexus-surface/50">
+                  <span className="text-sm text-nexus-muted">Created By</span>
+                  <span className="text-sm text-nexus-text">{selectedFlag.createdBy}</span>
                 </div>
               </div>
               {selectedFlag.variants && (
                 <div className="mb-4">
-                  <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Variants</h3>
+                  <h3 className="text-sm font-semibold text-nexus-text mb-2">Variants</h3>
                   <div className="space-y-2">
                     {selectedFlag.variants.map(v => (
-                      <div key={v.name} className="flex items-center justify-between p-2 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-                        <span className="text-sm text-gray-700 dark:text-gray-300">{v.name} ({v.weight}%)</span>
-                        <span className="text-sm font-medium text-gray-900 dark:text-white">{v.conversions} conversions</span>
+                      <div key={v.name} className="flex items-center justify-between p-2 rounded-lg bg-nexus-surface/50">
+                        <span className="text-sm text-nexus-text">{v.name} ({v.weight}%)</span>
+                        <span className="text-sm font-medium text-nexus-text">{v.conversions} conversions</span>
                       </div>
                     ))}
                   </div>
@@ -309,7 +309,7 @@ const FeatureFlags: React.FC = () => {
                   className={`flex-1 px-4 py-3 rounded-xl font-medium ${selectedFlag.enabled ? 'bg-red-500 text-white' : 'bg-green-500 text-white'}`}>
                   {selectedFlag.enabled ? 'Disable Flag' : 'Enable Flag'}
                 </motion.button>
-                <button className="px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-medium">
+                <button className="px-4 py-3 bg-nexus-surface text-nexus-text rounded-xl font-medium">
                   <Edit3 size={18} />
                 </button>
               </div>

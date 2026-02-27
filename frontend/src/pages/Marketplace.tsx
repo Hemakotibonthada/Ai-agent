@@ -208,10 +208,10 @@ const StarRating: React.FC<{ rating: number; size?: number }> = ({ rating, size 
       <Star
         key={i}
         size={size}
-        className={i <= Math.floor(rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300 dark:text-gray-600'}
+        className={i <= Math.floor(rating) ? 'text-yellow-400 fill-yellow-400' : 'text-nexus-muted dark:text-nexus-muted'}
       />
     ))}
-    <span className="ml-1 text-sm font-medium text-gray-700 dark:text-gray-300">{rating}</span>
+    <span className="ml-1 text-sm font-medium text-nexus-text">{rating}</span>
   </div>
 );
 
@@ -227,7 +227,7 @@ const PluginGridCard: React.FC<{
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay: index * 0.03 }}
     whileHover={{ y: -4, boxShadow: '0 12px 40px rgba(0,0,0,0.12)' }}
-    className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden group cursor-pointer"
+    className="bg-nexus-card rounded-2xl border border-nexus-border overflow-hidden group cursor-pointer"
     onClick={() => onSelect(plugin)}
   >
     {/* Header Gradient */}
@@ -245,7 +245,7 @@ const PluginGridCard: React.FC<{
       )}
       {plugin.verified && (
         <div className="absolute top-2 left-2">
-          <div className="flex items-center gap-1 px-2 py-0.5 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs">
+          <div className="flex items-center gap-1 px-2 py-0.5 bg-nexus-card/20 backdrop-blur-sm rounded-full text-white text-xs">
             <Check size={10} /> Verified
           </div>
         </div>
@@ -253,17 +253,17 @@ const PluginGridCard: React.FC<{
     </div>
 
     <div className="p-4">
-      <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-indigo-500 transition-colors">
+      <h3 className="font-semibold text-nexus-text group-hover:text-indigo-500 transition-colors">
         {plugin.name}
       </h3>
-      <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">{plugin.description}</p>
+      <p className="text-sm text-nexus-muted mt-1 line-clamp-2">{plugin.description}</p>
 
       <div className="flex items-center gap-2 mt-3">
         <StarRating rating={plugin.rating} size={12} />
-        <span className="text-xs text-gray-400">({plugin.reviews})</span>
+        <span className="text-xs text-nexus-muted">({plugin.reviews})</span>
       </div>
 
-      <div className="flex items-center gap-3 mt-3 text-xs text-gray-400">
+      <div className="flex items-center gap-3 mt-3 text-xs text-nexus-muted">
         <span className="flex items-center gap-1"><Download size={12} /> {(plugin.downloads / 1000).toFixed(0)}k</span>
         <span className="flex items-center gap-1"><Tag size={12} /> {plugin.version}</span>
         <span className="flex items-center gap-1"><Clock size={12} /> {plugin.lastUpdated}</span>
@@ -271,14 +271,14 @@ const PluginGridCard: React.FC<{
 
       <div className="flex flex-wrap gap-1 mt-3">
         {plugin.tags.slice(0, 3).map(tag => (
-          <span key={tag} className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs">
+          <span key={tag} className="px-2 py-0.5 rounded-full bg-nexus-surface text-nexus-muted text-xs">
             {tag}
           </span>
         ))}
       </div>
 
-      <div className="mt-4 pt-3 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
-        <span className="text-xs text-gray-400">by {plugin.author}</span>
+      <div className="mt-4 pt-3 border-t border-nexus-border flex items-center justify-between">
+        <span className="text-xs text-nexus-muted">by {plugin.author}</span>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -289,8 +289,8 @@ const PluginGridCard: React.FC<{
           className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
             plugin.installed
               ? plugin.active
-                ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
+                ? 'bg-nexus-success/15 text-nexus-success'
+                : 'bg-nexus-surface text-nexus-muted'
               : 'bg-indigo-500 text-white hover:bg-indigo-600'
           }`}
         >
@@ -319,7 +319,7 @@ const PluginDetailModal: React.FC<{
       animate={{ scale: 1, opacity: 1 }}
       exit={{ scale: 0.9, opacity: 0 }}
       onClick={(e) => e.stopPropagation()}
-      className="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-2xl"
+      className="bg-nexus-card rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-2xl"
     >
       {/* Hero */}
       <div className={`h-40 bg-gradient-to-br ${plugin.color} relative flex items-center justify-center`}>
@@ -334,8 +334,8 @@ const PluginDetailModal: React.FC<{
       <div className="p-6">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{plugin.name}</h2>
-            <p className="text-gray-500 mt-1">by {plugin.author} · v{plugin.version}</p>
+            <h2 className="text-2xl font-bold text-nexus-text">{plugin.name}</h2>
+            <p className="text-nexus-muted mt-1">by {plugin.author} · v{plugin.version}</p>
           </div>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -351,7 +351,7 @@ const PluginDetailModal: React.FC<{
           </motion.button>
         </div>
 
-        <p className="text-gray-600 dark:text-gray-300 mb-6">{plugin.longDescription}</p>
+        <p className="text-nexus-text mb-6">{plugin.longDescription}</p>
 
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
@@ -360,28 +360,28 @@ const PluginDetailModal: React.FC<{
             { label: 'Reviews', value: plugin.reviews.toString() },
             { label: 'Size', value: plugin.size },
           ].map(stat => (
-            <div key={stat.label} className="text-center p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50">
-              <div className="text-lg font-bold text-gray-900 dark:text-white">{stat.value}</div>
-              <div className="text-xs text-gray-500">{stat.label}</div>
+            <div key={stat.label} className="text-center p-3 rounded-xl bg-nexus-surface/50">
+              <div className="text-lg font-bold text-nexus-text">{stat.value}</div>
+              <div className="text-xs text-nexus-muted">{stat.label}</div>
             </div>
           ))}
         </div>
 
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Features</h3>
+        <h3 className="font-semibold text-nexus-text mb-3">Features</h3>
         <div className="grid grid-cols-2 gap-2 mb-6">
           {plugin.features.map(feature => (
-            <div key={feature} className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+            <div key={feature} className="flex items-center gap-2 text-sm text-nexus-text">
               <Check size={14} className="text-green-500 flex-shrink-0" />
               {feature}
             </div>
           ))}
         </div>
 
-        <div className="flex items-center gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex items-center gap-4 pt-4 border-t border-nexus-border">
           <StarRating rating={plugin.rating} />
-          <span className="text-sm text-gray-500">{plugin.reviews} reviews</span>
-          <span className="text-sm text-gray-500">Updated {plugin.lastUpdated}</span>
-          <span className="text-sm text-gray-500">Requires {plugin.compatibility}</span>
+          <span className="text-sm text-nexus-muted">{plugin.reviews} reviews</span>
+          <span className="text-sm text-nexus-muted">Updated {plugin.lastUpdated}</span>
+          <span className="text-sm text-nexus-muted">Requires {plugin.compatibility}</span>
         </div>
       </div>
     </motion.div>
@@ -443,15 +443,15 @@ const Marketplace: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <Store className="text-indigo-500" size={32} />
               Plugin Marketplace
             </h1>
-            <p className="text-gray-500 dark:text-gray-400 mt-1">
+            <p className="text-nexus-muted mt-1">
               Discover and install plugins to extend your AI agent
             </p>
           </div>
-          <div className="flex items-center gap-3 text-sm text-gray-500">
+          <div className="flex items-center gap-3 text-sm text-nexus-muted">
             <span className="px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-medium">
               {stats.installed} installed
             </span>
@@ -469,8 +469,8 @@ const Marketplace: React.FC = () => {
           whileHover={{ scale: 1.005 }}
         >
           <div className="absolute inset-0 bg-black/10" />
-          <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
-          <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
+          <div className="absolute -right-10 -top-10 w-40 h-40 bg-nexus-card/10 rounded-full blur-3xl" />
+          <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-nexus-card/10 rounded-full blur-3xl" />
           <div className="relative z-10">
             <div className="flex items-center gap-2 mb-2">
               <Zap className="text-yellow-300" size={20} />
@@ -483,7 +483,7 @@ const Marketplace: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-5 py-2.5 bg-white text-indigo-600 rounded-xl font-medium hover:bg-gray-100 transition-colors"
+              className="px-5 py-2.5 bg-nexus-card text-indigo-600 rounded-xl font-medium hover:bg-nexus-surface transition-colors"
             >
               Learn More
             </motion.button>
@@ -494,8 +494,8 @@ const Marketplace: React.FC = () => {
       <div className="flex gap-6">
         {/* Sidebar Categories */}
         <FadeIn delay={0.2} className="hidden lg:block w-56 flex-shrink-0">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-4 sticky top-6">
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-3 text-sm uppercase tracking-wider">Categories</h3>
+          <div className="bg-nexus-card rounded-2xl border border-nexus-border p-4 sticky top-6">
+            <h3 className="font-semibold text-nexus-text mb-3 text-sm uppercase tracking-wider">Categories</h3>
             <ul className="space-y-0.5">
               {categories.map(cat => (
                 <li key={cat.id}>
@@ -504,7 +504,7 @@ const Marketplace: React.FC = () => {
                     className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
                       selectedCategory === cat.id
                         ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-medium'
-                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'
+                        : 'text-nexus-muted hover:bg-nexus-surface/60'
                     }`}
                   >
                     {cat.icon}
@@ -521,20 +521,20 @@ const Marketplace: React.FC = () => {
           {/* Search & Filters */}
           <div className="flex flex-col sm:flex-row gap-3 mb-6">
             <div className="relative flex-1">
-              <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-muted" />
               <input
                 type="text"
                 placeholder="Search plugins..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-nexus-card border border-nexus-border text-nexus-text focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
               />
             </div>
             <div className="flex gap-2">
               <select
                 value={filterInstalled}
                 onChange={(e) => setFilterInstalled(e.target.value as any)}
-                className="px-3 py-2.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm outline-none"
+                className="px-3 py-2.5 rounded-xl bg-nexus-card border border-nexus-border text-nexus-text text-sm outline-none"
               >
                 <option value="all">All</option>
                 <option value="installed">Installed</option>
@@ -543,7 +543,7 @@ const Marketplace: React.FC = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="px-3 py-2.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm outline-none"
+                className="px-3 py-2.5 rounded-xl bg-nexus-card border border-nexus-border text-nexus-text text-sm outline-none"
               >
                 <option value="popularity">Most Popular</option>
                 <option value="rating">Highest Rated</option>
@@ -552,7 +552,7 @@ const Marketplace: React.FC = () => {
             </div>
           </div>
 
-          <p className="text-sm text-gray-500 mb-4">{filteredPlugins.length} plugins found</p>
+          <p className="text-sm text-nexus-muted mb-4">{filteredPlugins.length} plugins found</p>
 
           {/* Plugin Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -569,9 +569,9 @@ const Marketplace: React.FC = () => {
 
           {filteredPlugins.length === 0 && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-16">
-              <Package size={48} className="text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No plugins found</h3>
-              <p className="text-gray-500">Try adjusting your search or browse different categories.</p>
+              <Package size={48} className="text-nexus-muted dark:text-nexus-muted mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-nexus-text mb-2">No plugins found</h3>
+              <p className="text-nexus-muted">Try adjusting your search or browse different categories.</p>
             </motion.div>
           )}
         </div>

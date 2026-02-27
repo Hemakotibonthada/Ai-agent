@@ -109,13 +109,13 @@ export default function CacheManager() {
             </motion.div>
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-400 to-pink-400 bg-clip-text text-transparent">Cache Manager</h1>
-              <p className="text-gray-400 text-sm">Redis cache monitoring & key management</p>
+              <p className="text-nexus-muted text-sm">Redis cache monitoring & key management</p>
             </div>
           </div>
           <div className="flex gap-2">
             {(['keys', 'stats', 'config', 'clusters'] as const).map(v => (
               <button key={v} onClick={() => setView(v)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${view === v ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'text-gray-500 hover:text-gray-300'}`}>
+                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${view === v ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'text-nexus-muted hover:text-nexus-muted'}`}>
                 {v.charAt(0).toUpperCase() + v.slice(1)}
               </button>
             ))}
@@ -136,7 +136,7 @@ export default function CacheManager() {
               {s.icon}
               <div>
                 <span className="text-base font-bold text-white">{s.value}</span>
-                <span className="block text-[10px] text-gray-500">{s.label}</span>
+                <span className="block text-[10px] text-nexus-muted">{s.label}</span>
               </div>
             </motion.div>
           ))}
@@ -147,13 +147,13 @@ export default function CacheManager() {
             <motion.div key="keys" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex gap-4">
               {/* Namespace Sidebar */}
               <div className="w-44 bg-gray-800/30 border border-gray-700/50 rounded-xl p-3 shrink-0 space-y-2">
-                <h4 className="text-xs text-gray-500 uppercase tracking-wider mb-1">Namespaces</h4>
-                <button onClick={() => setSelectedNamespace(null)} className={`w-full text-left px-2.5 py-1.5 text-xs rounded-lg ${!selectedNamespace ? 'bg-rose-500/20 text-rose-300' : 'text-gray-500 hover:text-gray-300'}`}>
+                <h4 className="text-xs text-nexus-muted uppercase tracking-wider mb-1">Namespaces</h4>
+                <button onClick={() => setSelectedNamespace(null)} className={`w-full text-left px-2.5 py-1.5 text-xs rounded-lg ${!selectedNamespace ? 'bg-rose-500/20 text-rose-300' : 'text-nexus-muted hover:text-nexus-muted'}`}>
                   All ({entries.length})
                 </button>
                 {namespaces.map(ns => (
                   <button key={ns.name} onClick={() => setSelectedNamespace(ns.name === selectedNamespace ? null : ns.name)}
-                    className={`w-full text-left px-2.5 py-1.5 text-xs rounded-lg flex justify-between ${selectedNamespace === ns.name ? 'bg-rose-500/20 text-rose-300' : 'text-gray-500 hover:text-gray-300'}`}>
+                    className={`w-full text-left px-2.5 py-1.5 text-xs rounded-lg flex justify-between ${selectedNamespace === ns.name ? 'bg-rose-500/20 text-rose-300' : 'text-nexus-muted hover:text-nexus-muted'}`}>
                     <span>{ns.name}</span><span className="opacity-60">{ns.count}</span>
                   </button>
                 ))}
@@ -167,18 +167,18 @@ export default function CacheManager() {
               <div className="flex-1 bg-gray-800/20 border border-gray-700/50 rounded-xl overflow-hidden">
                 <div className="px-4 py-3 border-b border-gray-700/50 flex items-center gap-3">
                   <div className="relative flex-1">
-                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-nexus-muted" />
                     <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search keys..."
-                      className="w-full pl-8 pr-3 py-1.5 bg-gray-700/50 border border-gray-600 rounded-lg text-xs text-white placeholder-gray-500 focus:outline-none" />
+                      className="w-full pl-8 pr-3 py-1.5 bg-nexus-surface/50 border border-nexus-border rounded-lg text-xs text-white placeholder-gray-500 focus:outline-none" />
                   </div>
-                  <button onClick={() => setShowValues(!showValues)} className="flex items-center gap-1 px-2 py-1.5 text-xs text-gray-400 hover:text-gray-200 bg-gray-700/30 rounded-lg">
+                  <button onClick={() => setShowValues(!showValues)} className="flex items-center gap-1 px-2 py-1.5 text-xs text-nexus-muted hover:text-gray-200 bg-gray-700/30 rounded-lg">
                     {showValues ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                     {showValues ? 'Hide' : 'Show'} Values
                   </button>
                 </div>
                 <div className="max-h-[500px] overflow-y-auto">
                   <table className="w-full">
-                    <thead><tr className="text-[10px] text-gray-500 uppercase tracking-wider border-b border-gray-700/30 sticky top-0 bg-gray-900/80 backdrop-blur">
+                    <thead><tr className="text-[10px] text-nexus-muted uppercase tracking-wider border-b border-gray-700/30 sticky top-0 bg-gray-900/80 backdrop-blur">
                       <th className="text-left p-3">Key</th><th className="text-left p-3">Type</th><th className="text-right p-3">Size</th>
                       <th className="text-right p-3">TTL</th><th className="text-right p-3">Hits</th><th className="text-right p-3">Last Access</th><th className="text-center p-3">Actions</th>
                     </tr></thead>
@@ -187,17 +187,17 @@ export default function CacheManager() {
                         <tr key={entry.key} className="border-b border-gray-700/15 hover:bg-gray-800/40 text-xs group">
                           <td className="p-3">
                             <code className="text-rose-400 font-mono text-[11px]">{entry.key}</code>
-                            {showValues && <div className="mt-1 text-[10px] text-gray-500 font-mono truncate max-w-xs">{entry.value}</div>}
+                            {showValues && <div className="mt-1 text-[10px] text-nexus-muted font-mono truncate max-w-xs">{entry.value}</div>}
                           </td>
-                          <td className="p-3"><span className="px-1.5 py-0.5 bg-gray-700/50 text-gray-400 rounded text-[10px] font-mono">{entry.type}</span></td>
-                          <td className="p-3 text-right text-gray-400">{formatSize(entry.size)}</td>
-                          <td className="p-3 text-right"><span className={entry.ttl === -1 ? 'text-gray-600' : entry.ttl < 60 ? 'text-amber-400' : 'text-gray-400'}>{entry.ttl === -1 ? '∞' : `${entry.ttl}s`}</span></td>
-                          <td className="p-3 text-right text-gray-400">{entry.hits.toLocaleString()}</td>
-                          <td className="p-3 text-right text-gray-500">{entry.lastAccessed}</td>
+                          <td className="p-3"><span className="px-1.5 py-0.5 bg-nexus-surface/50 text-nexus-muted rounded text-[10px] font-mono">{entry.type}</span></td>
+                          <td className="p-3 text-right text-nexus-muted">{formatSize(entry.size)}</td>
+                          <td className="p-3 text-right"><span className={entry.ttl === -1 ? 'text-nexus-muted' : entry.ttl < 60 ? 'text-amber-400' : 'text-nexus-muted'}>{entry.ttl === -1 ? '∞' : `${entry.ttl}s`}</span></td>
+                          <td className="p-3 text-right text-nexus-muted">{entry.hits.toLocaleString()}</td>
+                          <td className="p-3 text-right text-nexus-muted">{entry.lastAccessed}</td>
                           <td className="p-3 text-center">
                             <div className="flex justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <button onClick={() => navigator.clipboard.writeText(entry.value)} className="p-1 text-gray-500 hover:text-blue-400"><Copy className="w-3 h-3" /></button>
-                              <button className="p-1 text-gray-500 hover:text-red-400"><Trash2 className="w-3 h-3" /></button>
+                              <button onClick={() => navigator.clipboard.writeText(entry.value)} className="p-1 text-nexus-muted hover:text-blue-400"><Copy className="w-3 h-3" /></button>
+                              <button className="p-1 text-nexus-muted hover:text-red-400"><Trash2 className="w-3 h-3" /></button>
                             </div>
                           </td>
                         </tr>
@@ -276,9 +276,9 @@ export default function CacheManager() {
                     className="p-4 bg-gray-800/30 border border-gray-700/50 rounded-xl flex items-center justify-between">
                     <div>
                       <h4 className="text-sm text-white font-medium">{cfg.label}</h4>
-                      <p className="text-xs text-gray-500 mt-0.5">{cfg.desc}</p>
+                      <p className="text-xs text-nexus-muted mt-0.5">{cfg.desc}</p>
                     </div>
-                    <span className="px-3 py-1.5 bg-gray-700/50 text-gray-300 text-xs font-mono rounded-lg">{cfg.value}</span>
+                    <span className="px-3 py-1.5 bg-nexus-surface/50 text-nexus-muted text-xs font-mono rounded-lg">{cfg.value}</span>
                   </motion.div>
                 ))}
               </motion.div>
@@ -297,12 +297,12 @@ export default function CacheManager() {
                         <h4 className="text-sm text-white font-medium">{node.name}</h4>
                         <span className={`px-1.5 py-0.5 text-[10px] rounded ${node.role === 'master' ? 'bg-amber-500/20 text-amber-400' : node.role === 'replica' ? 'bg-blue-500/20 text-blue-400' : 'bg-purple-500/20 text-purple-400'}`}>{node.role}</span>
                       </div>
-                      <span className="text-xs text-gray-500 font-mono">{node.host}</span>
+                      <span className="text-xs text-nexus-muted font-mono">{node.host}</span>
                     </div>
-                    <div className="flex items-center gap-6 text-xs text-gray-400">
-                      <div className="text-center"><span className="block text-white font-medium">{node.memory}</span><span className="text-gray-600">Memory</span></div>
-                      <div className="text-center"><span className="block text-white font-medium">{node.keys.toLocaleString()}</span><span className="text-gray-600">Keys</span></div>
-                      <div className="text-center"><span className="block text-white font-medium">{node.connections}</span><span className="text-gray-600">Conns</span></div>
+                    <div className="flex items-center gap-6 text-xs text-nexus-muted">
+                      <div className="text-center"><span className="block text-white font-medium">{node.memory}</span><span className="text-nexus-muted">Memory</span></div>
+                      <div className="text-center"><span className="block text-white font-medium">{node.keys.toLocaleString()}</span><span className="text-nexus-muted">Keys</span></div>
+                      <div className="text-center"><span className="block text-white font-medium">{node.connections}</span><span className="text-nexus-muted">Conns</span></div>
                     </div>
                     <Check className="w-4 h-4 text-green-400" />
                   </motion.div>

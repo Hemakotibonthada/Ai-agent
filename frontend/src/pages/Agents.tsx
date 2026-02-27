@@ -792,7 +792,7 @@ export default function Agents() {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.06 }}
-                    className="flex items-center gap-3 rounded-lg border border-nexus-border/30 bg-nexus-card/30 p-3 hover:bg-white/5 transition-colors"
+                    className="flex items-center gap-3 rounded-lg border border-nexus-border/30 bg-nexus-card/30 p-3 hover:bg-nexus-card/5 transition-colors"
                   >
                     <div className="shrink-0">
                       {evt.status === 'completed' ? (
@@ -852,7 +852,7 @@ export default function Agents() {
                     initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.04 }}
-                    className="flex items-start gap-3 rounded-lg p-2.5 hover:bg-white/5 transition-colors"
+                    className="flex items-start gap-3 rounded-lg p-2.5 hover:bg-nexus-card/5 transition-colors"
                   >
                     {/* Status icon */}
                     <div className="mt-0.5 shrink-0">

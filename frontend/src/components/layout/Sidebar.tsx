@@ -300,7 +300,7 @@ export default function Sidebar() {
                     transition-all duration-200
                     ${active
                       ? 'bg-nexus-primary/10 text-nexus-primary'
-                      : 'text-nexus-muted hover:bg-white/5 hover:text-nexus-text'
+                      : 'text-nexus-muted hover:bg-nexus-card/5 hover:text-nexus-text'
                     }
                   `}
                 >
@@ -396,7 +396,7 @@ export default function Sidebar() {
 
       {/* ---- User profile ---- */}
       <div className="border-t border-nexus-border/30 p-3">
-        <div className={`flex items-center gap-3 rounded-lg p-2 transition hover:bg-white/5 ${collapsed ? 'justify-center' : ''}`}>
+        <div className={`flex items-center gap-3 rounded-lg p-2 transition hover:bg-nexus-card/5 ${collapsed ? 'justify-center' : ''}`}>
           <Avatar fallback={user?.username?.slice(0, 2).toUpperCase() ?? 'NX'} size="sm" status="online" glow />
           <AnimatePresence>
             {!collapsed && (

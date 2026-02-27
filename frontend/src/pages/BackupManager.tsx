@@ -40,7 +40,7 @@ const statusConfig = {
   'in-progress': { color: 'text-blue-400', bg: 'bg-blue-500/10', icon: <RefreshCw size={12} className="animate-spin" /> },
   failed: { color: 'text-red-400', bg: 'bg-red-500/10', icon: <XCircle size={12} /> },
   scheduled: { color: 'text-yellow-400', bg: 'bg-yellow-500/10', icon: <Clock size={12} /> },
-  cancelled: { color: 'text-gray-400', bg: 'bg-gray-500/10', icon: <XCircle size={12} /> },
+  cancelled: { color: 'text-nexus-muted', bg: 'bg-gray-500/10', icon: <XCircle size={12} /> },
 };
 
 const formatSize = (bytes: number) => {

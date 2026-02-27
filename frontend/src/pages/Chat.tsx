@@ -154,7 +154,7 @@ function MessageBubble({
             >
               <button
                 onClick={() => onCopy(message.content)}
-                className="p-1 rounded hover:bg-white/10 text-nexus-muted hover:text-nexus-text transition-colors"
+                className="p-1 rounded hover:bg-nexus-card/10 text-nexus-muted hover:text-nexus-text transition-colors"
                 title="Copy"
               >
                 <Copy size={12} />
@@ -162,7 +162,7 @@ function MessageBubble({
               {!isUser && onRegenerate && (
                 <button
                   onClick={onRegenerate}
-                  className="p-1 rounded hover:bg-white/10 text-nexus-muted hover:text-nexus-text transition-colors"
+                  className="p-1 rounded hover:bg-nexus-card/10 text-nexus-muted hover:text-nexus-text transition-colors"
                   title="Regenerate"
                 >
                   <RefreshCw size={12} />
@@ -172,14 +172,14 @@ function MessageBubble({
                 <>
                   <button
                     onClick={() => setLiked('up')}
-                    className={`p-1 rounded hover:bg-white/10 transition-colors ${liked === 'up' ? 'text-emerald-400' : 'text-nexus-muted hover:text-nexus-text'}`}
+                    className={`p-1 rounded hover:bg-nexus-card/10 transition-colors ${liked === 'up' ? 'text-emerald-400' : 'text-nexus-muted hover:text-nexus-text'}`}
                     title="Good response"
                   >
                     <ThumbsUp size={12} />
                   </button>
                   <button
                     onClick={() => setLiked('down')}
-                    className={`p-1 rounded hover:bg-white/10 transition-colors ${liked === 'down' ? 'text-red-400' : 'text-nexus-muted hover:text-nexus-text'}`}
+                    className={`p-1 rounded hover:bg-nexus-card/10 transition-colors ${liked === 'down' ? 'text-red-400' : 'text-nexus-muted hover:text-nexus-text'}`}
                     title="Bad response"
                   >
                     <ThumbsDown size={12} />
@@ -344,7 +344,7 @@ export default function Chat() {
               </Button>
               <button
                 onClick={() => setSidebarOpen(false)}
-                className="p-1.5 rounded-lg hover:bg-white/10 text-nexus-muted transition-colors"
+                className="p-1.5 rounded-lg hover:bg-nexus-card/10 text-nexus-muted transition-colors"
               >
                 <X size={16} />
               </button>
@@ -375,7 +375,7 @@ export default function Chat() {
                     className={`w-full text-left rounded-lg p-2.5 transition-colors ${
                       activeConversationId === conv.id
                         ? 'bg-nexus-primary/15 border border-nexus-primary/30'
-                        : 'hover:bg-white/5 border border-transparent'
+                        : 'hover:bg-nexus-card/5 border border-transparent'
                     }`}
                   >
                     <div className="flex items-center gap-2">
@@ -413,7 +413,7 @@ export default function Chat() {
           {!sidebarOpen && (
             <button
               onClick={() => setSidebarOpen(true)}
-              className="p-1.5 rounded-lg hover:bg-white/10 text-nexus-muted transition-colors"
+              className="p-1.5 rounded-lg hover:bg-nexus-card/10 text-nexus-muted transition-colors"
             >
               <ChevronRight size={16} />
             </button>
@@ -430,7 +430,7 @@ export default function Chat() {
               <span className="text-[10px] text-nexus-muted">Nexus AI ready</span>
             </div>
           </div>
-          <button className="p-1.5 rounded-lg hover:bg-white/10 text-nexus-muted transition-colors">
+          <button className="p-1.5 rounded-lg hover:bg-nexus-card/10 text-nexus-muted transition-colors">
             <MoreVertical size={16} />
           </button>
         </div>
@@ -500,7 +500,7 @@ export default function Chat() {
         {/* Input Area */}
         <div className="border-t border-nexus-border/50 p-3">
           <div className="flex items-center gap-2 rounded-xl border border-nexus-border bg-nexus-surface/60 px-3 py-2 focus-within:border-nexus-primary/50 transition-colors">
-            <button className="p-1.5 rounded-lg hover:bg-white/10 text-nexus-muted transition-colors" title="Attach file">
+            <button className="p-1.5 rounded-lg hover:bg-nexus-card/10 text-nexus-muted transition-colors" title="Attach file">
               <Paperclip size={18} />
             </button>
             <input
@@ -512,7 +512,7 @@ export default function Chat() {
               placeholder="Type your message..."
               className="flex-1 bg-transparent border-none text-sm text-nexus-text placeholder:text-nexus-muted/50 outline-none"
             />
-            <button className="p-1.5 rounded-lg hover:bg-white/10 text-nexus-muted transition-colors" title="Voice input">
+            <button className="p-1.5 rounded-lg hover:bg-nexus-card/10 text-nexus-muted transition-colors" title="Voice input">
               <Mic size={18} />
             </button>
             <Button

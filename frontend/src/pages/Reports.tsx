@@ -327,7 +327,7 @@ function GenerateReportModal({
                 className={`flex-1 rounded-lg border py-2 text-xs font-medium capitalize transition-all ${
                   type === t
                     ? 'border-nexus-primary/50 bg-nexus-primary/10 text-nexus-primary'
-                    : 'border-nexus-border bg-nexus-card/40 text-nexus-muted hover:bg-white/5'
+                    : 'border-nexus-border bg-nexus-card/40 text-nexus-muted hover:bg-nexus-card/5'
                 }`}
               >
                 {t}
@@ -347,7 +347,7 @@ function GenerateReportModal({
                 className={`flex flex-col items-center gap-1 rounded-lg border py-3 transition-all ${
                   format === f.value
                     ? 'border-nexus-primary/50 bg-nexus-primary/10 text-nexus-primary'
-                    : 'border-nexus-border bg-nexus-card/40 text-nexus-muted hover:bg-white/5'
+                    : 'border-nexus-border bg-nexus-card/40 text-nexus-muted hover:bg-nexus-card/5'
                 }`}
               >
                 <f.icon size={18} />
@@ -798,7 +798,7 @@ export default function Reports() {
                   />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-nexus-text">{fmt.name}</p>
-                    <div className="mt-1 h-1.5 w-full rounded-full bg-white/5 overflow-hidden">
+                    <div className="mt-1 h-1.5 w-full rounded-full bg-nexus-card/5 overflow-hidden">
                       <div
                         className="h-full rounded-full transition-all"
                         style={{ width: `${fmt.value}%`, backgroundColor: fmt.color }}
@@ -853,7 +853,7 @@ export default function Reports() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: i * 0.03 }}
-                  className="grid grid-cols-12 gap-2 px-3 py-2.5 rounded-lg hover:bg-white/5 transition-colors items-center"
+                  className="grid grid-cols-12 gap-2 px-3 py-2.5 rounded-lg hover:bg-nexus-card/5 transition-colors items-center"
                 >
                   <div className="col-span-4 flex items-center gap-2 min-w-0">
                     <FileText size={14} className="text-nexus-muted shrink-0" />
@@ -878,14 +878,14 @@ export default function Reports() {
                   <div className="col-span-2 flex justify-end gap-1">
                     <button
                       onClick={() => setPreviewReport(report)}
-                      className="p-1.5 rounded hover:bg-white/10 text-nexus-muted hover:text-nexus-text transition-colors"
+                      className="p-1.5 rounded hover:bg-nexus-card/10 text-nexus-muted hover:text-nexus-text transition-colors"
                       title="Preview"
                     >
                       <Eye size={14} />
                     </button>
                     <button
                       onClick={() => handleDownload(report.id)}
-                      className="p-1.5 rounded hover:bg-white/10 text-nexus-muted hover:text-nexus-text transition-colors"
+                      className="p-1.5 rounded hover:bg-nexus-card/10 text-nexus-muted hover:text-nexus-text transition-colors"
                       title="Download"
                     >
                       <Download size={14} />
@@ -970,7 +970,7 @@ export default function Reports() {
             ].map((s) => (
               <div
                 key={s.name}
-                className="flex items-center gap-3 rounded-lg p-2.5 hover:bg-white/5 transition-colors"
+                className="flex items-center gap-3 rounded-lg p-2.5 hover:bg-nexus-card/5 transition-colors"
               >
                 <Calendar size={14} className="text-nexus-muted" />
                 <div className="flex-1 min-w-0">

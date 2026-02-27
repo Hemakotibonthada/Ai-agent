@@ -282,7 +282,7 @@ function HydrationTracker() {
                 className={`h-8 w-6 rounded-b-lg rounded-t border transition-all ${
                   i < glasses
                     ? 'bg-blue-400/30 border-blue-400/50 shadow-[0_0_6px_rgba(59,130,246,0.3)]'
-                    : 'bg-white/5 border-nexus-border'
+                    : 'bg-nexus-card/5 border-nexus-border'
                 }`}
               />
             ))}
@@ -387,8 +387,8 @@ export default function Health() {
                     selectedMood === m.level
                       ? 'border-nexus-primary/50 bg-nexus-primary/10 shadow-nexus'
                       : currentMood === m.level
-                      ? 'border-nexus-border bg-white/5'
-                      : 'border-transparent hover:bg-white/5'
+                      ? 'border-nexus-border bg-nexus-card/5'
+                      : 'border-transparent hover:bg-nexus-card/5'
                   }`}
                 >
                   <span className="text-2xl">{m.emoji}</span>
@@ -856,7 +856,7 @@ export default function Health() {
               {exerciseLog.map((e) => (
                 <div
                   key={e.day}
-                  className="flex items-center gap-3 rounded-lg p-2 hover:bg-white/5 transition-colors"
+                  className="flex items-center gap-3 rounded-lg p-2 hover:bg-nexus-card/5 transition-colors"
                 >
                   <span className="text-xs font-semibold text-nexus-muted w-8">{e.day}</span>
                   <span className="flex-1 text-sm text-nexus-text">{e.type}</span>
@@ -905,7 +905,7 @@ export default function Health() {
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="flex items-start gap-3 rounded-lg p-2 hover:bg-white/5 transition-colors"
+                className="flex items-start gap-3 rounded-lg p-2 hover:bg-nexus-card/5 transition-colors"
               >
                 <span
                   className="flex h-8 w-8 items-center justify-center rounded-lg shrink-0 mt-0.5"

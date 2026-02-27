@@ -108,11 +108,11 @@ export default function EnvironmentManager() {
             <motion.div whileHover={{ scale: 1.1, rotate: 90 }} transition={{ duration: 0.3 }} className="p-3 bg-indigo-500/20 rounded-xl"><Settings className="w-7 h-7 text-indigo-400" /></motion.div>
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-blue-400 bg-clip-text text-transparent">Environment Manager</h1>
-              <p className="text-gray-400 text-sm">Environment variables & configuration management</p>
+              <p className="text-nexus-muted text-sm">Environment variables & configuration management</p>
             </div>
           </div>
           <div className="flex gap-2">
-            <motion.button whileHover={{ scale: 1.05 }} className="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-sm flex items-center gap-2 border border-gray-700"><Download className="w-4 h-4" /> Export</motion.button>
+            <motion.button whileHover={{ scale: 1.05 }} className="px-4 py-2 bg-nexus-card hover:bg-nexus-surface text-nexus-muted rounded-lg text-sm flex items-center gap-2 border border-nexus-border"><Download className="w-4 h-4" /> Export</motion.button>
             <motion.button whileHover={{ scale: 1.05 }} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-medium flex items-center gap-2"><Plus className="w-4 h-4" /> Add Variable</motion.button>
           </div>
         </div>
@@ -121,13 +121,13 @@ export default function EnvironmentManager() {
         <div className="grid grid-cols-4 gap-3">
           {environments.map(env => (
             <motion.button key={env.id} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setSelectedEnv(env.id)}
-              className={`p-4 rounded-xl border transition-all text-left ${selectedEnv === env.id ? `${typeColors[env.type]} border` : 'bg-gray-800/30 border-gray-700/50 hover:border-gray-600'}`}>
+              className={`p-4 rounded-xl border transition-all text-left ${selectedEnv === env.id ? `${typeColors[env.type]} border` : 'bg-gray-800/30 border-gray-700/50 hover:border-nexus-border'}`}>
               <div className="flex items-center justify-between mb-2">
                 <span className="font-semibold text-white text-sm">{env.name}</span>
                 <div className={`w-2 h-2 rounded-full ${env.status === 'running' ? 'bg-green-400' : 'bg-gray-400'}`} />
               </div>
-              <p className="text-xs text-gray-500 truncate">{env.base_url}</p>
-              <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
+              <p className="text-xs text-nexus-muted truncate">{env.base_url}</p>
+              <div className="flex items-center gap-2 mt-2 text-xs text-nexus-muted">
                 <span>{env.variables_count} vars</span>
                 <span>·</span>
                 <span>{env.region}</span>
@@ -144,7 +144,7 @@ export default function EnvironmentManager() {
             { key: 'history' as const, label: 'History', icon: <Clock className="w-4 h-4" /> },
           ].map(tab => (
             <motion.button key={tab.key} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setActiveView(tab.key)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeView === tab.key ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/25' : 'text-gray-400 hover:text-gray-200 hover:bg-gray-700/50'}`}>
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeView === tab.key ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/25' : 'text-nexus-muted hover:text-gray-200 hover:bg-nexus-surface/50'}`}>
               {tab.icon}<span>{tab.label}</span>
             </motion.button>
           ))}
@@ -156,38 +156,38 @@ export default function EnvironmentManager() {
             <motion.div key="variables" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-4">
               <div className="flex gap-3">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-                  <input type="text" placeholder="Search variables..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full pl-10 pr-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-lg text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-nexus-muted" />
+                  <input type="text" placeholder="Search variables..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full pl-10 pr-4 py-2.5 bg-gray-800/50 border border-nexus-border rounded-lg text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500" />
                 </div>
                 <motion.button whileHover={{ scale: 1.05 }} onClick={() => setShowSecrets(!showSecrets)}
-                  className={`px-3 py-2 rounded-lg text-sm flex items-center gap-2 transition-all ${showSecrets ? 'bg-amber-600/50 text-amber-200' : 'bg-gray-800/50 text-gray-400 border border-gray-700'}`}>
+                  className={`px-3 py-2 rounded-lg text-sm flex items-center gap-2 transition-all ${showSecrets ? 'bg-amber-600/50 text-amber-200' : 'bg-gray-800/50 text-nexus-muted border border-nexus-border'}`}>
                   {showSecrets ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />} {showSecrets ? 'Hide' : 'Show'} Secrets
                 </motion.button>
               </div>
               <div className="flex gap-3 text-xs">
-                <span className="px-2 py-1 bg-gray-800/50 rounded-lg text-gray-400">{filteredVars.length} variables</span>
+                <span className="px-2 py-1 bg-gray-800/50 rounded-lg text-nexus-muted">{filteredVars.length} variables</span>
                 <span className="px-2 py-1 bg-amber-500/10 rounded-lg text-amber-400 flex items-center gap-1"><Lock className="w-3 h-3" /> {secretCount} secrets</span>
                 <span className="px-2 py-1 bg-blue-500/10 rounded-lg text-blue-400 flex items-center gap-1"><Settings className="w-3 h-3" /> {configCount} config</span>
               </div>
               <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-1">
                 {filteredVars.map(v => (
-                  <motion.div key={v.key} variants={itemVariants} className="p-3 bg-gray-800/30 border border-gray-700/50 rounded-lg hover:border-gray-600 transition-all group">
+                  <motion.div key={v.key} variants={itemVariants} className="p-3 bg-gray-800/30 border border-gray-700/50 rounded-lg hover:border-nexus-border transition-all group">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3 flex-1 min-w-0">
                         {v.is_secret ? <Lock className="w-3.5 h-3.5 text-amber-400 shrink-0" /> : <Hash className="w-3.5 h-3.5 text-indigo-400 shrink-0" />}
                         <code className="font-mono font-semibold text-white text-sm">{v.key}</code>
-                        <span className="text-xs text-gray-600">·</span>
-                        <span className="text-xs text-gray-500 truncate">{v.description}</span>
+                        <span className="text-xs text-nexus-muted">·</span>
+                        <span className="text-xs text-nexus-muted truncate">{v.description}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <code className="text-xs bg-gray-900/50 border border-gray-700/50 px-3 py-1 rounded font-mono text-gray-400 max-w-xs truncate">
+                        <code className="text-xs bg-gray-900/50 border border-gray-700/50 px-3 py-1 rounded font-mono text-nexus-muted max-w-xs truncate">
                           {v.is_secret && !showSecrets ? '••••••••' : v.value}
                         </code>
                         <span className={`px-1.5 py-0.5 rounded text-[10px] ${v.source === 'vault' ? 'bg-amber-500/20 text-amber-400' : 'bg-blue-500/20 text-blue-400'}`}>{v.source}</span>
                         <div className="opacity-0 group-hover:opacity-100 flex items-center gap-1 transition-opacity">
-                          <button className="p-1 hover:bg-gray-700/50 rounded"><Copy className="w-3 h-3 text-gray-400" /></button>
-                          <button className="p-1 hover:bg-gray-700/50 rounded"><Edit className="w-3 h-3 text-gray-400" /></button>
-                          <button className="p-1 hover:bg-red-500/20 rounded"><Trash2 className="w-3 h-3 text-gray-400" /></button>
+                          <button className="p-1 hover:bg-nexus-surface/50 rounded"><Copy className="w-3 h-3 text-nexus-muted" /></button>
+                          <button className="p-1 hover:bg-nexus-surface/50 rounded"><Edit className="w-3 h-3 text-nexus-muted" /></button>
+                          <button className="p-1 hover:bg-red-500/20 rounded"><Trash2 className="w-3 h-3 text-nexus-muted" /></button>
                         </div>
                       </div>
                     </div>
@@ -201,18 +201,18 @@ export default function EnvironmentManager() {
           {activeView === 'compare' && (
             <motion.div key="compare" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-4">
               <div className="flex items-center gap-4">
-                <select className="px-3 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-indigo-500" value={selectedEnv} onChange={e => setSelectedEnv(e.target.value)}>
+                <select className="px-3 py-2 bg-gray-800/50 border border-nexus-border rounded-lg text-sm text-gray-200 focus:outline-none focus:border-indigo-500" value={selectedEnv} onChange={e => setSelectedEnv(e.target.value)}>
                   {environments.map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
                 </select>
-                <ArrowRight className="w-5 h-5 text-gray-500" />
-                <select className="px-3 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-indigo-500" value={compareEnv} onChange={e => setCompareEnv(e.target.value)}>
+                <ArrowRight className="w-5 h-5 text-nexus-muted" />
+                <select className="px-3 py-2 bg-gray-800/50 border border-nexus-border rounded-lg text-sm text-gray-200 focus:outline-none focus:border-indigo-500" value={compareEnv} onChange={e => setCompareEnv(e.target.value)}>
                   <option value="">Select environment...</option>
                   {environments.filter(e => e.id !== selectedEnv).map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
                 </select>
               </div>
               <div className="bg-gray-800/30 border border-gray-700/50 rounded-xl overflow-hidden">
                 <table className="w-full">
-                  <thead><tr className="border-b border-gray-700/50 text-xs text-gray-500 uppercase tracking-wider">
+                  <thead><tr className="border-b border-gray-700/50 text-xs text-nexus-muted uppercase tracking-wider">
                     <th className="text-left p-3">Key</th>
                     <th className="text-left p-3">{environments.find(e => e.id === selectedEnv)?.name || 'Env 1'}</th>
                     <th className="text-left p-3">{environments.find(e => e.id === compareEnv)?.name || 'Env 2'}</th>
@@ -222,8 +222,8 @@ export default function EnvironmentManager() {
                     {diffData.map(d => (
                       <tr key={d.key} className={`border-b border-gray-700/30 ${d.status === 'different' ? 'bg-yellow-500/5' : d.status === 'only_env1' || d.status === 'only_env2' ? 'bg-red-500/5' : ''}`}>
                         <td className="p-3"><code className="font-mono text-sm text-white">{d.key}</code></td>
-                        <td className="p-3"><code className="text-xs text-gray-400">{d.env1}</code></td>
-                        <td className="p-3"><code className="text-xs text-gray-400">{d.env2}</code></td>
+                        <td className="p-3"><code className="text-xs text-nexus-muted">{d.env1}</code></td>
+                        <td className="p-3"><code className="text-xs text-nexus-muted">{d.env2}</code></td>
                         <td className="p-3 text-center">
                           {d.status === 'same' && <Check className="w-4 h-4 text-green-400 mx-auto" />}
                           {d.status === 'different' && <AlertTriangle className="w-4 h-4 text-yellow-400 mx-auto" />}
@@ -256,13 +256,13 @@ export default function EnvironmentManager() {
                           {entry.old_value && entry.new_value && (
                             <div className="flex items-center gap-2 mt-1 text-xs">
                               <code className="text-red-400 line-through">{entry.old_value}</code>
-                              <ArrowRight className="w-3 h-3 text-gray-500" />
+                              <ArrowRight className="w-3 h-3 text-nexus-muted" />
                               <code className="text-green-400">{entry.new_value}</code>
                             </div>
                           )}
                         </div>
                       </div>
-                      <div className="text-right text-xs text-gray-500">
+                      <div className="text-right text-xs text-nexus-muted">
                         <p>{entry.user}</p>
                         <p>{new Date(entry.timestamp).toLocaleString()}</p>
                       </div>

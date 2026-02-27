@@ -140,7 +140,7 @@ function TaskCard({
     >
       <div className="flex items-start justify-between mb-2">
         <h4 className="text-sm font-medium text-nexus-text line-clamp-2">{task.title}</h4>
-        <button className="opacity-0 group-hover:opacity-100 p-0.5 rounded hover:bg-white/10 transition-all">
+        <button className="opacity-0 group-hover:opacity-100 p-0.5 rounded hover:bg-nexus-card/10 transition-all">
           <MoreHorizontal size={14} className="text-nexus-muted" />
         </button>
       </div>
@@ -153,7 +153,7 @@ function TaskCard({
         {task.tags.map((tag) => (
           <span
             key={tag}
-            className="inline-flex items-center gap-0.5 rounded px-1.5 py-0.5 text-[10px] bg-white/5 text-nexus-muted border border-nexus-border/30"
+            className="inline-flex items-center gap-0.5 rounded px-1.5 py-0.5 text-[10px] bg-nexus-card/5 text-nexus-muted border border-nexus-border/30"
           >
             <Tag size={8} />
             {tag}
@@ -199,7 +199,7 @@ function KanbanColumn({
       <div className="flex items-center gap-2 mb-3 px-1">
         <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: color }} />
         <span className="text-sm font-semibold text-nexus-text">{label}</span>
-        <span className="ml-auto text-xs text-nexus-muted bg-white/5 rounded-full px-2 py-0.5">
+        <span className="ml-auto text-xs text-nexus-muted bg-nexus-card/5 rounded-full px-2 py-0.5">
           {tasks.length}
         </span>
       </div>
@@ -249,7 +249,7 @@ function TaskDetailPanel({
         {/* Header */}
         <div className="flex items-start justify-between">
           <h3 className="text-lg font-bold text-nexus-text pr-4">{task.title}</h3>
-          <button onClick={onClose} className="p-1 rounded hover:bg-white/10 text-nexus-muted transition-colors shrink-0">
+          <button onClick={onClose} className="p-1 rounded hover:bg-nexus-card/10 text-nexus-muted transition-colors shrink-0">
             <X size={18} />
           </button>
         </div>
@@ -663,7 +663,7 @@ export default function Tasks() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   onClick={() => setSelectedTask(task)}
-                  className="grid grid-cols-12 gap-2 px-3 py-2.5 rounded-lg hover:bg-white/5 cursor-pointer transition-colors items-center"
+                  className="grid grid-cols-12 gap-2 px-3 py-2.5 rounded-lg hover:bg-nexus-card/5 cursor-pointer transition-colors items-center"
                 >
                   <div className="col-span-5 flex items-center gap-2 min-w-0">
                     {task.status === 'done' ? (

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   User, Mail, Phone, MapPin, Camera, Edit3, Save,
-  Shield, Key, Bell, Globe, Palette, Clock, Award,
-  Activity, Star, Settings, ChevronRight, Lock,
-  Eye, EyeOff, Upload, Check, X, Zap, Target,
+  Shield, Key, Bell, Globe, Clock,
+  Activity, Star, Settings, Lock,
+  Check, Zap, Target,
   Calendar, MessageSquare, Code, BookOpen
 } from 'lucide-react';
 import { FadeIn } from '../lib/animations';
@@ -24,7 +24,7 @@ const ProfilePage: React.FC = () => {
   const [editing, setEditing] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const [profile, setProfile] = useState({
+  const [profile] = useState({
     name: 'Admin User',
     email: 'admin@nexusai.local',
     phone: '+1 (555) 123-4567',
@@ -49,10 +49,10 @@ const ProfilePage: React.FC = () => {
   });
 
   const stats = [
-    { label: 'Tasks Completed', value: '1,247', icon: <Target size={16} />, color: 'text-blue-500' },
-    { label: 'Agent Interactions', value: '8,432', icon: <MessageSquare size={16} />, color: 'text-purple-500' },
-    { label: 'Days Active', value: '89', icon: <Calendar size={16} />, color: 'text-green-500' },
-    { label: 'Automations Run', value: '3,891', icon: <Zap size={16} />, color: 'text-orange-500' },
+    { label: 'Tasks Completed', value: '1,247', icon: <Target size={16} />, color: 'text-nexus-primary' },
+    { label: 'Agent Interactions', value: '8,432', icon: <MessageSquare size={16} />, color: 'text-nexus-secondary' },
+    { label: 'Days Active', value: '89', icon: <Calendar size={16} />, color: 'text-nexus-success' },
+    { label: 'Automations Run', value: '3,891', icon: <Zap size={16} />, color: 'text-nexus-warning' },
   ];
 
   const activityTimeline = [
@@ -81,9 +81,9 @@ const ProfilePage: React.FC = () => {
     <div className="space-y-6 p-6">
       {/* Header Card */}
       <FadeIn>
-        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="bg-nexus-card rounded-2xl border border-nexus-border overflow-hidden">
           {/* Cover */}
-          <div className="h-32 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 relative">
+          <div className="h-32 bg-gradient-to-r from-nexus-primary via-nexus-secondary to-nexus-accent relative">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiLz48L3N2Zz4=')] opacity-50" />
           </div>
 
@@ -91,23 +91,23 @@ const ProfilePage: React.FC = () => {
           <div className="px-6 pb-6 -mt-12">
             <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4">
               <div className="relative">
-                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-3xl font-bold border-4 border-white dark:border-gray-800 shadow-lg">
+                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-nexus-primary to-nexus-secondary flex items-center justify-center text-white text-3xl font-bold border-4 border-nexus-card shadow-lg">
                   AU
                 </div>
-                <button className="absolute bottom-0 right-0 p-1.5 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600">
+                <button className="absolute bottom-0 right-0 p-1.5 bg-nexus-primary text-white rounded-lg shadow-lg hover:opacity-90 transition-opacity">
                   <Camera size={12} />
                 </button>
               </div>
               <div className="flex-1">
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{profile.name}</h1>
-                <p className="text-sm text-gray-500 flex items-center gap-2">
-                  <Shield size={12} className="text-blue-500" /> {profile.role}
-                  <span className="px-2 py-0.5 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded text-xs">Active</span>
+                <h1 className="text-2xl font-bold text-nexus-text">{profile.name}</h1>
+                <p className="text-sm text-nexus-muted flex items-center gap-2">
+                  <Shield size={12} className="text-nexus-primary" /> {profile.role}
+                  <span className="px-2 py-0.5 bg-nexus-success/15 text-nexus-success rounded text-xs">Active</span>
                 </p>
               </div>
               <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                 onClick={() => setEditing(!editing)}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-xl text-sm font-medium hover:bg-blue-600">
+                className="flex items-center gap-2 px-4 py-2 bg-nexus-primary text-white rounded-xl text-sm font-medium hover:opacity-90 transition-opacity">
                 {editing ? <><Save size={14} /> Save Profile</> : <><Edit3 size={14} /> Edit Profile</>}
               </motion.button>
             </div>
@@ -115,10 +115,10 @@ const ProfilePage: React.FC = () => {
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
               {stats.map(stat => (
-                <div key={stat.label} className="text-center p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50">
+                <div key={stat.label} className="text-center p-3 rounded-xl bg-nexus-surface/50">
                   <div className={`${stat.color} mb-1 flex justify-center`}>{stat.icon}</div>
-                  <div className="text-xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
-                  <div className="text-xs text-gray-500">{stat.label}</div>
+                  <div className="text-xl font-bold text-nexus-text">{stat.value}</div>
+                  <div className="text-xs text-nexus-muted">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -127,11 +127,11 @@ const ProfilePage: React.FC = () => {
       </FadeIn>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-gray-100 dark:bg-gray-800 rounded-xl p-1 w-fit">
+      <div className="flex gap-1 bg-nexus-surface rounded-xl p-1 w-fit">
         {(['profile', 'security', 'preferences', 'achievements'] as const).map(tab => (
           <button key={tab} onClick={() => setActiveTab(tab)}
             className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-colors ${
-              activeTab === tab ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500'
+              activeTab === tab ? 'bg-nexus-card text-nexus-text shadow-sm' : 'text-nexus-muted hover:text-nexus-text'
             }`}>{tab}</button>
         ))}
       </div>
@@ -139,8 +139,8 @@ const ProfilePage: React.FC = () => {
       {activeTab === 'profile' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <FadeIn delay={0.1} className="lg:col-span-2">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 space-y-4">
-              <h3 className="font-semibold text-gray-900 dark:text-white">Personal Information</h3>
+            <div className="bg-nexus-card rounded-2xl p-6 border border-nexus-border space-y-4">
+              <h3 className="font-semibold text-nexus-text">Personal Information</h3>
               {[
                 { label: 'Full Name', value: profile.name, icon: <User size={16} /> },
                 { label: 'Email', value: profile.email, icon: <Mail size={16} /> },
@@ -149,44 +149,44 @@ const ProfilePage: React.FC = () => {
                 { label: 'Timezone', value: profile.timezone, icon: <Clock size={16} /> },
                 { label: 'Language', value: profile.language, icon: <Globe size={16} /> },
               ].map(field => (
-                <div key={field.label} className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50">
-                  <span className="text-gray-400">{field.icon}</span>
+                <div key={field.label} className="flex items-center gap-3 p-3 rounded-xl bg-nexus-surface/50">
+                  <span className="text-nexus-muted">{field.icon}</span>
                   <div className="flex-1">
-                    <label className="text-xs text-gray-500">{field.label}</label>
+                    <label className="text-xs text-nexus-muted">{field.label}</label>
                     {editing ? (
                       <input type="text" defaultValue={field.value}
-                        className="w-full bg-transparent text-sm text-gray-900 dark:text-white outline-none border-b border-gray-300 dark:border-gray-600 focus:border-blue-500" />
+                        className="w-full bg-transparent text-sm text-nexus-text outline-none border-b border-nexus-border focus:border-nexus-primary" />
                     ) : (
-                      <p className="text-sm text-gray-900 dark:text-white">{field.value}</p>
+                      <p className="text-sm text-nexus-text">{field.value}</p>
                     )}
                   </div>
                 </div>
               ))}
-              <div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50">
-                <label className="text-xs text-gray-500">Bio</label>
+              <div className="p-3 rounded-xl bg-nexus-surface/50">
+                <label className="text-xs text-nexus-muted">Bio</label>
                 {editing ? (
                   <textarea defaultValue={profile.bio} rows={3}
-                    className="w-full bg-transparent text-sm text-gray-900 dark:text-white outline-none resize-none mt-1" />
+                    className="w-full bg-transparent text-sm text-nexus-text outline-none resize-none mt-1" />
                 ) : (
-                  <p className="text-sm text-gray-900 dark:text-white mt-1">{profile.bio}</p>
+                  <p className="text-sm text-nexus-text mt-1">{profile.bio}</p>
                 )}
               </div>
             </div>
           </FadeIn>
 
           <FadeIn delay={0.15}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Recent Activity</h3>
+            <div className="bg-nexus-card rounded-2xl p-6 border border-nexus-border">
+              <h3 className="font-semibold text-nexus-text mb-4">Recent Activity</h3>
               <div className="space-y-4">
                 {activityTimeline.map((item, i) => (
                   <div key={i} className="flex gap-3">
                     <div className="flex flex-col items-center">
-                      <div className="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-500">{item.icon}</div>
-                      {i < activityTimeline.length - 1 && <div className="w-px h-full bg-gray-200 dark:bg-gray-700 mt-1" />}
+                      <div className="p-1.5 rounded-lg bg-nexus-surface text-nexus-muted">{item.icon}</div>
+                      {i < activityTimeline.length - 1 && <div className="w-px h-full bg-nexus-border mt-1" />}
                     </div>
                     <div className="pb-4">
-                      <p className="text-sm text-gray-900 dark:text-white">{item.action}</p>
-                      <p className="text-xs text-gray-500">{item.time}</p>
+                      <p className="text-sm text-nexus-text">{item.action}</p>
+                      <p className="text-xs text-nexus-muted">{item.time}</p>
                     </div>
                   </div>
                 ))}
@@ -199,53 +199,53 @@ const ProfilePage: React.FC = () => {
       {activeTab === 'security' && (
         <FadeIn delay={0.1}>
           <div className="max-w-2xl space-y-4">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 space-y-4">
-              <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                <Lock size={16} className="text-blue-500" /> Password
+            <div className="bg-nexus-card rounded-2xl p-6 border border-nexus-border space-y-4">
+              <h3 className="font-semibold text-nexus-text flex items-center gap-2">
+                <Lock size={16} className="text-nexus-primary" /> Password
               </h3>
               {['Current Password', 'New Password', 'Confirm Password'].map(label => (
                 <div key={label} className="relative">
-                  <label className="text-xs text-gray-500 mb-1 block">{label}</label>
+                  <label className="text-xs text-nexus-muted mb-1 block">{label}</label>
                   <input type={showPassword ? 'text' : 'password'} placeholder="••••••••"
-                    className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-sm text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full px-4 py-2.5 rounded-xl bg-nexus-surface border border-nexus-border text-sm text-nexus-text outline-none focus:ring-2 focus:ring-nexus-primary" />
                 </div>
               ))}
               <div className="flex items-center gap-2">
                 <input type="checkbox" checked={showPassword} onChange={e => setShowPassword(e.target.checked)} className="rounded" />
-                <span className="text-sm text-gray-500">Show passwords</span>
+                <span className="text-sm text-nexus-muted">Show passwords</span>
               </div>
-              <button className="px-4 py-2 bg-blue-500 text-white rounded-xl text-sm font-medium hover:bg-blue-600">Update Password</button>
+              <button className="px-4 py-2 bg-nexus-primary text-white rounded-xl text-sm font-medium hover:opacity-90 transition-opacity">Update Password</button>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 space-y-4">
-              <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                <Shield size={16} className="text-green-500" /> Two-Factor Authentication
+            <div className="bg-nexus-card rounded-2xl p-6 border border-nexus-border space-y-4">
+              <h3 className="font-semibold text-nexus-text flex items-center gap-2">
+                <Shield size={16} className="text-nexus-success" /> Two-Factor Authentication
               </h3>
-              <p className="text-sm text-gray-500">Secure your account with TOTP-based 2FA</p>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded-lg text-sm font-medium">
+              <p className="text-sm text-nexus-muted">Secure your account with TOTP-based 2FA</p>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-nexus-success/15 text-nexus-success rounded-lg text-sm font-medium">
                 <Check size={14} /> Enabled
               </span>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 space-y-4">
-              <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                <Key size={16} className="text-purple-500" /> API Keys
+            <div className="bg-nexus-card rounded-2xl p-6 border border-nexus-border space-y-4">
+              <h3 className="font-semibold text-nexus-text flex items-center gap-2">
+                <Key size={16} className="text-nexus-secondary" /> API Keys
               </h3>
               <div className="space-y-2">
                 {[
                   { name: 'Production Key', created: 'Jan 15, 2024', lastUsed: '2 min ago' },
                   { name: 'Development Key', created: 'Feb 1, 2024', lastUsed: '1 day ago' },
                 ].map(key => (
-                  <div key={key.name} className="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50">
+                  <div key={key.name} className="flex items-center justify-between p-3 rounded-xl bg-nexus-surface/50">
                     <div>
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">{key.name}</p>
-                      <p className="text-xs text-gray-500">Created {key.created} · Last used {key.lastUsed}</p>
+                      <p className="text-sm font-medium text-nexus-text">{key.name}</p>
+                      <p className="text-xs text-nexus-muted">Created {key.created} · Last used {key.lastUsed}</p>
                     </div>
-                    <button className="text-xs text-red-500 hover:text-red-600">Revoke</button>
+                    <button className="text-xs text-nexus-error hover:opacity-80">Revoke</button>
                   </div>
                 ))}
               </div>
-              <button className="flex items-center gap-2 text-sm text-blue-500 hover:text-blue-600">
+              <button className="flex items-center gap-2 text-sm text-nexus-primary hover:opacity-80">
                 <Key size={14} /> Generate New API Key
               </button>
             </div>
@@ -255,9 +255,9 @@ const ProfilePage: React.FC = () => {
 
       {activeTab === 'preferences' && (
         <FadeIn delay={0.1}>
-          <div className="max-w-2xl bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 space-y-6">
-            <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-              <Bell size={16} className="text-orange-500" /> Notification Preferences
+          <div className="max-w-2xl bg-nexus-card rounded-2xl p-6 border border-nexus-border space-y-6">
+            <h3 className="font-semibold text-nexus-text flex items-center gap-2">
+              <Bell size={16} className="text-nexus-warning" /> Notification Preferences
             </h3>
             {[
               { key: 'email', label: 'Email Notifications', desc: 'Receive notifications via email' },
@@ -268,14 +268,14 @@ const ProfilePage: React.FC = () => {
               { key: 'weekly', label: 'Weekly Digest', desc: 'Summary of activity each week' },
               { key: 'realtime', label: 'Real-time Alerts', desc: 'Immediate notifications for critical events' },
             ].map(item => (
-              <div key={item.key} className="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50">
+              <div key={item.key} className="flex items-center justify-between p-3 rounded-xl bg-nexus-surface/50">
                 <div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">{item.label}</p>
-                  <p className="text-xs text-gray-500">{item.desc}</p>
+                  <p className="text-sm font-medium text-nexus-text">{item.label}</p>
+                  <p className="text-xs text-nexus-muted">{item.desc}</p>
                 </div>
                 <button
                   onClick={() => setNotifications(prev => ({ ...prev, [item.key]: !prev[item.key as keyof typeof prev] }))}
-                  className={`relative w-10 h-5 rounded-full transition-colors ${notifications[item.key as keyof typeof notifications] ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'}`}
+                  className={`relative w-10 h-5 rounded-full transition-colors ${notifications[item.key as keyof typeof notifications] ? 'bg-nexus-primary' : 'bg-nexus-border'}`}
                 >
                   <motion.div
                     animate={{ x: notifications[item.key as keyof typeof notifications] ? 20 : 2 }}
@@ -297,19 +297,19 @@ const ProfilePage: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
                 whileHover={{ y: -4 }}
-                className={`bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700 text-center ${!ach.earned ? 'opacity-50' : ''}`}
+                className={`bg-nexus-card rounded-2xl p-5 border border-nexus-border text-center ${!ach.earned ? 'opacity-50' : ''}`}
               >
                 <div className={`w-14 h-14 mx-auto mb-3 rounded-xl bg-gradient-to-br ${ach.color} flex items-center justify-center text-white ${!ach.earned ? 'grayscale' : ''}`}>
                   {ach.icon}
                 </div>
-                <h4 className="font-semibold text-gray-900 dark:text-white text-sm">{ach.name}</h4>
-                <p className="text-xs text-gray-500 mt-1">{ach.description}</p>
+                <h4 className="font-semibold text-nexus-text text-sm">{ach.name}</h4>
+                <p className="text-xs text-nexus-muted mt-1">{ach.description}</p>
                 {ach.earned ? (
-                  <span className="inline-flex items-center gap-1 mt-2 text-xs text-green-500">
+                  <span className="inline-flex items-center gap-1 mt-2 text-xs text-nexus-success">
                     <Check size={10} /> {ach.date}
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1 mt-2 text-xs text-gray-400">
+                  <span className="inline-flex items-center gap-1 mt-2 text-xs text-nexus-muted">
                     <Lock size={10} /> Locked
                   </span>
                 )}

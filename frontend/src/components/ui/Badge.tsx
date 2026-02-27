@@ -21,7 +21,7 @@ const styles: Record<BadgeVariant, { bg: string; text: string; dot: string }> = 
   warning: { bg: 'bg-amber-500/15 border-amber-500/30', text: 'text-amber-400', dot: 'bg-amber-400' },
   error:   { bg: 'bg-red-500/15 border-red-500/30', text: 'text-red-400', dot: 'bg-red-400' },
   info:    { bg: 'bg-blue-500/15 border-blue-500/30', text: 'text-blue-400', dot: 'bg-blue-400' },
-  neutral: { bg: 'bg-white/5 border-white/10', text: 'text-nexus-muted', dot: 'bg-nexus-muted' },
+  neutral: { bg: 'bg-nexus-card/5 border-white/10', text: 'text-nexus-muted', dot: 'bg-nexus-muted' },
 };
 
 /* ------------------------------------------------------------------ */

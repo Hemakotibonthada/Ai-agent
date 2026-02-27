@@ -73,7 +73,7 @@ export default function Header({ onNavigate }: HeaderProps) {
         <button
           onClick={() => setCmdOpen(true)}
           className="flex items-center gap-2.5 rounded-lg border border-nexus-border bg-nexus-bg/50
-                     px-3 py-1.5 text-sm text-nexus-muted transition hover:border-nexus-primary/40 hover:bg-white/5
+                     px-3 py-1.5 text-sm text-nexus-muted transition hover:border-nexus-primary/40 hover:bg-nexus-card/5
                      focus-ring w-64"
         >
           <Search size={14} />
@@ -123,7 +123,7 @@ export default function Header({ onNavigate }: HeaderProps) {
                 rounded-lg p-2 transition focus-ring
                 ${voiceActive
                   ? 'bg-nexus-primary/20 text-nexus-primary neon-blue'
-                  : 'text-nexus-muted hover:bg-white/5 hover:text-nexus-text'
+                  : 'text-nexus-muted hover:bg-nexus-card/5 hover:text-nexus-text'
                 }
               `}
             >
@@ -133,7 +133,7 @@ export default function Header({ onNavigate }: HeaderProps) {
 
           {/* Notifications */}
           <Tooltip content="Notifications">
-            <button className="relative rounded-lg p-2 text-nexus-muted transition hover:bg-white/5 hover:text-nexus-text focus-ring">
+            <button className="relative rounded-lg p-2 text-nexus-muted transition hover:bg-nexus-card/5 hover:text-nexus-text focus-ring">
               <Bell size={16} />
               <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-nexus-error animate-pulse" />
             </button>
@@ -145,7 +145,7 @@ export default function Header({ onNavigate }: HeaderProps) {
           <div className="relative">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center gap-2 rounded-lg p-1 transition hover:bg-white/5 focus-ring"
+              className="flex items-center gap-2 rounded-lg p-1 transition hover:bg-nexus-card/5 focus-ring"
             >
               <Avatar fallback="NX" size="xs" status="online" />
               <ChevronDown size={12} className="text-nexus-muted hidden sm:block" />
@@ -168,7 +168,7 @@ export default function Header({ onNavigate }: HeaderProps) {
                     <button
                       key={item.label}
                       className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-nexus-muted
-                                 transition hover:bg-white/5 hover:text-nexus-text"
+                                 transition hover:bg-nexus-card/5 hover:text-nexus-text"
                       onClick={() => setDropdownOpen(false)}
                     >
                       <item.icon size={14} />

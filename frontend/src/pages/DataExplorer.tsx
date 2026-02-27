@@ -215,11 +215,11 @@ export default function DataExplorer() {
           <h2 className="text-lg font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent flex items-center gap-2">
             <Database className="w-5 h-5 text-cyan-400" /> Data Explorer
           </h2>
-          <div className="text-xs text-gray-500 mt-1">{tables.length} tables · {totalRows.toLocaleString()} rows · {totalSize} MB</div>
+          <div className="text-xs text-nexus-muted mt-1">{tables.length} tables · {totalRows.toLocaleString()} rows · {totalSize} MB</div>
           <div className="relative mt-3">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-nexus-muted" />
             <input type="text" value={searchTables} onChange={e => setSearchTables(e.target.value)}
-              placeholder="Search tables..." className="w-full pl-9 pr-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs text-white placeholder:text-gray-500" />
+              placeholder="Search tables..." className="w-full pl-9 pr-3 py-1.5 bg-nexus-card/5 border border-white/10 rounded-lg text-xs text-white placeholder:text-nexus-muted" />
           </div>
         </div>
 
@@ -228,12 +228,12 @@ export default function DataExplorer() {
             <div key={table.name}>
               <button onClick={() => { setSelectedTable(table); setExpandedTable(expandedTable === table.name ? '' : table.name); }}
                 className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all ${
-                  selectedTable.name === table.name ? 'bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5'
+                  selectedTable.name === table.name ? 'bg-nexus-card/10 text-white' : 'text-nexus-muted hover:bg-nexus-card/5'
                 }`}>
                 <ChevronRight className={`w-3 h-3 transition-transform ${expandedTable === table.name ? 'rotate-90' : ''}`} />
                 <Table className="w-4 h-4 text-cyan-400" />
                 <span className="flex-1 text-left text-xs font-medium">{table.name}</span>
-                <span className="text-[10px] text-gray-600">{table.rows.toLocaleString()}</span>
+                <span className="text-[10px] text-nexus-muted">{table.rows.toLocaleString()}</span>
               </button>
               <AnimatePresence>
                 {expandedTable === table.name && (
@@ -242,7 +242,7 @@ export default function DataExplorer() {
                     {table.fields.map(field => {
                       const Icon = fieldTypeIcons[field.type];
                       return (
-                        <div key={field.name} className="flex items-center gap-2 px-2 py-1 text-xs text-gray-500">
+                        <div key={field.name} className="flex items-center gap-2 px-2 py-1 text-xs text-nexus-muted">
                           <Icon className="w-3 h-3" style={{ color: fieldTypeColors[field.type] }} />
                           <span className={field.primaryKey ? 'text-yellow-400 font-medium' : ''}>{field.name}</span>
                           {field.primaryKey && <Key className="w-2.5 h-2.5 text-yellow-400" />}
@@ -266,14 +266,14 @@ export default function DataExplorer() {
             <Table className="w-5 h-5 text-cyan-400" />
             <div>
               <h3 className="font-semibold text-sm">{selectedTable.schema}.{selectedTable.name}</h3>
-              <div className="text-xs text-gray-500">{selectedTable.rows.toLocaleString()} rows · {selectedTable.size} · {selectedTable.fields.length} columns</div>
+              <div className="text-xs text-nexus-muted">{selectedTable.rows.toLocaleString()} rows · {selectedTable.size} · {selectedTable.fields.length} columns</div>
             </div>
           </div>
           <div className="flex gap-1">
             {(['schema', 'data', 'query', 'indexes'] as const).map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
                 className={`px-3 py-1 text-xs rounded-lg font-medium capitalize transition-all ${
-                  activeTab === tab ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'
+                  activeTab === tab ? 'bg-nexus-card/10 text-white' : 'text-nexus-muted hover:text-white'
                 }`}>{tab}</button>
             ))}
           </div>
@@ -283,15 +283,15 @@ export default function DataExplorer() {
           {/* Schema Tab */}
           {activeTab === 'schema' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
+              <div className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="text-left p-3 text-xs text-gray-500 font-medium">Column</th>
-                      <th className="text-left p-3 text-xs text-gray-500 font-medium">Type</th>
-                      <th className="text-left p-3 text-xs text-gray-500 font-medium">Nullable</th>
-                      <th className="text-left p-3 text-xs text-gray-500 font-medium">Default</th>
-                      <th className="text-left p-3 text-xs text-gray-500 font-medium">Constraints</th>
+                      <th className="text-left p-3 text-xs text-nexus-muted font-medium">Column</th>
+                      <th className="text-left p-3 text-xs text-nexus-muted font-medium">Type</th>
+                      <th className="text-left p-3 text-xs text-nexus-muted font-medium">Nullable</th>
+                      <th className="text-left p-3 text-xs text-nexus-muted font-medium">Default</th>
+                      <th className="text-left p-3 text-xs text-nexus-muted font-medium">Constraints</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -299,7 +299,7 @@ export default function DataExplorer() {
                       const Icon = fieldTypeIcons[field.type];
                       return (
                         <motion.tr key={field.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.03 }}
-                          className="border-b border-white/5 hover:bg-white/[0.02]">
+                          className="border-b border-white/5 hover:bg-nexus-card/[0.02]">
                           <td className="p-3">
                             <div className="flex items-center gap-2">
                               {field.primaryKey && <Key className="w-3.5 h-3.5 text-yellow-400" />}
@@ -316,12 +316,12 @@ export default function DataExplorer() {
                             </div>
                           </td>
                           <td className="p-3">
-                            <span className={`text-xs ${field.nullable ? 'text-gray-500' : 'text-yellow-400'}`}>
+                            <span className={`text-xs ${field.nullable ? 'text-nexus-muted' : 'text-yellow-400'}`}>
                               {field.nullable ? 'YES' : 'NOT NULL'}
                             </span>
                           </td>
                           <td className="p-3">
-                            <span className="text-xs font-mono text-gray-400">{field.default || '—'}</span>
+                            <span className="text-xs font-mono text-nexus-muted">{field.default || '—'}</span>
                           </td>
                           <td className="p-3">
                             <div className="flex gap-1">
@@ -345,12 +345,12 @@ export default function DataExplorer() {
           {/* Data Tab */}
           {activeTab === 'data' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden overflow-x-auto">
+              <div className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/10">
                       {sampleQuery.columns.map(col => (
-                        <th key={col} className="text-left p-3 text-xs text-gray-500 font-medium whitespace-nowrap cursor-pointer hover:text-white">
+                        <th key={col} className="text-left p-3 text-xs text-nexus-muted font-medium whitespace-nowrap cursor-pointer hover:text-white">
                           <span className="flex items-center gap-1">{col} <ArrowDown className="w-3 h-3" /></span>
                         </th>
                       ))}
@@ -358,7 +358,7 @@ export default function DataExplorer() {
                   </thead>
                   <tbody>
                     {sampleQuery.rows.map((row, i) => (
-                      <tr key={i} className="border-b border-white/5 hover:bg-white/[0.02]">
+                      <tr key={i} className="border-b border-white/5 hover:bg-nexus-card/[0.02]">
                         {sampleQuery.columns.map(col => (
                           <td key={col} className="p-3 text-xs font-mono whitespace-nowrap">
                             {typeof row[col] === 'boolean' ? (
@@ -371,11 +371,11 @@ export default function DataExplorer() {
                   </tbody>
                 </table>
               </div>
-              <div className="flex items-center justify-between mt-3 text-xs text-gray-500">
+              <div className="flex items-center justify-between mt-3 text-xs text-nexus-muted">
                 <span>Showing 5 of {selectedTable.rows.toLocaleString()} rows</span>
                 <div className="flex gap-1">
                   {[1, 2, 3, '...', 100].map((p, i) => (
-                    <button key={i} className={`px-2 py-1 rounded ${p === 1 ? 'bg-white/10 text-white' : 'hover:bg-white/5'}`}>{p}</button>
+                    <button key={i} className={`px-2 py-1 rounded ${p === 1 ? 'bg-nexus-card/10 text-white' : 'hover:bg-nexus-card/5'}`}>{p}</button>
                   ))}
                 </div>
               </div>
@@ -385,9 +385,9 @@ export default function DataExplorer() {
           {/* Query Tab */}
           {activeTab === 'query' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
+              <div className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
                 <div className="flex items-center justify-between px-4 py-2 border-b border-white/10">
-                  <span className="text-xs text-gray-400">SQL Query</span>
+                  <span className="text-xs text-nexus-muted">SQL Query</span>
                   <div className="flex gap-2">
                     <button onClick={executeQuery}
                       className="flex items-center gap-1 px-3 py-1 bg-green-500/20 text-green-400 rounded-lg text-xs hover:bg-green-500/30 transition-colors">
@@ -401,9 +401,9 @@ export default function DataExplorer() {
               </div>
 
               {queryResult && (
-                <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
+                <div className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
                   <div className="flex items-center justify-between px-4 py-2 border-b border-white/10">
-                    <div className="flex items-center gap-3 text-xs text-gray-400">
+                    <div className="flex items-center gap-3 text-xs text-nexus-muted">
                       <span className="flex items-center gap-1 text-green-400"><CheckCircle className="w-3 h-3" /> Success</span>
                       <span>{queryResult.rowCount.toLocaleString()} rows</span>
                       <span>{queryResult.executionTime}ms</span>
@@ -414,7 +414,7 @@ export default function DataExplorer() {
                       <thead>
                         <tr className="border-b border-white/10">
                           {queryResult.columns.map(col => (
-                            <th key={col} className="text-left p-3 text-xs text-gray-500 font-medium font-mono">{col}</th>
+                            <th key={col} className="text-left p-3 text-xs text-nexus-muted font-medium font-mono">{col}</th>
                           ))}
                         </tr>
                       </thead>
@@ -441,24 +441,24 @@ export default function DataExplorer() {
           {/* Indexes Tab */}
           {activeTab === 'indexes' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
+              <div className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="text-left p-3 text-xs text-gray-500 font-medium">Name</th>
-                      <th className="text-left p-3 text-xs text-gray-500 font-medium">Columns</th>
-                      <th className="text-left p-3 text-xs text-gray-500 font-medium">Unique</th>
+                      <th className="text-left p-3 text-xs text-nexus-muted font-medium">Name</th>
+                      <th className="text-left p-3 text-xs text-nexus-muted font-medium">Columns</th>
+                      <th className="text-left p-3 text-xs text-nexus-muted font-medium">Unique</th>
                     </tr>
                   </thead>
                   <tbody>
                     {selectedTable.indexes.map((idx, i) => (
                       <motion.tr key={idx.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.05 }}
-                        className="border-b border-white/5 hover:bg-white/[0.02]">
+                        className="border-b border-white/5 hover:bg-nexus-card/[0.02]">
                         <td className="p-3 text-xs font-mono text-cyan-400">{idx.name}</td>
                         <td className="p-3">
                           <div className="flex gap-1">
                             {idx.columns.map(col => (
-                              <span key={col} className="px-2 py-0.5 bg-white/5 rounded text-xs font-mono">{col}</span>
+                              <span key={col} className="px-2 py-0.5 bg-nexus-card/5 rounded text-xs font-mono">{col}</span>
                             ))}
                           </div>
                         </td>
@@ -466,7 +466,7 @@ export default function DataExplorer() {
                           {idx.unique ? (
                             <span className="text-xs text-purple-400">UNIQUE</span>
                           ) : (
-                            <span className="text-xs text-gray-500">—</span>
+                            <span className="text-xs text-nexus-muted">—</span>
                           )}
                         </td>
                       </motion.tr>

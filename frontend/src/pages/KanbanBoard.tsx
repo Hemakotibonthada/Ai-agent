@@ -72,9 +72,9 @@ const initialColumns: KanbanColumn[] = [
 
 const priorityConfig = {
   low: { color: 'text-blue-500', bg: 'bg-blue-100 dark:bg-blue-900/30', icon: <Flag size={10} /> },
-  medium: { color: 'text-yellow-500', bg: 'bg-yellow-100 dark:bg-yellow-900/30', icon: <Flag size={10} /> },
+  medium: { color: 'text-yellow-500', bg: 'bg-nexus-warning/15', icon: <Flag size={10} /> },
   high: { color: 'text-orange-500', bg: 'bg-orange-100 dark:bg-orange-900/30', icon: <Flag size={10} /> },
-  urgent: { color: 'text-red-500', bg: 'bg-red-100 dark:bg-red-900/30', icon: <AlertCircle size={10} /> },
+  urgent: { color: 'text-red-500', bg: 'bg-nexus-error/15', icon: <AlertCircle size={10} /> },
 };
 
 const avatarColors = ['bg-indigo-500', 'bg-emerald-500', 'bg-rose-500', 'bg-amber-500', 'bg-cyan-500'];
@@ -96,7 +96,7 @@ const TaskCard: React.FC<{
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ delay: index * 0.02 }}
       whileHover={{ y: -2 }}
-      className="bg-white dark:bg-gray-800 rounded-xl p-3.5 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow cursor-pointer group"
+      className="bg-nexus-card rounded-xl p-3.5 border border-nexus-border shadow-sm hover:shadow-md transition-shadow cursor-pointer group"
     >
       {/* Header */}
       <div className="flex items-start justify-between mb-2">
@@ -108,23 +108,23 @@ const TaskCard: React.FC<{
         </div>
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <button onClick={(e) => { e.stopPropagation(); onStar(); }}
-            className={`p-0.5 rounded ${task.starred ? 'text-yellow-400' : 'text-gray-300 hover:text-yellow-400'}`}>
+            className={`p-0.5 rounded ${task.starred ? 'text-yellow-400' : 'text-nexus-muted hover:text-yellow-400'}`}>
             <Star size={14} fill={task.starred ? 'currentColor' : 'none'} />
           </button>
-          <button className="p-0.5 rounded text-gray-300 hover:text-gray-500">
+          <button className="p-0.5 rounded text-nexus-muted hover:text-nexus-muted">
             <MoreHorizontal size={14} />
           </button>
         </div>
       </div>
 
       {/* Title */}
-      <h4 className="font-medium text-sm text-gray-900 dark:text-white mb-1">{task.title}</h4>
-      <p className="text-xs text-gray-500 line-clamp-2 mb-3">{task.description}</p>
+      <h4 className="font-medium text-sm text-nexus-text mb-1">{task.title}</h4>
+      <p className="text-xs text-nexus-muted line-clamp-2 mb-3">{task.description}</p>
 
       {/* Tags */}
       <div className="flex flex-wrap gap-1 mb-3">
         {task.tags.map(tag => (
-          <span key={tag} className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs">
+          <span key={tag} className="px-1.5 py-0.5 rounded bg-nexus-surface text-nexus-muted text-xs">
             {tag}
           </span>
         ))}
@@ -133,14 +133,14 @@ const TaskCard: React.FC<{
       {/* Checklist Progress */}
       {task.checklist.total > 0 && (
         <div className="mb-3">
-          <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
+          <div className="flex items-center justify-between text-xs text-nexus-muted mb-1">
             <span className="flex items-center gap-1">
               <CheckCircle2 size={10} />
               {task.checklist.done}/{task.checklist.total}
             </span>
             <span>{progress}%</span>
           </div>
-          <div className="h-1 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+          <div className="h-1 bg-nexus-surface rounded-full overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
@@ -151,19 +151,19 @@ const TaskCard: React.FC<{
       )}
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-700">
+      <div className="flex items-center justify-between pt-2 border-t border-nexus-border">
         <div className="flex items-center gap-2">
           <div className={`w-5 h-5 rounded-full ${avatarColors[task.assignee.charCodeAt(0) % avatarColors.length]} flex items-center justify-center text-white text-xs font-bold`}>
             {task.assignee[0]}
           </div>
           {task.dueDate && (
-            <span className="flex items-center gap-0.5 text-xs text-gray-400">
+            <span className="flex items-center gap-0.5 text-xs text-nexus-muted">
               <Calendar size={10} />
               {task.dueDate.split('-').slice(1).join('/')}
             </span>
           )}
         </div>
-        <div className="flex items-center gap-2 text-xs text-gray-400">
+        <div className="flex items-center gap-2 text-xs text-nexus-muted">
           <span className="flex items-center gap-0.5"><MessageSquare size={10} /> {task.comments}</span>
         </div>
       </div>
@@ -203,11 +203,11 @@ const KanbanBoard: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <LayoutGrid className="text-indigo-500" size={32} />
               Kanban Board
             </h1>
-            <p className="text-gray-500 mt-1">
+            <p className="text-nexus-muted mt-1">
               {totalTasks} tasks · {completedTasks} completed
             </p>
           </div>
@@ -221,15 +221,15 @@ const KanbanBoard: React.FC = () => {
       <FadeIn delay={0.1}>
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1 max-w-md">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-muted" />
             <input type="text" placeholder="Search tasks..." value={search} onChange={e => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none" />
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-nexus-card border border-nexus-border text-nexus-text focus:ring-2 focus:ring-indigo-500 outline-none" />
           </div>
-          <div className="flex items-center bg-gray-100 dark:bg-gray-700 rounded-xl p-1">
+          <div className="flex items-center bg-nexus-surface rounded-xl p-1">
             {['all', 'urgent', 'high', 'medium', 'low'].map(p => (
               <button key={p} onClick={() => setFilterPriority(p)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-all ${
-                  filterPriority === p ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500'
+                  filterPriority === p ? 'bg-white text-nexus-text shadow-sm' : 'text-nexus-muted'
                 }`}>
                 {p}
               </button>
@@ -242,15 +242,15 @@ const KanbanBoard: React.FC = () => {
       <div className="flex gap-4 overflow-x-auto pb-4">
         {filteredColumns.map((column, colIndex) => (
           <FadeIn key={column.id} delay={0.1 + colIndex * 0.05} className="flex-shrink-0 w-72">
-            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-3 min-h-[600px]">
+            <div className="bg-nexus-surface/50 rounded-2xl p-3 min-h-[600px]">
               {/* Column Header */}
               <div className="flex items-center justify-between mb-3 px-1">
                 <div className="flex items-center gap-2">
                   <div className={`w-2.5 h-2.5 rounded-full ${column.color}`} />
-                  <h3 className="font-semibold text-sm text-gray-900 dark:text-white">{column.title}</h3>
-                  <span className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded-full text-xs text-gray-500">{column.tasks.length}</span>
+                  <h3 className="font-semibold text-sm text-nexus-text">{column.title}</h3>
+                  <span className="px-1.5 py-0.5 bg-nexus-surface rounded-full text-xs text-nexus-muted">{column.tasks.length}</span>
                 </div>
-                <button className="p-1 rounded-lg text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700">
+                <button className="p-1 rounded-lg text-nexus-muted hover:bg-nexus-surface">
                   <Plus size={14} />
                 </button>
               </div>
@@ -269,7 +269,7 @@ const KanbanBoard: React.FC = () => {
                 </AnimatePresence>
 
                 {column.tasks.length === 0 && (
-                  <div className="text-center py-8 text-gray-400 text-sm">
+                  <div className="text-center py-8 text-nexus-muted text-sm">
                     <Circle size={24} className="mx-auto mb-2 opacity-30" />
                     No tasks
                   </div>

@@ -143,7 +143,7 @@ const stepTypeConfig: Record<string, { color: string; bgColor: string; icon: Rea
 };
 
 const statusIcons: Record<string, React.ReactNode> = {
-  pending: <Clock size={12} className="text-gray-400" />,
+  pending: <Clock size={12} className="text-nexus-muted" />,
   running: <RefreshCw size={12} className="text-blue-500 animate-spin" />,
   completed: <CheckCircle2 size={12} className="text-green-500" />,
   failed: <XCircle size={12} className="text-red-500" />,
@@ -179,7 +179,7 @@ const PipelineCard: React.FC<{
       transition={{ delay: index * 0.05 }}
       whileHover={{ y: -2, boxShadow: '0 8px 30px rgba(0,0,0,0.1)' }}
       onClick={onClick}
-      className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 cursor-pointer"
+      className="bg-nexus-card rounded-2xl p-6 border border-nexus-border cursor-pointer"
     >
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
@@ -187,15 +187,15 @@ const PipelineCard: React.FC<{
             <Database size={20} className="text-cyan-500" />
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white">{pipeline.name}</h3>
-            <p className="text-sm text-gray-500 mt-0.5 line-clamp-1">{pipeline.description}</p>
+            <h3 className="font-semibold text-nexus-text">{pipeline.name}</h3>
+            <p className="text-sm text-nexus-muted mt-0.5 line-clamp-1">{pipeline.description}</p>
           </div>
         </div>
         <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${
           pipeline.status === 'active' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' :
           pipeline.status === 'paused' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400' :
           pipeline.status === 'error' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400' :
-          'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
+          'bg-nexus-surface text-nexus-text'
         }`}>
           {pipeline.status}
         </span>
@@ -209,13 +209,13 @@ const PipelineCard: React.FC<{
               <div className={`w-6 h-6 rounded-full flex items-center justify-center text-white ${
                 step.status === 'completed' ? stepTypeConfig[step.type]?.bgColor || 'bg-gray-500' :
                 step.status === 'running' ? 'bg-blue-500 animate-pulse' :
-                'bg-gray-300 dark:bg-gray-600'
+                'bg-nexus-border'
               }`}>
                 {statusIcons[step.status] || stepTypeConfig[step.type]?.icon}
               </div>
             </div>
             {i < pipeline.steps.length - 1 && (
-              <div className={`w-4 h-0.5 ${step.status === 'completed' ? 'bg-green-400' : 'bg-gray-200 dark:bg-gray-600'}`} />
+              <div className={`w-4 h-0.5 ${step.status === 'completed' ? 'bg-green-400' : 'bg-nexus-surface'}`} />
             )}
           </React.Fragment>
         ))}
@@ -223,11 +223,11 @@ const PipelineCard: React.FC<{
 
       {/* Progress Bar */}
       <div className="mb-4">
-        <div className="flex justify-between text-xs text-gray-500 mb-1">
+        <div className="flex justify-between text-xs text-nexus-muted mb-1">
           <span>{completedSteps}/{pipeline.steps.length} steps</span>
           <span>{progress.toFixed(0)}%</span>
         </div>
-        <div className="h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div className="h-1.5 bg-nexus-surface rounded-full overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
@@ -240,27 +240,27 @@ const PipelineCard: React.FC<{
       {/* Stats Grid */}
       <div className="grid grid-cols-4 gap-2 mb-4">
         <div className="text-center">
-          <div className="text-sm font-bold text-gray-900 dark:text-white">{pipeline.runs.toLocaleString()}</div>
-          <div className="text-xs text-gray-500">Runs</div>
+          <div className="text-sm font-bold text-nexus-text">{pipeline.runs.toLocaleString()}</div>
+          <div className="text-xs text-nexus-muted">Runs</div>
         </div>
         <div className="text-center">
           <div className="text-sm font-bold text-green-500">{pipeline.successRate}%</div>
-          <div className="text-xs text-gray-500">Success</div>
+          <div className="text-xs text-nexus-muted">Success</div>
         </div>
         <div className="text-center">
-          <div className="text-sm font-bold text-gray-900 dark:text-white">{pipeline.avgDuration}</div>
-          <div className="text-xs text-gray-500">Avg Time</div>
+          <div className="text-sm font-bold text-nexus-text">{pipeline.avgDuration}</div>
+          <div className="text-xs text-nexus-muted">Avg Time</div>
         </div>
         <div className="text-center">
-          <div className="text-sm font-bold text-gray-900 dark:text-white">
+          <div className="text-sm font-bold text-nexus-text">
             {pipeline.totalRecords > 1000000 ? `${(pipeline.totalRecords / 1000000).toFixed(1)}M` : `${(pipeline.totalRecords / 1000).toFixed(0)}k`}
           </div>
-          <div className="text-xs text-gray-500">Records</div>
+          <div className="text-xs text-nexus-muted">Records</div>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-700 text-xs text-gray-500">
+      <div className="flex items-center justify-between pt-3 border-t border-nexus-border text-xs text-nexus-muted">
         <div className="flex items-center gap-1">
           <Clock size={12} />
           <span>{pipeline.schedule}</span>
@@ -283,20 +283,20 @@ const PipelineDetail: React.FC<{ pipeline: Pipeline; onClose: () => void }> = ({
     initial={{ opacity: 0, x: 300 }}
     animate={{ opacity: 1, x: 0 }}
     exit={{ opacity: 0, x: 300 }}
-    className="fixed inset-y-0 right-0 w-full max-w-xl bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 shadow-2xl z-50 overflow-y-auto"
+    className="fixed inset-y-0 right-0 w-full max-w-xl bg-nexus-card border-l border-nexus-border shadow-2xl z-50 overflow-y-auto"
   >
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white">{pipeline.name}</h2>
-        <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-          <XCircle size={20} className="text-gray-400" />
+        <h2 className="text-xl font-bold text-nexus-text">{pipeline.name}</h2>
+        <button onClick={onClose} className="p-2 rounded-lg hover:bg-nexus-surface">
+          <XCircle size={20} className="text-nexus-muted" />
         </button>
       </div>
 
-      <p className="text-gray-500 mb-6">{pipeline.description}</p>
+      <p className="text-nexus-muted mb-6">{pipeline.description}</p>
 
       {/* Data Flow Visualization */}
-      <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900 dark:text-white mb-4">Data Flow</h3>
+      <h3 className="text-sm font-semibold uppercase tracking-wider text-nexus-text mb-4">Data Flow</h3>
       <div className="space-y-3 mb-6">
         {pipeline.steps.map((step, i) => (
           <motion.div
@@ -306,35 +306,35 @@ const PipelineDetail: React.FC<{ pipeline: Pipeline; onClose: () => void }> = ({
             transition={{ delay: i * 0.08 }}
           >
             {i > 0 && <div className="flex items-center gap-2 py-1 pl-6">
-              <ArrowDown size={14} className="text-gray-300" />
+              <ArrowDown size={14} className="text-nexus-muted" />
               {step.recordsIn !== undefined && step.recordsIn > 0 && (
-                <span className="text-xs text-gray-400">{step.recordsIn?.toLocaleString()} records</span>
+                <span className="text-xs text-nexus-muted">{step.recordsIn?.toLocaleString()} records</span>
               )}
             </div>}
             <div className={`flex items-center gap-3 p-4 rounded-xl border ${
               step.status === 'completed' ? 'border-green-200 dark:border-green-800 bg-green-50/50 dark:bg-green-900/10' :
               step.status === 'running' ? 'border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10' :
               step.status === 'failed' ? 'border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-900/10' :
-              'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50'
+              'border-nexus-border bg-nexus-surface/50'
             }`}>
               <div className={`p-2 rounded-lg ${stepTypeConfig[step.type]?.bgColor || 'bg-gray-500'} text-white`}>
                 {stepTypeConfig[step.type]?.icon}
               </div>
               <div className="flex-1">
-                <div className="font-medium text-sm text-gray-900 dark:text-white">{step.name}</div>
-                <div className="text-xs text-gray-500 capitalize">{step.type}</div>
+                <div className="font-medium text-sm text-nexus-text">{step.name}</div>
+                <div className="text-xs text-nexus-muted capitalize">{step.type}</div>
               </div>
               <div className="text-right">
                 <div className="flex items-center gap-1 text-xs">
                   {statusIcons[step.status]}
-                  <span className="capitalize text-gray-500">{step.status}</span>
+                  <span className="capitalize text-nexus-muted">{step.status}</span>
                 </div>
-                {step.duration && <div className="text-xs text-gray-400 mt-0.5">{step.duration}</div>}
+                {step.duration && <div className="text-xs text-nexus-muted mt-0.5">{step.duration}</div>}
               </div>
               {step.recordsOut !== undefined && step.recordsOut > 0 && (
                 <div className="text-right">
-                  <div className="text-xs font-medium text-gray-700 dark:text-gray-300">{step.recordsOut?.toLocaleString()}</div>
-                  <div className="text-xs text-gray-400">out</div>
+                  <div className="text-xs font-medium text-nexus-text">{step.recordsOut?.toLocaleString()}</div>
+                  <div className="text-xs text-nexus-muted">out</div>
                 </div>
               )}
             </div>
@@ -343,7 +343,7 @@ const PipelineDetail: React.FC<{ pipeline: Pipeline; onClose: () => void }> = ({
       </div>
 
       {/* Statistics */}
-      <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900 dark:text-white mb-3">Statistics</h3>
+      <h3 className="text-sm font-semibold uppercase tracking-wider text-nexus-text mb-3">Statistics</h3>
       <div className="grid grid-cols-2 gap-3 mb-6">
         {[
           { label: 'Total Runs', value: pipeline.runs.toLocaleString() },
@@ -351,9 +351,9 @@ const PipelineDetail: React.FC<{ pipeline: Pipeline; onClose: () => void }> = ({
           { label: 'Avg Duration', value: pipeline.avgDuration },
           { label: 'Total Records', value: pipeline.totalRecords > 1000000 ? `${(pipeline.totalRecords / 1000000).toFixed(1)}M` : `${(pipeline.totalRecords / 1000).toFixed(0)}k` },
         ].map(stat => (
-          <div key={stat.label} className="p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50">
-            <div className="text-xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
-            <div className="text-xs text-gray-500">{stat.label}</div>
+          <div key={stat.label} className="p-3 rounded-xl bg-nexus-surface/50">
+            <div className="text-xl font-bold text-nexus-text">{stat.value}</div>
+            <div className="text-xs text-nexus-muted">{stat.label}</div>
           </div>
         ))}
       </div>
@@ -367,7 +367,7 @@ const PipelineDetail: React.FC<{ pipeline: Pipeline; onClose: () => void }> = ({
         >
           <Play size={18} /> Execute
         </motion.button>
-        <button className="px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-medium">
+        <button className="px-4 py-3 bg-nexus-surface text-nexus-text rounded-xl font-medium">
           <Settings2 size={18} />
         </button>
       </div>
@@ -403,11 +403,11 @@ const DataPipelines: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <Database className="text-cyan-500" size={32} />
               Data Pipelines
             </h1>
-            <p className="text-gray-500 mt-1">Build, manage, and monitor ETL pipelines</p>
+            <p className="text-nexus-muted mt-1">Build, manage, and monitor ETL pipelines</p>
           </div>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -433,13 +433,13 @@ const DataPipelines: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700"
+              className="bg-nexus-card rounded-xl p-4 border border-nexus-border"
             >
               <div className="flex items-center gap-3">
                 <div className={`p-2 rounded-lg ${stat.color}`}>{stat.icon}</div>
                 <div>
-                  <div className="text-xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
-                  <div className="text-xs text-gray-500">{stat.label}</div>
+                  <div className="text-xl font-bold text-nexus-text">{stat.value}</div>
+                  <div className="text-xs text-nexus-muted">{stat.label}</div>
                 </div>
               </div>
             </motion.div>
@@ -449,7 +449,7 @@ const DataPipelines: React.FC = () => {
 
       {/* Tabs */}
       <FadeIn delay={0.15}>
-        <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-700 rounded-xl p-1 w-fit">
+        <div className="flex items-center gap-1 bg-nexus-surface rounded-xl p-1 w-fit">
           {[
             { id: 'pipelines' as const, label: 'Pipelines', icon: <Layers size={14} /> },
             { id: 'monitoring' as const, label: 'Monitoring', icon: <Activity size={14} /> },
@@ -460,8 +460,8 @@ const DataPipelines: React.FC = () => {
               onClick={() => setTab(t.id)}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                 tab === t.id
-                  ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-white text-nexus-text shadow-sm'
+                  : 'text-nexus-muted hover:text-nexus-text'
               }`}
             >
               {t.icon} {t.label}
@@ -474,13 +474,13 @@ const DataPipelines: React.FC = () => {
         <>
           {/* Search */}
           <div className="relative">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-muted" />
             <input
               type="text"
               placeholder="Search pipelines..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full max-w-md pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-cyan-500 outline-none"
+              className="w-full max-w-md pl-10 pr-4 py-2.5 rounded-xl bg-nexus-card border border-nexus-border text-nexus-text focus:ring-2 focus:ring-cyan-500 outline-none"
             />
           </div>
 
@@ -501,8 +501,8 @@ const DataPipelines: React.FC = () => {
         <FadeIn>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
             {/* Throughput Chart */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Records Throughput (24h)</h3>
+            <div className="bg-nexus-card rounded-2xl p-6 border border-nexus-border">
+              <h3 className="font-semibold text-nexus-text mb-4">Records Throughput (24h)</h3>
               <ResponsiveContainer width="100%" height={250}>
                 <AreaChart data={throughputData}>
                   <defs>
@@ -521,8 +521,8 @@ const DataPipelines: React.FC = () => {
             </div>
 
             {/* Distribution Pie */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Pipeline Distribution</h3>
+            <div className="bg-nexus-card rounded-2xl p-6 border border-nexus-border">
+              <h3 className="font-semibold text-nexus-text mb-4">Pipeline Distribution</h3>
               <ResponsiveContainer width="100%" height={250}>
                 <PieChart>
                   <Pie data={pipelineDistribution} cx="50%" cy="50%" innerRadius={60} outerRadius={90} dataKey="value" paddingAngle={4}>
@@ -535,7 +535,7 @@ const DataPipelines: React.FC = () => {
               </ResponsiveContainer>
               <div className="flex justify-center gap-4 mt-2">
                 {pipelineDistribution.map(d => (
-                  <div key={d.name} className="flex items-center gap-1.5 text-xs text-gray-500">
+                  <div key={d.name} className="flex items-center gap-1.5 text-xs text-nexus-muted">
                     <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: d.color }} />
                     {d.name}
                   </div>
@@ -544,8 +544,8 @@ const DataPipelines: React.FC = () => {
             </div>
 
             {/* Error Rate Chart */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 xl:col-span-2">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Error Rate (24h)</h3>
+            <div className="bg-nexus-card rounded-2xl p-6 border border-nexus-border xl:col-span-2">
+              <h3 className="font-semibold text-nexus-text mb-4">Error Rate (24h)</h3>
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={throughputData}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
@@ -576,13 +576,13 @@ const DataPipelines: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700"
+                className="bg-nexus-card rounded-2xl p-5 border border-nexus-border"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-500">{source.icon}</div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">{source.name}</h4>
-                    <span className="text-xs text-gray-500">{source.type}</span>
+                    <h4 className="font-semibold text-nexus-text">{source.name}</h4>
+                    <span className="text-xs text-nexus-muted">{source.type}</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
@@ -592,7 +592,7 @@ const DataPipelines: React.FC = () => {
                     <span className={`w-1.5 h-1.5 rounded-full ${source.status === 'connected' ? 'bg-green-500' : 'bg-red-500'}`} />
                     {source.status}
                   </span>
-                  <span className="text-sm font-medium text-gray-900 dark:text-white">{source.records} records</span>
+                  <span className="text-sm font-medium text-nexus-text">{source.records} records</span>
                 </div>
               </motion.div>
             ))}

@@ -102,12 +102,12 @@ export default function ResourceMonitor() {
             </motion.div>
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent">Resource Monitor</h1>
-              <p className="text-gray-400 text-sm">Real-time system performance monitoring</p>
+              <p className="text-nexus-muted text-sm">Real-time system performance monitoring</p>
             </div>
           </div>
-          <div className="flex items-center gap-3 text-xs text-gray-500">
+          <div className="flex items-center gap-3 text-xs text-nexus-muted">
             <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> Uptime: {uptime}</span>
-            <select value={refreshInterval} onChange={e => setRefreshInterval(Number(e.target.value))} className="bg-gray-800 border border-gray-700 rounded-lg px-2 py-1 text-gray-300 text-xs focus:outline-none">
+            <select value={refreshInterval} onChange={e => setRefreshInterval(Number(e.target.value))} className="bg-nexus-card border border-nexus-border rounded-lg px-2 py-1 text-nexus-muted text-xs focus:outline-none">
               <option value={1000}>1s</option><option value={3000}>3s</option><option value={5000}>5s</option><option value={10000}>10s</option>
             </select>
           </div>
@@ -136,12 +136,12 @@ export default function ResourceMonitor() {
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <span className="text-lg font-bold text-white">{metric.value.toFixed(1)}</span>
-                  <span className="text-[10px] text-gray-500">{metric.unit}</span>
+                  <span className="text-[10px] text-nexus-muted">{metric.unit}</span>
                 </div>
               </div>
               <div className="flex items-center justify-center gap-1.5">
                 <span className="text-teal-400">{metric.icon}</span>
-                <span className="text-xs text-gray-400">{metric.label}</span>
+                <span className="text-xs text-nexus-muted">{metric.label}</span>
               </div>
             </motion.div>
           ))}
@@ -197,10 +197,10 @@ export default function ResourceMonitor() {
                 return (
                   <div key={disk.name}>
                     <div className="flex justify-between text-xs mb-1.5">
-                      <span className="text-gray-300 font-mono">{disk.name}</span>
-                      <span className="text-gray-500">{disk.used} / {disk.total} GB ({disk.fs})</span>
+                      <span className="text-nexus-muted font-mono">{disk.name}</span>
+                      <span className="text-nexus-muted">{disk.used} / {disk.total} GB ({disk.fs})</span>
                     </div>
-                    <div className="h-3 bg-gray-700 rounded-full overflow-hidden">
+                    <div className="h-3 bg-nexus-surface rounded-full overflow-hidden">
                       <motion.div initial={{ width: 0 }} animate={{ width: `${pct}%` }} transition={{ duration: 1 }}
                         className={`h-full rounded-full ${pct > 80 ? 'bg-red-500' : pct > 60 ? 'bg-amber-500' : 'bg-teal-500'}`} />
                     </div>
@@ -215,21 +215,21 @@ export default function ResourceMonitor() {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-gray-800/30 border border-gray-700/50 rounded-xl overflow-hidden">
           <div className="px-5 py-3 border-b border-gray-700/50 flex items-center justify-between">
             <h3 className="text-sm font-medium text-white flex items-center gap-2"><Server className="w-4 h-4 text-teal-400" /> Top Processes</h3>
-            <span className="text-xs text-gray-500">{processes.length} processes</span>
+            <span className="text-xs text-nexus-muted">{processes.length} processes</span>
           </div>
           <table className="w-full">
-            <thead><tr className="text-xs text-gray-500 uppercase tracking-wider border-b border-gray-700/30">
+            <thead><tr className="text-xs text-nexus-muted uppercase tracking-wider border-b border-gray-700/30">
               <th className="text-left p-3">PID</th><th className="text-left p-3">Name</th><th className="text-right p-3">CPU %</th><th className="text-right p-3">Memory</th><th className="text-center p-3">Status</th>
             </tr></thead>
             <tbody>
               {processes.sort((a, b) => b.cpu - a.cpu).map(p => (
                 <motion.tr key={p.pid} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="border-b border-gray-700/20 hover:bg-gray-800/50 text-sm">
-                  <td className="p-3 text-gray-500 font-mono text-xs">{p.pid}</td>
+                  <td className="p-3 text-nexus-muted font-mono text-xs">{p.pid}</td>
                   <td className="p-3 text-white font-medium">{p.name}</td>
                   <td className="p-3 text-right">
-                    <span className={p.cpu > 15 ? 'text-amber-400' : p.cpu > 5 ? 'text-teal-400' : 'text-gray-400'}>{p.cpu}%</span>
+                    <span className={p.cpu > 15 ? 'text-amber-400' : p.cpu > 5 ? 'text-teal-400' : 'text-nexus-muted'}>{p.cpu}%</span>
                   </td>
-                  <td className="p-3 text-right text-gray-400">{p.memory} MB</td>
+                  <td className="p-3 text-right text-nexus-muted">{p.memory} MB</td>
                   <td className="p-3 text-center"><span className="px-1.5 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">{p.status}</span></td>
                 </motion.tr>
               ))}

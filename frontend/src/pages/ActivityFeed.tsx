@@ -99,14 +99,14 @@ const ActivityFeed: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <Activity className="text-blue-500" size={32} />
               Activity Feed
             </h1>
-            <p className="text-gray-500 mt-1">System activity timeline and performance metrics</p>
+            <p className="text-nexus-muted mt-1">System activity timeline and performance metrics</p>
           </div>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-sm font-medium">
+            className="flex items-center gap-2 px-4 py-2 bg-nexus-surface text-nexus-text rounded-xl text-sm font-medium">
             <RefreshCw size={14} /> Refresh
           </motion.button>
         </div>
@@ -117,15 +117,15 @@ const ActivityFeed: React.FC = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {quickStats.map(stat => (
             <motion.div key={stat.label} whileHover={{ y: -4 }}
-              className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+              className="bg-nexus-card rounded-xl p-4 border border-nexus-border">
               <div className="flex items-center justify-between mb-2">
                 <span className={stat.color}>{stat.icon}</span>
                 <span className={`text-xs font-medium ${stat.trend.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
                   {stat.trend}
                 </span>
               </div>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
-              <div className="text-xs text-gray-500">{stat.label}</div>
+              <div className="text-2xl font-bold text-nexus-text">{stat.value}</div>
+              <div className="text-xs text-nexus-muted">{stat.label}</div>
             </motion.div>
           ))}
         </div>
@@ -147,7 +147,7 @@ const ActivityFeed: React.FC = () => {
               ].map(f => (
                 <button key={f.key} onClick={() => setFilter(f.key)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                    filter === f.key ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500'
+                    filter === f.key ? 'bg-blue-500 text-white' : 'bg-nexus-surface text-nexus-muted'
                   }`}>{f.label}</button>
               ))}
             </div>
@@ -155,7 +155,7 @@ const ActivityFeed: React.FC = () => {
 
           {/* Events */}
           <FadeIn delay={0.15}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5">
+            <div className="bg-nexus-card rounded-2xl border border-nexus-border p-5">
               <div className="space-y-0">
                 {filteredEvents.map((event, i) => (
                   <div key={event.id} className="flex gap-4">
@@ -165,18 +165,18 @@ const ActivityFeed: React.FC = () => {
                         {event.icon}
                       </div>
                       {i < filteredEvents.length - 1 && (
-                        <div className="w-px h-full bg-gray-200 dark:bg-gray-700 my-1 min-h-[20px]" />
+                        <div className="w-px h-full bg-nexus-surface my-1 min-h-[20px]" />
                       )}
                     </div>
 
                     {/* Content */}
                     <div className="pb-6 flex-1" onClick={() => setSelectedEvent(selectedEvent?.id === event.id ? null : event)}>
-                      <div className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/30 rounded-xl p-3 -ml-2 transition-colors">
+                      <div className="cursor-pointer hover:bg-nexus-surface/60/30 rounded-xl p-3 -ml-2 transition-colors">
                         <div className="flex items-center justify-between mb-1">
-                          <h4 className="text-sm font-medium text-gray-900 dark:text-white">{event.title}</h4>
-                          <span className="text-xs text-gray-500 flex-shrink-0 ml-2">{event.timestamp}</span>
+                          <h4 className="text-sm font-medium text-nexus-text">{event.title}</h4>
+                          <span className="text-xs text-nexus-muted flex-shrink-0 ml-2">{event.timestamp}</span>
                         </div>
-                        <p className="text-xs text-gray-500">{event.description}</p>
+                        <p className="text-xs text-nexus-muted">{event.description}</p>
 
                         <AnimatePresence>
                           {selectedEvent?.id === event.id && event.metadata && (
@@ -184,8 +184,8 @@ const ActivityFeed: React.FC = () => {
                               className="overflow-hidden">
                               <div className="flex flex-wrap gap-2 mt-2">
                                 {Object.entries(event.metadata).map(([k, v]) => (
-                                  <span key={k} className="px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-[10px] text-gray-600 dark:text-gray-400">
-                                    {k}: <span className="font-medium text-gray-900 dark:text-white">{v}</span>
+                                  <span key={k} className="px-2 py-0.5 rounded bg-nexus-surface text-[10px] text-nexus-muted">
+                                    {k}: <span className="font-medium text-nexus-text">{v}</span>
                                   </span>
                                 ))}
                               </div>
@@ -205,8 +205,8 @@ const ActivityFeed: React.FC = () => {
         <div className="space-y-4">
           {/* Performance Chart */}
           <FadeIn delay={0.2}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4 text-sm">Response Time (24h)</h3>
+            <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+              <h3 className="font-semibold text-nexus-text mb-4 text-sm">Response Time (24h)</h3>
               <ResponsiveContainer width="100%" height={120}>
                 <AreaChart data={performanceData}>
                   <Tooltip contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: 8, fontSize: 11 }} />
@@ -218,16 +218,16 @@ const ActivityFeed: React.FC = () => {
 
           {/* Agent Activity */}
           <FadeIn delay={0.25}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-3 text-sm">Agent Activity Today</h3>
+            <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+              <h3 className="font-semibold text-nexus-text mb-3 text-sm">Agent Activity Today</h3>
               <div className="space-y-3">
                 {agentActivity.map(agent => (
                   <div key={agent.name}>
                     <div className="flex justify-between text-xs mb-1">
-                      <span className="text-gray-700 dark:text-gray-300">{agent.name}</span>
-                      <span className="text-gray-500">{agent.interactions} calls · {agent.success}%</span>
+                      <span className="text-nexus-text">{agent.name}</span>
+                      <span className="text-nexus-muted">{agent.interactions} calls · {agent.success}%</span>
                     </div>
-                    <div className="h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-nexus-surface rounded-full overflow-hidden">
                       <motion.div initial={{ width: 0 }} animate={{ width: `${agent.success}%` }} transition={{ duration: 0.5 }}
                         className="h-full bg-blue-500 rounded-full" />
                     </div>
@@ -239,8 +239,8 @@ const ActivityFeed: React.FC = () => {
 
           {/* Hot Actions */}
           <FadeIn delay={0.3}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-3 text-sm">Quick Actions</h3>
+            <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+              <h3 className="font-semibold text-nexus-text mb-3 text-sm">Quick Actions</h3>
               <div className="space-y-2">
                 {[
                   { label: 'Run all health checks', icon: <Heart size={14} />, color: 'text-pink-500' },
@@ -249,10 +249,10 @@ const ActivityFeed: React.FC = () => {
                   { label: 'Clear system cache', icon: <RefreshCw size={14} />, color: 'text-orange-500' },
                 ].map(action => (
                   <button key={action.label}
-                    className="w-full flex items-center gap-2 p-2.5 rounded-xl bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 text-left transition-colors">
+                    className="w-full flex items-center gap-2 p-2.5 rounded-xl bg-nexus-surface/50 hover:bg-nexus-surface text-left transition-colors">
                     <span className={action.color}>{action.icon}</span>
-                    <span className="text-sm text-gray-700 dark:text-gray-300">{action.label}</span>
-                    <ChevronRight size={12} className="ml-auto text-gray-400" />
+                    <span className="text-sm text-nexus-text">{action.label}</span>
+                    <ChevronRight size={12} className="ml-auto text-nexus-muted" />
                   </button>
                 ))}
               </div>

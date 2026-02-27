@@ -159,17 +159,17 @@ export default function SecurityCenter() {
         <h1 className="text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
           Security Center
         </h1>
-        <p className="text-gray-400 mt-1">Monitor certificates, vulnerabilities, and access patterns</p>
+        <p className="text-nexus-muted mt-1">Monitor certificates, vulnerabilities, and access patterns</p>
       </motion.div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-white/5 rounded-xl p-1 mb-8 border border-white/10">
+      <div className="flex gap-1 bg-nexus-card/5 rounded-xl p-1 mb-8 border border-white/10">
         {tabs.map(tab => {
           const Icon = tab.icon;
           return (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all flex-1 justify-center ${
-                activeTab === tab.id ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'
+                activeTab === tab.id ? 'bg-nexus-card/10 text-white' : 'text-nexus-muted hover:text-white'
               }`}>
               <Icon className="w-4 h-4" /> {tab.label}
             </button>
@@ -182,7 +182,7 @@ export default function SecurityCenter() {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             {/* Security Score */}
-            <motion.div whileHover={{ y: -2 }} className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 col-span-1 md:col-span-2 lg:col-span-1">
+            <motion.div whileHover={{ y: -2 }} className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 col-span-1 md:col-span-2 lg:col-span-1">
               <div className="text-center">
                 <div className="relative w-28 h-28 mx-auto mb-3">
                   <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
@@ -195,8 +195,8 @@ export default function SecurityCenter() {
                     <span className="text-3xl font-bold">{securityScore}</span>
                   </div>
                 </div>
-                <div className="text-sm font-medium text-gray-300">Security Score</div>
-                <div className="text-xs text-gray-500">Good - Room for improvement</div>
+                <div className="text-sm font-medium text-nexus-muted">Security Score</div>
+                <div className="text-xs text-nexus-muted">Good - Room for improvement</div>
               </div>
             </motion.div>
 
@@ -207,21 +207,21 @@ export default function SecurityCenter() {
             ].map(stat => {
               const Icon = stat.icon;
               return (
-                <motion.div key={stat.label} whileHover={{ y: -2 }} className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6">
+                <motion.div key={stat.label} whileHover={{ y: -2 }} className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 p-6">
                   <div className="flex items-center gap-2 mb-2">
                     <Icon className="w-4 h-4" style={{ color: stat.color }} />
-                    <span className="text-xs text-gray-400">{stat.label}</span>
+                    <span className="text-xs text-nexus-muted">{stat.label}</span>
                   </div>
                   <div className="text-2xl font-bold" style={{ color: stat.color }}>{stat.value}</div>
-                  <div className="text-xs text-gray-500 mt-1">{stat.sub}</div>
+                  <div className="text-xs text-nexus-muted mt-1">{stat.sub}</div>
                 </motion.div>
               );
             })}
           </div>
 
           {/* Recent Threats */}
-          <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6">
-            <h3 className="font-semibold text-gray-300 mb-4">Recent Threats & Events</h3>
+          <div className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 p-6">
+            <h3 className="font-semibold text-nexus-muted mb-4">Recent Threats & Events</h3>
             <div className="space-y-3">
               {[...scans.filter(s => s.status === 'open').slice(0, 3), ...accessLogs.filter(l => l.result === 'blocked').slice(0, 3)]
                 .sort((a, b) => {
@@ -239,7 +239,7 @@ export default function SecurityCenter() {
                         <div className="text-sm font-medium truncate">
                           {isScan ? (item as SecurityScan).title : (item as AccessLog).action}
                         </div>
-                        <div className="text-xs text-gray-500">
+                        <div className="text-xs text-nexus-muted">
                           {isScan ? (item as SecurityScan).asset : `${(item as AccessLog).source} — ${(item as AccessLog).location}`}
                         </div>
                       </div>
@@ -263,7 +263,7 @@ export default function SecurityCenter() {
           {certificates.map((cert, i) => (
             <motion.div key={cert.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-5">
+              className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 p-5">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${certStatusColors[cert.status]}15` }}>
@@ -273,7 +273,7 @@ export default function SecurityCenter() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-sm">{cert.domain}</h3>
-                    <div className="text-xs text-gray-500">{cert.issuer} · {cert.type}</div>
+                    <div className="text-xs text-nexus-muted">{cert.issuer} · {cert.type}</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -286,14 +286,14 @@ export default function SecurityCenter() {
                 </div>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-                <div><span className="text-gray-500">Valid From</span><div className="mt-0.5">{cert.validFrom}</div></div>
-                <div><span className="text-gray-500">Valid To</span><div className="mt-0.5">{cert.validTo}</div></div>
-                <div><span className="text-gray-500">Algorithm</span><div className="mt-0.5 font-mono">{cert.algorithm}</div></div>
-                <div><span className="text-gray-500">Key Size</span><div className="mt-0.5">{cert.keySize} bits</div></div>
+                <div><span className="text-nexus-muted">Valid From</span><div className="mt-0.5">{cert.validFrom}</div></div>
+                <div><span className="text-nexus-muted">Valid To</span><div className="mt-0.5">{cert.validTo}</div></div>
+                <div><span className="text-nexus-muted">Algorithm</span><div className="mt-0.5 font-mono">{cert.algorithm}</div></div>
+                <div><span className="text-nexus-muted">Key Size</span><div className="mt-0.5">{cert.keySize} bits</div></div>
               </div>
               <div className="mt-3 flex flex-wrap gap-1">
                 {cert.sans.map(san => (
-                  <span key={san} className="px-2 py-0.5 bg-white/5 rounded text-xs text-gray-400 font-mono">{san}</span>
+                  <span key={san} className="px-2 py-0.5 bg-nexus-card/5 rounded text-xs text-nexus-muted font-mono">{san}</span>
                 ))}
               </div>
             </motion.div>
@@ -304,10 +304,10 @@ export default function SecurityCenter() {
       {/* Vulnerabilities Tab */}
       {activeTab === 'vulnerabilities' && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <div className="flex gap-1 bg-white/5 rounded-lg p-1 border border-white/10 mb-6 w-fit">
+          <div className="flex gap-1 bg-nexus-card/5 rounded-lg p-1 border border-white/10 mb-6 w-fit">
             {(['all', 'critical', 'high', 'medium', 'low', 'info'] as const).map(f => (
               <button key={f} onClick={() => setScanFilter(f)}
-                className={`px-3 py-1 text-xs rounded-md font-medium transition-all capitalize ${scanFilter === f ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'}`}>
+                className={`px-3 py-1 text-xs rounded-md font-medium transition-all capitalize ${scanFilter === f ? 'bg-nexus-card/10 text-white' : 'text-nexus-muted hover:text-white'}`}>
                 {f}
               </button>
             ))}
@@ -316,19 +316,19 @@ export default function SecurityCenter() {
             {filteredScans.map((scan, i) => (
               <motion.div key={scan.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
+                className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
                 <div className="p-4 cursor-pointer" onClick={() => setExpandedScan(expandedScan === scan.id ? null : scan.id)}>
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-2 h-full min-h-[40px] rounded-full" style={{ backgroundColor: severityColors[scan.severity] }} />
                       <div>
                         <h3 className="font-semibold text-sm">{scan.title}</h3>
-                        <div className="text-xs text-gray-500 mt-0.5">{scan.asset}</div>
+                        <div className="text-xs text-nexus-muted mt-0.5">{scan.asset}</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       {scan.cvss && (
-                        <span className="px-2 py-0.5 bg-white/5 rounded text-xs font-mono">CVSS {scan.cvss}</span>
+                        <span className="px-2 py-0.5 bg-nexus-card/5 rounded text-xs font-mono">CVSS {scan.cvss}</span>
                       )}
                       <span className="px-2 py-0.5 rounded-full text-xs font-medium capitalize" style={{
                         backgroundColor: `${severityColors[scan.severity]}15`, color: severityColors[scan.severity],
@@ -338,7 +338,7 @@ export default function SecurityCenter() {
                         scan.status === 'accepted' ? 'bg-blue-500/10 text-blue-400' :
                         'bg-yellow-500/10 text-yellow-400'
                       }`}>{scan.status}</span>
-                      <ChevronRight className={`w-4 h-4 text-gray-500 transition-transform ${expandedScan === scan.id ? 'rotate-90' : ''}`} />
+                      <ChevronRight className={`w-4 h-4 text-nexus-muted transition-transform ${expandedScan === scan.id ? 'rotate-90' : ''}`} />
                     </div>
                   </div>
                 </div>
@@ -347,16 +347,16 @@ export default function SecurityCenter() {
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
                       className="border-t border-white/5">
                       <div className="p-4 space-y-3">
-                        <div className="text-sm text-gray-300">{scan.description}</div>
+                        <div className="text-sm text-nexus-muted">{scan.description}</div>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-                          <div><span className="text-gray-500">Type</span><div className="mt-0.5">{scan.type}</div></div>
-                          <div><span className="text-gray-500">Discovered</span><div className="mt-0.5">{new Date(scan.discoveredAt).toLocaleDateString()}</div></div>
-                          {scan.cve && <div><span className="text-gray-500">CVE</span><div className="mt-0.5 font-mono text-red-400">{scan.cve}</div></div>}
-                          {scan.cvss && <div><span className="text-gray-500">CVSS Score</span><div className="mt-0.5">{scan.cvss}/10</div></div>}
+                          <div><span className="text-nexus-muted">Type</span><div className="mt-0.5">{scan.type}</div></div>
+                          <div><span className="text-nexus-muted">Discovered</span><div className="mt-0.5">{new Date(scan.discoveredAt).toLocaleDateString()}</div></div>
+                          {scan.cve && <div><span className="text-nexus-muted">CVE</span><div className="mt-0.5 font-mono text-red-400">{scan.cve}</div></div>}
+                          {scan.cvss && <div><span className="text-nexus-muted">CVSS Score</span><div className="mt-0.5">{scan.cvss}/10</div></div>}
                         </div>
                         <div className="bg-green-500/5 border border-green-500/10 rounded-lg p-3">
                           <div className="text-xs text-green-400 font-medium mb-1">Remediation</div>
-                          <div className="text-sm text-gray-300">{scan.remediation}</div>
+                          <div className="text-sm text-nexus-muted">{scan.remediation}</div>
                         </div>
                       </div>
                     </motion.div>
@@ -371,24 +371,24 @@ export default function SecurityCenter() {
       {/* Access Logs Tab */}
       {activeTab === 'access' && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
+          <div className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/10">
-                    <th className="text-left p-3 text-xs text-gray-500 font-medium">Time</th>
-                    <th className="text-left p-3 text-xs text-gray-500 font-medium">Source</th>
-                    <th className="text-left p-3 text-xs text-gray-500 font-medium">Action</th>
-                    <th className="text-left p-3 text-xs text-gray-500 font-medium">Result</th>
-                    <th className="text-left p-3 text-xs text-gray-500 font-medium">Details</th>
-                    <th className="text-left p-3 text-xs text-gray-500 font-medium">Location</th>
+                    <th className="text-left p-3 text-xs text-nexus-muted font-medium">Time</th>
+                    <th className="text-left p-3 text-xs text-nexus-muted font-medium">Source</th>
+                    <th className="text-left p-3 text-xs text-nexus-muted font-medium">Action</th>
+                    <th className="text-left p-3 text-xs text-nexus-muted font-medium">Result</th>
+                    <th className="text-left p-3 text-xs text-nexus-muted font-medium">Details</th>
+                    <th className="text-left p-3 text-xs text-nexus-muted font-medium">Location</th>
                   </tr>
                 </thead>
                 <tbody>
                   {accessLogs.map((log, i) => (
                     <motion.tr key={log.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.05 }}
-                      className="border-b border-white/5 hover:bg-white/[0.02]">
-                      <td className="p-3 text-xs text-gray-400 whitespace-nowrap">{new Date(log.timestamp).toLocaleTimeString()}</td>
+                      className="border-b border-white/5 hover:bg-nexus-card/[0.02]">
+                      <td className="p-3 text-xs text-nexus-muted whitespace-nowrap">{new Date(log.timestamp).toLocaleTimeString()}</td>
                       <td className="p-3 text-xs font-mono">{log.source}</td>
                       <td className="p-3 text-xs">{log.action}</td>
                       <td className="p-3">
@@ -397,8 +397,8 @@ export default function SecurityCenter() {
                           {log.result}
                         </span>
                       </td>
-                      <td className="p-3 text-xs text-gray-400 max-w-[200px] truncate">{log.details}</td>
-                      <td className="p-3 text-xs text-gray-400">{log.location}</td>
+                      <td className="p-3 text-xs text-nexus-muted max-w-[200px] truncate">{log.details}</td>
+                      <td className="p-3 text-xs text-nexus-muted">{log.location}</td>
                     </motion.tr>
                   ))}
                 </tbody>

@@ -68,7 +68,7 @@ const SkeletonRow: React.FC<{ cols: number }> = ({ cols }) => (
   <tr className="animate-pulse">
     {Array.from({ length: cols }).map((_, i) => (
       <td key={i} className="px-4 py-3">
-        <div className="h-4 bg-white/10 rounded w-3/4" />
+        <div className="h-4 bg-nexus-card/10 rounded w-3/4" />
       </td>
     ))}
   </tr>
@@ -96,10 +96,10 @@ const Pagination: React.FC<{
         <select
           value={pageSize}
           onChange={(e) => onPageSizeChange(Number(e.target.value))}
-          className="bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-sm text-white/70 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+          className="bg-nexus-card/5 border border-white/10 rounded-lg px-2 py-1 text-sm text-white/70 focus:outline-none focus:ring-1 focus:ring-cyan-500"
         >
           {pageSizeOptions.map((size) => (
-            <option key={size} value={size} className="bg-gray-900">
+            <option key={size} value={size} className="bg-nexus-bg">
               {size} / page
             </option>
           ))}
@@ -110,14 +110,14 @@ const Pagination: React.FC<{
         <button
           onClick={() => onPageChange(1)}
           disabled={page <= 1}
-          className="p-1.5 rounded-lg hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-1.5 rounded-lg hover:bg-nexus-card/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           <ChevronsLeft className="w-4 h-4" />
         </button>
         <button
           onClick={() => onPageChange(page - 1)}
           disabled={page <= 1}
-          className="p-1.5 rounded-lg hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-1.5 rounded-lg hover:bg-nexus-card/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
@@ -142,7 +142,7 @@ const Pagination: React.FC<{
                 'w-8 h-8 rounded-lg text-sm font-medium transition-all',
                 pageNum === page
                   ? 'bg-cyan-500/20 text-cyan-400 ring-1 ring-cyan-500/30'
-                  : 'hover:bg-white/10 text-white/70'
+                  : 'hover:bg-nexus-card/10 text-white/70'
               )}
             >
               {pageNum}
@@ -153,14 +153,14 @@ const Pagination: React.FC<{
         <button
           onClick={() => onPageChange(page + 1)}
           disabled={page >= totalPages}
-          className="p-1.5 rounded-lg hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-1.5 rounded-lg hover:bg-nexus-card/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           <ChevronRight className="w-4 h-4" />
         </button>
         <button
           onClick={() => onPageChange(totalPages)}
           disabled={page >= totalPages}
-          className="p-1.5 rounded-lg hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-1.5 rounded-lg hover:bg-nexus-card/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           <ChevronsRight className="w-4 h-4" />
         </button>
@@ -378,7 +378,7 @@ export function DataTable<T extends Record<string, any>>({
   const allSelected = paginatedData.length > 0 && selected.size === paginatedData.length;
 
   return (
-    <div className={cn('rounded-xl border border-white/10 overflow-hidden bg-white/[0.02]', className)}>
+    <div className={cn('rounded-xl border border-white/10 overflow-hidden bg-nexus-card/[0.02]', className)}>
       {/* Toolbar */}
       <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-white/10">
         <div className="flex items-center gap-3 flex-1">
@@ -390,12 +390,12 @@ export function DataTable<T extends Record<string, any>>({
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search..."
-                className="w-full pl-9 pr-8 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 transition-all"
+                className="w-full pl-9 pr-8 py-2 bg-nexus-card/5 border border-white/10 rounded-lg text-sm text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 transition-all"
               />
               {search && (
                 <button
                   onClick={() => setSearch('')}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded hover:bg-white/10"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded hover:bg-nexus-card/10"
                 >
                   <X className="w-3.5 h-3.5 text-white/40" />
                 </button>
@@ -421,7 +421,7 @@ export function DataTable<T extends Record<string, any>>({
             <button
               onClick={onRefresh}
               className={cn(
-                'p-2 rounded-lg hover:bg-white/10 transition-colors',
+                'p-2 rounded-lg hover:bg-nexus-card/10 transition-colors',
                 refreshing && 'animate-spin'
               )}
               title="Refresh"
@@ -433,7 +433,7 @@ export function DataTable<T extends Record<string, any>>({
           <div className="relative">
             <button
               onClick={() => setShowColumnPicker(!showColumnPicker)}
-              className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+              className="p-2 rounded-lg hover:bg-nexus-card/10 transition-colors"
               title="Toggle columns"
             >
               <Columns className="w-4 h-4 text-white/50" />
@@ -445,7 +445,7 @@ export function DataTable<T extends Record<string, any>>({
                   initial={{ opacity: 0, scale: 0.95, y: -5 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: -5 }}
-                  className="absolute right-0 top-full mt-1 w-48 bg-gray-900 border border-white/10 rounded-xl shadow-2xl z-50 py-1"
+                  className="absolute right-0 top-full mt-1 w-48 bg-nexus-bg border border-white/10 rounded-xl shadow-2xl z-50 py-1"
                 >
                   {columns.map((col) => (
                     <button
@@ -458,7 +458,7 @@ export function DataTable<T extends Record<string, any>>({
                           return next;
                         });
                       }}
-                      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:bg-white/5 transition-colors"
+                      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:bg-nexus-card/5 transition-colors"
                     >
                       <div
                         className={cn(
@@ -480,7 +480,7 @@ export function DataTable<T extends Record<string, any>>({
 
           <button
             onClick={() => handleExport('csv')}
-            className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+            className="p-2 rounded-lg hover:bg-nexus-card/10 transition-colors"
             title="Export CSV"
           >
             <Download className="w-4 h-4 text-white/50" />
@@ -553,7 +553,7 @@ export function DataTable<T extends Record<string, any>>({
                   className="py-12 text-center"
                 >
                   <div className="flex flex-col items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-nexus-card/5 flex items-center justify-center">
                       <Search className="w-5 h-5 text-white/30" />
                     </div>
                     <p className="text-white/50 text-sm">{emptyMessage}</p>
@@ -577,8 +577,8 @@ export function DataTable<T extends Record<string, any>>({
                         'border-b border-white/5 transition-colors',
                         onRowClick && 'cursor-pointer',
                         isSelected && 'bg-cyan-500/5',
-                        variant === 'striped' && idx % 2 === 1 && 'bg-white/[0.02]',
-                        'hover:bg-white/[0.04]',
+                        variant === 'striped' && idx % 2 === 1 && 'bg-nexus-card/[0.02]',
+                        'hover:bg-nexus-card/[0.04]',
                         rowClassName?.(row, idx)
                       )}
                     >
@@ -601,7 +601,7 @@ export function DataTable<T extends Record<string, any>>({
                         <td className={cn(s.cell, 'w-10')} onClick={(e) => e.stopPropagation()}>
                           <button
                             onClick={() => toggleExpand(String(rowKey))}
-                            className="p-1 rounded hover:bg-white/10 transition-colors"
+                            className="p-1 rounded hover:bg-nexus-card/10 transition-colors"
                           >
                             <motion.div animate={{ rotate: isExpanded ? 90 : 0 }}>
                               <ChevronRight className="w-4 h-4 text-white/50" />
@@ -640,7 +640,7 @@ export function DataTable<T extends Record<string, any>>({
                         >
                           <td
                             colSpan={displayColumns.length + (selectable ? 1 : 0) + 1 + (actions ? 1 : 0)}
-                            className="px-4 py-3 bg-white/[0.02]"
+                            className="px-4 py-3 bg-nexus-card/[0.02]"
                           >
                             {renderExpanded(row)}
                           </td>

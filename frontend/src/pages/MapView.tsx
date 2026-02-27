@@ -64,7 +64,7 @@ const typeIcons: Record<string, React.ReactNode> = {
 const statusColors = {
   active: { color: 'text-green-400', bg: 'bg-green-500/10', dot: '#10B981' },
   warning: { color: 'text-yellow-400', bg: 'bg-yellow-500/10', dot: '#F59E0B' },
-  offline: { color: 'text-gray-400', bg: 'bg-gray-500/10', dot: '#6B7280' },
+  offline: { color: 'text-nexus-muted', bg: 'bg-gray-500/10', dot: '#6B7280' },
   moving: { color: 'text-blue-400', bg: 'bg-blue-500/10', dot: '#3B82F6' },
 };
 

@@ -32,7 +32,7 @@ const roleConfig = {
 
 const statusConfig = {
   active: { color: 'text-green-400', bg: 'bg-green-500/10', dot: '#10B981' },
-  inactive: { color: 'text-gray-400', bg: 'bg-gray-500/10', dot: '#6B7280' },
+  inactive: { color: 'text-nexus-muted', bg: 'bg-gray-500/10', dot: '#6B7280' },
   suspended: { color: 'text-red-400', bg: 'bg-red-500/10', dot: '#EF4444' },
   pending: { color: 'text-yellow-400', bg: 'bg-yellow-500/10', dot: '#F59E0B' },
 };

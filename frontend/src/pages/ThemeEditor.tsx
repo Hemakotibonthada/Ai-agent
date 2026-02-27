@@ -239,7 +239,7 @@ export default function ThemeEditor() {
                     <p className="text-xs text-nexus-muted">Frosted glass effect on cards and panels</p>
                   </div>
                   <button onClick={() => setTheme(prev => ({ ...prev, glassEnabled: !prev.glassEnabled }))} className={`w-12 h-6 rounded-full transition-colors ${theme.glassEnabled ? 'bg-nexus-primary' : 'bg-nexus-surface'}`}>
-                    <div className={`h-5 w-5 rounded-full bg-white shadow transition-transform ${theme.glassEnabled ? 'translate-x-6' : 'translate-x-0.5'}`} />
+                    <div className={`h-5 w-5 rounded-full bg-nexus-card shadow transition-transform ${theme.glassEnabled ? 'translate-x-6' : 'translate-x-0.5'}`} />
                   </button>
                 </div>
                 <div className="flex items-center justify-between">
@@ -248,7 +248,7 @@ export default function ThemeEditor() {
                     <p className="text-xs text-nexus-muted">Animated floating particles in the background</p>
                   </div>
                   <button onClick={() => setTheme(prev => ({ ...prev, particlesEnabled: !prev.particlesEnabled }))} className={`w-12 h-6 rounded-full transition-colors ${theme.particlesEnabled ? 'bg-nexus-primary' : 'bg-nexus-surface'}`}>
-                    <div className={`h-5 w-5 rounded-full bg-white shadow transition-transform ${theme.particlesEnabled ? 'translate-x-6' : 'translate-x-0.5'}`} />
+                    <div className={`h-5 w-5 rounded-full bg-nexus-card shadow transition-transform ${theme.particlesEnabled ? 'translate-x-6' : 'translate-x-0.5'}`} />
                   </button>
                 </div>
               </div>

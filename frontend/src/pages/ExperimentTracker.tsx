@@ -127,7 +127,7 @@ const statusConfig = {
   running: { color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-500/10', icon: <Play size={12} /> },
   completed: { color: 'text-green-500', bg: 'bg-green-50 dark:bg-green-500/10', icon: <CheckCircle size={12} /> },
   paused: { color: 'text-yellow-500', bg: 'bg-yellow-50 dark:bg-yellow-500/10', icon: <Pause size={12} /> },
-  draft: { color: 'text-gray-500', bg: 'bg-gray-50 dark:bg-gray-500/10', icon: <Edit size={12} /> },
+  draft: { color: 'text-nexus-muted', bg: 'bg-nexus-surface/50', icon: <Edit size={12} /> },
 };
 
 const COLORS = ['#6b7280', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444'];
@@ -169,11 +169,11 @@ const ExperimentTracker: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <FlaskConical className="text-purple-500" size={32} />
               Experiments
             </h1>
-            <p className="text-gray-500 mt-1">A/B tests, feature flags, and experiment tracking</p>
+            <p className="text-nexus-muted mt-1">A/B tests, feature flags, and experiment tracking</p>
           </div>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-4 py-2 bg-purple-500 text-white rounded-xl text-sm font-medium">
@@ -192,10 +192,10 @@ const ExperimentTracker: React.FC = () => {
             { label: 'Avg Confidence', value: `${summaryStats.avgConfidence}%`, icon: <Target size={16} />, color: 'text-orange-500' },
           ].map(stat => (
             <motion.div key={stat.label} whileHover={{ y: -4 }}
-              className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+              className="bg-nexus-card rounded-xl p-4 border border-nexus-border">
               <div className={`${stat.color} mb-2`}>{stat.icon}</div>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
-              <div className="text-xs text-gray-500">{stat.label}</div>
+              <div className="text-2xl font-bold text-nexus-text">{stat.value}</div>
+              <div className="text-xs text-nexus-muted">{stat.label}</div>
             </motion.div>
           ))}
         </div>
@@ -206,10 +206,10 @@ const ExperimentTracker: React.FC = () => {
         <div className="lg:col-span-1 space-y-4">
           <FadeIn delay={0.1}>
             <div className="relative">
-              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-muted" />
               <input type="text" placeholder="Search experiments..."
                 value={search} onChange={e => setSearch(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                className="w-full pl-9 pr-3 py-2 rounded-xl bg-nexus-card border border-nexus-border text-sm text-nexus-text focus:outline-none focus:ring-2 focus:ring-purple-500" />
             </div>
           </FadeIn>
 
@@ -218,7 +218,7 @@ const ExperimentTracker: React.FC = () => {
               {['all', 'running', 'completed', 'paused', 'draft'].map(s => (
                 <button key={s} onClick={() => setStatusFilter(s)}
                   className={`px-2.5 py-1 rounded-lg text-xs font-medium capitalize transition-colors ${
-                    statusFilter === s ? 'bg-purple-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500'
+                    statusFilter === s ? 'bg-purple-500 text-white' : 'bg-nexus-surface text-nexus-muted'
                   }`}>{s}</button>
               ))}
             </div>
@@ -231,16 +231,16 @@ const ExperimentTracker: React.FC = () => {
                 return (
                   <motion.div key={exp.id} whileHover={{ x: 4 }}
                     onClick={() => setSelectedExperiment(exp)}
-                    className={`bg-white dark:bg-gray-800 rounded-xl p-3 border cursor-pointer transition-colors ${
+                    className={`bg-nexus-card rounded-xl p-3 border cursor-pointer transition-colors ${
                       selectedExperiment?.id === exp.id
                         ? 'border-purple-300 dark:border-purple-600'
-                        : 'border-gray-200 dark:border-gray-700'
+                        : 'border-nexus-border'
                     }`}>
                     <div className="flex items-center gap-2 mb-1">
                       <span className={`${sc.color}`}>{sc.icon}</span>
-                      <h3 className="text-sm font-medium text-gray-900 dark:text-white truncate">{exp.name}</h3>
+                      <h3 className="text-sm font-medium text-nexus-text truncate">{exp.name}</h3>
                     </div>
-                    <div className="flex items-center gap-2 text-[10px] text-gray-500">
+                    <div className="flex items-center gap-2 text-[10px] text-nexus-muted">
                       <span className={`px-1.5 py-0.5 rounded ${sc.bg} ${sc.color} font-medium capitalize`}>{exp.status}</span>
                       <span className="capitalize">{exp.type}</span>
                       {exp.results && <span>{exp.results.confidence.toFixed(0)}% conf</span>}
@@ -260,53 +260,53 @@ const ExperimentTracker: React.FC = () => {
                 initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
                 className="space-y-4">
                 {/* Header */}
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
+                <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
                   <div className="flex items-center justify-between mb-3">
                     <div>
-                      <h2 className="text-xl font-bold text-gray-900 dark:text-white">{selectedExperiment.name}</h2>
-                      <p className="text-sm text-gray-500 mt-1">{selectedExperiment.hypothesis}</p>
+                      <h2 className="text-xl font-bold text-nexus-text">{selectedExperiment.name}</h2>
+                      <p className="text-sm text-nexus-muted mt-1">{selectedExperiment.hypothesis}</p>
                     </div>
                     <span className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize ${statusConfig[selectedExperiment.status].bg} ${statusConfig[selectedExperiment.status].color}`}>
                       {selectedExperiment.status}
                     </span>
                   </div>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <div className="p-2.5 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-                      <div className="text-[10px] text-gray-500 uppercase">Type</div>
-                      <div className="text-sm font-medium text-gray-900 dark:text-white capitalize">{selectedExperiment.type}</div>
+                    <div className="p-2.5 rounded-lg bg-nexus-surface/50">
+                      <div className="text-[10px] text-nexus-muted uppercase">Type</div>
+                      <div className="text-sm font-medium text-nexus-text capitalize">{selectedExperiment.type}</div>
                     </div>
-                    <div className="p-2.5 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-                      <div className="text-[10px] text-gray-500 uppercase">Metric</div>
-                      <div className="text-sm font-medium text-gray-900 dark:text-white">{selectedExperiment.metric}</div>
+                    <div className="p-2.5 rounded-lg bg-nexus-surface/50">
+                      <div className="text-[10px] text-nexus-muted uppercase">Metric</div>
+                      <div className="text-sm font-medium text-nexus-text">{selectedExperiment.metric}</div>
                     </div>
-                    <div className="p-2.5 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-                      <div className="text-[10px] text-gray-500 uppercase">Traffic</div>
-                      <div className="text-sm font-medium text-gray-900 dark:text-white">{selectedExperiment.traffic}%</div>
+                    <div className="p-2.5 rounded-lg bg-nexus-surface/50">
+                      <div className="text-[10px] text-nexus-muted uppercase">Traffic</div>
+                      <div className="text-sm font-medium text-nexus-text">{selectedExperiment.traffic}%</div>
                     </div>
-                    <div className="p-2.5 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-                      <div className="text-[10px] text-gray-500 uppercase">Start Date</div>
-                      <div className="text-sm font-medium text-gray-900 dark:text-white">{selectedExperiment.startDate || 'Not started'}</div>
+                    <div className="p-2.5 rounded-lg bg-nexus-surface/50">
+                      <div className="text-[10px] text-nexus-muted uppercase">Start Date</div>
+                      <div className="text-sm font-medium text-nexus-text">{selectedExperiment.startDate || 'Not started'}</div>
                     </div>
                   </div>
                 </div>
 
                 {/* Variants */}
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-                  <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Variants</h3>
+                <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+                  <h3 className="text-sm font-semibold text-nexus-text mb-3">Variants</h3>
                   <div className="space-y-2">
                     {selectedExperiment.variants.map(variant => (
-                      <div key={variant.id} className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50">
+                      <div key={variant.id} className="flex items-center gap-3 p-3 rounded-xl bg-nexus-surface/50">
                         <div className="w-3 h-3 rounded-full" style={{ backgroundColor: variant.color }} />
                         <div className="flex-1">
-                          <div className="text-sm font-medium text-gray-900 dark:text-white">{variant.name}</div>
-                          <div className="text-[10px] text-gray-500">{variant.traffic}% traffic</div>
+                          <div className="text-sm font-medium text-nexus-text">{variant.name}</div>
+                          <div className="text-[10px] text-nexus-muted">{variant.traffic}% traffic</div>
                         </div>
                         {selectedExperiment.results?.winner === variant.id && (
                           <span className="px-2 py-0.5 rounded bg-green-100 dark:bg-green-500/20 text-green-600 dark:text-green-400 text-xs font-medium flex items-center gap-1">
                             <Star size={10} /> Winner
                           </span>
                         )}
-                        <div className="h-1.5 w-24 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
+                        <div className="h-1.5 w-24 bg-nexus-surface rounded-full overflow-hidden">
                           <div className="h-full rounded-full" style={{ width: `${variant.traffic}%`, backgroundColor: variant.color }} />
                         </div>
                       </div>
@@ -316,9 +316,9 @@ const ExperimentTracker: React.FC = () => {
 
                 {/* Results Chart */}
                 {selectedExperiment.results && (
-                  <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
+                  <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Results</h3>
+                      <h3 className="text-sm font-semibold text-nexus-text">Results</h3>
                       <div className="flex gap-4 text-xs">
                         <span className="flex items-center gap-1">
                           <Target size={12} className="text-blue-500" />
@@ -333,7 +333,7 @@ const ExperimentTracker: React.FC = () => {
                           </span>
                         </span>
                         <span className="flex items-center gap-1">
-                          <Users size={12} className="text-gray-500" />
+                          <Users size={12} className="text-nexus-muted" />
                           Samples: {selectedExperiment.results.totalSamples.toLocaleString()}
                         </span>
                       </div>
@@ -350,14 +350,14 @@ const ExperimentTracker: React.FC = () => {
                     </ResponsiveContainer>
 
                     {/* Confidence Bar */}
-                    <div className="mt-4 p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50">
+                    <div className="mt-4 p-3 rounded-xl bg-nexus-surface/50">
                       <div className="flex items-center justify-between text-xs mb-2">
-                        <span className="text-gray-500">Statistical Confidence</span>
+                        <span className="text-nexus-muted">Statistical Confidence</span>
                         <span className={`font-bold ${selectedExperiment.results.confidence >= 95 ? 'text-green-500' : selectedExperiment.results.confidence >= 80 ? 'text-yellow-500' : 'text-red-500'}`}>
                           {selectedExperiment.results.confidence}%
                         </span>
                       </div>
-                      <div className="h-2 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
+                      <div className="h-2 bg-nexus-surface rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }} animate={{ width: `${selectedExperiment.results.confidence}%` }}
                           transition={{ duration: 1 }}
@@ -366,7 +366,7 @@ const ExperimentTracker: React.FC = () => {
                             selectedExperiment.results.confidence >= 80 ? 'bg-yellow-500' : 'bg-red-500'
                           }`} />
                       </div>
-                      <div className="flex justify-between text-[10px] text-gray-500 mt-1">
+                      <div className="flex justify-between text-[10px] text-nexus-muted mt-1">
                         <span>0%</span>
                         <span className="text-yellow-500">80% threshold</span>
                         <span className="text-green-500">95% significant</span>
@@ -377,10 +377,10 @@ const ExperimentTracker: React.FC = () => {
                 )}
               </motion.div>
             ) : (
-              <div className="flex items-center justify-center h-64 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
+              <div className="flex items-center justify-center h-64 bg-nexus-card rounded-2xl border border-nexus-border">
                 <div className="text-center">
-                  <FlaskConical size={48} className="mx-auto text-gray-300 dark:text-gray-600 mb-3" />
-                  <p className="text-gray-500 text-sm">Select an experiment to view details</p>
+                  <FlaskConical size={48} className="mx-auto text-nexus-muted dark:text-nexus-muted mb-3" />
+                  <p className="text-nexus-muted text-sm">Select an experiment to view details</p>
                 </div>
               </div>
             )}

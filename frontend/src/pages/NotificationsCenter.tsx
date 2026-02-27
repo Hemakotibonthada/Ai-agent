@@ -107,7 +107,7 @@ const NotificationsCenter: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <Bell className="text-blue-500" size={32} />
               Notifications
               {unreadCount > 0 && (
@@ -116,17 +116,17 @@ const NotificationsCenter: React.FC = () => {
                 </span>
               )}
             </h1>
-            <p className="text-gray-500 mt-1">Manage your alerts, updates, and system messages</p>
+            <p className="text-nexus-muted mt-1">Manage your alerts, updates, and system messages</p>
           </div>
           <div className="flex items-center gap-2">
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
               onClick={() => setMuted(!muted)}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+              className="p-2 rounded-lg bg-nexus-surface text-nexus-text">
               {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
             </motion.button>
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
               onClick={markAllRead}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-sm">
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-nexus-surface text-nexus-text text-sm">
               <Check size={14} /> Mark all read
             </motion.button>
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
@@ -148,11 +148,11 @@ const NotificationsCenter: React.FC = () => {
             { label: 'Errors', value: notifications.filter(n => n.type === 'error').length, color: 'bg-red-500' },
             { label: 'Starred', value: notifications.filter(n => n.starred).length, color: 'bg-purple-500' },
           ].map(s => (
-            <div key={s.label} className="bg-white dark:bg-gray-800 rounded-xl p-3 border border-gray-200 dark:border-gray-700 flex items-center gap-3">
+            <div key={s.label} className="bg-nexus-card rounded-xl p-3 border border-nexus-border flex items-center gap-3">
               <div className={`w-2 h-8 rounded-full ${s.color}`} />
               <div>
-                <div className="text-lg font-bold text-gray-900 dark:text-white">{s.value}</div>
-                <div className="text-xs text-gray-500">{s.label}</div>
+                <div className="text-lg font-bold text-nexus-text">{s.value}</div>
+                <div className="text-xs text-nexus-muted">{s.label}</div>
               </div>
             </div>
           ))}
@@ -164,26 +164,26 @@ const NotificationsCenter: React.FC = () => {
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex gap-2 flex-wrap">
             <button onClick={() => setShowReadOnly('all')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${showReadOnly === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500'}`}>
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${showReadOnly === 'all' ? 'bg-blue-500 text-white' : 'bg-nexus-surface text-nexus-muted'}`}>
               All
             </button>
             <button onClick={() => setShowReadOnly('unread')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${showReadOnly === 'unread' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500'}`}>
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${showReadOnly === 'unread' ? 'bg-blue-500 text-white' : 'bg-nexus-surface text-nexus-muted'}`}>
               Unread
             </button>
             <button onClick={() => setShowReadOnly('starred')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${showReadOnly === 'starred' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500'}`}>
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${showReadOnly === 'starred' ? 'bg-blue-500 text-white' : 'bg-nexus-surface text-nexus-muted'}`}>
               Starred
             </button>
           </div>
           <div className="flex gap-2 flex-wrap">
             <button onClick={() => setFilter('all')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filter === 'all' ? 'bg-purple-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500'}`}>
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filter === 'all' ? 'bg-purple-500 text-white' : 'bg-nexus-surface text-nexus-muted'}`}>
               All Categories
             </button>
             {categories.map(cat => (
               <button key={cat} onClick={() => setFilter(cat)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-colors ${filter === cat ? 'bg-purple-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500'}`}>
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-colors ${filter === cat ? 'bg-purple-500 text-white' : 'bg-nexus-surface text-nexus-muted'}`}>
                 {cat}
               </button>
             ))}
@@ -209,16 +209,16 @@ const NotificationsCenter: React.FC = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h4 className={`text-sm font-semibold ${!notification.read ? 'text-gray-900 dark:text-white' : 'text-gray-700 dark:text-gray-300'}`}>
+                          <h4 className={`text-sm font-semibold ${!notification.read ? 'text-nexus-text' : 'text-nexus-text'}`}>
                             {notification.title}
                           </h4>
                           {!notification.read && <div className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" />}
                         </div>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{notification.body}</p>
-                        <div className="flex items-center gap-3 text-[10px] text-gray-500">
+                        <p className="text-xs text-nexus-muted mb-2">{notification.body}</p>
+                        <div className="flex items-center gap-3 text-[10px] text-nexus-muted">
                           <span className="flex items-center gap-1"><Clock size={10} /> {notification.timestamp}</span>
                           <span>via {notification.source}</span>
-                          <span className="capitalize px-1.5 py-0.5 rounded bg-white/50 dark:bg-black/20">{notification.category}</span>
+                          <span className="capitalize px-1.5 py-0.5 rounded bg-nexus-card/50 dark:bg-black/20">{notification.category}</span>
                         </div>
 
                         {/* Expanded actions */}
@@ -232,7 +232,7 @@ const NotificationsCenter: React.FC = () => {
                                     className={`px-3 py-1.5 rounded-lg text-xs font-medium ${
                                       action.variant === 'primary'
                                         ? 'bg-blue-500 text-white hover:bg-blue-600'
-                                        : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600'
+                                        : 'bg-nexus-card text-nexus-text hover:bg-nexus-surface'
                                     } transition-colors`}>{action.label}</button>
                                 ))}
                               </div>
@@ -244,23 +244,23 @@ const NotificationsCenter: React.FC = () => {
                       {/* Actions */}
                       <div className="flex items-center gap-1.5 flex-shrink-0">
                         <button onClick={() => toggleStar(notification.id)}
-                          className={`p-1.5 rounded-lg hover:bg-white/50 dark:hover:bg-black/20 transition-colors ${notification.starred ? 'text-yellow-500' : 'text-gray-400'}`}>
+                          className={`p-1.5 rounded-lg hover:bg-nexus-card/50 dark:hover:bg-black/20 transition-colors ${notification.starred ? 'text-yellow-500' : 'text-nexus-muted'}`}>
                           <Star size={14} fill={notification.starred ? 'currentColor' : 'none'} />
                         </button>
                         {!notification.read && (
                           <button onClick={() => markAsRead(notification.id)}
-                            className="p-1.5 rounded-lg hover:bg-white/50 dark:hover:bg-black/20 text-gray-400 hover:text-blue-500 transition-colors">
+                            className="p-1.5 rounded-lg hover:bg-nexus-card/50 dark:hover:bg-black/20 text-nexus-muted hover:text-blue-500 transition-colors">
                             <Eye size={14} />
                           </button>
                         )}
                         {notification.actions && (
                           <button onClick={() => setExpandedId(expandedId === notification.id ? null : notification.id)}
-                            className="p-1.5 rounded-lg hover:bg-white/50 dark:hover:bg-black/20 text-gray-400 transition-colors">
+                            className="p-1.5 rounded-lg hover:bg-nexus-card/50 dark:hover:bg-black/20 text-nexus-muted transition-colors">
                             <ChevronDown size={14} className={`transition-transform ${expandedId === notification.id ? 'rotate-180' : ''}`} />
                           </button>
                         )}
                         <button onClick={() => deleteNotification(notification.id)}
-                          className="p-1.5 rounded-lg hover:bg-white/50 dark:hover:bg-black/20 text-gray-400 hover:text-red-500 transition-colors">
+                          className="p-1.5 rounded-lg hover:bg-nexus-card/50 dark:hover:bg-black/20 text-nexus-muted hover:text-red-500 transition-colors">
                           <Trash2 size={14} />
                         </button>
                       </div>
@@ -273,8 +273,8 @@ const NotificationsCenter: React.FC = () => {
 
           {filteredNotifications.length === 0 && (
             <div className="text-center py-12">
-              <Bell size={48} className="mx-auto text-gray-300 dark:text-gray-600 mb-3" />
-              <p className="text-gray-500 text-sm">No notifications match your filters</p>
+              <Bell size={48} className="mx-auto text-nexus-muted dark:text-nexus-muted mb-3" />
+              <p className="text-nexus-muted text-sm">No notifications match your filters</p>
             </div>
           )}
         </div>

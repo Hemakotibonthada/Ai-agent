@@ -53,7 +53,7 @@ const integrations: Integration[] = [
 
 const statusConfig = {
   connected: { color: 'text-green-500', bg: 'bg-green-50 dark:bg-green-500/10', label: 'Connected', dot: 'bg-green-500' },
-  disconnected: { color: 'text-gray-500', bg: 'bg-gray-50 dark:bg-gray-500/10', label: 'Disconnected', dot: 'bg-gray-400' },
+  disconnected: { color: 'text-nexus-muted', bg: 'bg-nexus-surface/50', label: 'Disconnected', dot: 'bg-gray-400' },
   error: { color: 'text-red-500', bg: 'bg-red-50 dark:bg-red-500/10', label: 'Error', dot: 'bg-red-500' },
   pending: { color: 'text-yellow-500', bg: 'bg-yellow-50 dark:bg-yellow-500/10', label: 'Pending', dot: 'bg-yellow-500' },
 };
@@ -99,11 +99,11 @@ const IntegrationSettings: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <Plug className="text-blue-500" size={32} />
               Integrations
             </h1>
-            <p className="text-gray-500 mt-1">Manage external services and device connections</p>
+            <p className="text-nexus-muted mt-1">Manage external services and device connections</p>
           </div>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-xl text-sm font-medium">
@@ -122,10 +122,10 @@ const IntegrationSettings: React.FC = () => {
             { label: 'Total Events', value: totalEvents.toLocaleString(), color: 'text-purple-500', icon: <Activity size={16} /> },
           ].map(stat => (
             <motion.div key={stat.label} whileHover={{ y: -4 }}
-              className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+              className="bg-nexus-card rounded-xl p-4 border border-nexus-border">
               <div className={`${stat.color} mb-2`}>{stat.icon}</div>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
-              <div className="text-xs text-gray-500">{stat.label}</div>
+              <div className="text-2xl font-bold text-nexus-text">{stat.value}</div>
+              <div className="text-xs text-nexus-muted">{stat.label}</div>
             </motion.div>
           ))}
         </div>
@@ -138,18 +138,18 @@ const IntegrationSettings: React.FC = () => {
           <FadeIn delay={0.1}>
             <div className="flex flex-col md:flex-row gap-3">
               <div className="relative flex-1">
-                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-muted" />
                 <input type="text" placeholder="Search integrations..."
                   value={search} onChange={e => setSearch(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  className="w-full pl-9 pr-3 py-2 rounded-xl bg-nexus-card border border-nexus-border text-sm text-nexus-text focus:outline-none focus:ring-2 focus:ring-nexus-primary" />
               </div>
               <select value={categoryFilter} onChange={e => setCategoryFilter(e.target.value)}
-                className="px-3 py-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-white">
+                className="px-3 py-2 rounded-xl bg-nexus-card border border-nexus-border text-sm text-nexus-text">
                 <option value="all">All Categories</option>
                 {categories.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
               <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
-                className="px-3 py-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-white">
+                className="px-3 py-2 rounded-xl bg-nexus-card border border-nexus-border text-sm text-nexus-text">
                 <option value="all">All Status</option>
                 <option value="connected">Connected</option>
                 <option value="disconnected">Disconnected</option>
@@ -167,25 +167,25 @@ const IntegrationSettings: React.FC = () => {
                 return (
                   <motion.div key={integration.id} whileHover={{ x: 4 }}
                     onClick={() => setSelectedIntegration(selectedIntegration?.id === integration.id ? null : integration)}
-                    className={`bg-white dark:bg-gray-800 rounded-xl p-4 border transition-colors cursor-pointer ${
+                    className={`bg-nexus-card rounded-xl p-4 border transition-colors cursor-pointer ${
                       selectedIntegration?.id === integration.id
                         ? 'border-blue-300 dark:border-blue-600'
-                        : 'border-gray-200 dark:border-gray-700'
+                        : 'border-nexus-border'
                     }`}>
                     <div className="flex items-center gap-4">
                       <div className="text-2xl">{integration.icon}</div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <h3 className="text-sm font-semibold text-gray-900 dark:text-white">{integration.name}</h3>
+                          <h3 className="text-sm font-semibold text-nexus-text">{integration.name}</h3>
                           <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${sc.bg} ${sc.color}`}>
                             {sc.label}
                           </span>
-                          <span className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-[10px] text-gray-500">
+                          <span className="px-1.5 py-0.5 rounded bg-nexus-surface text-[10px] text-nexus-muted">
                             {integration.category}
                           </span>
                         </div>
-                        <p className="text-xs text-gray-500 mt-0.5">{integration.description}</p>
-                        <div className="flex items-center gap-3 mt-1.5 text-[10px] text-gray-500">
+                        <p className="text-xs text-nexus-muted mt-0.5">{integration.description}</p>
+                        <div className="flex items-center gap-3 mt-1.5 text-[10px] text-nexus-muted">
                           <span>v{integration.version}</span>
                           {integration.lastSync && <span className="flex items-center gap-0.5"><Clock size={9} /> {integration.lastSync}</span>}
                           <span>{integration.events.toLocaleString()} events</span>
@@ -194,11 +194,11 @@ const IntegrationSettings: React.FC = () => {
                       <div className="flex items-center gap-2 flex-shrink-0">
                         <button onClick={(e) => { e.stopPropagation(); toggleStatus(integration.id); }}
                           className={`p-1.5 rounded-lg transition-colors ${
-                            integration.status === 'connected' ? 'text-green-500 hover:bg-green-50 dark:hover:bg-green-500/10' : 'text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            integration.status === 'connected' ? 'text-green-500 hover:bg-green-50 dark:hover:bg-green-500/10' : 'text-nexus-muted hover:bg-nexus-surface'
                           }`}>
                           {integration.status === 'connected' ? <ToggleRight size={20} /> : <ToggleLeft size={20} />}
                         </button>
-                        <ChevronRight size={14} className="text-gray-400" />
+                        <ChevronRight size={14} className="text-nexus-muted" />
                       </div>
                     </div>
 
@@ -207,13 +207,13 @@ const IntegrationSettings: React.FC = () => {
                       {selectedIntegration?.id === integration.id && (
                         <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
                           className="overflow-hidden">
-                          <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700">
-                            <h4 className="text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">Configuration</h4>
+                          <div className="pt-4 mt-4 border-t border-nexus-border">
+                            <h4 className="text-xs font-medium text-nexus-text mb-2">Configuration</h4>
                             <div className="grid grid-cols-2 gap-2">
                               {Object.entries(integration.config).map(([key, value]) => (
-                                <div key={key} className="p-2 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-                                  <div className="text-[10px] text-gray-500 uppercase">{key}</div>
-                                  <div className="text-xs font-mono text-gray-900 dark:text-white">{value}</div>
+                                <div key={key} className="p-2 rounded-lg bg-nexus-surface/50">
+                                  <div className="text-[10px] text-nexus-muted uppercase">{key}</div>
+                                  <div className="text-xs font-mono text-nexus-text">{value}</div>
                                 </div>
                               ))}
                             </div>
@@ -221,10 +221,10 @@ const IntegrationSettings: React.FC = () => {
                               <button className="px-3 py-1.5 rounded-lg bg-blue-500 text-white text-xs font-medium flex items-center gap-1">
                                 <Settings size={12} /> Configure
                               </button>
-                              <button className="px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-medium flex items-center gap-1">
+                              <button className="px-3 py-1.5 rounded-lg bg-nexus-surface text-nexus-text text-xs font-medium flex items-center gap-1">
                                 <RefreshCw size={12} /> Sync
                               </button>
-                              <button className="px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-medium flex items-center gap-1">
+                              <button className="px-3 py-1.5 rounded-lg bg-nexus-surface text-nexus-text text-xs font-medium flex items-center gap-1">
                                 <Terminal size={12} /> Test
                               </button>
                             </div>
@@ -242,8 +242,8 @@ const IntegrationSettings: React.FC = () => {
         {/* Sidebar Charts */}
         <div className="space-y-4">
           <FadeIn delay={0.2}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">By Category</h3>
+            <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+              <h3 className="text-sm font-semibold text-nexus-text mb-3">By Category</h3>
               <ResponsiveContainer width="100%" height={180}>
                 <BarChart data={categoryData} layout="vertical">
                   <XAxis type="number" hide />
@@ -256,8 +256,8 @@ const IntegrationSettings: React.FC = () => {
           </FadeIn>
 
           <FadeIn delay={0.25}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Status Distribution</h3>
+            <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+              <h3 className="text-sm font-semibold text-nexus-text mb-3">Status Distribution</h3>
               <ResponsiveContainer width="100%" height={160}>
                 <PieChart>
                   <Pie data={statusData} cx="50%" cy="50%" innerRadius={40} outerRadius={65} paddingAngle={2} dataKey="value"
@@ -271,8 +271,8 @@ const IntegrationSettings: React.FC = () => {
           </FadeIn>
 
           <FadeIn delay={0.3}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Quick Links</h3>
+            <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+              <h3 className="text-sm font-semibold text-nexus-text mb-3">Quick Links</h3>
               <div className="space-y-2">
                 {[
                   { label: 'API Documentation', icon: <Code size={14} /> },
@@ -281,10 +281,10 @@ const IntegrationSettings: React.FC = () => {
                   { label: 'Security Settings', icon: <Shield size={14} /> },
                 ].map(link => (
                   <button key={link.label}
-                    className="w-full flex items-center gap-2 p-2.5 rounded-xl bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 text-left transition-colors">
+                    className="w-full flex items-center gap-2 p-2.5 rounded-xl bg-nexus-surface/50 hover:bg-nexus-surface text-left transition-colors">
                     <span className="text-blue-500">{link.icon}</span>
-                    <span className="text-sm text-gray-700 dark:text-gray-300">{link.label}</span>
-                    <ExternalLink size={12} className="ml-auto text-gray-400" />
+                    <span className="text-sm text-nexus-text">{link.label}</span>
+                    <ExternalLink size={12} className="ml-auto text-nexus-muted" />
                   </button>
                 ))}
               </div>

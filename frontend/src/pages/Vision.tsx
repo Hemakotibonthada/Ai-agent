@@ -434,7 +434,7 @@ export default function Vision() {
                   .map((det) => (
                     <div
                       key={det.id}
-                      className="flex items-center gap-3 rounded-lg bg-white/5 px-3 py-2"
+                      className="flex items-center gap-3 rounded-lg bg-nexus-card/5 px-3 py-2"
                     >
                       <span
                         className="flex h-7 w-7 items-center justify-center rounded-md"
@@ -470,7 +470,7 @@ export default function Vision() {
               <motion.div
                 key={det.id}
                 whileHover={{ y: -4, scale: 1.03 }}
-                className="flex min-w-[160px] shrink-0 flex-col items-center gap-2 rounded-xl border border-nexus-border bg-white/5 p-3 transition-colors hover:border-nexus-primary/30"
+                className="flex min-w-[160px] shrink-0 flex-col items-center gap-2 rounded-xl border border-nexus-border bg-nexus-card/5 p-3 transition-colors hover:border-nexus-primary/30"
               >
                 {/* Thumbnail placeholder */}
                 <div
@@ -514,7 +514,7 @@ export default function Vision() {
                 <motion.div
                   key={alert.id}
                   whileHover={{ x: 4 }}
-                  className="flex items-start gap-3 rounded-lg bg-white/5 p-3 transition-colors hover:bg-white/10"
+                  className="flex items-start gap-3 rounded-lg bg-nexus-card/5 p-3 transition-colors hover:bg-nexus-card/10"
                 >
                   <span
                     className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
@@ -625,7 +625,7 @@ export default function Vision() {
                 onClick={() => {
                   if (action.label === 'Night Mode') setNightMode((prev) => !prev);
                 }}
-                className="flex items-center gap-2 rounded-xl border border-nexus-border bg-white/5 px-4 py-2.5 text-sm font-medium text-nexus-text transition-colors hover:border-nexus-primary/40 hover:bg-white/10"
+                className="flex items-center gap-2 rounded-xl border border-nexus-border bg-nexus-card/5 px-4 py-2.5 text-sm font-medium text-nexus-text transition-colors hover:border-nexus-primary/40 hover:bg-nexus-card/10"
               >
                 <action.icon size={16} style={{ color: action.color }} />
                 {action.label === 'Night Mode'
@@ -667,7 +667,7 @@ export default function Vision() {
                 {mockRecordings.map((rec) => (
                   <tr
                     key={rec.id}
-                    className="border-b border-nexus-border/40 transition-colors hover:bg-white/5"
+                    className="border-b border-nexus-border/40 transition-colors hover:bg-nexus-card/5"
                   >
                     <td className="py-2 pr-4 font-medium text-nexus-text">{rec.cameraName}</td>
                     <td className="py-2 pr-4 text-nexus-muted">{rec.startTime}</td>

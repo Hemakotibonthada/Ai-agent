@@ -28,7 +28,7 @@ const variantStyles: Record<ButtonVariant, string> = {
   accent:
     'bg-nexus-accent/20 text-nexus-accent border-nexus-accent/40 hover:bg-nexus-accent/30 hover:border-nexus-accent/60 neon-cyan',
   ghost:
-    'bg-transparent text-nexus-muted border-transparent hover:bg-white/5 hover:text-nexus-text',
+    'bg-transparent text-nexus-muted border-transparent hover:bg-nexus-card/5 hover:text-nexus-text',
   danger:
     'bg-nexus-error/20 text-nexus-error border-nexus-error/40 hover:bg-nexus-error/30 hover:border-nexus-error/60',
 };
@@ -56,7 +56,7 @@ function useRipple() {
     const y = e.clientY - rect.top - size / 2;
 
     const ripple = document.createElement('span');
-    ripple.className = 'absolute rounded-full bg-white/20 pointer-events-none animate-scale-in';
+    ripple.className = 'absolute rounded-full bg-nexus-card/20 pointer-events-none animate-scale-in';
     ripple.style.width = ripple.style.height = `${size}px`;
     ripple.style.left = `${x}px`;
     ripple.style.top = `${y}px`;

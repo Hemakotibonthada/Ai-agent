@@ -161,7 +161,7 @@ export default function WebhookManager() {
             <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
               Webhook Manager
             </h1>
-            <p className="text-gray-400 mt-1">Configure and monitor webhook endpoints</p>
+            <p className="text-nexus-muted mt-1">Configure and monitor webhook endpoints</p>
           </div>
           <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
             <Plus className="w-4 h-4" /> New Webhook
@@ -181,10 +181,10 @@ export default function WebhookManager() {
           const Icon = stat.icon;
           return (
             <motion.div key={stat.label} whileHover={{ y: -2 }}
-              className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-4">
+              className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Icon className="w-4 h-4" style={{ color: stat.color }} />
-                <span className="text-xs text-gray-400">{stat.label}</span>
+                <span className="text-xs text-nexus-muted">{stat.label}</span>
               </div>
               <div className="text-2xl font-bold" style={{ color: stat.color }}>{stat.value}</div>
             </motion.div>
@@ -195,14 +195,14 @@ export default function WebhookManager() {
       {/* Filters */}
       <div className="flex flex-wrap gap-3 mb-6">
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-nexus-muted" />
           <input type="text" value={search} onChange={e => setSearch(e.target.value)}
-            placeholder="Search webhooks..." className="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white placeholder:text-gray-500" />
+            placeholder="Search webhooks..." className="w-full pl-10 pr-4 py-2 bg-nexus-card/5 border border-white/10 rounded-lg text-sm text-white placeholder:text-nexus-muted" />
         </div>
-        <div className="flex gap-1 bg-white/5 rounded-lg p-1 border border-white/10">
+        <div className="flex gap-1 bg-nexus-card/5 rounded-lg p-1 border border-white/10">
           {(['all', 'active', 'paused', 'error'] as const).map(f => (
             <button key={f} onClick={() => setFilter(f)}
-              className={`px-3 py-1 text-xs rounded-md font-medium transition-all capitalize ${filter === f ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'}`}>
+              className={`px-3 py-1 text-xs rounded-md font-medium transition-all capitalize ${filter === f ? 'bg-nexus-card/10 text-white' : 'text-nexus-muted hover:text-white'}`}>
               {f}
             </button>
           ))}
@@ -220,7 +220,7 @@ export default function WebhookManager() {
                   initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: -20 }}
                   transition={{ delay: i * 0.05 }}
                   onClick={() => setSelectedWebhook(wh)}
-                  className={`bg-white/5 backdrop-blur-sm rounded-xl border p-4 cursor-pointer transition-all hover:bg-white/[0.07] ${
+                  className={`bg-nexus-card/5 backdrop-blur-sm rounded-xl border p-4 cursor-pointer transition-all hover:bg-nexus-card/[0.07] ${
                     selectedWebhook?.id === wh.id ? 'border-orange-500/50 ring-1 ring-orange-500/20' : 'border-white/10'
                   }`}>
                   <div className="flex items-start justify-between mb-3">
@@ -230,7 +230,7 @@ export default function WebhookManager() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-sm">{wh.name}</h3>
-                        <div className="text-xs text-gray-500 font-mono truncate max-w-[300px]">{wh.url}</div>
+                        <div className="text-xs text-nexus-muted font-mono truncate max-w-[300px]">{wh.url}</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -243,11 +243,11 @@ export default function WebhookManager() {
 
                   <div className="flex flex-wrap gap-1 mb-3">
                     {wh.events.map(evt => (
-                      <span key={evt} className="px-2 py-0.5 bg-white/5 rounded text-xs text-gray-400 font-mono">{evt}</span>
+                      <span key={evt} className="px-2 py-0.5 bg-nexus-card/5 rounded text-xs text-nexus-muted font-mono">{evt}</span>
                     ))}
                   </div>
 
-                  <div className="flex items-center justify-between text-xs text-gray-500">
+                  <div className="flex items-center justify-between text-xs text-nexus-muted">
                     <div className="flex gap-4">
                       <span>{wh.method}</span>
                       <span>{wh.totalCalls.toLocaleString()} calls</span>
@@ -258,7 +258,7 @@ export default function WebhookManager() {
                     </div>
                     <div className="flex gap-1">
                       <button onClick={e => { e.stopPropagation(); toggleStatus(wh.id); }}
-                        className="p-1 hover:bg-white/10 rounded transition-colors">
+                        className="p-1 hover:bg-nexus-card/10 rounded transition-colors">
                         {wh.status === 'active' ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
                       </button>
                       <button onClick={e => { e.stopPropagation(); deleteWebhook(wh.id); }}
@@ -279,29 +279,29 @@ export default function WebhookManager() {
             {selectedWebhook ? (
               <motion.div key={selectedWebhook.id}
                 initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}
-                className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-5 sticky top-6">
+                className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 p-5 sticky top-6">
                 <h3 className="font-semibold text-lg mb-1">{selectedWebhook.name}</h3>
-                <p className="text-xs text-gray-500 font-mono mb-4 break-all">{selectedWebhook.url}</p>
+                <p className="text-xs text-nexus-muted font-mono mb-4 break-all">{selectedWebhook.url}</p>
 
                 <div className="space-y-3 mb-6">
-                  <div className="flex justify-between text-sm"><span className="text-gray-400">Method</span>
+                  <div className="flex justify-between text-sm"><span className="text-nexus-muted">Method</span>
                     <span className="px-2 py-0.5 bg-blue-500/15 text-blue-400 rounded text-xs font-mono">{selectedWebhook.method}</span></div>
-                  <div className="flex justify-between text-sm"><span className="text-gray-400">Secret</span>
-                    <span className="text-xs font-mono text-gray-500">{selectedWebhook.secret}</span></div>
-                  <div className="flex justify-between text-sm"><span className="text-gray-400">Retries</span>
+                  <div className="flex justify-between text-sm"><span className="text-nexus-muted">Secret</span>
+                    <span className="text-xs font-mono text-nexus-muted">{selectedWebhook.secret}</span></div>
+                  <div className="flex justify-between text-sm"><span className="text-nexus-muted">Retries</span>
                     <span className="text-xs">{selectedWebhook.retryPolicy.maxRetries}x / {selectedWebhook.retryPolicy.backoffMs}ms</span></div>
-                  <div className="flex justify-between text-sm"><span className="text-gray-400">Created</span>
+                  <div className="flex justify-between text-sm"><span className="text-nexus-muted">Created</span>
                     <span className="text-xs">{new Date(selectedWebhook.createdAt).toLocaleDateString()}</span></div>
                 </div>
 
-                <h4 className="text-sm font-semibold text-gray-300 mb-3">Headers</h4>
+                <h4 className="text-sm font-semibold text-nexus-muted mb-3">Headers</h4>
                 <div className="bg-black/20 rounded-lg p-3 mb-6 text-xs font-mono space-y-1 max-h-32 overflow-y-auto">
                   {Object.entries(selectedWebhook.headers).map(([k, v]) => (
-                    <div key={k}><span className="text-purple-400">{k}:</span> <span className="text-gray-400">{v.length > 30 ? v.slice(0, 30) + '...' : v}</span></div>
+                    <div key={k}><span className="text-purple-400">{k}:</span> <span className="text-nexus-muted">{v.length > 30 ? v.slice(0, 30) + '...' : v}</span></div>
                   ))}
                 </div>
 
-                <h4 className="text-sm font-semibold text-gray-300 mb-3">Recent Events</h4>
+                <h4 className="text-sm font-semibold text-nexus-muted mb-3">Recent Events</h4>
                 <div className="space-y-2 max-h-64 overflow-y-auto">
                   {selectedWebhook.recentEvents.map(evt => (
                     <div key={evt.id} onClick={() => setShowEventDetail(showEventDetail?.id === evt.id ? null : evt)}
@@ -311,19 +311,19 @@ export default function WebhookManager() {
                           <div className="w-2 h-2 rounded-full" style={{ backgroundColor: eventStatusColors[evt.status] }} />
                           {evt.status}
                         </span>
-                        <span className="text-gray-500">{evt.statusCode || 'N/A'}</span>
+                        <span className="text-nexus-muted">{evt.statusCode || 'N/A'}</span>
                       </div>
-                      <div className="flex justify-between text-xs text-gray-500">
+                      <div className="flex justify-between text-xs text-nexus-muted">
                         <span>{new Date(evt.timestamp).toLocaleString()}</span>
                         <span>{evt.duration}ms</span>
                       </div>
                       {showEventDetail?.id === evt.id && (
                         <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
                           className="mt-2 pt-2 border-t border-white/5 space-y-2">
-                          <div><div className="text-xs text-gray-500 mb-1">Request</div>
-                            <pre className="text-xs text-gray-400 bg-black/30 rounded p-2 overflow-x-auto whitespace-pre-wrap">{evt.requestBody}</pre></div>
-                          <div><div className="text-xs text-gray-500 mb-1">Response</div>
-                            <pre className="text-xs text-gray-400 bg-black/30 rounded p-2 overflow-x-auto whitespace-pre-wrap">{evt.responseBody || '(empty)'}</pre></div>
+                          <div><div className="text-xs text-nexus-muted mb-1">Request</div>
+                            <pre className="text-xs text-nexus-muted bg-black/30 rounded p-2 overflow-x-auto whitespace-pre-wrap">{evt.requestBody}</pre></div>
+                          <div><div className="text-xs text-nexus-muted mb-1">Response</div>
+                            <pre className="text-xs text-nexus-muted bg-black/30 rounded p-2 overflow-x-auto whitespace-pre-wrap">{evt.responseBody || '(empty)'}</pre></div>
                           {evt.retries > 0 && <div className="text-xs text-yellow-400">Retried {evt.retries} time(s)</div>}
                         </motion.div>
                       )}
@@ -333,9 +333,9 @@ export default function WebhookManager() {
               </motion.div>
             ) : (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-8 text-center">
-                <Webhook className="w-12 h-12 text-gray-600 mx-auto mb-3" />
-                <p className="text-gray-400 text-sm">Select a webhook to view details</p>
+                className="bg-nexus-card/5 backdrop-blur-sm rounded-xl border border-white/10 p-8 text-center">
+                <Webhook className="w-12 h-12 text-nexus-muted mx-auto mb-3" />
+                <p className="text-nexus-muted text-sm">Select a webhook to view details</p>
               </motion.div>
             )}
           </AnimatePresence>

@@ -30,7 +30,7 @@ interface RequestHistory {
 }
 
 const METHOD_COLORS: Record<HttpMethod, string> = {
-  GET: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+  GET: 'bg-nexus-success/15 text-nexus-success',
   POST: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
   PUT: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
   PATCH: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400',
@@ -131,14 +131,14 @@ const ApiPlayground: React.FC = () => {
         <div key={param.id} className="flex items-center gap-2">
           <input type="checkbox" checked={param.enabled}
             onChange={e => updateParam(items, setItems, param.id, 'enabled', e.target.checked)}
-            className="rounded border-gray-300 text-blue-500" />
+            className="rounded border-nexus-border text-blue-500" />
           <input type="text" placeholder="Key" value={param.key}
             onChange={e => updateParam(items, setItems, param.id, 'key', e.target.value)}
-            className="flex-1 px-3 py-1.5 bg-gray-50 dark:bg-gray-700 rounded-lg text-sm border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white outline-none focus:ring-1 focus:ring-blue-500" />
+            className="flex-1 px-3 py-1.5 bg-nexus-surface rounded-lg text-sm border border-nexus-border text-nexus-text outline-none focus:ring-1 focus:ring-nexus-primary" />
           <input type="text" placeholder="Value" value={param.value}
             onChange={e => updateParam(items, setItems, param.id, 'value', e.target.value)}
-            className="flex-1 px-3 py-1.5 bg-gray-50 dark:bg-gray-700 rounded-lg text-sm border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white outline-none focus:ring-1 focus:ring-blue-500" />
-          <button onClick={() => removeParam(items, setItems, param.id)} className="p-1 text-gray-400 hover:text-red-500">
+            className="flex-1 px-3 py-1.5 bg-nexus-surface rounded-lg text-sm border border-nexus-border text-nexus-text outline-none focus:ring-1 focus:ring-nexus-primary" />
+          <button onClick={() => removeParam(items, setItems, param.id)} className="p-1 text-nexus-muted hover:text-red-500">
             <Trash2 size={14} />
           </button>
         </div>
@@ -154,32 +154,32 @@ const ApiPlayground: React.FC = () => {
       <FadeIn>
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <Globe className="text-blue-500" size={32} />
               API Playground
             </h1>
-            <p className="text-gray-500 mt-1">Test and explore API endpoints interactively</p>
+            <p className="text-nexus-muted mt-1">Test and explore API endpoints interactively</p>
           </div>
           <div className="relative">
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
               onClick={() => setShowEndpoints(!showEndpoints)}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-sm font-medium">
+              className="flex items-center gap-2 px-4 py-2 bg-nexus-surface text-nexus-text rounded-xl text-sm font-medium">
               <BookOpen size={16} /> Endpoints
             </motion.button>
             <AnimatePresence>
               {showEndpoints && (
                 <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 5 }}
-                  className="absolute right-0 top-12 w-80 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-xl z-50 overflow-hidden">
-                  <div className="p-3 border-b border-gray-200 dark:border-gray-700">
-                    <h3 className="font-semibold text-sm text-gray-900 dark:text-white">Available Endpoints</h3>
+                  className="absolute right-0 top-12 w-80 bg-nexus-card rounded-xl border border-nexus-border shadow-xl z-50 overflow-hidden">
+                  <div className="p-3 border-b border-nexus-border">
+                    <h3 className="font-semibold text-sm text-nexus-text">Available Endpoints</h3>
                   </div>
-                  <div className="max-h-72 overflow-y-auto divide-y divide-gray-100 dark:divide-gray-700">
+                  <div className="max-h-72 overflow-y-auto divide-y divide-nexus-border">
                     {sampleEndpoints.map((ep, i) => (
                       <button key={i}
                         onClick={() => { setMethod(ep.method); setUrl(ep.path); setShowEndpoints(false); }}
-                        className="w-full text-left px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center gap-2">
+                        className="w-full text-left px-3 py-2 hover:bg-nexus-surface/60/50 flex items-center gap-2">
                         <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${METHOD_COLORS[ep.method]}`}>{ep.method}</span>
-                        <span className="text-xs text-gray-700 dark:text-gray-300 font-mono">{ep.path}</span>
+                        <span className="text-xs text-nexus-text font-mono">{ep.path}</span>
                       </button>
                     ))}
                   </div>
@@ -192,7 +192,7 @@ const ApiPlayground: React.FC = () => {
 
       {/* Request Bar */}
       <FadeIn delay={0.05}>
-        <div className="flex items-center gap-2 bg-white dark:bg-gray-800 rounded-2xl p-2 border border-gray-200 dark:border-gray-700">
+        <div className="flex items-center gap-2 bg-nexus-card rounded-2xl p-2 border border-nexus-border">
           <select value={method} onChange={e => setMethod(e.target.value as HttpMethod)}
             className={`px-3 py-2.5 rounded-xl text-sm font-bold ${METHOD_COLORS[method]} border-0 outline-none cursor-pointer`}>
             {(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'] as HttpMethod[]).map(m => (
@@ -200,7 +200,7 @@ const ApiPlayground: React.FC = () => {
             ))}
           </select>
           <input type="text" value={url} onChange={e => setUrl(e.target.value)}
-            className="flex-1 px-3 py-2.5 text-sm font-mono text-gray-900 dark:text-white bg-transparent outline-none"
+            className="flex-1 px-3 py-2.5 text-sm font-mono text-nexus-text bg-transparent outline-none"
             placeholder="/api/endpoint" />
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             onClick={simulateRequest} disabled={loading}
@@ -215,14 +215,14 @@ const ApiPlayground: React.FC = () => {
         {/* Request Config */}
         <div className="lg:col-span-2 space-y-4">
           <FadeIn delay={0.1}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-              <div className="flex border-b border-gray-200 dark:border-gray-700">
+            <div className="bg-nexus-card rounded-2xl border border-nexus-border overflow-hidden">
+              <div className="flex border-b border-nexus-border">
                 {(['params', 'headers', 'body', 'auth'] as const).map(tab => (
                   <button key={tab} onClick={() => setActiveTab(tab)}
                     className={`px-4 py-3 text-sm font-medium capitalize transition-colors ${
                       activeTab === tab
                         ? 'text-blue-600 border-b-2 border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                        : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                        : 'text-nexus-muted hover:text-nexus-text dark:hover:text-nexus-muted'
                     }`}>
                     {tab === 'params' && <Hash size={12} className="inline mr-1" />}
                     {tab === 'headers' && <AlignLeft size={12} className="inline mr-1" />}
@@ -237,18 +237,18 @@ const ApiPlayground: React.FC = () => {
                 {activeTab === 'headers' && paramTable(headers, setHeaders, 'header')}
                 {activeTab === 'body' && (
                   <textarea value={body} onChange={e => setBody(e.target.value)} rows={10}
-                    className="w-full px-4 py-3 bg-gray-900 text-green-400 rounded-xl text-sm font-mono outline-none resize-none" />
+                    className="w-full px-4 py-3 bg-nexus-bg text-green-400 rounded-xl text-sm font-mono outline-none resize-none" />
                 )}
                 {activeTab === 'auth' && (
                   <div className="space-y-3">
-                    <select className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 rounded-lg text-sm border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white outline-none">
+                    <select className="w-full px-3 py-2 bg-nexus-surface rounded-lg text-sm border border-nexus-border text-nexus-text outline-none">
                       <option>No Auth</option>
                       <option>Bearer Token</option>
                       <option>API Key</option>
                       <option>Basic Auth</option>
                     </select>
                     <input type="text" placeholder="Enter token or API key..."
-                      className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 rounded-lg text-sm border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white outline-none" />
+                      className="w-full px-3 py-2 bg-nexus-surface rounded-lg text-sm border border-nexus-border text-nexus-text outline-none" />
                   </div>
                 )}
               </div>
@@ -257,16 +257,16 @@ const ApiPlayground: React.FC = () => {
 
           {/* Response */}
           <FadeIn delay={0.15}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+            <div className="bg-nexus-card rounded-2xl border border-nexus-border overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3 border-b border-nexus-border">
                 <div className="flex items-center gap-3">
-                  <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Response</h3>
+                  <h3 className="text-sm font-semibold text-nexus-text">Response</h3>
                   {responseStatus !== null && (
                     <>
                       <span className={`px-2 py-0.5 rounded text-xs font-bold ${responseStatus < 400 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                         {responseStatus} {responseStatus < 400 ? 'OK' : 'Not Found'}
                       </span>
-                      <span className="text-xs text-gray-500 flex items-center gap-1">
+                      <span className="text-xs text-nexus-muted flex items-center gap-1">
                         <Clock size={10} /> {responseTime}ms
                       </span>
                     </>
@@ -274,7 +274,7 @@ const ApiPlayground: React.FC = () => {
                 </div>
                 {responseData && (
                   <button onClick={() => navigator.clipboard.writeText(responseData || '')}
-                    className="flex items-center gap-1 text-xs text-gray-500 hover:text-gray-700">
+                    className="flex items-center gap-1 text-xs text-nexus-muted hover:text-nexus-text">
                     <Copy size={12} /> Copy
                   </button>
                 )}
@@ -290,11 +290,11 @@ const ApiPlayground: React.FC = () => {
                       {(['body', 'headers', 'cookies'] as const).map(t => (
                         <button key={t} onClick={() => setResponseTab(t)}
                           className={`px-3 py-1 rounded-lg text-xs font-medium capitalize ${
-                            responseTab === t ? 'bg-gray-200 dark:bg-gray-600 text-gray-900 dark:text-white' : 'text-gray-500'
+                            responseTab === t ? 'bg-nexus-surface text-nexus-text' : 'text-nexus-muted'
                           }`}>{t}</button>
                       ))}
                     </div>
-                    <pre className="bg-gray-900 text-green-400 p-4 rounded-xl text-xs font-mono overflow-auto max-h-80 whitespace-pre-wrap">
+                    <pre className="bg-nexus-bg text-green-400 p-4 rounded-xl text-xs font-mono overflow-auto max-h-80 whitespace-pre-wrap">
                       {responseTab === 'body' ? responseData : responseTab === 'headers' ? JSON.stringify({
                         'content-type': 'application/json',
                         'x-request-id': 'req_' + Date.now(),
@@ -304,7 +304,7 @@ const ApiPlayground: React.FC = () => {
                     </pre>
                   </div>
                 ) : (
-                  <div className="text-center py-12 text-gray-400">
+                  <div className="text-center py-12 text-nexus-muted">
                     <Send size={32} className="mx-auto mb-3 opacity-50" />
                     <p className="text-sm">Send a request to see the response</p>
                   </div>
@@ -316,25 +316,25 @@ const ApiPlayground: React.FC = () => {
 
         {/* History Sidebar */}
         <FadeIn delay={0.2}>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-            <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+          <div className="bg-nexus-card rounded-2xl border border-nexus-border overflow-hidden">
+            <div className="px-4 py-3 border-b border-nexus-border flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-nexus-text flex items-center gap-2">
                 <Clock size={14} /> History
               </h3>
-              <button onClick={() => setHistory([])} className="text-xs text-gray-500 hover:text-red-500">Clear</button>
+              <button onClick={() => setHistory([])} className="text-xs text-nexus-muted hover:text-red-500">Clear</button>
             </div>
-            <div className="divide-y divide-gray-100 dark:divide-gray-700 max-h-96 overflow-y-auto">
+            <div className="divide-y divide-nexus-border max-h-96 overflow-y-auto">
               {history.map(item => (
                 <button key={item.id}
                   onClick={() => { setMethod(item.method as HttpMethod); setUrl(item.url); }}
-                  className="w-full text-left px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700/30 group">
+                  className="w-full text-left px-4 py-3 hover:bg-nexus-surface/60/30 group">
                   <div className="flex items-center gap-2 mb-1">
                     <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${METHOD_COLORS[item.method as HttpMethod]}`}>
                       {item.method}
                     </span>
-                    <span className="text-xs font-mono text-gray-700 dark:text-gray-300 truncate flex-1">{item.url}</span>
+                    <span className="text-xs font-mono text-nexus-text truncate flex-1">{item.url}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-gray-400">
+                  <div className="flex items-center gap-2 text-xs text-nexus-muted">
                     <span className={item.status < 400 ? 'text-green-500' : 'text-red-500'}>{item.status}</span>
                     <span>{item.time}ms</span>
                     <span>{item.timestamp}</span>
@@ -342,7 +342,7 @@ const ApiPlayground: React.FC = () => {
                 </button>
               ))}
               {history.length === 0 && (
-                <div className="p-8 text-center text-gray-400 text-sm">No history yet</div>
+                <div className="p-8 text-center text-nexus-muted text-sm">No history yet</div>
               )}
             </div>
           </div>

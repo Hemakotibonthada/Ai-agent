@@ -105,7 +105,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.4 }}
       whileHover={{ y: -4, boxShadow: '0 12px 40px rgba(0,0,0,0.15)' }}
-      className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 relative overflow-hidden group"
+      className="bg-nexus-card rounded-2xl p-6 border border-nexus-border relative overflow-hidden group"
     >
       <div className="absolute top-0 right-0 w-32 h-32 opacity-5 group-hover:opacity-10 transition-opacity">
         <div className={`w-full h-full rounded-full ${color} blur-2xl`} />
@@ -123,13 +123,13 @@ const MetricCard: React.FC<MetricCardProps> = ({
         </div>
       </div>
 
-      <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-1">{title}</h3>
+      <h3 className="text-sm text-nexus-muted mb-1">{title}</h3>
       <div className="flex items-end gap-2">
-        <span className="text-3xl font-bold text-gray-900 dark:text-white">
+        <span className="text-3xl font-bold text-nexus-text">
           {typeof value === 'number' ? value.toLocaleString() : value}
         </span>
         {suffix && (
-          <span className="text-sm text-gray-400 mb-1">{suffix}</span>
+          <span className="text-sm text-nexus-muted mb-1">{suffix}</span>
         )}
       </div>
 
@@ -180,7 +180,7 @@ const TabButton: React.FC<{
     className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
       active
         ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/25'
-        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+        : 'text-nexus-muted hover:bg-nexus-surface'
     }`}
   >
     {icon}
@@ -220,11 +220,11 @@ const Analytics: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <BarChart3 className="text-indigo-500" size={32} />
               Analytics Dashboard
             </h1>
-            <p className="text-gray-500 dark:text-gray-400 mt-1">
+            <p className="text-nexus-muted mt-1">
               Comprehensive system analytics and performance metrics
             </p>
           </div>
@@ -232,15 +232,15 @@ const Analytics: React.FC = () => {
           <div className="flex items-center gap-3">
             <LiveIndicator />
 
-            <div className="flex items-center bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+            <div className="flex items-center bg-nexus-surface rounded-lg p-1">
               {['24h', '7d', '30d', '90d'].map((range) => (
                 <button
                   key={range}
                   onClick={() => setTimeRange(range)}
                   className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
                     timeRange === range
-                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                      : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                      ? 'bg-white text-nexus-text shadow-sm'
+                      : 'text-nexus-muted hover:text-nexus-text dark:hover:text-nexus-muted'
                   }`}
                 >
                   {range}
@@ -252,9 +252,9 @@ const Analytics: React.FC = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleRefresh}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              className="p-2 rounded-lg bg-nexus-surface hover:bg-nexus-surface transition-colors"
             >
-              <RefreshCcw size={18} className={`text-gray-600 dark:text-gray-300 ${isRefreshing ? 'animate-spin' : ''}`} />
+              <RefreshCcw size={18} className={`text-nexus-text ${isRefreshing ? 'animate-spin' : ''}`} />
             </motion.button>
 
             <motion.button
@@ -293,12 +293,12 @@ const Analytics: React.FC = () => {
             {/* Main Charts */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Traffic Over Time */}
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="lg:col-span-2 bg-nexus-card rounded-2xl p-6 border border-nexus-border">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Traffic Overview</h3>
+                  <h3 className="text-lg font-semibold text-nexus-text">Traffic Overview</h3>
                   <div className="flex items-center gap-4 text-sm">
-                    <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-full bg-indigo-500" /><span className="text-gray-500">Page Views</span></div>
-                    <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-full bg-purple-500" /><span className="text-gray-500">Visitors</span></div>
+                    <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-full bg-indigo-500" /><span className="text-nexus-muted">Page Views</span></div>
+                    <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-full bg-purple-500" /><span className="text-nexus-muted">Visitors</span></div>
                   </div>
                 </div>
                 <ResponsiveContainer width="100%" height={350}>
@@ -324,8 +324,8 @@ const Analytics: React.FC = () => {
               </motion.div>
 
               {/* Category Distribution */}
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Usage by Category</h3>
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-nexus-card rounded-2xl p-6 border border-nexus-border">
+                <h3 className="text-lg font-semibold text-nexus-text mb-6">Usage by Category</h3>
                 <ResponsiveContainer width="100%" height={250}>
                   <RechartsPieChart>
                     <Pie data={categoryData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={3}>
@@ -341,9 +341,9 @@ const Analytics: React.FC = () => {
                     <div key={item.name} className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[idx] }} />
-                        <span className="text-gray-600 dark:text-gray-300">{item.name}</span>
+                        <span className="text-nexus-text">{item.name}</span>
                       </div>
-                      <span className="font-medium text-gray-900 dark:text-white">{item.count.toLocaleString()}</span>
+                      <span className="font-medium text-nexus-text">{item.count.toLocaleString()}</span>
                     </div>
                   ))}
                 </div>
@@ -352,8 +352,8 @@ const Analytics: React.FC = () => {
 
             {/* Conversion & Bounce Rate */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Conversions</h3>
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="bg-nexus-card rounded-2xl p-6 border border-nexus-border">
+                <h3 className="text-lg font-semibold text-nexus-text mb-4">Conversions</h3>
                 <ResponsiveContainer width="100%" height={280}>
                   <BarChart data={timeSeriesData.slice(-14)}>
                     <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
@@ -365,8 +365,8 @@ const Analytics: React.FC = () => {
                 </ResponsiveContainer>
               </motion.div>
 
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Bounce Rate & Avg. Duration</h3>
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="bg-nexus-card rounded-2xl p-6 border border-nexus-border">
+                <h3 className="text-lg font-semibold text-nexus-text mb-4">Bounce Rate & Avg. Duration</h3>
                 <ResponsiveContainer width="100%" height={280}>
                   <ComposedChart data={timeSeriesData.slice(-14)}>
                     <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
@@ -394,8 +394,8 @@ const Analytics: React.FC = () => {
             </div>
 
             {/* System Performance Chart */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">System Performance (24h)</h3>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-nexus-card rounded-2xl p-6 border border-nexus-border">
+              <h3 className="text-lg font-semibold text-nexus-text mb-6">System Performance (24h)</h3>
               <ResponsiveContainer width="100%" height={400}>
                 <RechartsLineChart data={performanceData}>
                   <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
@@ -411,8 +411,8 @@ const Analytics: React.FC = () => {
             </motion.div>
 
             {/* Hourly Breakdown */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Hourly Request Volume</h3>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-nexus-card rounded-2xl p-6 border border-nexus-border">
+              <h3 className="text-lg font-semibold text-nexus-text mb-6">Hourly Request Volume</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={hourlyData}>
                   <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
@@ -432,8 +432,8 @@ const Analytics: React.FC = () => {
           <motion.div key="agents" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-6">
             {/* Agent Radar Chart */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Agent Efficiency Radar</h3>
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-nexus-card rounded-2xl p-6 border border-nexus-border">
+                <h3 className="text-lg font-semibold text-nexus-text mb-6">Agent Efficiency Radar</h3>
                 <ResponsiveContainer width="100%" height={350}>
                   <RadarChart data={agentData}>
                     <PolarGrid stroke="#e5e7eb50" />
@@ -447,8 +447,8 @@ const Analytics: React.FC = () => {
                 </ResponsiveContainer>
               </motion.div>
 
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Tasks Completed by Agent</h3>
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-nexus-card rounded-2xl p-6 border border-nexus-border">
+                <h3 className="text-lg font-semibold text-nexus-text mb-6">Tasks Completed by Agent</h3>
                 <ResponsiveContainer width="100%" height={350}>
                   <BarChart data={agentData} layout="vertical">
                     <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
@@ -466,43 +466,43 @@ const Analytics: React.FC = () => {
             </div>
 
             {/* Agent Performance Table */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-              <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Agent Performance Details</h3>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-nexus-card rounded-2xl border border-nexus-border overflow-hidden">
+              <div className="p-6 border-b border-nexus-border">
+                <h3 className="text-lg font-semibold text-nexus-text">Agent Performance Details</h3>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="bg-gray-50 dark:bg-gray-700/50">
-                      <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Agent</th>
-                      <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Efficiency</th>
-                      <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Tasks</th>
-                      <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Avg Response</th>
-                      <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Satisfaction</th>
-                      <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Uptime</th>
-                      <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <tr className="bg-nexus-surface/50">
+                      <th className="text-left px-6 py-3 text-xs font-medium text-nexus-muted uppercase tracking-wider">Agent</th>
+                      <th className="text-left px-6 py-3 text-xs font-medium text-nexus-muted uppercase tracking-wider">Efficiency</th>
+                      <th className="text-left px-6 py-3 text-xs font-medium text-nexus-muted uppercase tracking-wider">Tasks</th>
+                      <th className="text-left px-6 py-3 text-xs font-medium text-nexus-muted uppercase tracking-wider">Avg Response</th>
+                      <th className="text-left px-6 py-3 text-xs font-medium text-nexus-muted uppercase tracking-wider">Satisfaction</th>
+                      <th className="text-left px-6 py-3 text-xs font-medium text-nexus-muted uppercase tracking-wider">Uptime</th>
+                      <th className="text-left px-6 py-3 text-xs font-medium text-nexus-muted uppercase tracking-wider">Status</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                  <tbody className="divide-y divide-nexus-border">
                     {agentData.map((agent, idx) => (
                       <motion.tr
                         key={agent.agent}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: idx * 0.05 }}
-                        className="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors"
+                        className="hover:bg-nexus-surface/60/30 transition-colors"
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${COLORS[idx]}20` }}>
                               <Zap size={16} style={{ color: COLORS[idx] }} />
                             </div>
-                            <span className="font-medium text-gray-900 dark:text-white">{agent.agent}</span>
+                            <span className="font-medium text-nexus-text">{agent.agent}</span>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-2">
-                            <div className="w-24 h-2 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
+                            <div className="w-24 h-2 bg-nexus-surface rounded-full overflow-hidden">
                               <motion.div
                                 initial={{ width: 0 }}
                                 animate={{ width: `${agent.efficiency}%` }}
@@ -511,18 +511,18 @@ const Analytics: React.FC = () => {
                                 style={{ backgroundColor: COLORS[idx] }}
                               />
                             </div>
-                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{agent.efficiency}%</span>
+                            <span className="text-sm font-medium text-nexus-text">{agent.efficiency}%</span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{agent.tasks}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{agent.responseTime}ms</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-nexus-text">{agent.tasks}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-nexus-text">{agent.responseTime}ms</td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-1">
                             <span className="text-sm font-medium text-yellow-500">★</span>
-                            <span className="text-sm text-gray-700 dark:text-gray-300">{agent.satisfaction}</span>
+                            <span className="text-sm text-nexus-text">{agent.satisfaction}</span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{agent.uptime}%</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-nexus-text">{agent.uptime}%</td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
                             <CheckCircle2 size={12} className="mr-1" /> Active
@@ -546,9 +546,9 @@ const Analytics: React.FC = () => {
             </div>
 
             {/* Live Activity Feed */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-nexus-card rounded-2xl p-6 border border-nexus-border">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Live Activity Feed</h3>
+                <h3 className="text-lg font-semibold text-nexus-text">Live Activity Feed</h3>
                 <LiveIndicator />
               </div>
               <div className="space-y-3 max-h-96 overflow-y-auto">
@@ -568,11 +568,11 @@ const Analytics: React.FC = () => {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.03 }}
-                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors"
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-nexus-surface/60/30 transition-colors"
                     >
                       <div className="flex-shrink-0">{activity.icon}</div>
-                      <span className="flex-1 text-sm text-gray-700 dark:text-gray-300">{activity.text}</span>
-                      <span className="text-xs text-gray-400 whitespace-nowrap">{activity.time}</span>
+                      <span className="flex-1 text-sm text-nexus-text">{activity.text}</span>
+                      <span className="text-xs text-nexus-muted whitespace-nowrap">{activity.time}</span>
                     </motion.div>
                   );
                 })}

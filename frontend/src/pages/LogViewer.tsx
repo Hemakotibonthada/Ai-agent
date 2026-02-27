@@ -23,10 +23,10 @@ interface LogEntry {
 
 const LEVEL_CONFIG: Record<LogLevel, { icon: React.ReactNode; color: string; bg: string }> = {
   info: { icon: <Info size={14} />, color: 'text-blue-500', bg: 'bg-blue-100 dark:bg-blue-900/30' },
-  warning: { icon: <AlertTriangle size={14} />, color: 'text-yellow-500', bg: 'bg-yellow-100 dark:bg-yellow-900/30' },
-  error: { icon: <AlertCircle size={14} />, color: 'text-red-500', bg: 'bg-red-100 dark:bg-red-900/30' },
+  warning: { icon: <AlertTriangle size={14} />, color: 'text-yellow-500', bg: 'bg-nexus-warning/15' },
+  error: { icon: <AlertCircle size={14} />, color: 'text-red-500', bg: 'bg-nexus-error/15' },
   debug: { icon: <Bug size={14} />, color: 'text-purple-500', bg: 'bg-purple-100 dark:bg-purple-900/30' },
-  success: { icon: <CheckCircle size={14} />, color: 'text-green-500', bg: 'bg-green-100 dark:bg-green-900/30' },
+  success: { icon: <CheckCircle size={14} />, color: 'text-green-500', bg: 'bg-nexus-success/15' },
 };
 
 const SOURCES = ['System', 'AI Engine', 'Security', 'Network', 'Scheduler', 'Database', 'MQTT', 'API', 'Agent', 'Auth'];
@@ -161,11 +161,11 @@ const LogViewer: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <Terminal className="text-green-500" size={32} />
               Log Viewer
             </h1>
-            <p className="text-gray-500 mt-1">Real-time system logs · {filteredLogs.length} entries</p>
+            <p className="text-nexus-muted mt-1">Real-time system logs · {filteredLogs.length} entries</p>
           </div>
           <div className="flex items-center gap-2">
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
@@ -177,11 +177,11 @@ const LogViewer: React.FC = () => {
             </motion.button>
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
               onClick={() => setLogs([])}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-sm font-medium">
+              className="flex items-center gap-2 px-4 py-2 bg-nexus-surface text-nexus-text rounded-xl text-sm font-medium">
               <RefreshCw size={14} /> Clear
             </motion.button>
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-sm font-medium">
+              className="flex items-center gap-2 px-4 py-2 bg-nexus-surface text-nexus-text rounded-xl text-sm font-medium">
               <Download size={14} /> Export
             </motion.button>
           </div>
@@ -193,16 +193,16 @@ const LogViewer: React.FC = () => {
         <FadeIn delay={0.05}>
           <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
             {[
-              { label: 'Total', value: stats.total, color: 'text-gray-500' },
+              { label: 'Total', value: stats.total, color: 'text-nexus-muted' },
               { label: 'Info', value: stats.info, color: 'text-blue-500' },
               { label: 'Success', value: stats.success, color: 'text-green-500' },
               { label: 'Warning', value: stats.warning, color: 'text-yellow-500' },
               { label: 'Error', value: stats.error, color: 'text-red-500' },
               { label: 'Debug', value: stats.debug, color: 'text-purple-500' },
             ].map(stat => (
-              <div key={stat.label} className="bg-white dark:bg-gray-800 rounded-xl p-3 border border-gray-200 dark:border-gray-700 text-center">
+              <div key={stat.label} className="bg-nexus-card rounded-xl p-3 border border-nexus-border text-center">
                 <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
-                <div className="text-xs text-gray-500">{stat.label}</div>
+                <div className="text-xs text-nexus-muted">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -213,9 +213,9 @@ const LogViewer: React.FC = () => {
       <FadeIn delay={0.1}>
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-muted" />
             <input type="text" placeholder="Search logs..." value={search} onChange={e => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500" />
+              className="w-full pl-9 pr-4 py-2 rounded-xl bg-nexus-card border border-nexus-border text-sm text-nexus-text outline-none focus:ring-2 focus:ring-nexus-primary" />
           </div>
           <div className="flex items-center gap-2 flex-wrap">
             {(['all', 'info', 'warning', 'error', 'debug', 'success'] as const).map(level => (
@@ -223,9 +223,9 @@ const LogViewer: React.FC = () => {
                 onClick={() => setLevelFilter(level)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-colors ${
                   levelFilter === level
-                    ? level === 'all' ? 'bg-gray-800 text-white dark:bg-white dark:text-gray-900'
+                    ? level === 'all' ? 'bg-nexus-card text-white dark:bg-white dark:text-nexus-text'
                     : `${LEVEL_CONFIG[level as LogLevel].bg} ${LEVEL_CONFIG[level as LogLevel].color}`
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-500'
+                    : 'bg-nexus-surface text-nexus-muted'
                 }`}>
                 {level !== 'all' && <span className="mr-1">{React.cloneElement(LEVEL_CONFIG[level as LogLevel].icon as React.ReactElement, { size: 10 })}</span>}
                 {level}
@@ -233,7 +233,7 @@ const LogViewer: React.FC = () => {
             ))}
           </div>
           <select value={sourceFilter} onChange={e => setSourceFilter(e.target.value)}
-            className="px-3 py-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-white outline-none">
+            className="px-3 py-2 rounded-xl bg-nexus-card border border-nexus-border text-sm text-nexus-text outline-none">
             <option value="all">All Sources</option>
             {SOURCES.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
@@ -242,16 +242,16 @@ const LogViewer: React.FC = () => {
 
       {/* Log Stream */}
       <FadeIn delay={0.15}>
-        <div className="bg-gray-900 rounded-2xl border border-gray-700 overflow-hidden">
+        <div className="bg-nexus-bg rounded-2xl border border-nexus-border overflow-hidden">
           {/* Terminal Header */}
-          <div className="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700">
+          <div className="flex items-center justify-between px-4 py-2 bg-nexus-card border-b border-nexus-border">
             <div className="flex items-center gap-2">
               <div className="flex gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-red-500" />
                 <div className="w-3 h-3 rounded-full bg-yellow-500" />
                 <div className="w-3 h-3 rounded-full bg-green-500" />
               </div>
-              <span className="text-xs text-gray-400 ml-2 font-mono">nexus-logs — {filteredLogs.length} entries</span>
+              <span className="text-xs text-nexus-muted ml-2 font-mono">nexus-logs — {filteredLogs.length} entries</span>
             </div>
             <div className="flex items-center gap-2">
               {!paused && (
@@ -282,7 +282,7 @@ const LogViewer: React.FC = () => {
                     'border-transparent'
                   }`}
                 >
-                  <span className="text-gray-500 select-none flex-shrink-0 w-20">{formatTime(log.timestamp)}</span>
+                  <span className="text-nexus-muted select-none flex-shrink-0 w-20">{formatTime(log.timestamp)}</span>
                   <span className={`flex-shrink-0 w-6 ${LEVEL_CONFIG[log.level].color}`}>{LEVEL_CONFIG[log.level].icon}</span>
                   <span className="text-cyan-400 flex-shrink-0 w-20 truncate">[{log.source}]</span>
                   <span className={`flex-1 ${
@@ -290,12 +290,12 @@ const LogViewer: React.FC = () => {
                     log.level === 'warning' ? 'text-yellow-300' :
                     log.level === 'success' ? 'text-green-400' :
                     log.level === 'debug' ? 'text-purple-300' :
-                    'text-gray-300'
+                    'text-nexus-muted'
                   }`}>
                     {log.message}
                   </span>
                   {(log.details || log.metadata) && (
-                    <ChevronRight size={12} className={`text-gray-500 transition-transform flex-shrink-0 ${expandedLog === log.id ? 'rotate-90' : ''}`} />
+                    <ChevronRight size={12} className={`text-nexus-muted transition-transform flex-shrink-0 ${expandedLog === log.id ? 'rotate-90' : ''}`} />
                   )}
                 </div>
                 <AnimatePresence>
@@ -306,12 +306,12 @@ const LogViewer: React.FC = () => {
                       exit={{ height: 0, opacity: 0 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-4 py-2 ml-28 bg-gray-800/50 rounded-lg my-1 mr-4 border border-gray-700">
-                        {log.details && <pre className="text-gray-400 text-xs whitespace-pre-wrap mb-2">{log.details}</pre>}
+                      <div className="px-4 py-2 ml-28 bg-gray-800/50 rounded-lg my-1 mr-4 border border-nexus-border">
+                        {log.details && <pre className="text-nexus-muted text-xs whitespace-pre-wrap mb-2">{log.details}</pre>}
                         {log.metadata && (
                           <div className="flex flex-wrap gap-2">
                             {Object.entries(log.metadata).map(([key, val]) => (
-                              <span key={key} className="px-2 py-0.5 rounded bg-gray-700 text-gray-300 text-[10px]">
+                              <span key={key} className="px-2 py-0.5 rounded bg-nexus-surface text-nexus-muted text-[10px]">
                                 {key}: <span className="text-blue-300">{val}</span>
                               </span>
                             ))}
@@ -324,7 +324,7 @@ const LogViewer: React.FC = () => {
               </motion.div>
             ))}
             {filteredLogs.length === 0 && (
-              <div className="text-center py-12 text-gray-500">
+              <div className="text-center py-12 text-nexus-muted">
                 <FileText size={32} className="mx-auto mb-3 opacity-50" />
                 <p>No logs match your filters</p>
               </div>

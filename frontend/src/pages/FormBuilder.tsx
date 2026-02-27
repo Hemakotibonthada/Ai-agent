@@ -105,13 +105,13 @@ export default function FormBuilder() {
             </motion.div>
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Form Builder</h1>
-              <p className="text-gray-400 text-sm">Drag-and-drop form designer</p>
+              <p className="text-nexus-muted text-sm">Drag-and-drop form designer</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             {(['editor', 'preview', 'templates', 'submissions'] as const).map(v => (
               <button key={v} onClick={() => setView(v)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${view === v ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'text-gray-500 hover:text-gray-300'}`}>
+                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${view === v ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'text-nexus-muted hover:text-nexus-muted'}`}>
                 {v.charAt(0).toUpperCase() + v.slice(1)}
               </button>
             ))}
@@ -123,10 +123,10 @@ export default function FormBuilder() {
             <motion.div key="editor" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex gap-4">
               {/* Field Types Palette */}
               <div className="w-44 bg-gray-800/30 border border-gray-700/50 rounded-xl p-3 space-y-1.5 shrink-0">
-                <h4 className="text-xs text-gray-500 uppercase tracking-wider mb-2">Add Field</h4>
+                <h4 className="text-xs text-nexus-muted uppercase tracking-wider mb-2">Add Field</h4>
                 {FIELD_TYPES.map(ft => (
                   <button key={ft.type} onClick={() => addField(ft.type)}
-                    className="w-full flex items-center gap-2 px-2.5 py-2 text-gray-300 text-xs rounded-lg hover:bg-gray-700/50 transition-colors">
+                    className="w-full flex items-center gap-2 px-2.5 py-2 text-nexus-muted text-xs rounded-lg hover:bg-nexus-surface/50 transition-colors">
                     <span className="text-cyan-400">{ft.icon}</span>
                     {ft.label}
                   </button>
@@ -138,15 +138,15 @@ export default function FormBuilder() {
                 <input value={formTitle} onChange={e => setFormTitle(e.target.value)}
                   className="text-xl font-bold text-white bg-transparent border-none outline-none w-full mb-1" />
                 <input value={formDescription} onChange={e => setFormDescription(e.target.value)}
-                  className="text-sm text-gray-400 bg-transparent border-none outline-none w-full mb-6" />
+                  className="text-sm text-nexus-muted bg-transparent border-none outline-none w-full mb-6" />
 
                 <div className="space-y-3">
                   {fields.map((field, index) => (
                     <motion.div key={field.id} layout initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
                       onClick={() => setSelectedFieldId(field.id)}
-                      className={`p-4 border rounded-xl cursor-pointer transition-all group ${selectedFieldId === field.id ? 'bg-gray-800/60 border-cyan-500/40' : 'bg-gray-800/30 border-gray-700/50 hover:border-gray-600'}`}>
+                      className={`p-4 border rounded-xl cursor-pointer transition-all group ${selectedFieldId === field.id ? 'bg-gray-800/60 border-cyan-500/40' : 'bg-gray-800/30 border-gray-700/50 hover:border-nexus-border'}`}>
                       <div className="flex items-center gap-3">
-                        <GripVertical className="w-4 h-4 text-gray-600 cursor-grab" />
+                        <GripVertical className="w-4 h-4 text-nexus-muted cursor-grab" />
                         <span className="text-cyan-400">{getFieldIcon(field.type)}</span>
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
@@ -154,29 +154,29 @@ export default function FormBuilder() {
                             {field.required && <span className="text-red-400 text-xs">*</span>}
                           </div>
                           {field.type === 'select' && field.options ? (
-                            <select className="mt-2 w-full bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-1.5 text-sm text-gray-400" disabled>
+                            <select className="mt-2 w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-1.5 text-sm text-nexus-muted" disabled>
                               <option>{field.placeholder || 'Select...'}</option>
                               {field.options.map(o => <option key={o}>{o}</option>)}
                             </select>
                           ) : field.type === 'textarea' ? (
-                            <textarea placeholder={field.placeholder} disabled rows={2} className="mt-2 w-full bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-1.5 text-sm text-gray-400 resize-none" />
+                            <textarea placeholder={field.placeholder} disabled rows={2} className="mt-2 w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-1.5 text-sm text-nexus-muted resize-none" />
                           ) : field.type === 'toggle' ? (
                             <div className="mt-2 w-10 h-5 bg-gray-600 rounded-full" />
                           ) : field.type === 'checkbox' ? (
-                            <div className="mt-2 w-4 h-4 border border-gray-600 rounded" />
+                            <div className="mt-2 w-4 h-4 border border-nexus-border rounded" />
                           ) : (
-                            <input type="text" placeholder={field.placeholder} disabled className="mt-2 w-full bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-1.5 text-sm text-gray-400" />
+                            <input type="text" placeholder={field.placeholder} disabled className="mt-2 w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-1.5 text-sm text-nexus-muted" />
                           )}
                         </div>
                         <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <button onClick={e => { e.stopPropagation(); duplicateField(field); }} className="p-1 text-gray-500 hover:text-blue-400"><Copy className="w-3.5 h-3.5" /></button>
-                          <button onClick={e => { e.stopPropagation(); removeField(field.id); }} className="p-1 text-gray-500 hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
+                          <button onClick={e => { e.stopPropagation(); duplicateField(field); }} className="p-1 text-nexus-muted hover:text-blue-400"><Copy className="w-3.5 h-3.5" /></button>
+                          <button onClick={e => { e.stopPropagation(); removeField(field.id); }} className="p-1 text-nexus-muted hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
                         </div>
                       </div>
                     </motion.div>
                   ))}
                 </div>
-                <button onClick={() => addField('text')} className="mt-4 w-full py-3 border-2 border-dashed border-gray-700/50 rounded-xl text-gray-500 hover:text-cyan-400 hover:border-cyan-500/30 transition-colors text-sm flex items-center justify-center gap-2">
+                <button onClick={() => addField('text')} className="mt-4 w-full py-3 border-2 border-dashed border-gray-700/50 rounded-xl text-nexus-muted hover:text-cyan-400 hover:border-cyan-500/30 transition-colors text-sm flex items-center justify-center gap-2">
                   <Plus className="w-4 h-4" /> Add Field
                 </button>
               </div>
@@ -185,22 +185,22 @@ export default function FormBuilder() {
               {selectedField && (
                 <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="w-56 bg-gray-800/30 border border-gray-700/50 rounded-xl p-4 shrink-0 space-y-3">
                   <h4 className="text-sm font-medium text-white flex items-center gap-1.5"><Settings className="w-4 h-4 text-cyan-400" /> Properties</h4>
-                  <div><label className="text-xs text-gray-500 block mb-1">Label</label>
+                  <div><label className="text-xs text-nexus-muted block mb-1">Label</label>
                     <input value={selectedField.label} onChange={e => setFields(prev => prev.map(f => f.id === selectedField.id ? { ...f, label: e.target.value } : f))}
-                      className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500" />
+                      className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500" />
                   </div>
-                  <div><label className="text-xs text-gray-500 block mb-1">Placeholder</label>
+                  <div><label className="text-xs text-nexus-muted block mb-1">Placeholder</label>
                     <input value={selectedField.placeholder} onChange={e => setFields(prev => prev.map(f => f.id === selectedField.id ? { ...f, placeholder: e.target.value } : f))}
-                      className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500" />
+                      className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500" />
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-400">Required</span>
+                    <span className="text-xs text-nexus-muted">Required</span>
                     <button onClick={() => setFields(prev => prev.map(f => f.id === selectedField.id ? { ...f, required: !f.required } : f))}
                       className={`w-8 h-4 rounded-full transition-colors ${selectedField.required ? 'bg-cyan-600' : 'bg-gray-600'}`}>
-                      <motion.div animate={{ x: selectedField.required ? 16 : 2 }} className="w-3 h-3 bg-white rounded-full" />
+                      <motion.div animate={{ x: selectedField.required ? 16 : 2 }} className="w-3 h-3 bg-nexus-card rounded-full" />
                     </button>
                   </div>
-                  <div><label className="text-xs text-gray-500 block mb-1">Type</label>
+                  <div><label className="text-xs text-nexus-muted block mb-1">Type</label>
                     <span className="text-xs text-cyan-400 font-mono">{selectedField.type}</span>
                   </div>
                 </motion.div>
@@ -212,24 +212,24 @@ export default function FormBuilder() {
             <motion.div key="preview" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-w-lg mx-auto">
               <div className="bg-gray-800/30 border border-gray-700/50 rounded-xl p-8">
                 <h2 className="text-xl font-bold text-white mb-1">{formTitle}</h2>
-                <p className="text-sm text-gray-400 mb-6">{formDescription}</p>
+                <p className="text-sm text-nexus-muted mb-6">{formDescription}</p>
                 <div className="space-y-5">
                   {fields.map(field => (
                     <div key={field.id}>
-                      <label className="text-sm text-gray-300 mb-1.5 block">{field.label} {field.required && <span className="text-red-400">*</span>}</label>
+                      <label className="text-sm text-nexus-muted mb-1.5 block">{field.label} {field.required && <span className="text-red-400">*</span>}</label>
                       {field.type === 'textarea' ? (
-                        <textarea placeholder={field.placeholder} rows={3} className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 resize-none" />
+                        <textarea placeholder={field.placeholder} rows={3} className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 resize-none" />
                       ) : field.type === 'select' ? (
-                        <select className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-400 focus:outline-none focus:border-cyan-500">
+                        <select className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm text-nexus-muted focus:outline-none focus:border-cyan-500">
                           <option value="">{field.placeholder || 'Select...'}</option>
                           {field.options?.map(o => <option key={o}>{o}</option>)}
                         </select>
                       ) : field.type === 'toggle' ? (
-                        <div className="w-10 h-5 bg-gray-600 rounded-full cursor-pointer"><div className="w-3 h-3 bg-white rounded-full translate-x-1 translate-y-1" /></div>
+                        <div className="w-10 h-5 bg-gray-600 rounded-full cursor-pointer"><div className="w-3 h-3 bg-nexus-card rounded-full translate-x-1 translate-y-1" /></div>
                       ) : field.type === 'checkbox' ? (
-                        <label className="flex items-center gap-2 text-sm text-gray-400 cursor-pointer"><input type="checkbox" className="accent-cyan-500" /> {field.placeholder || 'Yes'}</label>
+                        <label className="flex items-center gap-2 text-sm text-nexus-muted cursor-pointer"><input type="checkbox" className="accent-cyan-500" /> {field.placeholder || 'Yes'}</label>
                       ) : (
-                        <input type={field.type} placeholder={field.placeholder} className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500" />
+                        <input type={field.type} placeholder={field.placeholder} className="w-full bg-nexus-surface/50 border border-nexus-border rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500" />
                       )}
                     </div>
                   ))}
@@ -249,10 +249,10 @@ export default function FormBuilder() {
                       <div className="p-2 bg-cyan-500/15 rounded-lg"><FileText className="w-5 h-5 text-cyan-400" /></div>
                       <div>
                         <h3 className="text-white font-medium text-sm">{tpl.name}</h3>
-                        <span className="text-xs text-gray-500">{tpl.category}</span>
+                        <span className="text-xs text-nexus-muted">{tpl.category}</span>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between text-xs text-gray-500">
+                    <div className="flex items-center justify-between text-xs text-nexus-muted">
                       <span>{tpl.fields} fields</span>
                       <span>{tpl.uses.toLocaleString()} uses</span>
                     </div>
@@ -273,19 +273,19 @@ export default function FormBuilder() {
                 <button className="text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1"><Download className="w-3.5 h-3.5" /> Export</button>
               </div>
               <table className="w-full">
-                <thead><tr className="text-xs text-gray-500 uppercase tracking-wider border-b border-gray-700/30">
+                <thead><tr className="text-xs text-nexus-muted uppercase tracking-wider border-b border-gray-700/30">
                   <th className="text-left p-3">Name</th><th className="text-left p-3">Email</th><th className="text-left p-3">Subject</th><th className="text-center p-3">Status</th><th className="text-right p-3">Time</th>
                 </tr></thead>
                 <tbody>
                   {submissions.map(sub => (
                     <motion.tr key={sub.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="border-b border-gray-700/20 hover:bg-gray-800/40 text-sm">
                       <td className="p-3 text-white">{sub.data['Full Name']}</td>
-                      <td className="p-3 text-gray-400">{sub.data['Email']}</td>
-                      <td className="p-3 text-gray-400">{sub.data['Subject']}</td>
+                      <td className="p-3 text-nexus-muted">{sub.data['Email']}</td>
+                      <td className="p-3 text-nexus-muted">{sub.data['Subject']}</td>
                       <td className="p-3 text-center">
-                        <span className={`px-1.5 py-0.5 text-[10px] rounded ${sub.status === 'new' ? 'bg-blue-500/20 text-blue-400' : sub.status === 'read' ? 'bg-gray-500/20 text-gray-400' : 'bg-green-500/20 text-green-400'}`}>{sub.status}</span>
+                        <span className={`px-1.5 py-0.5 text-[10px] rounded ${sub.status === 'new' ? 'bg-blue-500/20 text-blue-400' : sub.status === 'read' ? 'bg-gray-500/20 text-nexus-muted' : 'bg-green-500/20 text-green-400'}`}>{sub.status}</span>
                       </td>
-                      <td className="p-3 text-right text-xs text-gray-500">{sub.date}</td>
+                      <td className="p-3 text-right text-xs text-nexus-muted">{sub.date}</td>
                     </motion.tr>
                   ))}
                 </tbody>

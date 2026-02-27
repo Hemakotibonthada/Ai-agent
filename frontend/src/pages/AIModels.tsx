@@ -1258,7 +1258,7 @@ export default function AIModels() {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="flex items-start gap-2 rounded-lg p-2 hover:bg-white/5 transition-colors"
+                className="flex items-start gap-2 rounded-lg p-2 hover:bg-nexus-card/5 transition-colors"
               >
                 <ChevronRight size={12} className="text-nexus-muted mt-0.5 shrink-0" />
                 <p className="text-xs text-nexus-text flex-1">{insight.text}</p>

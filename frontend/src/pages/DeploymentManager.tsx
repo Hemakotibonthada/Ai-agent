@@ -109,7 +109,7 @@ const deployments: Deployment[] = [
 const statusConfig = {
   running: { color: 'text-green-500', bg: 'bg-green-50 dark:bg-green-500/10', dot: 'bg-green-500', label: 'Running' },
   deploying: { color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-500/10', dot: 'bg-blue-500 animate-pulse', label: 'Deploying' },
-  stopped: { color: 'text-gray-500', bg: 'bg-gray-50 dark:bg-gray-500/10', dot: 'bg-gray-400', label: 'Stopped' },
+  stopped: { color: 'text-nexus-muted', bg: 'bg-nexus-surface/50', dot: 'bg-gray-400', label: 'Stopped' },
   failed: { color: 'text-red-500', bg: 'bg-red-50 dark:bg-red-500/10', dot: 'bg-red-500', label: 'Failed' },
   rollback: { color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-orange-500/10', dot: 'bg-orange-500', label: 'Rolling Back' },
 };
@@ -157,15 +157,15 @@ const DeploymentManager: React.FC = () => {
       <FadeIn>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-nexus-text flex items-center gap-3">
               <Server className="text-blue-500" size={32} />
               Deployments
             </h1>
-            <p className="text-gray-500 mt-1">Manage service deployments and infrastructure</p>
+            <p className="text-nexus-muted mt-1">Manage service deployments and infrastructure</p>
           </div>
           <div className="flex gap-2">
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-sm font-medium">
+              className="flex items-center gap-2 px-4 py-2 bg-nexus-surface text-nexus-text rounded-xl text-sm font-medium">
               <RefreshCw size={14} /> Refresh
             </motion.button>
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
@@ -186,9 +186,9 @@ const DeploymentManager: React.FC = () => {
             { label: 'Instances', value: deployments.reduce((s, d) => s + d.instances, 0), color: 'text-purple-500' },
             { label: 'Failed', value: deployments.filter(d => d.status === 'failed').length, color: 'text-red-500' },
           ].map(s => (
-            <div key={s.label} className="bg-white dark:bg-gray-800 rounded-xl p-3 border border-gray-200 dark:border-gray-700">
+            <div key={s.label} className="bg-nexus-card rounded-xl p-3 border border-nexus-border">
               <div className={`text-xl font-bold ${s.color}`}>{s.value}</div>
-              <div className="text-xs text-gray-500">{s.label}</div>
+              <div className="text-xs text-nexus-muted">{s.label}</div>
             </div>
           ))}
         </div>
@@ -200,7 +200,7 @@ const DeploymentManager: React.FC = () => {
           {['all', 'production', 'staging', 'development'].map(env => (
             <button key={env} onClick={() => setEnvFilter(env)}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-colors ${
-                envFilter === env ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500'
+                envFilter === env ? 'bg-blue-500 text-white' : 'bg-nexus-surface text-nexus-muted'
               }`}>{env}</button>
           ))}
         </div>
@@ -215,17 +215,17 @@ const DeploymentManager: React.FC = () => {
             return (
               <motion.div key={dep.id} whileHover={{ x: 4 }}
                 onClick={() => { setSelectedDeployment(dep); setDetailTab('overview'); }}
-                className={`bg-white dark:bg-gray-800 rounded-xl p-3 border cursor-pointer transition-all ${
+                className={`bg-nexus-card rounded-xl p-3 border cursor-pointer transition-all ${
                   selectedDeployment?.id === dep.id
                     ? 'border-blue-300 dark:border-blue-600 shadow-sm'
-                    : 'border-gray-200 dark:border-gray-700'
+                    : 'border-nexus-border'
                 }`}>
                 <div className="flex items-center gap-2 mb-1">
                   <div className={`w-2 h-2 rounded-full ${sc.dot}`} />
-                  <h3 className="text-sm font-semibold text-gray-900 dark:text-white">{dep.name}</h3>
+                  <h3 className="text-sm font-semibold text-nexus-text">{dep.name}</h3>
                   <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${ec.color}`}>{dep.environment}</span>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] text-gray-500 ml-4">
+                <div className="flex items-center gap-2 text-[10px] text-nexus-muted ml-4">
                   <span>{dep.version}</span>
                   <span className="flex items-center gap-0.5"><GitBranch size={9} /> {dep.branch}</span>
                   <span>{dep.deployedAt}</span>
@@ -234,15 +234,15 @@ const DeploymentManager: React.FC = () => {
                   <div className="flex gap-3 mt-2 ml-4">
                     <div className="flex items-center gap-1 text-[10px]">
                       <Cpu size={9} className="text-blue-500" />
-                      <span className="text-gray-500">{dep.cpu}%</span>
+                      <span className="text-nexus-muted">{dep.cpu}%</span>
                     </div>
                     <div className="flex items-center gap-1 text-[10px]">
                       <HardDrive size={9} className="text-purple-500" />
-                      <span className="text-gray-500">{dep.memory}%</span>
+                      <span className="text-nexus-muted">{dep.memory}%</span>
                     </div>
                     <div className="flex items-center gap-1 text-[10px]">
                       <Layers size={9} className="text-green-500" />
-                      <span className="text-gray-500">{dep.instances} instances</span>
+                      <span className="text-nexus-muted">{dep.instances} instances</span>
                     </div>
                   </div>
                 )}
@@ -256,11 +256,11 @@ const DeploymentManager: React.FC = () => {
           {selectedDeployment ? (
             <div className="space-y-4">
               {/* Tabs */}
-              <div className="flex gap-1 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl w-fit">
+              <div className="flex gap-1 p-1 bg-nexus-surface rounded-xl w-fit">
                 {(['overview', 'health', 'metrics', 'logs'] as const).map(tab => (
                   <button key={tab} onClick={() => setDetailTab(tab)}
                     className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-colors ${
-                      detailTab === tab ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500'
+                      detailTab === tab ? 'bg-nexus-card text-nexus-text shadow-sm' : 'text-nexus-muted'
                     }`}>{tab}</button>
                 ))}
               </div>
@@ -268,8 +268,8 @@ const DeploymentManager: React.FC = () => {
               <AnimatePresence mode="wait">
                 {detailTab === 'overview' && (
                   <motion.div key="overview" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                    className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">{selectedDeployment.name}</h3>
+                    className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+                    <h3 className="text-lg font-bold text-nexus-text mb-4">{selectedDeployment.name}</h3>
                     <div className="grid grid-cols-2 gap-4">
                       {[
                         { label: 'Version', value: selectedDeployment.version },
@@ -281,9 +281,9 @@ const DeploymentManager: React.FC = () => {
                         { label: 'Instances', value: String(selectedDeployment.instances) },
                         { label: 'Status', value: statusConfig[selectedDeployment.status].label },
                       ].map(item => (
-                        <div key={item.label} className="p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50">
-                          <div className="text-[10px] text-gray-500 uppercase">{item.label}</div>
-                          <div className="text-sm font-medium text-gray-900 dark:text-white mt-0.5">{item.value}</div>
+                        <div key={item.label} className="p-3 rounded-xl bg-nexus-surface/50">
+                          <div className="text-[10px] text-nexus-muted uppercase">{item.label}</div>
+                          <div className="text-sm font-medium text-nexus-text mt-0.5">{item.value}</div>
                         </div>
                       ))}
                     </div>
@@ -291,22 +291,22 @@ const DeploymentManager: React.FC = () => {
                       <button className="px-3 py-1.5 rounded-lg bg-green-500 text-white text-xs font-medium flex items-center gap-1"><Play size={12} /> Restart</button>
                       <button className="px-3 py-1.5 rounded-lg bg-yellow-500 text-white text-xs font-medium flex items-center gap-1"><RefreshCw size={12} /> Rollback</button>
                       <button className="px-3 py-1.5 rounded-lg bg-red-500 text-white text-xs font-medium flex items-center gap-1"><Square size={12} /> Stop</button>
-                      <button className="px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-medium flex items-center gap-1"><ArrowUp size={12} /> Scale Up</button>
+                      <button className="px-3 py-1.5 rounded-lg bg-nexus-surface text-nexus-text text-xs font-medium flex items-center gap-1"><ArrowUp size={12} /> Scale Up</button>
                     </div>
                   </motion.div>
                 )}
 
                 {detailTab === 'health' && (
                   <motion.div key="health" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                    className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Health Checks</h3>
+                    className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+                    <h3 className="text-sm font-semibold text-nexus-text mb-4">Health Checks</h3>
                     <div className="space-y-3">
                       {selectedDeployment.healthChecks.map(check => (
-                        <div key={check.name} className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50">
+                        <div key={check.name} className="flex items-center gap-3 p-3 rounded-xl bg-nexus-surface/50">
                           {check.status === 'pass' && <CheckCircle size={16} className="text-green-500" />}
                           {check.status === 'fail' && <X size={16} className="text-red-500" />}
                           {check.status === 'warn' && <AlertCircle size={16} className="text-yellow-500" />}
-                          <span className="text-sm text-gray-900 dark:text-white flex-1">{check.name}</span>
+                          <span className="text-sm text-nexus-text flex-1">{check.name}</span>
                           <span className={`px-2 py-0.5 rounded text-xs font-medium capitalize ${
                             check.status === 'pass' ? 'bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400' :
                             check.status === 'fail' ? 'bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400' :
@@ -321,8 +321,8 @@ const DeploymentManager: React.FC = () => {
                 {detailTab === 'metrics' && selectedDeployment.metrics.length > 0 && (
                   <motion.div key="metrics" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                     className="space-y-4">
-                    <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-                      <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Requests (24h)</h3>
+                    <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+                      <h3 className="text-sm font-semibold text-nexus-text mb-3">Requests (24h)</h3>
                       <ResponsiveContainer width="100%" height={180}>
                         <AreaChart data={selectedDeployment.metrics}>
                           <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} />
@@ -333,8 +333,8 @@ const DeploymentManager: React.FC = () => {
                         </AreaChart>
                       </ResponsiveContainer>
                     </div>
-                    <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700">
-                      <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Latency & Errors</h3>
+                    <div className="bg-nexus-card rounded-2xl p-5 border border-nexus-border">
+                      <h3 className="text-sm font-semibold text-nexus-text mb-3">Latency & Errors</h3>
                       <ResponsiveContainer width="100%" height={180}>
                         <LineChart data={selectedDeployment.metrics}>
                           <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} />
@@ -351,17 +351,17 @@ const DeploymentManager: React.FC = () => {
 
                 {detailTab === 'logs' && (
                   <motion.div key="logs" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                    className="bg-gray-900 rounded-2xl p-4 border border-gray-700 font-mono text-xs">
+                    className="bg-nexus-bg rounded-2xl p-4 border border-nexus-border font-mono text-xs">
                     <div className="space-y-1">
                       {recentLogs.map((log, i) => (
                         <div key={i} className="flex gap-2">
-                          <span className="text-gray-500">{log.time}</span>
+                          <span className="text-nexus-muted">{log.time}</span>
                           <span className={
                             log.level === 'error' ? 'text-red-400' :
                             log.level === 'warn' ? 'text-yellow-400' :
-                            log.level === 'debug' ? 'text-gray-500' : 'text-green-400'
+                            log.level === 'debug' ? 'text-nexus-muted' : 'text-green-400'
                           }>[{log.level.padEnd(5)}]</span>
-                          <span className="text-gray-300">{log.message}</span>
+                          <span className="text-nexus-muted">{log.message}</span>
                         </div>
                       ))}
                     </div>
@@ -370,8 +370,8 @@ const DeploymentManager: React.FC = () => {
               </AnimatePresence>
             </div>
           ) : (
-            <div className="flex items-center justify-center h-64 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
-              <p className="text-gray-500 text-sm">Select a deployment to view details</p>
+            <div className="flex items-center justify-center h-64 bg-nexus-card rounded-2xl border border-nexus-border">
+              <p className="text-nexus-muted text-sm">Select a deployment to view details</p>
             </div>
           )}
         </div>

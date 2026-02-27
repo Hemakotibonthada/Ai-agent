@@ -20,7 +20,7 @@ const statusConfig: Record<string, { color: string; bg: string; icon: React.Reac
   stopped: { color: 'text-red-400', bg: 'bg-red-500/20', icon: <Square className="w-3 h-3" /> },
   paused: { color: 'text-yellow-400', bg: 'bg-yellow-500/20', icon: <Pause className="w-3 h-3" /> },
   restarting: { color: 'text-blue-400', bg: 'bg-blue-500/20', icon: <RefreshCw className="w-3 h-3" /> },
-  created: { color: 'text-gray-400', bg: 'bg-gray-500/20', icon: <Plus className="w-3 h-3" /> },
+  created: { color: 'text-nexus-muted', bg: 'bg-gray-500/20', icon: <Plus className="w-3 h-3" /> },
 };
 
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
@@ -114,7 +114,7 @@ export default function ContainerManager() {
             <motion.div whileHover={{ scale: 1.1 }} className="p-3 bg-cyan-500/20 rounded-xl"><Server className="w-7 h-7 text-cyan-400" /></motion.div>
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Container Manager</h1>
-              <p className="text-gray-400 text-sm">Docker container orchestration & monitoring</p>
+              <p className="text-nexus-muted text-sm">Docker container orchestration & monitoring</p>
             </div>
           </div>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-sm font-medium flex items-center gap-2 transition-colors">
@@ -136,7 +136,7 @@ export default function ContainerManager() {
                 <div className={`p-2 bg-${stat.color}-500/20 rounded-lg`}><span className={`text-${stat.color}-400`}>{stat.icon}</span></div>
                 <span className="text-2xl font-bold text-white">{stat.value}</span>
               </div>
-              <p className="text-xs text-gray-500 mt-2">{stat.label}</p>
+              <p className="text-xs text-nexus-muted mt-2">{stat.label}</p>
             </motion.div>
           ))}
         </div>
@@ -145,10 +145,10 @@ export default function ContainerManager() {
         <div className="flex gap-1 bg-gray-800/30 rounded-xl p-1 border border-gray-700/50">
           {tabs.map(tab => (
             <motion.button key={tab.key} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setActiveTab(tab.key)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === tab.key ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/25' : 'text-gray-400 hover:text-gray-200 hover:bg-gray-700/50'}`}>
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === tab.key ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/25' : 'text-nexus-muted hover:text-gray-200 hover:bg-nexus-surface/50'}`}>
               {tab.icon}
               <span>{tab.label}</span>
-              <span className={`px-1.5 py-0.5 rounded-full text-xs ${activeTab === tab.key ? 'bg-cyan-500/50' : 'bg-gray-700/50'}`}>{tab.count}</span>
+              <span className={`px-1.5 py-0.5 rounded-full text-xs ${activeTab === tab.key ? 'bg-cyan-500/50' : 'bg-nexus-surface/50'}`}>{tab.count}</span>
             </motion.button>
           ))}
         </div>
@@ -156,8 +156,8 @@ export default function ContainerManager() {
         {/* Search (for containers tab) */}
         {activeTab === 'containers' && (
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-            <input type="text" placeholder="Search containers..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full pl-10 pr-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-lg text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-nexus-muted" />
+            <input type="text" placeholder="Search containers..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full pl-10 pr-4 py-2.5 bg-gray-800/50 border border-nexus-border rounded-lg text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors" />
           </div>
         )}
 
@@ -169,7 +169,7 @@ export default function ContainerManager() {
                 const cfg = statusConfig[container.status] || statusConfig.created;
                 const memPercent = container.memory_limit_mb ? (container.memory_mb / container.memory_limit_mb) * 100 : 0;
                 return (
-                  <motion.div key={container.id} variants={itemVariants} className="p-4 bg-gray-800/30 border border-gray-700/50 rounded-xl hover:border-gray-600 transition-all">
+                  <motion.div key={container.id} variants={itemVariants} className="p-4 bg-gray-800/30 border border-gray-700/50 rounded-xl hover:border-nexus-border transition-all">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className={`p-2 rounded-lg ${cfg.bg}`}><span className={cfg.color}>{cfg.icon}</span></div>
@@ -178,7 +178,7 @@ export default function ContainerManager() {
                             <span className="font-semibold text-white text-sm">{container.name}</span>
                             <span className={`px-1.5 py-0.5 rounded-full text-xs ${cfg.bg} ${cfg.color}`}>{container.status}</span>
                           </div>
-                          <div className="flex items-center gap-3 mt-0.5 text-xs text-gray-500">
+                          <div className="flex items-center gap-3 mt-0.5 text-xs text-nexus-muted">
                             <span>{container.image}</span>
                             <span className="flex items-center gap-1"><Globe className="w-3 h-3" /> {container.ports}</span>
                             <span className="flex items-center gap-1"><Network className="w-3 h-3" /> {container.network}</span>
@@ -189,15 +189,15 @@ export default function ContainerManager() {
                         {container.status === 'running' && (
                           <div className="flex items-center gap-6 text-xs">
                             <div className="w-32">
-                              <div className="flex justify-between text-gray-500 mb-1"><span>CPU</span><span className="text-cyan-400">{container.cpu_percent}%</span></div>
-                              <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                              <div className="flex justify-between text-nexus-muted mb-1"><span>CPU</span><span className="text-cyan-400">{container.cpu_percent}%</span></div>
+                              <div className="h-1.5 bg-nexus-surface rounded-full overflow-hidden">
                                 <motion.div initial={{ width: 0 }} animate={{ width: `${container.cpu_percent}%` }} transition={{ duration: 1 }}
                                   className={`h-full rounded-full ${container.cpu_percent > 80 ? 'bg-red-500' : container.cpu_percent > 50 ? 'bg-yellow-500' : 'bg-cyan-500'}`} />
                               </div>
                             </div>
                             <div className="w-32">
-                              <div className="flex justify-between text-gray-500 mb-1"><span>MEM</span><span className="text-purple-400">{container.memory_mb}MB</span></div>
-                              <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                              <div className="flex justify-between text-nexus-muted mb-1"><span>MEM</span><span className="text-purple-400">{container.memory_mb}MB</span></div>
+                              <div className="h-1.5 bg-nexus-surface rounded-full overflow-hidden">
                                 <motion.div initial={{ width: 0 }} animate={{ width: `${memPercent}%` }} transition={{ duration: 1 }}
                                   className={`h-full rounded-full ${memPercent > 80 ? 'bg-red-500' : memPercent > 50 ? 'bg-yellow-500' : 'bg-purple-500'}`} />
                               </div>
@@ -207,9 +207,9 @@ export default function ContainerManager() {
                         <div className="flex items-center gap-1">
                           {container.status === 'running' && (
                             <>
-                              <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-gray-700/50 rounded-lg transition-colors" title="Logs"><Terminal className="w-3.5 h-3.5 text-gray-400" /></motion.button>
-                              <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-gray-700/50 rounded-lg transition-colors" title="Stop"><Square className="w-3.5 h-3.5 text-gray-400" /></motion.button>
-                              <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-gray-700/50 rounded-lg transition-colors" title="Restart"><RefreshCw className="w-3.5 h-3.5 text-gray-400" /></motion.button>
+                              <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-nexus-surface/50 rounded-lg transition-colors" title="Logs"><Terminal className="w-3.5 h-3.5 text-nexus-muted" /></motion.button>
+                              <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-nexus-surface/50 rounded-lg transition-colors" title="Stop"><Square className="w-3.5 h-3.5 text-nexus-muted" /></motion.button>
+                              <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-nexus-surface/50 rounded-lg transition-colors" title="Restart"><RefreshCw className="w-3.5 h-3.5 text-nexus-muted" /></motion.button>
                             </>
                           )}
                           {container.status === 'stopped' && (
@@ -218,7 +218,7 @@ export default function ContainerManager() {
                           {container.status === 'paused' && (
                             <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-blue-500/20 rounded-lg transition-colors" title="Unpause"><SkipForward className="w-3.5 h-3.5 text-blue-400" /></motion.button>
                           )}
-                          <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-red-500/20 rounded-lg transition-colors" title="Delete"><Trash2 className="w-3.5 h-3.5 text-gray-400 hover:text-red-400" /></motion.button>
+                          <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-red-500/20 rounded-lg transition-colors" title="Delete"><Trash2 className="w-3.5 h-3.5 text-nexus-muted hover:text-red-400" /></motion.button>
                         </div>
                       </div>
                     </div>
@@ -233,20 +233,20 @@ export default function ContainerManager() {
             <motion.div key="images" variants={containerVariants} initial="hidden" animate="visible" exit="hidden">
               <div className="bg-gray-800/30 border border-gray-700/50 rounded-xl overflow-hidden">
                 <table className="w-full">
-                  <thead><tr className="border-b border-gray-700/50 text-xs text-gray-500 uppercase tracking-wider">
+                  <thead><tr className="border-b border-gray-700/50 text-xs text-nexus-muted uppercase tracking-wider">
                     <th className="text-left p-4">Image</th><th className="text-left p-4">Tag</th><th className="text-right p-4">Size</th><th className="text-right p-4">Created</th><th className="text-right p-4">Actions</th>
                   </tr></thead>
                   <tbody>
                     {images.map((img, i) => (
                       <motion.tr key={img.id} variants={itemVariants} className="border-b border-gray-700/30 hover:bg-gray-800/50 transition-colors">
                         <td className="p-4"><div className="flex items-center gap-2"><Layers className="w-4 h-4 text-cyan-400" /><span className="text-white text-sm font-medium">{img.name}</span></div></td>
-                        <td className="p-4"><code className="text-xs bg-gray-700/50 px-2 py-0.5 rounded text-cyan-300">{img.tag}</code></td>
-                        <td className="p-4 text-right text-sm text-gray-400">{img.size_mb > 1000 ? `${(img.size_mb / 1024).toFixed(1)} GB` : `${img.size_mb} MB`}</td>
-                        <td className="p-4 text-right text-sm text-gray-500">{img.created}</td>
+                        <td className="p-4"><code className="text-xs bg-nexus-surface/50 px-2 py-0.5 rounded text-cyan-300">{img.tag}</code></td>
+                        <td className="p-4 text-right text-sm text-nexus-muted">{img.size_mb > 1000 ? `${(img.size_mb / 1024).toFixed(1)} GB` : `${img.size_mb} MB`}</td>
+                        <td className="p-4 text-right text-sm text-nexus-muted">{img.created}</td>
                         <td className="p-4 text-right">
                           <div className="flex items-center justify-end gap-1">
-                            <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-gray-700/50 rounded-lg"><Play className="w-3.5 h-3.5 text-gray-400" /></motion.button>
-                            <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-red-500/20 rounded-lg"><Trash2 className="w-3.5 h-3.5 text-gray-400" /></motion.button>
+                            <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-nexus-surface/50 rounded-lg"><Play className="w-3.5 h-3.5 text-nexus-muted" /></motion.button>
+                            <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-red-500/20 rounded-lg"><Trash2 className="w-3.5 h-3.5 text-nexus-muted" /></motion.button>
                           </div>
                         </td>
                       </motion.tr>
@@ -261,20 +261,20 @@ export default function ContainerManager() {
           {activeTab === 'networks' && (
             <motion.div key="networks" variants={containerVariants} initial="hidden" animate="visible" exit="hidden" className="space-y-3">
               {networks.map(net => (
-                <motion.div key={net.id} variants={itemVariants} className="p-5 bg-gray-800/30 border border-gray-700/50 rounded-xl hover:border-gray-600 transition-all">
+                <motion.div key={net.id} variants={itemVariants} className="p-5 bg-gray-800/30 border border-gray-700/50 rounded-xl hover:border-nexus-border transition-all">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="p-2 bg-blue-500/20 rounded-lg"><Network className="w-5 h-5 text-blue-400" /></div>
                       <div>
                         <h3 className="font-semibold text-white">{net.name}</h3>
-                        <div className="flex items-center gap-3 mt-0.5 text-xs text-gray-500">
+                        <div className="flex items-center gap-3 mt-0.5 text-xs text-nexus-muted">
                           <span>Driver: {net.driver}</span>
                           <span>Subnet: {net.subnet}</span>
                           <span>{net.containers_count} containers</span>
                         </div>
                       </div>
                     </div>
-                    <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-red-500/20 rounded-lg"><Trash2 className="w-4 h-4 text-gray-400" /></motion.button>
+                    <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-red-500/20 rounded-lg"><Trash2 className="w-4 h-4 text-nexus-muted" /></motion.button>
                   </div>
                 </motion.div>
               ))}
@@ -285,13 +285,13 @@ export default function ContainerManager() {
           {activeTab === 'volumes' && (
             <motion.div key="volumes" variants={containerVariants} initial="hidden" animate="visible" exit="hidden" className="space-y-2">
               {volumes.map(vol => (
-                <motion.div key={vol.id} variants={itemVariants} className="p-4 bg-gray-800/30 border border-gray-700/50 rounded-xl hover:border-gray-600 transition-all">
+                <motion.div key={vol.id} variants={itemVariants} className="p-4 bg-gray-800/30 border border-gray-700/50 rounded-xl hover:border-nexus-border transition-all">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="p-2 bg-purple-500/20 rounded-lg"><HardDrive className="w-4 h-4 text-purple-400" /></div>
                       <div>
                         <span className="font-medium text-white text-sm">{vol.name}</span>
-                        <div className="flex items-center gap-3 mt-0.5 text-xs text-gray-500">
+                        <div className="flex items-center gap-3 mt-0.5 text-xs text-nexus-muted">
                           <span>{vol.driver}</span>
                           <span className="font-mono">{vol.mount_point}</span>
                           <span>{vol.used_by} container(s)</span>
@@ -299,8 +299,8 @@ export default function ContainerManager() {
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
-                      <span className="text-sm text-gray-400">{vol.size_mb > 1000 ? `${(vol.size_mb / 1024).toFixed(1)} GB` : `${vol.size_mb} MB`}</span>
-                      <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-red-500/20 rounded-lg"><Trash2 className="w-3.5 h-3.5 text-gray-400" /></motion.button>
+                      <span className="text-sm text-nexus-muted">{vol.size_mb > 1000 ? `${(vol.size_mb / 1024).toFixed(1)} GB` : `${vol.size_mb} MB`}</span>
+                      <motion.button whileHover={{ scale: 1.1 }} className="p-1.5 hover:bg-red-500/20 rounded-lg"><Trash2 className="w-3.5 h-3.5 text-nexus-muted" /></motion.button>
                     </div>
                   </div>
                 </motion.div>
@@ -322,7 +322,7 @@ export default function ContainerManager() {
                     <div className="p-2 bg-green-500/20 rounded-lg"><Settings className="w-5 h-5 text-green-400" /></div>
                     <div>
                       <h3 className="font-semibold text-white">nexus-stack</h3>
-                      <p className="text-xs text-gray-500">docker-compose.yml · 8 services · Running</p>
+                      <p className="text-xs text-nexus-muted">docker-compose.yml · 8 services · Running</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -340,7 +340,7 @@ export default function ContainerManager() {
                           <div className={`w-2 h-2 rounded-full ${c.status === 'running' ? 'bg-green-400' : c.status === 'paused' ? 'bg-yellow-400' : 'bg-red-400'}`} />
                           <span className="text-xs font-medium text-white truncate">{c.name}</span>
                         </div>
-                        <p className="text-[10px] text-gray-500 truncate">{c.image}</p>
+                        <p className="text-[10px] text-nexus-muted truncate">{c.image}</p>
                       </motion.div>
                     );
                   })}

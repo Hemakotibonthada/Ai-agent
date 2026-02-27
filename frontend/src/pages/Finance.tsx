@@ -301,7 +301,7 @@ function AddTransactionModal({
                     : t === 'expense'
                     ? 'border-red-500/50 bg-red-500/10 text-red-400'
                     : 'border-blue-500/50 bg-blue-500/10 text-blue-400'
-                  : 'border-nexus-border bg-nexus-card/40 text-nexus-muted hover:bg-white/5'
+                  : 'border-nexus-border bg-nexus-card/40 text-nexus-muted hover:bg-nexus-card/5'
               }`}
             >
               {t}
@@ -848,7 +848,7 @@ export default function Finance() {
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.03 }}
-                    className="flex items-center gap-3 rounded-lg p-2.5 hover:bg-white/5 transition-colors"
+                    className="flex items-center gap-3 rounded-lg p-2.5 hover:bg-nexus-card/5 transition-colors"
                   >
                     <span
                       className="flex h-9 w-9 items-center justify-center rounded-lg shrink-0"
@@ -982,7 +982,7 @@ export default function Finance() {
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="flex items-start gap-3 rounded-lg p-2 hover:bg-white/5 transition-colors"
+                className="flex items-start gap-3 rounded-lg p-2 hover:bg-nexus-card/5 transition-colors"
               >
                 <span
                   className="h-1.5 w-1.5 rounded-full mt-1.5 shrink-0"

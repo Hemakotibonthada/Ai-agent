@@ -20,12 +20,12 @@ const statusColors: Record<string, string> = {
   open: 'bg-green-500/20 text-green-400',
   closed: 'bg-red-500/20 text-red-400',
   merged: 'bg-purple-500/20 text-purple-400',
-  draft: 'bg-gray-500/20 text-gray-400',
+  draft: 'bg-gray-500/20 text-nexus-muted',
   success: 'bg-green-500/20 text-green-400',
   failed: 'bg-red-500/20 text-red-400',
   running: 'bg-blue-500/20 text-blue-400',
   pending: 'bg-yellow-500/20 text-yellow-400',
-  cancelled: 'bg-gray-500/20 text-gray-400',
+  cancelled: 'bg-gray-500/20 text-nexus-muted',
 };
 
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
@@ -147,13 +147,13 @@ export default function GitManager() {
             </motion.div>
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Git Manager</h1>
-              <p className="text-gray-400 text-sm">Repository management & version control</p>
+              <p className="text-nexus-muted text-sm">Repository management & version control</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-              <input type="text" placeholder="Search..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-10 pr-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-purple-500 w-64 transition-colors" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-nexus-muted" />
+              <input type="text" placeholder="Search..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-10 pr-4 py-2 bg-gray-800/50 border border-nexus-border rounded-lg text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-purple-500 w-64 transition-colors" />
             </div>
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-sm font-medium flex items-center gap-2 transition-colors">
               <Plus className="w-4 h-4" /> New Repository
@@ -165,10 +165,10 @@ export default function GitManager() {
         <div className="flex gap-1 bg-gray-800/30 rounded-xl p-1 border border-gray-700/50">
           {tabs.map(tab => (
             <motion.button key={tab.key} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setActiveTab(tab.key)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === tab.key ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/25' : 'text-gray-400 hover:text-gray-200 hover:bg-gray-700/50'}`}>
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === tab.key ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/25' : 'text-nexus-muted hover:text-gray-200 hover:bg-nexus-surface/50'}`}>
               {tab.icon}
               <span>{tab.label}</span>
-              <span className={`px-1.5 py-0.5 rounded-full text-xs ${activeTab === tab.key ? 'bg-purple-500/50' : 'bg-gray-700/50'}`}>{tab.count}</span>
+              <span className={`px-1.5 py-0.5 rounded-full text-xs ${activeTab === tab.key ? 'bg-purple-500/50' : 'bg-nexus-surface/50'}`}>{tab.count}</span>
             </motion.button>
           ))}
         </div>
@@ -180,20 +180,20 @@ export default function GitManager() {
             <motion.div key="repos" variants={containerVariants} initial="hidden" animate="visible" exit="hidden" className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {repos.map(repo => (
                 <motion.div key={repo.id} variants={itemVariants} whileHover={{ scale: 1.01 }} onClick={() => setSelectedRepo(repo.id)}
-                  className={`p-5 rounded-xl border cursor-pointer transition-all ${selectedRepo === repo.id ? 'bg-purple-500/10 border-purple-500/50' : 'bg-gray-800/30 border-gray-700/50 hover:border-gray-600'}`}>
+                  className={`p-5 rounded-xl border cursor-pointer transition-all ${selectedRepo === repo.id ? 'bg-purple-500/10 border-purple-500/50' : 'bg-gray-800/30 border-gray-700/50 hover:border-nexus-border'}`}>
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-gray-700/50 rounded-lg"><FileCode className="w-5 h-5 text-purple-400" /></div>
+                      <div className="p-2 bg-nexus-surface/50 rounded-lg"><FileCode className="w-5 h-5 text-purple-400" /></div>
                       <div>
                         <h3 className="font-semibold text-white">{repo.name}</h3>
-                        <p className="text-xs text-gray-500">{repo.provider} · {repo.default_branch}</p>
+                        <p className="text-xs text-nexus-muted">{repo.provider} · {repo.default_branch}</p>
                       </div>
                     </div>
-                    <span className="text-xs text-gray-500">{formatDate(repo.last_push)}</span>
+                    <span className="text-xs text-nexus-muted">{formatDate(repo.last_push)}</span>
                   </div>
                   <div className="mt-4 flex items-center gap-4 text-sm">
-                    <span className="flex items-center gap-1.5 text-gray-400"><GitBranch className="w-3.5 h-3.5" /> {repo.branches_count} branches</span>
-                    <span className="flex items-center gap-1.5 text-gray-400"><GitCommit className="w-3.5 h-3.5" /> {repo.commits_count} commits</span>
+                    <span className="flex items-center gap-1.5 text-nexus-muted"><GitBranch className="w-3.5 h-3.5" /> {repo.branches_count} branches</span>
+                    <span className="flex items-center gap-1.5 text-nexus-muted"><GitCommit className="w-3.5 h-3.5" /> {repo.commits_count} commits</span>
                     <span className="flex items-center gap-1.5 text-green-400"><GitPullRequest className="w-3.5 h-3.5" /> {repo.open_prs} open PRs</span>
                   </div>
                 </motion.div>
@@ -211,33 +211,33 @@ export default function GitManager() {
                       <div className="p-1.5 bg-blue-500/20 rounded-lg"><GitCommit className="w-4 h-4 text-blue-400" /></div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-white truncate">{commit.message}</p>
-                        <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
+                        <div className="flex items-center gap-3 mt-1 text-xs text-nexus-muted">
                           <span className="flex items-center gap-1"><User className="w-3 h-3" /> {commit.author}</span>
                           <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {formatDate(commit.date)}</span>
                         </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <code className="text-xs bg-gray-700/50 px-2 py-1 rounded font-mono text-purple-300">{commit.sha}</code>
+                      <code className="text-xs bg-nexus-surface/50 px-2 py-1 rounded font-mono text-purple-300">{commit.sha}</code>
                       <div className="flex items-center gap-2 text-xs">
                         <span className="text-green-400">+{commit.additions}</span>
                         <span className="text-red-400">-{commit.deletions}</span>
                       </div>
-                      <motion.div animate={{ rotate: expandedCommit === commit.id ? 90 : 0 }}><ChevronRight className="w-4 h-4 text-gray-500" /></motion.div>
+                      <motion.div animate={{ rotate: expandedCommit === commit.id ? 90 : 0 }}><ChevronRight className="w-4 h-4 text-nexus-muted" /></motion.div>
                     </div>
                   </div>
                   <AnimatePresence>
                     {expandedCommit === commit.id && (
                       <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="border-t border-gray-700/50 px-4 py-3 bg-gray-900/50">
-                        <div className="flex items-center gap-4 text-sm text-gray-400">
+                        <div className="flex items-center gap-4 text-sm text-nexus-muted">
                           <span>{commit.files_changed} files changed</span>
                           <span className="text-green-400">{commit.additions} insertions(+)</span>
                           <span className="text-red-400">{commit.deletions} deletions(-)</span>
                         </div>
                         <div className="mt-2 flex gap-2">
-                          <button className="px-3 py-1 bg-gray-700/50 rounded text-xs text-gray-300 hover:bg-gray-600/50 flex items-center gap-1"><Eye className="w-3 h-3" /> View diff</button>
-                          <button className="px-3 py-1 bg-gray-700/50 rounded text-xs text-gray-300 hover:bg-gray-600/50 flex items-center gap-1"><Copy className="w-3 h-3" /> Copy SHA</button>
-                          <button className="px-3 py-1 bg-gray-700/50 rounded text-xs text-gray-300 hover:bg-gray-600/50 flex items-center gap-1"><ExternalLink className="w-3 h-3" /> Browse files</button>
+                          <button className="px-3 py-1 bg-nexus-surface/50 rounded text-xs text-nexus-muted hover:bg-gray-600/50 flex items-center gap-1"><Eye className="w-3 h-3" /> View diff</button>
+                          <button className="px-3 py-1 bg-nexus-surface/50 rounded text-xs text-nexus-muted hover:bg-gray-600/50 flex items-center gap-1"><Copy className="w-3 h-3" /> Copy SHA</button>
+                          <button className="px-3 py-1 bg-nexus-surface/50 rounded text-xs text-nexus-muted hover:bg-gray-600/50 flex items-center gap-1"><ExternalLink className="w-3 h-3" /> Browse files</button>
                         </div>
                       </motion.div>
                     )}
@@ -253,8 +253,8 @@ export default function GitManager() {
               {branches.map(branch => (
                 <motion.div key={branch.id} variants={itemVariants} className="p-4 bg-gray-800/30 border border-gray-700/50 rounded-xl flex items-center justify-between hover:bg-gray-800/50 transition-colors">
                   <div className="flex items-center gap-3">
-                    <div className={`p-1.5 rounded-lg ${branch.is_default ? 'bg-green-500/20' : 'bg-gray-700/50'}`}>
-                      <GitBranch className={`w-4 h-4 ${branch.is_default ? 'text-green-400' : 'text-gray-400'}`} />
+                    <div className={`p-1.5 rounded-lg ${branch.is_default ? 'bg-green-500/20' : 'bg-nexus-surface/50'}`}>
+                      <GitBranch className={`w-4 h-4 ${branch.is_default ? 'text-green-400' : 'text-nexus-muted'}`} />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
@@ -262,7 +262,7 @@ export default function GitManager() {
                         {branch.is_default && <span className="px-1.5 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">default</span>}
                         {branch.protected && <span className="px-1.5 py-0.5 bg-yellow-500/20 text-yellow-400 text-xs rounded">protected</span>}
                       </div>
-                      <p className="text-xs text-gray-500 mt-0.5">{formatDate(branch.last_commit_date)}</p>
+                      <p className="text-xs text-nexus-muted mt-0.5">{formatDate(branch.last_commit_date)}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -287,29 +287,29 @@ export default function GitManager() {
           {activeTab === 'prs' && (
             <motion.div key="prs" variants={containerVariants} initial="hidden" animate="visible" exit="hidden" className="space-y-3">
               {filteredPRs.map(pr => (
-                <motion.div key={pr.id} variants={itemVariants} className="p-5 bg-gray-800/30 border border-gray-700/50 rounded-xl hover:border-gray-600 transition-all">
+                <motion.div key={pr.id} variants={itemVariants} className="p-5 bg-gray-800/30 border border-gray-700/50 rounded-xl hover:border-nexus-border transition-all">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-3">
-                      <div className={`p-1.5 rounded-lg mt-0.5 ${pr.status === 'merged' ? 'bg-purple-500/20' : pr.status === 'open' ? 'bg-green-500/20' : 'bg-gray-700/50'}`}>
-                        {pr.status === 'merged' ? <GitMerge className="w-4 h-4 text-purple-400" /> : <GitPullRequest className={`w-4 h-4 ${pr.status === 'open' ? 'text-green-400' : 'text-gray-400'}`} />}
+                      <div className={`p-1.5 rounded-lg mt-0.5 ${pr.status === 'merged' ? 'bg-purple-500/20' : pr.status === 'open' ? 'bg-green-500/20' : 'bg-nexus-surface/50'}`}>
+                        {pr.status === 'merged' ? <GitMerge className="w-4 h-4 text-purple-400" /> : <GitPullRequest className={`w-4 h-4 ${pr.status === 'open' ? 'text-green-400' : 'text-nexus-muted'}`} />}
                       </div>
                       <div>
                         <h3 className="font-medium text-white text-sm">{pr.title}</h3>
-                        <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
+                        <div className="flex items-center gap-3 mt-1 text-xs text-nexus-muted">
                           <span>#{pr.number}</span>
                           <span className="flex items-center gap-1"><User className="w-3 h-3" /> {pr.author}</span>
                           <span>{formatDate(pr.created_at)}</span>
                         </div>
                         <div className="flex items-center gap-2 mt-2 text-xs">
-                          <code className="bg-gray-700/50 px-2 py-0.5 rounded font-mono text-blue-300">{pr.source_branch}</code>
-                          <ChevronRight className="w-3 h-3 text-gray-500" />
-                          <code className="bg-gray-700/50 px-2 py-0.5 rounded font-mono text-green-300">{pr.target_branch}</code>
+                          <code className="bg-nexus-surface/50 px-2 py-0.5 rounded font-mono text-blue-300">{pr.source_branch}</code>
+                          <ChevronRight className="w-3 h-3 text-nexus-muted" />
+                          <code className="bg-nexus-surface/50 px-2 py-0.5 rounded font-mono text-green-300">{pr.target_branch}</code>
                         </div>
                       </div>
                     </div>
                     <div className="flex flex-col items-end gap-2">
-                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[pr.status] || 'bg-gray-700 text-gray-400'}`}>{pr.status}</span>
-                      <div className="flex items-center gap-2 text-xs text-gray-500">
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[pr.status] || 'bg-nexus-surface text-nexus-muted'}`}>{pr.status}</span>
+                      <div className="flex items-center gap-2 text-xs text-nexus-muted">
                         <span className="text-green-400">+{pr.additions}</span>
                         <span className="text-red-400">-{pr.deletions}</span>
                         <span>💬 {pr.comments}</span>
@@ -327,20 +327,20 @@ export default function GitManager() {
               {pipelines.map(pip => (
                 <motion.div key={pip.id} variants={itemVariants} className="p-4 bg-gray-800/30 border border-gray-700/50 rounded-xl flex items-center justify-between hover:bg-gray-800/50 transition-colors">
                   <div className="flex items-center gap-3">
-                    <div className={`p-2 rounded-lg ${pip.status === 'success' ? 'bg-green-500/20' : pip.status === 'failed' ? 'bg-red-500/20' : pip.status === 'running' ? 'bg-blue-500/20' : 'bg-gray-700/50'}`}>
-                      {pip.status === 'success' ? <Check className="w-4 h-4 text-green-400" /> : pip.status === 'failed' ? <X className="w-4 h-4 text-red-400" /> : pip.status === 'running' ? <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}><Loader className="w-4 h-4 text-blue-400" /></motion.div> : <AlertCircle className="w-4 h-4 text-gray-400" />}
+                    <div className={`p-2 rounded-lg ${pip.status === 'success' ? 'bg-green-500/20' : pip.status === 'failed' ? 'bg-red-500/20' : pip.status === 'running' ? 'bg-blue-500/20' : 'bg-nexus-surface/50'}`}>
+                      {pip.status === 'success' ? <Check className="w-4 h-4 text-green-400" /> : pip.status === 'failed' ? <X className="w-4 h-4 text-red-400" /> : pip.status === 'running' ? <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}><Loader className="w-4 h-4 text-blue-400" /></motion.div> : <AlertCircle className="w-4 h-4 text-nexus-muted" />}
                     </div>
                     <div>
                       <p className="font-medium text-white text-sm">{pip.name}</p>
-                      <div className="flex items-center gap-3 mt-0.5 text-xs text-gray-500">
+                      <div className="flex items-center gap-3 mt-0.5 text-xs text-nexus-muted">
                         <span className="flex items-center gap-1"><GitBranch className="w-3 h-3" /> {pip.branch}</span>
                         <code className="font-mono text-purple-300">{pip.commit_sha.slice(0, 8)}</code>
                       </div>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[pip.status] || 'bg-gray-700 text-gray-400'}`}>{pip.status}</span>
-                    <span className="text-xs text-gray-500 flex items-center gap-1"><Clock className="w-3 h-3" /> {formatDuration(pip.duration_seconds)}</span>
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[pip.status] || 'bg-nexus-surface text-nexus-muted'}`}>{pip.status}</span>
+                    <span className="text-xs text-nexus-muted flex items-center gap-1"><Clock className="w-3 h-3" /> {formatDuration(pip.duration_seconds)}</span>
                     {pip.status === 'running' && (
                       <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="p-1.5 bg-red-500/20 hover:bg-red-500/30 rounded-lg transition-colors"><Square className="w-3.5 h-3.5 text-red-400" /></motion.button>
                     )}
@@ -367,11 +367,11 @@ export default function GitManager() {
                         <span className="font-medium text-white text-sm">{tag.name}</span>
                         {i === 0 && <span className="px-1.5 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">latest</span>}
                       </div>
-                      <p className="text-xs text-gray-500 mt-0.5">{tag.message}</p>
+                      <p className="text-xs text-nexus-muted mt-0.5">{tag.message}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-gray-500">
-                    <code className="font-mono text-purple-300 bg-gray-700/50 px-2 py-0.5 rounded">{tag.sha}</code>
+                  <div className="flex items-center gap-4 text-xs text-nexus-muted">
+                    <code className="font-mono text-purple-300 bg-nexus-surface/50 px-2 py-0.5 rounded">{tag.sha}</code>
                     <span>{tag.date}</span>
                   </div>
                 </motion.div>

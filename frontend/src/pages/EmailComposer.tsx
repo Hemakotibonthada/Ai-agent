@@ -118,7 +118,7 @@ export default function EmailComposer() {
             <motion.div whileHover={{ scale: 1.1, y: -2 }} className="p-3 bg-blue-500/20 rounded-xl"><Mail className="w-7 h-7 text-blue-400" /></motion.div>
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Email Composer</h1>
-              <p className="text-gray-400 text-sm">Rich text email drafting & template management</p>
+              <p className="text-nexus-muted text-sm">Rich text email drafting & template management</p>
             </div>
           </div>
         </div>
@@ -131,9 +131,9 @@ export default function EmailComposer() {
             { key: 'templates' as const, label: 'Templates', icon: <Palette className="w-4 h-4" />, count: templates.length },
           ].map(tab => (
             <motion.button key={tab.key} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setActiveView(tab.key)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeView === tab.key ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25' : 'text-gray-400 hover:text-gray-200 hover:bg-gray-700/50'}`}>
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeView === tab.key ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25' : 'text-nexus-muted hover:text-gray-200 hover:bg-nexus-surface/50'}`}>
               {tab.icon}<span>{tab.label}</span>
-              {'count' in tab && <span className={`px-1.5 py-0.5 rounded-full text-xs ${activeView === tab.key ? 'bg-blue-500/50' : 'bg-gray-700/50'}`}>{tab.count}</span>}
+              {'count' in tab && <span className={`px-1.5 py-0.5 rounded-full text-xs ${activeView === tab.key ? 'bg-blue-500/50' : 'bg-nexus-surface/50'}`}>{tab.count}</span>}
             </motion.button>
           ))}
         </div>
@@ -146,16 +146,16 @@ export default function EmailComposer() {
               {/* To/CC/Subject fields */}
               <div className="border-b border-gray-700/50">
                 <div className="flex items-center border-b border-gray-700/30 px-4">
-                  <span className="text-sm text-gray-500 w-16">To:</span>
+                  <span className="text-sm text-nexus-muted w-16">To:</span>
                   <input type="text" value={to} onChange={e => setTo(e.target.value)} placeholder="recipient@example.com" className="flex-1 py-3 bg-transparent text-sm text-gray-200 placeholder-gray-600 focus:outline-none" />
-                  <motion.button whileHover={{ scale: 1.1 }} onClick={() => setShowContacts(!showContacts)} className="p-1.5 hover:bg-gray-700/50 rounded"><AtSign className="w-4 h-4 text-gray-400" /></motion.button>
+                  <motion.button whileHover={{ scale: 1.1 }} onClick={() => setShowContacts(!showContacts)} className="p-1.5 hover:bg-nexus-surface/50 rounded"><AtSign className="w-4 h-4 text-nexus-muted" /></motion.button>
                 </div>
                 <div className="flex items-center border-b border-gray-700/30 px-4">
-                  <span className="text-sm text-gray-500 w-16">CC:</span>
+                  <span className="text-sm text-nexus-muted w-16">CC:</span>
                   <input type="text" value={cc} onChange={e => setCc(e.target.value)} placeholder="cc@example.com" className="flex-1 py-3 bg-transparent text-sm text-gray-200 placeholder-gray-600 focus:outline-none" />
                 </div>
                 <div className="flex items-center px-4">
-                  <span className="text-sm text-gray-500 w-16">Subject:</span>
+                  <span className="text-sm text-nexus-muted w-16">Subject:</span>
                   <input type="text" value={subject} onChange={e => setSubject(e.target.value)} placeholder="Email subject..." className="flex-1 py-3 bg-transparent text-sm text-gray-200 placeholder-gray-600 focus:outline-none font-medium" />
                 </div>
               </div>
@@ -171,7 +171,7 @@ export default function EmailComposer() {
                           <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-medium text-blue-400">{c.avatar}</div>
                           <div className="min-w-0">
                             <p className="text-sm text-white truncate">{c.name}</p>
-                            <p className="text-xs text-gray-500 truncate">{c.email}</p>
+                            <p className="text-xs text-nexus-muted truncate">{c.email}</p>
                           </div>
                         </motion.button>
                       ))}
@@ -183,9 +183,9 @@ export default function EmailComposer() {
               {/* Toolbar */}
               <div className="flex items-center gap-0.5 px-3 py-2 border-b border-gray-700/50 bg-gray-800/20">
                 {toolbarButtons.map((btn, i) => btn ? (
-                  <motion.button key={i} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="p-2 rounded hover:bg-gray-700/50 text-gray-400 hover:text-gray-200 transition-colors" title={btn.label}>{btn.icon}</motion.button>
+                  <motion.button key={i} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="p-2 rounded hover:bg-nexus-surface/50 text-nexus-muted hover:text-gray-200 transition-colors" title={btn.label}>{btn.icon}</motion.button>
                 ) : (
-                  <div key={i} className="w-px h-5 bg-gray-700 mx-1" />
+                  <div key={i} className="w-px h-5 bg-nexus-surface mx-1" />
                 ))}
               </div>
 
@@ -198,7 +198,7 @@ export default function EmailComposer() {
               {attachments.length > 0 && (
                 <div className="px-4 py-2 border-t border-gray-700/50 flex items-center gap-2 flex-wrap">
                   {attachments.map((file, i) => (
-                    <span key={i} className="flex items-center gap-1.5 px-2 py-1 bg-gray-700/50 rounded text-xs text-gray-300">
+                    <span key={i} className="flex items-center gap-1.5 px-2 py-1 bg-nexus-surface/50 rounded text-xs text-nexus-muted">
                       <Paperclip className="w-3 h-3" /> {file}
                       <button onClick={() => setAttachments(prev => prev.filter((_, idx) => idx !== i))} className="hover:text-red-400"><X className="w-3 h-3" /></button>
                     </span>
@@ -209,14 +209,14 @@ export default function EmailComposer() {
               {/* Actions */}
               <div className="flex items-center justify-between p-3 border-t border-gray-700/50 bg-gray-800/20">
                 <div className="flex items-center gap-2">
-                  <motion.button whileHover={{ scale: 1.05 }} className="p-2 hover:bg-gray-700/50 rounded-lg"><Paperclip className="w-4 h-4 text-gray-400" /></motion.button>
-                  <motion.button whileHover={{ scale: 1.05 }} className="p-2 hover:bg-gray-700/50 rounded-lg"><Clock className="w-4 h-4 text-gray-400" /></motion.button>
-                  <motion.button whileHover={{ scale: 1.05 }} onClick={() => setShowPreview(!showPreview)} className={`p-2 rounded-lg ${showPreview ? 'bg-blue-500/20 text-blue-400' : 'hover:bg-gray-700/50 text-gray-400'}`}><Eye className="w-4 h-4" /></motion.button>
+                  <motion.button whileHover={{ scale: 1.05 }} className="p-2 hover:bg-nexus-surface/50 rounded-lg"><Paperclip className="w-4 h-4 text-nexus-muted" /></motion.button>
+                  <motion.button whileHover={{ scale: 1.05 }} className="p-2 hover:bg-nexus-surface/50 rounded-lg"><Clock className="w-4 h-4 text-nexus-muted" /></motion.button>
+                  <motion.button whileHover={{ scale: 1.05 }} onClick={() => setShowPreview(!showPreview)} className={`p-2 rounded-lg ${showPreview ? 'bg-blue-500/20 text-blue-400' : 'hover:bg-nexus-surface/50 text-nexus-muted'}`}><Eye className="w-4 h-4" /></motion.button>
                 </div>
                 <div className="flex items-center gap-2">
-                  <motion.button whileHover={{ scale: 1.05 }} className="px-4 py-2 bg-gray-700/50 text-gray-300 rounded-lg text-sm hover:bg-gray-600/50 transition-colors">Save Draft</motion.button>
+                  <motion.button whileHover={{ scale: 1.05 }} className="px-4 py-2 bg-nexus-surface/50 text-nexus-muted rounded-lg text-sm hover:bg-gray-600/50 transition-colors">Save Draft</motion.button>
                   <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleSend} disabled={sending || !to || !subject}
-                    className={`px-6 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-all ${!to || !subject ? 'bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/25'}`}>
+                    className={`px-6 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-all ${!to || !subject ? 'bg-nexus-surface text-nexus-muted cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/25'}`}>
                     {sending ? <><Loader className="w-4 h-4 animate-spin" /> Sending...</> : <><Send className="w-4 h-4" /> Send</>}
                   </motion.button>
                 </div>
@@ -229,7 +229,7 @@ export default function EmailComposer() {
             <motion.div key="drafts" variants={containerVariants} initial="hidden" animate="visible" exit="hidden" className="space-y-2">
               {drafts.map(draft => (
                 <motion.div key={draft.id} variants={itemVariants} onClick={() => loadDraft(draft)}
-                  className="p-4 bg-gray-800/30 border border-gray-700/50 rounded-xl cursor-pointer hover:border-gray-600 transition-all">
+                  className="p-4 bg-gray-800/30 border border-gray-700/50 rounded-xl cursor-pointer hover:border-nexus-border transition-all">
                   <div className="flex items-center justify-between">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
@@ -237,12 +237,12 @@ export default function EmailComposer() {
                         {draft.priority === 'high' && <span className="px-1.5 py-0.5 bg-red-500/20 text-red-400 text-xs rounded">high priority</span>}
                         {draft.status === 'scheduled' && <span className="px-1.5 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded flex items-center gap-1"><Clock className="w-3 h-3" /> scheduled</span>}
                       </div>
-                      <p className="text-xs text-gray-500">To: {draft.to}</p>
-                      <p className="text-xs text-gray-600 mt-1 truncate">{draft.body}</p>
+                      <p className="text-xs text-nexus-muted">To: {draft.to}</p>
+                      <p className="text-xs text-nexus-muted mt-1 truncate">{draft.body}</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      {draft.attachments.length > 0 && <span className="text-xs text-gray-500 flex items-center gap-1"><Paperclip className="w-3 h-3" /> {draft.attachments.length}</span>}
-                      <motion.button whileHover={{ scale: 1.1 }} onClick={e => { e.stopPropagation(); }} className="p-1.5 hover:bg-red-500/20 rounded-lg"><Trash2 className="w-3.5 h-3.5 text-gray-400" /></motion.button>
+                      {draft.attachments.length > 0 && <span className="text-xs text-nexus-muted flex items-center gap-1"><Paperclip className="w-3 h-3" /> {draft.attachments.length}</span>}
+                      <motion.button whileHover={{ scale: 1.1 }} onClick={e => { e.stopPropagation(); }} className="p-1.5 hover:bg-red-500/20 rounded-lg"><Trash2 className="w-3.5 h-3.5 text-nexus-muted" /></motion.button>
                     </div>
                   </div>
                 </motion.div>
@@ -258,10 +258,10 @@ export default function EmailComposer() {
                   className="p-5 bg-gray-800/30 border border-gray-700/50 rounded-xl cursor-pointer hover:border-blue-500/50 transition-all group">
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="font-semibold text-white text-sm">{template.name}</h3>
-                    <span className="px-1.5 py-0.5 bg-gray-700/50 text-gray-400 text-xs rounded">{template.category}</span>
+                    <span className="px-1.5 py-0.5 bg-nexus-surface/50 text-nexus-muted text-xs rounded">{template.category}</span>
                   </div>
-                  <p className="text-xs text-gray-500 mb-2">Subject: <span className="text-gray-400">{template.subject}</span></p>
-                  <div className="text-xs text-gray-600 line-clamp-2" dangerouslySetInnerHTML={{ __html: template.body }} />
+                  <p className="text-xs text-nexus-muted mb-2">Subject: <span className="text-nexus-muted">{template.subject}</span></p>
+                  <div className="text-xs text-nexus-muted line-clamp-2" dangerouslySetInnerHTML={{ __html: template.body }} />
                   <p className="text-xs text-blue-400 mt-3 opacity-0 group-hover:opacity-100 transition-opacity">Click to use this template →</p>
                 </motion.div>
               ))}
