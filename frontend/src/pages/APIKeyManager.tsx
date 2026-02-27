@@ -10,6 +10,7 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer,
 } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface ApiKey {
   id: string;
@@ -59,7 +60,8 @@ const usageHistory = Array.from({ length: 30 }, (_, i) => ({
 }));
 
 export default function APIKeyManager() {
-  const [keys] = useState(sampleKeys);
+  const isDemo = useIsDemoAccount();
+  const [keys] = useState(isDemo ? sampleKeys : []);
   const [selectedKey, setSelectedKey] = useState<ApiKey | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [envFilter, setEnvFilter] = useState('All');

@@ -12,6 +12,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
 } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface Widget {
   id: string;
@@ -241,7 +242,8 @@ const heightClasses = {
 };
 
 export default function WidgetDashboard() {
-  const [widgets, setWidgets] = useState(initialWidgets);
+  const isDemo = useIsDemoAccount();
+  const [widgets, setWidgets] = useState(isDemo ? initialWidgets : []);
   const [editMode, setEditMode] = useState(false);
   const [selectedWidget, setSelectedWidget] = useState<string | null>(null);
 

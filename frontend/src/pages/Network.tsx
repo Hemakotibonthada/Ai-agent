@@ -31,6 +31,8 @@ import {
 
 import Card from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
+import EmptyState from '@/components/shared/EmptyState';
 
 /* ------------------------------------------------------------------ */
 /*  Animations                                                         */
@@ -268,6 +270,8 @@ const healthColor = (score: number) => {
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
 export default function NetworkPage() {
+  const isDemo = useIsDemoAccount();
+  if (!isDemo) return <div className="flex-1 p-6"><EmptyState title="No network data" description="Connect your network monitoring tools to see interfaces, connections, and threats." /></div>;
   const [connFilter, setConnFilter] = useState<string>('');
 
   const filteredConnections = useMemo(

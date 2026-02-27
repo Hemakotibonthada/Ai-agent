@@ -7,6 +7,7 @@ import {
   Filter, SortAsc, ZoomIn, Heart, Share2,
   ImagePlus, X, Check, Copy,
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface MediaItem {
   id: string;
@@ -49,7 +50,8 @@ const typeIcons = { image: FileImage, video: Film, audio: Music };
 const typeColors = { image: 'text-blue-400', video: 'text-purple-400', audio: 'text-green-400' };
 
 export default function MediaGallery() {
-  const [items, setItems] = useState(sampleMedia);
+  const isDemo = useIsDemoAccount();
+  const [items, setItems] = useState(isDemo ? sampleMedia : []);
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState<'all' | 'image' | 'video' | 'audio'>('all');
   const [folderFilter, setFolderFilter] = useState('All');

@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 from collections import defaultdict
+from services.demo_data_manager import is_demo_data_enabled
 
 
 class IntegrationStatus(str, Enum):
@@ -132,7 +133,8 @@ class IntegrationService:
     def __init__(self):
         self.integrations: Dict[str, Integration] = {}
         self.webhook_deliveries: List[WebhookDelivery] = []
-        self._initialize_sample_data()
+        if is_demo_data_enabled():
+            self._initialize_sample_data()
 
     def _initialize_sample_data(self):
         """Create sample integrations."""

@@ -6,6 +6,7 @@ import {
   Loader, ChevronRight, ChevronDown, Lock, Unlock, Hash, Clock, Filter,
   FileText, ArrowRight, FolderOpen
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface Environment { id: string; name: string; type: string; status: string; variables_count: number; base_url: string; region: string; last_deployed: string; }
 interface EnvVariable { key: string; value: string; type: string; is_secret: boolean; source: string; description: string; }
@@ -21,6 +22,7 @@ const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, trans
 const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 30 } } };
 
 export default function EnvironmentManager() {
+  const isDemo = useIsDemoAccount();
   const [environments, setEnvironments] = useState<Environment[]>([]);
   const [selectedEnv, setSelectedEnv] = useState<string>('');
   const [variables, setVariables] = useState<EnvVariable[]>([]);

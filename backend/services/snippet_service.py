@@ -9,6 +9,7 @@ from dataclasses import dataclass, field, asdict
 from datetime import datetime
 from enum import Enum
 from typing import Any, Dict, List, Optional, Set, Tuple
+from services.demo_data_manager import is_demo_data_enabled
 
 
 class SnippetLanguage(str, Enum):
@@ -130,7 +131,8 @@ class SnippetService:
         self._tag_index: Dict[str, Set[str]] = {}
         self._language_index: Dict[SnippetLanguage, Set[str]] = {}
         self._search_index: Dict[str, Set[str]] = {}
-        self._initialize_sample_data()
+        if is_demo_data_enabled():
+            self._initialize_sample_data()
 
     def _initialize_sample_data(self):
         """Initialize with sample snippets"""

@@ -6,6 +6,7 @@ import {
   Loader, BarChart3, Zap, Server, Hash, Key, Filter, Download
 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface CacheEntry {
   key: string; value: string; type: string; ttl: number; size: number;
@@ -18,6 +19,7 @@ const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, trans
 const itemVariants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
 
 export default function CacheManager() {
+  const isDemo = useIsDemoAccount();
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState<'keys' | 'stats' | 'config' | 'clusters'>('keys');
   const [search, setSearch] = useState('');

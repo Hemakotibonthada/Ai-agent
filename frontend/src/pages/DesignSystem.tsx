@@ -6,6 +6,7 @@ import {
   Contrast, Droplets, Grid3x3, Maximize2, ChevronDown,
   Download, Upload, Code2, Search, AlertTriangle, XCircle
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface ColorToken {
   name: string;
@@ -74,6 +75,7 @@ const borderRadiusOptions = [
 ];
 
 export default function DesignSystem() {
+  const isDemo = useIsDemoAccount();
   const [activePreset, setActivePreset] = useState<ThemePreset>(presets[0]);
   const [activeTab, setActiveTab] = useState<'presets' | 'colors' | 'typography' | 'components' | 'spacing'>('presets');
   const [fontSize, setFontSize] = useState(14);

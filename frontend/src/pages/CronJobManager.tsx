@@ -9,6 +9,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   LineChart, Line, AreaChart, Area,
 } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface CronJob {
   id: string;
@@ -96,7 +97,8 @@ const statusConfig = {
 const jobCategories = ['All', 'System', 'Database', 'AI/ML', 'Monitoring', 'Communication', 'IoT', 'Security'];
 
 export default function CronJobManager() {
-  const [jobs, setJobs] = useState(sampleJobs);
+  const isDemo = useIsDemoAccount();
+  const [jobs, setJobs] = useState(isDemo ? sampleJobs : []);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [categoryFilter, setCategoryFilter] = useState('All');

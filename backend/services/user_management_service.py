@@ -10,6 +10,7 @@ from dataclasses import dataclass, field, asdict
 from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any, Dict, List, Optional, Set, Tuple
+from services.demo_data_manager import is_demo_data_enabled
 
 
 class UserRole(str, Enum):
@@ -247,7 +248,8 @@ class UserManagementService:
         self.invites: Dict[str, InviteToken] = {}
         self._email_index: Dict[str, str] = {}
         self._username_index: Dict[str, str] = {}
-        self._initialize_sample_data()
+        if is_demo_data_enabled():
+            self._initialize_sample_data()
 
     def _initialize_sample_data(self):
         """Initialize with sample users"""

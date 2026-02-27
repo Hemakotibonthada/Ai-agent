@@ -72,6 +72,7 @@ import AnimatedNumber from '@/components/shared/AnimatedNumber';
 import useStore from '@/lib/store';
 import { financeApi } from '@/lib/api';
 import type { Transaction, TransactionType } from '@/types';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 /* ------------------------------------------------------------------ */
 /*  Animations                                                         */
@@ -352,6 +353,7 @@ function AddTransactionModal({
 /*  Main Component                                                     */
 /* ------------------------------------------------------------------ */
 export default function Finance() {
+  const isDemo = useIsDemoAccount();
   const {
     transactions: storeTxns,
     selectedPeriod,
@@ -364,7 +366,7 @@ export default function Finance() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const transactions = storeTxns.length > 0 ? storeTxns : mockTransactions;
+  const transactions = storeTxns.length > 0 ? storeTxns : (isDemo ? mockTransactions : []);
 
   useEffect(() => {
     setCurrentPage('/finance');

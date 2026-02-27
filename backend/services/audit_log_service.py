@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 from collections import defaultdict
+from services.demo_data_manager import is_demo_data_enabled
 
 
 class AuditSeverity(str, Enum):
@@ -184,7 +185,8 @@ class AuditLogService:
         self.analytics = AuditAnalytics()
         self._subscribers: List[Any] = []
         self._max_entries = 100000
-        self._initialize_sample_data()
+        if is_demo_data_enabled():
+            self._initialize_sample_data()
 
     def _initialize_sample_data(self):
         """Generate realistic sample audit entries."""

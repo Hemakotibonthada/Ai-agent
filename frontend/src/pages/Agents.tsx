@@ -66,6 +66,7 @@ import AnimatedNumber from '@/components/shared/AnimatedNumber';
 import StatusIndicator from '@/components/shared/StatusIndicator';
 import useStore from '@/lib/store';
 import { agentsApi } from '@/lib/api';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -247,6 +248,7 @@ function normalizeAgent(raw: Record<string, unknown>): Agent {
 /*  Main Component                                                     */
 /* ------------------------------------------------------------------ */
 export default function Agents() {
+  const isDemo = useIsDemoAccount();
   const { setAgents, setCurrentPage } = useStore();
   const navigate = useNavigate();
 
@@ -282,7 +284,7 @@ export default function Agents() {
   }, [setCurrentPage, fetchAgents]);
 
   /* ---- Derived data ---- */
-  const agents = agentData.length > 0 ? agentData : MOCK_AGENTS;
+  const agents = agentData.length > 0 ? agentData : (isDemo ? MOCK_AGENTS : []);
 
   const stats = useMemo(() => {
     const total = agents.length;

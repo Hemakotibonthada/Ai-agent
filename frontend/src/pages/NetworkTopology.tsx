@@ -12,6 +12,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell,
 } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface NetworkNode {
   id: string;
@@ -67,7 +68,8 @@ const protocolData = [
 ];
 
 export default function NetworkTopology() {
-  const [nodes] = useState(sampleNodes);
+  const isDemo = useIsDemoAccount();
+  const [nodes] = useState(isDemo ? sampleNodes : []);
   const [search, setSearch] = useState('');
   const [groupFilter, setGroupFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');

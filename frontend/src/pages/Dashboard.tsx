@@ -82,6 +82,7 @@ import AnimatedNumber from '@/components/shared/AnimatedNumber';
 import StatusIndicator from '@/components/shared/StatusIndicator';
 import useStore from '@/lib/store';
 import { systemApi, agentsApi } from '@/lib/api';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 /* ------------------------------------------------------------------ */
 /*  Animation variants                                                 */
@@ -369,6 +370,7 @@ function WeeklyHeatmap() {
 /*  Main Component                                                     */
 /* ------------------------------------------------------------------ */
 export default function Dashboard() {
+  const isDemo = useIsDemoAccount();
   const { resources, agents, setResources, setAgents, setCurrentPage } = useStore();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);

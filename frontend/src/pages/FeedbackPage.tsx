@@ -10,6 +10,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell,
 } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 type FeedbackType = 'bug' | 'feature' | 'improvement' | 'question' | 'praise';
 type Priority = 'low' | 'medium' | 'high' | 'critical';
@@ -74,7 +75,8 @@ const trendData = Array.from({ length: 12 }, (_, i) => ({
 const COLORS = ['#10B981', '#3B82F6', '#F59E0B', '#EF4444', '#6366F1'];
 
 export default function FeedbackPage() {
-  const [feedback] = useState(sampleFeedback);
+  const isDemo = useIsDemoAccount();
+  const [feedback] = useState(isDemo ? sampleFeedback : []);
   const [showForm, setShowForm] = useState(false);
   const [typeFilter, setTypeFilter] = useState<string>('All');
   const [statusFilter, setStatusFilter] = useState<string>('All');

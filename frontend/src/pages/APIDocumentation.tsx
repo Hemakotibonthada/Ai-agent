@@ -5,6 +5,7 @@ import {
   Lock, Unlock, Code, Hash, Loader, Check, X, AlertTriangle,
   Globe, Shield, Zap, Tag, Server, ArrowRight, Eye, Download
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface Endpoint {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
@@ -73,6 +74,7 @@ const SAMPLE_GROUPS: ApiGroup[] = [
 ];
 
 export default function APIDocumentation() {
+  const isDemo = useIsDemoAccount();
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [expandedEndpoints, setExpandedEndpoints] = useState<Set<string>>(new Set());

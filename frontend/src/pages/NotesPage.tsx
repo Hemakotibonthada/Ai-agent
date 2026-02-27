@@ -7,6 +7,7 @@ import {
   AlignLeft, X, ChevronRight, Hash, Bookmark, Eye
 } from 'lucide-react';
 import { FadeIn } from '../lib/animations';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface Note {
   id: string;
@@ -44,7 +45,7 @@ const notesData: Note[] = [
 ];
 
 const NotesPage: React.FC = () => {
-  const [notes, setNotes] = useState(notesData);
+  const [notes, setNotes] = useState(isDemo ? notesData : []);
   const [search, setSearch] = useState('');
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);

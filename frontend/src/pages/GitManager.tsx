@@ -6,6 +6,7 @@ import {
   Check, X, AlertCircle, Play, Square, Loader, Eye, Copy, ExternalLink,
   Filter, ArrowUpRight, ArrowDownLeft, MoreVertical, Trash2, Edit
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface Repository { id: string; name: string; provider: string; default_branch: string; branches_count: number; commits_count: number; open_prs: number; last_push: string; }
 interface Commit { id: string; sha: string; message: string; author: string; date: string; additions: number; deletions: number; files_changed: number; }
@@ -31,6 +32,7 @@ const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, trans
 const itemVariants = { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 30 } } };
 
 export default function GitManager() {
+  const isDemo = useIsDemoAccount();
   const [activeTab, setActiveTab] = useState<TabType>('repos');
   const [repos, setRepos] = useState<Repository[]>([]);
   const [commits, setCommits] = useState<Commit[]>([]);

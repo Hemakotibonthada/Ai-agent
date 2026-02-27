@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { FadeIn } from '../lib/animations';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface FeatureFlag {
   id: string;
@@ -59,7 +60,7 @@ const abTestData = [
 ];
 
 const FeatureFlags: React.FC = () => {
-  const [flags, setFlags] = useState(flagsData);
+  const [flags, setFlags] = useState(isDemo ? flagsData : []);
   const [search, setSearch] = useState('');
   const [filterType, setFilterType] = useState('all');
   const [filterEnabled, setFilterEnabled] = useState<'all' | 'enabled' | 'disabled'>('all');

@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any, Dict, List, Optional, Callable
 from pathlib import Path
+from services.demo_data_manager import is_demo_data_enabled
 
 
 class BackupType(str, Enum):
@@ -157,7 +158,8 @@ class BackupService:
         self.storage_targets: Dict[str, StorageInfo] = {}
         self.backup_items: Dict[str, List[BackupItem]] = {}
         self.listeners: List[Callable] = []
-        self._initialize_sample_data()
+        if is_demo_data_enabled():
+            self._initialize_sample_data()
 
     def _initialize_sample_data(self):
         """Initialize with sample backup data"""

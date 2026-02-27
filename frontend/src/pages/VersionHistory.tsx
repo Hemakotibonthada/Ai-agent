@@ -6,6 +6,7 @@ import {
   Plus, Minus, ChevronRight, Tag, ArrowLeft,
   ArrowRight, Download, Copy, AlertCircle,
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface VersionEntry {
   id: string;
@@ -128,7 +129,8 @@ const typeConfig = {
 };
 
 export default function VersionHistory() {
-  const [versions] = useState(sampleVersions);
+  const isDemo = useIsDemoAccount();
+  const [versions] = useState(isDemo ? sampleVersions : []);
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('All');
   const [selectedVersion, setSelectedVersion] = useState<VersionEntry | null>(null);

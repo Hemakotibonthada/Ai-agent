@@ -7,6 +7,7 @@ import {
   HardDrive, Layers, Key, Hash, Type, Calendar, ToggleLeft,
   Link2, Zap, AlertTriangle, CheckCircle, Code2
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 type FieldType = 'string' | 'number' | 'boolean' | 'date' | 'json' | 'uuid' | 'enum' | 'relation';
 
@@ -189,6 +190,7 @@ const sampleQuery: QueryResult = {
 };
 
 export default function DataExplorer() {
+  const isDemo = useIsDemoAccount();
   const [selectedTable, setSelectedTable] = useState<TableInfo>(tables[0]);
   const [activeTab, setActiveTab] = useState<'schema' | 'data' | 'query' | 'indexes'>('schema');
   const [query, setQuery] = useState("SELECT id, email, username, role, is_active, last_login\nFROM users\nWHERE is_active = true\nORDER BY last_login DESC\nLIMIT 50;");

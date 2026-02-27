@@ -9,6 +9,7 @@ from dataclasses import dataclass, field, asdict
 from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any, Dict, List, Optional
+from services.demo_data_manager import is_demo_data_enabled
 
 
 class QueueType(str, Enum):
@@ -169,7 +170,8 @@ class QueueMonitorService:
     async def initialize(self):
         if self._initialized:
             return
-        await self._create_sample_data()
+        if is_demo_data_enabled():
+            await self._create_sample_data()
         self._initialized = True
 
     async def _create_sample_data(self):

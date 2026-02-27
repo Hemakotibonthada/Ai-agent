@@ -6,6 +6,7 @@ import {
   ChevronRight, ChevronDown, Download, Upload, AlertCircle, Check, X,
   Terminal, Eye, Pause, SkipForward, Settings, Loader, Database, Globe
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface ContainerItem { id: string; name: string; image: string; status: string; cpu_percent: number; memory_mb: number; memory_limit_mb: number; uptime: string; ports: string; network: string; }
 interface ContainerImage { id: string; name: string; tag: string; size_mb: number; created: string; }
@@ -26,6 +27,7 @@ const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, trans
 const itemVariants = { hidden: { opacity: 0, x: -12 }, visible: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 300, damping: 30 } } };
 
 export default function ContainerManager() {
+  const isDemo = useIsDemoAccount();
   const [activeTab, setActiveTab] = useState<TabType>('containers');
   const [containers, setContainers] = useState<ContainerItem[]>([]);
   const [images, setImages] = useState<ContainerImage[]>([]);

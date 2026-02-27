@@ -14,6 +14,7 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Dict, List, Optional, Set, Tuple
+from services.demo_data_manager import is_demo_data_enabled
 
 
 class SearchIndex(str, Enum):
@@ -217,7 +218,8 @@ class SearchService:
             "home": ["house", "smart", "device", "iot"],
             "message": ["chat", "text", "communication"],
         }
-        self._init_sample_data()
+        if is_demo_data_enabled():
+            self._init_sample_data()
 
     def _init_sample_data(self):
         """Populate search index with sample documents."""

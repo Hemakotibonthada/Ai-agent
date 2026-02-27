@@ -33,6 +33,7 @@ import Slider from '@/components/ui/Slider';
 import StatusIndicator from '@/components/shared/StatusIndicator';
 import useStore from '@/lib/store';
 import { voiceApi } from '@/lib/api';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 /* ------------------------------------------------------------------ */
 /*  Animations                                                         */
@@ -178,6 +179,7 @@ const mockHistory: VoiceEntry[] = [
 /*  Main Component                                                     */
 /* ------------------------------------------------------------------ */
 export default function Voice() {
+  const isDemo = useIsDemoAccount();
   const {
     setCurrentPage,
     isListening,
@@ -193,7 +195,7 @@ export default function Voice() {
   } = useStore();
 
   const [status, setStatus] = useState<VoiceStatus>('ready');
-  const [history, setHistory] = useState<VoiceEntry[]>(mockHistory);
+  const [history, setHistory] = useState<VoiceEntry[]>(isDemo ? mockHistory : []);
   const [inputLevel, setInputLevel] = useState(0);
   const [outputLevel, setOutputLevel] = useState(0);
   const [pitch, setPitch] = useState([1.0]);

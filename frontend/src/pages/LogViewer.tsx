@@ -7,6 +7,7 @@ import {
   Cpu, HardDrive, Zap, Copy, Eye, Settings
 } from 'lucide-react';
 import { FadeIn } from '../lib/animations';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 type LogLevel = 'info' | 'warning' | 'error' | 'debug' | 'success';
 
@@ -107,7 +108,8 @@ const generateLogs = (count: number): LogEntry[] => {
 };
 
 const LogViewer: React.FC = () => {
-  const [logs, setLogs] = useState<LogEntry[]>(() => generateLogs(100));
+  const isDemo = useIsDemoAccount();
+  const [logs, setLogs] = useState<LogEntry[]>(() => isDemo ? generateLogs(100) : []);
   const [search, setSearch] = useState('');
   const [levelFilter, setLevelFilter] = useState<LogLevel | 'all'>('all');
   const [sourceFilter, setSourceFilter] = useState<string>('all');

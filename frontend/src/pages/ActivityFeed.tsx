@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { FadeIn } from '../lib/animations';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface TimelineEvent {
   id: string;

@@ -7,6 +7,7 @@ import {
   ToggleRight, Hash, Server
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Legend } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface RateLimitRule { id: string; name: string; endpoint_pattern: string; requests_per_window: number; window_seconds: number; burst_limit: number; enabled: boolean; current_hits: number; blocked_count: number; }
 interface RateLimitEvent { id: string; endpoint: string; key: string; blocked: boolean; timestamp: string; rule_name: string; remaining: number; }
@@ -18,6 +19,7 @@ const itemVariants = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 
 const COLORS = ['#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444', '#ec4899'];
 
 export default function RateLimiter() {
+  const isDemo = useIsDemoAccount();
   const [rules, setRules] = useState<RateLimitRule[]>([]);
   const [events, setEvents] = useState<RateLimitEvent[]>([]);
   const [quotaPlans, setQuotaPlans] = useState<QuotaPlan[]>([]);

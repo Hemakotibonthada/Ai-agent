@@ -12,6 +12,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 from collections import defaultdict
+from services.demo_data_manager import is_demo_data_enabled
 
 
 class MediaType(str, Enum):
@@ -138,7 +139,8 @@ class MediaService:
         self.items: Dict[str, MediaItem] = {}
         self.folders: Dict[str, MediaFolder] = {}
         self.collections: Dict[str, MediaCollection] = {}
-        self._initialize_sample_data()
+        if is_demo_data_enabled():
+            self._initialize_sample_data()
 
     def _initialize_sample_data(self):
         """Generate realistic sample media items."""

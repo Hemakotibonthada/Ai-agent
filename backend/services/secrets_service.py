@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any, Dict, List, Optional
 from base64 import b64encode, b64decode
+from services.demo_data_manager import is_demo_data_enabled
 
 
 class SecretType(str, Enum):
@@ -175,7 +176,8 @@ class SecretsVaultService:
         if self._initialized:
             return
         self._master_key = secrets_module.token_hex(32)
-        await self._create_sample_data()
+        if is_demo_data_enabled():
+            await self._create_sample_data()
         self._initialized = True
 
     async def _create_sample_data(self):

@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell } from 'recharts';
 import { FadeIn } from '../lib/animations';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface Experiment {
   id: string;

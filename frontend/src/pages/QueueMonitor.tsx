@@ -7,6 +7,7 @@ import {
   MessageSquare, Filter, Hash, ArrowUp, ArrowDown, Settings
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface QueueItem { id: string; name: string; type: string; status: string; messages_ready: number; messages_unacked: number; messages_total: number; consumers: number; publish_rate: number; consume_rate: number; memory_mb: number; }
 interface QueueMessage { id: string; queue: string; body: string; status: string; priority: number; attempts: number; created_at: string; }
@@ -22,6 +23,7 @@ const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, trans
 const itemVariants = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 30 } } };
 
 export default function QueueMonitor() {
+  const isDemo = useIsDemoAccount();
   const [queues, setQueues] = useState<QueueItem[]>([]);
   const [dlqMessages, setDlqMessages] = useState<QueueMessage[]>([]);
   const [activeTab, setActiveTab] = useState<'queues' | 'dlq' | 'metrics'>('queues');

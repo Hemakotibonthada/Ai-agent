@@ -66,6 +66,8 @@ import Button from '@/components/ui/Button';
 import { CircularProgress } from '@/components/ui/Progress';
 import AnimatedNumber from '@/components/shared/AnimatedNumber';
 import useStore from '@/lib/store';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
+import EmptyState from '@/components/shared/EmptyState';
 
 /* ------------------------------------------------------------------ */
 /*  Animation variants                                                 */
@@ -446,11 +448,14 @@ function BestCheckpointDot(props: any) {
 /*  Main Component                                                     */
 /* ------------------------------------------------------------------ */
 export default function AIModels() {
+  const isDemo = useIsDemoAccount();
   const { setCurrentPage } = useStore();
 
   useEffect(() => {
     setCurrentPage('/ai-models');
   }, [setCurrentPage]);
+
+  if (!isDemo) return <div className="flex-1 p-6"><EmptyState title="No AI models" description="Deploy or train AI models to see them here." /></div>;
 
   const activeTraining = models.filter((m) => m.trainingProgress !== null).length;
   const globalAccuracy = useMemo(

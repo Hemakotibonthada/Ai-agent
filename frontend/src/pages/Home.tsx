@@ -66,6 +66,7 @@ import StatusIndicator from '@/components/shared/StatusIndicator';
 import useStore from '@/lib/store';
 import { homeApi } from '@/lib/api';
 import type { Device, Room, Sensor, Scene } from '@/types';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 /* ------------------------------------------------------------------ */
 /*  Animation variants                                                 */
@@ -302,6 +303,7 @@ function DeviceCard({
 /*  Main Component                                                     */
 /* ------------------------------------------------------------------ */
 export default function Home() {
+  const isDemo = useIsDemoAccount();
   const {
     rooms: storeRooms,
     devices: storeDevices,
@@ -317,7 +319,7 @@ export default function Home() {
 
   const [loading, setLoading] = useState(true);
 
-  const rooms = storeRooms.length > 0 ? storeRooms : mockRooms;
+  const rooms = storeRooms.length > 0 ? storeRooms : (isDemo ? mockRooms : []);
   const devices = storeDevices.length > 0 ? storeDevices : mockDevices;
   const sensors = storeSensors.length > 0 ? storeSensors : mockSensors;
   const selectedRoom = selectedRoomId ?? 'r1';

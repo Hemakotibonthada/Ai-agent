@@ -54,6 +54,7 @@ import AnimatedNumber from '@/components/shared/AnimatedNumber';
 import useStore from '@/lib/store';
 import { tasksApi } from '@/lib/api';
 import type { Task, TaskStatus, TaskPriority } from '@/types';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 /* ------------------------------------------------------------------ */
 /*  Constants                                                          */
@@ -421,6 +422,7 @@ function CreateTaskModal({
 /*  Main Component                                                     */
 /* ------------------------------------------------------------------ */
 export default function Tasks() {
+  const isDemo = useIsDemoAccount();
   const {
     tasks: storeTasks,
     viewMode,
@@ -438,7 +440,7 @@ export default function Tasks() {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [activeTab, setActiveTab] = useState('kanban');
 
-  const allTasks = storeTasks.length > 0 ? storeTasks : mockTasks;
+  const allTasks = storeTasks.length > 0 ? storeTasks : (isDemo ? mockTasks : []);
 
   useEffect(() => {
     setCurrentPage('/tasks');

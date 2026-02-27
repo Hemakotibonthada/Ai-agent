@@ -10,6 +10,7 @@ from dataclasses import dataclass, field, asdict
 from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any, Dict, List, Optional, Set, Tuple
+from services.demo_data_manager import is_demo_data_enabled
 
 
 class KeyStatus(str, Enum):
@@ -189,7 +190,8 @@ class APIKeyService:
         self.usage_records: Dict[str, List[UsageRecord]] = {}
         self.rate_limiter = RateLimiter()
         self._key_lookup: Dict[str, str] = {}  # hash -> key_id
-        self._initialize_sample_data()
+        if is_demo_data_enabled():
+            self._initialize_sample_data()
 
     def _initialize_sample_data(self):
         """Initialize with sample API keys"""

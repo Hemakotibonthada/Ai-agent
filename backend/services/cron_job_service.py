@@ -11,6 +11,7 @@ from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any, Callable, Dict, List, Optional, Tuple
 from collections import defaultdict
+from services.demo_data_manager import is_demo_data_enabled
 
 
 class CronJobStatus(str, Enum):
@@ -168,7 +169,8 @@ class CronJobService:
         self.jobs: Dict[str, CronJob] = {}
         self._handlers: Dict[str, Callable] = {}
         self._running_jobs: set = set()
-        self._initialize_sample_data()
+        if is_demo_data_enabled():
+            self._initialize_sample_data()
 
     def _initialize_sample_data(self):
         """Create sample cron jobs."""

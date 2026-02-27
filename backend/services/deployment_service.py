@@ -12,6 +12,7 @@ from enum import Enum
 from dataclasses import dataclass, field, asdict
 from collections import defaultdict
 import logging
+from services.demo_data_manager import is_demo_data_enabled
 
 logger = logging.getLogger(__name__)
 
@@ -233,7 +234,8 @@ class DeploymentService:
         self.health_checker = HealthChecker()
         self.auto_scaler = AutoScaler()
         self.audit_log: List[Dict[str, Any]] = []
-        self._init_sample_data()
+        if is_demo_data_enabled():
+            self._init_sample_data()
     
     def _init_sample_data(self):
         """Initialize with sample deployments."""

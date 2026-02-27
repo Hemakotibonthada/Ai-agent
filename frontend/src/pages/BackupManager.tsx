@@ -10,6 +10,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, AreaChart, Area,
 } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface Backup {
   id: string;
@@ -82,7 +83,8 @@ const storageUsage = [
 ];
 
 export default function BackupManager() {
-  const [backups] = useState(sampleBackups);
+  const isDemo = useIsDemoAccount();
+  const [backups] = useState(isDemo ? sampleBackups : []);
   const [selectedBackup, setSelectedBackup] = useState<Backup | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState('All');

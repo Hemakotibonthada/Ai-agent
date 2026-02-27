@@ -11,6 +11,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
 } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface MLModel {
   id: string;
@@ -92,7 +93,8 @@ const statusConfig = {
 };
 
 export default function MLModelManager() {
-  const [models] = useState(sampleModels);
+  const isDemo = useIsDemoAccount();
+  const [models] = useState(isDemo ? sampleModels : []);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [selectedModel, setSelectedModel] = useState<MLModel | null>(null);

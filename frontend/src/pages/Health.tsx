@@ -76,6 +76,7 @@ import AnimatedNumber from '@/components/shared/AnimatedNumber';
 import useStore from '@/lib/store';
 import { healthApi } from '@/lib/api';
 import type { MoodEntry, MoodLevel } from '@/types';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 /* ------------------------------------------------------------------ */
 /*  Animations                                                         */
@@ -300,6 +301,7 @@ function HydrationTracker() {
 /*  Main Component                                                     */
 /* ------------------------------------------------------------------ */
 export default function Health() {
+  const isDemo = useIsDemoAccount();
   const {
     moodEntries,
     currentMood,

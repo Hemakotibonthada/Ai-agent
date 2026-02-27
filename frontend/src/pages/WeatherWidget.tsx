@@ -10,6 +10,8 @@ import {
   AreaChart, Area, LineChart, Line, BarChart, Bar,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
+import EmptyState from '@/components/shared/EmptyState';
 
 interface WeatherData {
   location: string;
@@ -102,6 +104,8 @@ const conditionIcons = {
 };
 
 export default function WeatherWidget() {
+  const isDemo = useIsDemoAccount();
+  if (!isDemo) return <div className="flex-1 p-6"><EmptyState title="No weather data" description="Configure your location to see weather forecasts." /></div>;
   const [activeTab, setActiveTab] = useState<'hourly' | 'daily' | 'history'>('hourly');
   const [unit, setUnit] = useState<'C' | 'F'>('C');
 

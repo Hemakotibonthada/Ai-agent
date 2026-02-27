@@ -28,6 +28,8 @@ import {
 
 import Card from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
+import EmptyState from '@/components/shared/EmptyState';
 
 /* ------------------------------------------------------------------ */
 /*  Animations                                                         */
@@ -244,6 +246,8 @@ const quickActions = [
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
 export default function Vision() {
+  const isDemo = useIsDemoAccount();
+  if (!isDemo) return <div className="flex-1 p-6"><EmptyState title="No vision data" description="Connect cameras and configure video analytics to see detections." /></div>;
   const [selectedCamera, setSelectedCamera] = useState<string | null>(null);
   const [nightMode, setNightMode] = useState(false);
 

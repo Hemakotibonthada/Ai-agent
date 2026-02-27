@@ -6,6 +6,7 @@ import {
   TrendingUp, BarChart3, Eye, Settings, Info, ExternalLink
 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Cell, PieChart, Pie } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface ServiceNode {
   id: string; name: string; type: string; status: 'healthy' | 'degraded' | 'down';
@@ -19,6 +20,7 @@ const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, trans
 const itemVariants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
 
 export default function ServiceMesh() {
+  const isDemo = useIsDemoAccount();
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState<'topology' | 'services' | 'traffic' | 'policies'>('topology');
   const [services, setServices] = useState<ServiceNode[]>([]);

@@ -15,6 +15,8 @@ import {
   ComposedChart, Scatter
 } from 'recharts';
 import { FadeIn, ScaleIn, StaggerList, StaggerItem } from '../lib/animations';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
+import EmptyState from '@/components/shared/EmptyState';
 
 const COLORS = ['#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#f43f5e', '#10b981', '#06b6d4'];
 
@@ -188,6 +190,8 @@ const TabButton: React.FC<{
 
 // ─── Main Analytics Page ────────────────────────────────────────────
 const Analytics: React.FC = () => {
+  const isDemo = useIsDemoAccount();
+  if (!isDemo) return <div className="flex-1 p-6"><EmptyState title="No analytics data" description="Analytics will appear here as you use the platform and collect data." /></div>;
   const [activeTab, setActiveTab] = useState<'overview' | 'performance' | 'agents' | 'realtime'>('overview');
   const [timeRange, setTimeRange] = useState('30d');
   const [isRefreshing, setIsRefreshing] = useState(false);

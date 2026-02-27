@@ -11,6 +11,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
 } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface PerformanceMetric {
   id: string;
@@ -72,6 +73,7 @@ const flamegraphData = [
 ];
 
 export default function PerformanceProfiler() {
+  const isDemo = useIsDemoAccount();
   const [metrics, setMetrics] = useState(initialMetrics);
   const [live, setLive] = useState(true);
   const [selectedMetric, setSelectedMetric] = useState<PerformanceMetric | null>(null);

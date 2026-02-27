@@ -5,6 +5,7 @@ import {
   Plus, FolderOpen, Globe, Code, FileText, Clock,
   Tag, MoreVertical, Grid, List, Copy, Share2,
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface BookmarkItem {
   id: string;
@@ -47,7 +48,8 @@ const categoryIcons: Record<string, React.ReactNode> = {
 };
 
 export default function BookmarksPage() {
-  const [bookmarks, setBookmarks] = useState(sampleBookmarks);
+  const isDemo = useIsDemoAccount();
+  const [bookmarks, setBookmarks] = useState(isDemo ? sampleBookmarks : []);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');

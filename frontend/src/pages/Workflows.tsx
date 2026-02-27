@@ -8,6 +8,8 @@ import {
   Timer, Repeat, Code, Globe, Shield, FileText, BarChart2
 } from 'lucide-react';
 import { FadeIn, ScaleIn } from '../lib/animations';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
+import EmptyState from '@/components/shared/EmptyState';
 
 // ─── Types ──────────────────────────────────────────────────────────
 interface WorkflowNode {
@@ -443,6 +445,8 @@ const WorkflowDetail: React.FC<{
 
 // ─── Main Workflows Page ────────────────────────────────────────────
 const Workflows: React.FC = () => {
+  const isDemo = useIsDemoAccount();
+  if (!isDemo) return <div className="flex-1 p-6"><EmptyState title="No workflows" description="Create automated workflows to streamline your processes." /></div>;
   const [selectedWorkflow, setSelectedWorkflow] = useState<WorkflowData | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');

@@ -7,6 +7,7 @@ import {
   ChevronDown, X, Edit3, Trash2, Eye
 } from 'lucide-react';
 import { FadeIn } from '../lib/animations';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface KanbanTask {
   id: string;
@@ -171,7 +172,7 @@ const TaskCard: React.FC<{
 };
 
 const KanbanBoard: React.FC = () => {
-  const [columns, setColumns] = useState(initialColumns);
+  const [columns, setColumns] = useState(isDemo ? initialColumns : []);
   const [search, setSearch] = useState('');
   const [selectedTask, setSelectedTask] = useState<KanbanTask | null>(null);
   const [filterPriority, setFilterPriority] = useState<string>('all');

@@ -9,6 +9,8 @@ import {
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { FadeIn } from '../lib/animations';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
+import EmptyState from '@/components/shared/EmptyState';
 
 interface TableInfo {
   name: string;
@@ -149,6 +151,8 @@ const sizeData = tables.map(t => ({ name: t.name, size: parseFloat(t.size) })).s
 const rowData = tables.map(t => ({ name: t.name, rows: t.rows })).sort((a, b) => b.rows - a.rows).slice(0, 5);
 
 const DatabaseBrowser: React.FC = () => {
+  const isDemo = useIsDemoAccount();
+  if (!isDemo) return <div className="flex-1 p-6"><EmptyState title="No database connected" description="Configure a database connection to browse tables and run queries." /></div>;
   const [selectedTable, setSelectedTable] = useState<TableInfo | null>(null);
   const [query, setQuery] = useState('SELECT id, username, email, role, is_active, last_login\nFROM users\nWHERE is_active = true\nLIMIT 10;');
   const [queryResult, setQueryResult] = useState<QueryResult | null>(null);

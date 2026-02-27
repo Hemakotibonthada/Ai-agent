@@ -6,6 +6,7 @@ import {
   Filter, Search, ArrowRight, Zap, Globe, Lock, Unlock,
   Activity, ChevronDown, ChevronRight, Code2, Link2, Edit3, RotateCcw
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 type WebhookStatus = 'active' | 'paused' | 'error' | 'disabled';
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -119,7 +120,8 @@ const eventStatusColors: Record<string, string> = {
 };
 
 export default function WebhookManager() {
-  const [webhooks, setWebhooks] = useState<WebhookConfig[]>(sampleWebhooks);
+  const isDemo = useIsDemoAccount();
+  const [webhooks, setWebhooks] = useState<WebhookConfig[]>(isDemo ? sampleWebhooks : []);
   const [selectedWebhook, setSelectedWebhook] = useState<WebhookConfig | null>(null);
   const [filter, setFilter] = useState<WebhookStatus | 'all'>('all');
   const [search, setSearch] = useState('');

@@ -6,6 +6,8 @@ import {
   Search, Filter, RefreshCw, Copy, Download, Upload, Settings,
   Activity, Fingerprint, Zap, BarChart3, Users, Wifi
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
+import EmptyState from '@/components/shared/EmptyState';
 
 type CertStatus = 'valid' | 'expiring' | 'expired' | 'revoked';
 type ScanSeverity = 'critical' | 'high' | 'medium' | 'low' | 'info';
@@ -130,6 +132,8 @@ const resultColors: Record<string, string> = {
 };
 
 export default function SecurityCenter() {
+  const isDemo = useIsDemoAccount();
+  if (!isDemo) return <div className="flex-1 p-6"><EmptyState title="No security data" description="Configure security scans and certificates to monitor your infrastructure." /></div>;
   const [activeTab, setActiveTab] = useState<'overview' | 'certificates' | 'vulnerabilities' | 'access'>('overview');
   const [scanFilter, setScanFilter] = useState<ScanSeverity | 'all'>('all');
   const [expandedScan, setExpandedScan] = useState<string | null>(null);

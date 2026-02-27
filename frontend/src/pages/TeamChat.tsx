@@ -7,6 +7,7 @@ import {
   Circle, CheckCircle, Clock, Edit3, Reply, MoreHorizontal,
   Phone, Video, UserPlus, Info, ArrowLeft
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface Message {
   id: string;
@@ -120,6 +121,7 @@ const statusColors: Record<string, string> = {
 };
 
 export default function TeamChat() {
+  const isDemo = useIsDemoAccount();
   const [activeChannel, setActiveChannel] = useState<Channel>(channels[1]);
   const [messageInput, setMessageInput] = useState('');
   const [showMembers, setShowMembers] = useState(false);

@@ -6,6 +6,7 @@ import {
   Calendar, List, Image, FileText, AlignLeft, Check, Loader,
   ChevronDown, ChevronUp, Star, Code, Palette, Layers, Layout
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface FormField {
   id: string; type: string; label: string; placeholder: string;
@@ -31,6 +32,7 @@ const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, trans
 const itemVariants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
 
 export default function FormBuilder() {
+  const isDemo = useIsDemoAccount();
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState<'editor' | 'preview' | 'templates' | 'submissions'>('editor');
   const [fields, setFields] = useState<FormField[]>([]);

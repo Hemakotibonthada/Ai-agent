@@ -9,6 +9,8 @@ import {
 } from 'lucide-react';
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 import { FadeIn } from '../lib/animations';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
+import EmptyState from '@/components/shared/EmptyState';
 
 interface SecurityEvent {
   id: string;
@@ -77,6 +79,8 @@ const securityEvents: SecurityEvent[] = [
 ];
 
 const SecurityDashboard: React.FC = () => {
+  const isDemo = useIsDemoAccount();
+  if (!isDemo) return <div className="flex-1 p-6"><EmptyState title="No security events" description="Enable security monitoring to track threats and compliance." /></div>;
   const [activeTab, setActiveTab] = useState<'overview' | 'events' | 'compliance' | 'threats'>('overview');
   const [severityFilter, setSeverityFilter] = useState<string>('all');
   const [selectedEvent, setSelectedEvent] = useState<SecurityEvent | null>(null);

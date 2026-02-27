@@ -8,6 +8,8 @@ import {
   Server, Eye
 } from 'lucide-react';
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
+import EmptyState from '@/components/shared/EmptyState';
 
 type MonitorStatus = 'up' | 'down' | 'degraded' | 'paused' | 'maintenance';
 
@@ -139,6 +141,8 @@ const incidentColors: Record<string, string> = {
 };
 
 export default function UptimeMonitor() {
+  const isDemo = useIsDemoAccount();
+  if (!isDemo) return <div className="flex-1 p-6"><EmptyState title="No uptime monitors" description="Add endpoints to monitor their uptime and response times." /></div>;
   const [selectedMonitor, setSelectedMonitor] = useState<UptimeCheck | null>(null);
   const [activeTab, setActiveTab] = useState<'monitors' | 'incidents' | 'statuspage'>('monitors');
   const [filter, setFilter] = useState<MonitorStatus | 'all'>('all');

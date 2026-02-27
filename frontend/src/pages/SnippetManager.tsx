@@ -6,6 +6,7 @@ import {
   FileCode, Save, Download, Upload, Filter,
   Hash, Terminal, Globe, Database, Braces, Cpu,
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface Snippet {
   id: string;
@@ -76,7 +77,8 @@ const sampleSnippets: Snippet[] = [
 ];
 
 export default function SnippetManager() {
-  const [snippets, setSnippets] = useState(sampleSnippets);
+  const isDemo = useIsDemoAccount();
+  const [snippets, setSnippets] = useState(isDemo ? sampleSnippets : []);
   const [selectedSnippet, setSelectedSnippet] = useState<Snippet | null>(sampleSnippets[0]);
   const [searchQuery, setSearchQuery] = useState('');
   const [folderFilter, setFolderFilter] = useState('All');

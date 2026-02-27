@@ -6,6 +6,7 @@ import {
   ChevronRight, ChevronDown, Trash2, Edit, MoreVertical, Loader, Settings,
   AlertCircle, FileText, Hash, Database, Globe, Mail, Server
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface Secret { id: string; key: string; type: string; scope: string; folder: string; created_at: string; last_rotated: string; rotation_days: number; masked_value: string; }
 interface SecretFolder { id: string; name: string; count: number; icon: string; }
@@ -34,6 +35,7 @@ const scopeColors: Record<string, string> = {
 };
 
 export default function SecretsVault() {
+  const isDemo = useIsDemoAccount();
   const [secrets, setSecrets] = useState<Secret[]>([]);
   const [folders, setFolders] = useState<SecretFolder[]>([]);
   const [auditLog, setAuditLog] = useState<AuditEntry[]>([]);

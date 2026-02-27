@@ -6,6 +6,7 @@ import {
   FileText, Code, GitCommit, Settings,
   Eye, EyeOff, AlignLeft,
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface DiffFile {
   id: string;
@@ -131,7 +132,8 @@ const sampleFiles: DiffFile[] = [
 ];
 
 export default function DiffViewer() {
-  const [files] = useState(sampleFiles);
+  const isDemo = useIsDemoAccount();
+  const [files] = useState(isDemo ? sampleFiles : []);
   const [selectedFile, setSelectedFile] = useState<DiffFile>(sampleFiles[0]);
   const [viewMode, setViewMode] = useState<'split' | 'unified'>('unified');
   const [showLineNumbers, setShowLineNumbers] = useState(true);

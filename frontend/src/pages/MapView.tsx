@@ -9,6 +9,7 @@ import {
 import {
   PieChart, Pie, Cell, Tooltip, ResponsiveContainer,
 } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface MapMarker {
   id: string;
@@ -76,7 +77,8 @@ const typeDistribution = [
 ];
 
 export default function MapView() {
-  const [markers] = useState(sampleMarkers);
+  const isDemo = useIsDemoAccount();
+  const [markers] = useState(isDemo ? sampleMarkers : []);
   const [layers, setLayers] = useState(defaultLayers);
   const [selectedMarker, setSelectedMarker] = useState<MapMarker | null>(null);
   const [searchQuery, setSearchQuery] = useState('');

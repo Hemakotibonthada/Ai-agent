@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, devtools } from 'zustand/middleware';
+import axios from 'axios';
 
 // ============================================================
 // Auth Store
@@ -8,7 +9,7 @@ interface User {
   id: string;
   name: string;
   email: string;
-  role: 'admin' | 'editor' | 'viewer' | 'api';
+  role: 'admin' | 'user' | 'viewer' | 'demo' | 'api';
   avatar?: string;
   mfaEnabled: boolean;
   permissions: string[];
@@ -23,8 +24,9 @@ interface AuthState {
   error: string | null;
   lastActivity: number;
   sessionExpiresAt: number | null;
+  isDemoAccount: boolean;
 
-  login: (email: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<void>;
   logout: () => void;
   refreshSession: () => Promise<void>;
   updateProfile: (updates: Partial<User>) => void;
@@ -34,47 +36,62 @@ interface AuthState {
   touchActivity: () => void;
 }
 
+const API_BASE = import.meta.env.VITE_API_URL ?? '/api';
+
 export const useAuthStore = create<AuthState>()(
   devtools(
     persist(
       (set, get) => ({
-        user: {
-          id: 'usr_001',
-          name: 'Alex Morgan',
-          email: 'alex@nexus.ai',
-          role: 'admin',
-          avatar: 'AM',
-          mfaEnabled: true,
-          permissions: ['all'],
-        },
-        token: 'nxs_token_demo_12345',
-        refreshToken: 'nxs_refresh_demo_67890',
-        isAuthenticated: true,
+        user: null,
+        token: null,
+        refreshToken: null,
+        isAuthenticated: false,
         isLoading: false,
         error: null,
         lastActivity: Date.now(),
-        sessionExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
+        sessionExpiresAt: null,
+        isDemoAccount: false,
 
-        login: async (email: string, _password: string) => {
+        login: async (username: string, password: string) => {
           set({ isLoading: true, error: null });
-          await new Promise(resolve => setTimeout(resolve, 800));
-          set({
-            user: { id: 'usr_001', name: 'Alex Morgan', email, role: 'admin', mfaEnabled: true, permissions: ['all'] },
-            token: `nxs_token_${Date.now()}`,
-            refreshToken: `nxs_refresh_${Date.now()}`,
-            isAuthenticated: true,
-            isLoading: false,
-            lastActivity: Date.now(),
-            sessionExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
-          });
+          try {
+            const res = await axios.post(`${API_BASE}/auth/login`, { username, password });
+            const { access_token, refresh_token, expires_in, user: profile } = res.data;
+            const isDemo = profile.role === 'demo';
+            localStorage.setItem('nexus_token', access_token);
+            set({
+              user: {
+                id: profile.id,
+                name: profile.display_name || profile.username,
+                email: profile.email,
+                role: profile.role,
+                avatar: profile.avatar_url || profile.display_name?.split(' ').map((w: string) => w[0]).join('').toUpperCase(),
+                mfaEnabled: profile.two_factor_enabled ?? false,
+                permissions: profile.permissions ?? (isDemo ? ['read'] : ['all']),
+              },
+              token: access_token,
+              refreshToken: refresh_token,
+              isAuthenticated: true,
+              isLoading: false,
+              isDemoAccount: isDemo,
+              lastActivity: Date.now(),
+              sessionExpiresAt: Date.now() + (expires_in ?? 86400) * 1000,
+            });
+          } catch (err: any) {
+            const msg = err?.response?.data?.detail ?? err.message ?? 'Login failed';
+            set({ isLoading: false, error: msg });
+            throw new Error(msg);
+          }
         },
 
         logout: () => {
+          localStorage.removeItem('nexus_token');
           set({
             user: null,
             token: null,
             refreshToken: null,
             isAuthenticated: false,
+            isDemoAccount: false,
             sessionExpiresAt: null,
           });
         },
@@ -83,12 +100,18 @@ export const useAuthStore = create<AuthState>()(
           const { refreshToken } = get();
           if (!refreshToken) return;
           set({ isLoading: true });
-          await new Promise(resolve => setTimeout(resolve, 300));
-          set({
-            token: `nxs_token_${Date.now()}`,
-            sessionExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
-            isLoading: false,
-          });
+          try {
+            const res = await axios.post(`${API_BASE}/auth/refresh`, { refresh_token: refreshToken });
+            const { access_token, expires_in } = res.data;
+            localStorage.setItem('nexus_token', access_token);
+            set({
+              token: access_token,
+              sessionExpiresAt: Date.now() + (expires_in ?? 86400) * 1000,
+              isLoading: false,
+            });
+          } catch {
+            set({ isLoading: false });
+          }
         },
 
         updateProfile: (updates) => {

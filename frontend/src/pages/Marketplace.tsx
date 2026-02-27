@@ -10,6 +10,7 @@ import {
   Image, Music, Video, Mic, Camera, Wifi
 } from 'lucide-react';
 import { FadeIn, ScaleIn } from '../lib/animations';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 // ─── Types ──────────────────────────────────────────────────────────
 interface Plugin {
@@ -389,7 +390,7 @@ const PluginDetailModal: React.FC<{
 
 // ─── Main Marketplace Page ──────────────────────────────────────────
 const Marketplace: React.FC = () => {
-  const [plugins, setPlugins] = useState<Plugin[]>(pluginsData);
+  const [plugins, setPlugins] = useState<Plugin[]>(isDemo ? pluginsData : []);
   const [selectedPlugin, setSelectedPlugin] = useState<Plugin | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');

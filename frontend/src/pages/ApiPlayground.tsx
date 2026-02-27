@@ -7,6 +7,7 @@ import {
   Hash, AlignLeft, List, ToggleLeft, X, FileJson
 } from 'lucide-react';
 import { FadeIn } from '../lib/animations';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 type ParamType = 'query' | 'header' | 'body';

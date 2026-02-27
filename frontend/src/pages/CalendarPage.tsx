@@ -6,6 +6,7 @@ import {
   Repeat, AlertCircle, Zap
 } from 'lucide-react';
 import { FadeIn } from '../lib/animations';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface CalendarEvent {
   id: string;
@@ -77,7 +78,7 @@ const generateEvents = (): CalendarEvent[] => {
 
 const CalendarPage: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [events] = useState(generateEvents);
+  const [events] = useState(isDemo ? generateEvents : []);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
   const [view, setView] = useState<'month' | 'week' | 'day'>('month');

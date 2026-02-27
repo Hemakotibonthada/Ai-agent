@@ -6,6 +6,7 @@ import {
   Crown, Eye, Edit3, Trash2, X, CheckCircle,
   AlertTriangle, Clock, Filter, Download, Activity,
 } from 'lucide-react';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface User {
   id: string;
@@ -50,7 +51,8 @@ const sampleUsers: User[] = [
 ];
 
 export default function UserManagement() {
-  const [users] = useState(sampleUsers);
+  const isDemo = useIsDemoAccount();
+  const [users] = useState(isDemo ? sampleUsers : []);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState('All');

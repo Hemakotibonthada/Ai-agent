@@ -61,6 +61,7 @@ import Modal from '@/components/ui/Modal';
 import useStore from '@/lib/store';
 import { reportsApi } from '@/lib/api';
 import type { Report, ReportFormat, ReportType } from '@/types';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 /* ------------------------------------------------------------------ */
 /*  Animations                                                         */
@@ -390,6 +391,7 @@ function GenerateReportModal({
 /*  Main Component                                                     */
 /* ------------------------------------------------------------------ */
 export default function Reports() {
+  const isDemo = useIsDemoAccount();
   const { setCurrentPage } = useStore();
   const [reports, setReports] = useState<Report[]>(mockReportHistory);
 

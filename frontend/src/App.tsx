@@ -4,6 +4,9 @@ import { Toaster } from 'react-hot-toast';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme } from './hooks/useTheme';
 import { useKeyboard } from './hooks/useKeyboard';
+import { useAuthStore } from './lib/stores';
+import Sidebar from './components/layout/Sidebar';
+import LoginPage from './pages/LoginPage';
 
 /* ------------------------------------------------------------------ */
 /*  Lazy-loaded pages                                                  */
@@ -118,6 +121,9 @@ function Layout({ children }: { children: React.ReactNode }) {
       {/* Particle / ambient background */}
       <div className="particle-bg pointer-events-none fixed inset-0 z-0" />
 
+      {/* Sidebar navigation */}
+      <Sidebar />
+
       {/* Main content area */}
       <main className="relative z-10 flex flex-1 flex-col overflow-y-auto scrollbar-thin">
         {children}
@@ -156,7 +162,25 @@ function AnimatedPage({ children }: { children: React.ReactNode }) {
 export default function App() {
   const location = useLocation();
   const { theme } = useTheme();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   useKeyboard();
+
+  // Show login page when not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className={theme === 'dark' ? 'dark' : ''}>
+        <LoginPage />
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            className: 'glass !bg-nexus-card !text-nexus-text !border !border-nexus-border',
+            duration: 4000,
+            style: { background: '#252538', color: '#E2E8F0', border: '1px solid #2E2E45' },
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={theme === 'dark' ? 'dark' : ''}>

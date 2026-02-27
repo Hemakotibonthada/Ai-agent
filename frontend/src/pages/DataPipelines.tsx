@@ -12,6 +12,8 @@ import {
   Tooltip, ResponsiveContainer, PieChart, Pie, Cell
 } from 'recharts';
 import { FadeIn } from '../lib/animations';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
+import EmptyState from '@/components/shared/EmptyState';
 
 // ─── Types ──────────────────────────────────────────────────────────
 interface PipelineStep {
@@ -375,6 +377,8 @@ const PipelineDetail: React.FC<{ pipeline: Pipeline; onClose: () => void }> = ({
 
 // ─── Main DataPipelines Page ────────────────────────────────────────
 const DataPipelines: React.FC = () => {
+  const isDemo = useIsDemoAccount();
+  if (!isDemo) return <div className="flex-1 p-6"><EmptyState title="No data pipelines" description="Create a data pipeline to process and transform your data." /></div>;
   const [selectedPipeline, setSelectedPipeline] = useState<Pipeline | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [tab, setTab] = useState<'pipelines' | 'monitoring' | 'sources'>('pipelines');

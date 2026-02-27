@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 from pathlib import Path
+from services.demo_data_manager import is_demo_data_enabled
 
 
 class GitProvider(str, Enum):
@@ -276,7 +277,8 @@ class GitService:
             return
 
         # Create sample repositories
-        await self._create_sample_data()
+        if is_demo_data_enabled():
+            await self._create_sample_data()
         self._initialized = True
 
     async def _create_sample_data(self):

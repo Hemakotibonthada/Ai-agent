@@ -12,6 +12,7 @@ from dataclasses import dataclass, field, asdict
 from collections import defaultdict
 import logging
 import random
+from services.demo_data_manager import is_demo_data_enabled
 
 logger = logging.getLogger(__name__)
 
@@ -239,7 +240,8 @@ class ExperimentService:
         self.events: List[ExperimentEvent] = []
         self.user_assignments: Dict[str, Dict[str, str]] = {}  # user_id -> {exp_id: variant_id}
         self.stats_engine = StatisticalEngine()
-        self._init_sample_data()
+        if is_demo_data_enabled():
+            self._init_sample_data()
     
     def _init_sample_data(self):
         """Create sample experiments."""

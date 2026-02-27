@@ -11,6 +11,7 @@ import {
   AreaChart, Area, BarChart, Bar,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface ServiceStatus {
   id: string;
@@ -98,8 +99,9 @@ const responseTimeData = Array.from({ length: 24 }, (_, i) => ({
 }));
 
 export default function StatusPage() {
-  const [services] = useState(sampleServices);
-  const [incidents] = useState(sampleIncidents);
+  const isDemo = useIsDemoAccount();
+  const [services] = useState(isDemo ? sampleServices : []);
+  const [incidents] = useState(isDemo ? sampleIncidents : []);
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
   const [categoryFilter, setCategoryFilter] = useState('All');
 

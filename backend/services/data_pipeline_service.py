@@ -18,6 +18,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Callable, Dict, List, Optional, Set, Tuple
+from services.demo_data_manager import is_demo_data_enabled
 
 
 class PipelineStatus(str, Enum):
@@ -687,8 +688,9 @@ class DataPipelineService:
         self._lineage: List[DataLineage] = []
         self._transform_engine = TransformEngine()
         self._quality_engine = DataQualityEngine()
-        self._sample_data: Dict[str, List[Dict[str, Any]]] = self._init_sample_data()
-        self._init_default_pipelines()
+        self._sample_data: Dict[str, List[Dict[str, Any]]] = self._init_sample_data() if is_demo_data_enabled() else {}
+        if is_demo_data_enabled():
+            self._init_default_pipelines()
 
     def _init_sample_data(self) -> Dict[str, List[Dict[str, Any]]]:
         """Initialize sample data sources."""

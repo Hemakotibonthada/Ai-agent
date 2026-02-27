@@ -10,6 +10,7 @@ import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts';
+import { useIsDemoAccount } from '@/hooks/useDemoData';
 
 interface AuditEntry {
   id: string;
@@ -65,7 +66,8 @@ const categoryDistribution = ['Authentication', 'Security', 'Automation', 'AI Ag
 }));
 
 export default function AuditLog() {
-  const [entries] = useState(sampleAuditLog);
+  const isDemo = useIsDemoAccount();
+  const [entries] = useState(isDemo ? sampleAuditLog : []);
   const [search, setSearch] = useState('');
   const [severityFilter, setSeverityFilter] = useState('All');
   const [categoryFilter, setCategoryFilter] = useState('All');
