@@ -264,12 +264,14 @@ export default function Dashboard() {
 
   const cpu = resources?.cpu_percent ?? 32;
   const ram = resources
-    ? Math.round((resources.memory_used_mb / resources.memory_total_mb) * 100)
+    ? Math.round(resources.memory_percent ?? ((resources.memory_used_gb / resources.memory_total_gb) * 100))
     : 58;
   const disk = resources
-    ? Math.round((resources.disk_used_gb / resources.disk_total_gb) * 100)
+    ? Math.round(resources.disk_percent ?? ((resources.disk_used_gb / resources.disk_total_gb) * 100))
     : 44;
-  const net = resources ? Math.min(100, Math.round(resources.network_recv_mb)) : 12;
+  const net = resources
+    ? Math.min(100, Math.round((resources.network?.bytes_recv ?? 0) / (1024 * 1024 * 100)))
+    : 12;
 
   return (
     <motion.div

@@ -111,7 +111,7 @@ export const chatApi = {
 
 export const agentsApi = {
   list: () =>
-    api.get<Agent[]>('/agents').then((r) => r.data),
+    api.get<{ total: number; agents: Agent[] }>('/agents').then((r) => r.data.agents ?? r.data),
 
   health: () =>
     api.get<ApiResponse>('/agents/health').then((r) => r.data),
