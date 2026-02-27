@@ -53,6 +53,7 @@ const sections: NavSection[] = [
       { label: 'Chat',       path: '/chat',     icon: MessageSquare, badge: 3 },
       { label: 'Tasks',      path: '/tasks',    icon: ListTodo,      badge: 5 },
       { label: 'Voice',      path: '/voice',    icon: Mic },
+      { label: 'Agents',     path: '/agents',   icon: Bot },
     ],
   },
   {

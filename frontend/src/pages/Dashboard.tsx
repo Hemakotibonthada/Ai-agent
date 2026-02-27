@@ -4,6 +4,7 @@
    =================================================================== */
 
 import React, { useEffect, useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   MessageSquare,
@@ -230,6 +231,7 @@ function WeeklyHeatmap() {
 /* ------------------------------------------------------------------ */
 export default function Dashboard() {
   const { resources, agents, setResources, setAgents, setCurrentPage } = useStore();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const greeting = useMemo(() => getGreeting(), []);
 
@@ -313,9 +315,10 @@ export default function Dashboard() {
         <Card
           variant="glow"
           header={
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/settings')}>
               <Activity size={16} className="text-nexus-primary" />
               <span>System Health</span>
+              <ChevronRight size={14} className="ml-auto text-nexus-muted" />
             </div>
           }
         >
@@ -337,7 +340,7 @@ export default function Dashboard() {
               key={a.label}
               whileHover={{ scale: 1.06, y: -2 }}
               whileTap={{ scale: 0.96 }}
-              onClick={() => setCurrentPage(a.path)}
+              onClick={() => navigate(a.path)}
               className="flex flex-col items-center gap-2 rounded-xl border border-nexus-border bg-nexus-card/60 backdrop-blur-sm p-4 transition-shadow hover:shadow-nexus"
             >
               <span
@@ -358,21 +361,28 @@ export default function Dashboard() {
         <motion.div variants={item} className="lg:col-span-2">
           <Card
             header={
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/agents')}>
                 <Clock size={16} className="text-nexus-accent" />
                 <span>Recent Activity</span>
+                <ChevronRight size={14} className="ml-auto text-nexus-muted" />
               </div>
             }
           >
             <div className="space-y-3 max-h-72 overflow-y-auto pr-1 scrollbar-thin">
               <AnimatePresence>
-                {activityLog.map((a, i) => (
+                {activityLog.map((a, i) => {
+                  const agentRoute: Record<string, string> = {
+                    'Task Agent': '/tasks', 'Communication Agent': '/chat', 'Home Agent': '/home',
+                    'Financial Agent': '/finance', 'Health Agent': '/health', 'Security Agent': '/network',
+                  };
+                  return (
                   <motion.div
                     key={a.id}
                     initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    className="flex items-start gap-3 rounded-lg p-2 hover:bg-white/5 transition-colors"
+                    onClick={() => navigate(agentRoute[a.agent] || '/agents')}
+                    className="flex items-start gap-3 rounded-lg p-2 hover:bg-white/5 transition-colors cursor-pointer"
                   >
                     <div className="mt-1">
                       {a.type === 'success' ? (
@@ -391,7 +401,8 @@ export default function Dashboard() {
                       </div>
                     </div>
                   </motion.div>
-                ))}
+                  );
+                })}
               </AnimatePresence>
             </div>
           </Card>
@@ -401,7 +412,7 @@ export default function Dashboard() {
         <motion.div variants={item} className="space-y-4">
           {/* Environment */}
           <Card size="sm" hoverable>
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-2 cursor-pointer" onClick={() => navigate('/home')}>
               <span className="text-xs font-semibold text-nexus-muted uppercase tracking-wider">Home Environment</span>
               <Home size={14} className="text-nexus-accent" />
             </div>
@@ -425,7 +436,7 @@ export default function Dashboard() {
 
           {/* Upcoming Tasks */}
           <Card size="sm" hoverable>
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-2 cursor-pointer" onClick={() => navigate('/tasks')}>
               <span className="text-xs font-semibold text-nexus-muted uppercase tracking-wider">Upcoming Tasks</span>
               <Calendar size={14} className="text-nexus-primary" />
             </div>
@@ -444,7 +455,7 @@ export default function Dashboard() {
 
           {/* Financial Summary */}
           <Card size="sm" hoverable>
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-2 cursor-pointer" onClick={() => navigate('/finance')}>
               <span className="text-xs font-semibold text-nexus-muted uppercase tracking-wider">Finance</span>
               <DollarSign size={14} className="text-emerald-400" />
             </div>
@@ -459,7 +470,7 @@ export default function Dashboard() {
 
           {/* Health Mood */}
           <Card size="sm" hoverable>
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-2 cursor-pointer" onClick={() => navigate('/health')}>
               <span className="text-xs font-semibold text-nexus-muted uppercase tracking-wider">Mood Today</span>
               <Heart size={14} className="text-pink-400" />
             </div>
@@ -486,12 +497,13 @@ export default function Dashboard() {
       <motion.div variants={item}>
         <Card
           header={
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/agents')}>
               <Bot size={16} className="text-nexus-secondary" />
               <span>AI Agents</span>
               <Badge variant="success" dot pulse className="ml-auto">
                 {agents.filter((a) => a.status === 'active').length} active
               </Badge>
+              <ChevronRight size={14} className="text-nexus-muted" />
             </div>
           }
         >
@@ -514,7 +526,8 @@ export default function Dashboard() {
               <motion.div
                 key={ag.name}
                 whileHover={{ scale: 1.03 }}
-                className="flex items-center gap-2 rounded-lg border border-nexus-border bg-nexus-card/40 p-2.5 transition-shadow hover:shadow-nexus"
+                onClick={() => navigate('/agents')}
+                className="flex items-center gap-2 rounded-lg border border-nexus-border bg-nexus-card/40 p-2.5 transition-shadow hover:shadow-nexus cursor-pointer"
               >
                 <StatusIndicator
                   status={
@@ -538,9 +551,10 @@ export default function Dashboard() {
         <motion.div variants={item}>
           <Card
             header={
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/settings')}>
                 <BarChart3 size={16} className="text-nexus-primary" />
                 <span>System Resources (24h)</span>
+                <ChevronRight size={14} className="ml-auto text-nexus-muted" />
               </div>
             }
           >
@@ -578,9 +592,10 @@ export default function Dashboard() {
         <motion.div variants={item}>
           <Card
             header={
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/tasks')}>
                 <ListTodo size={16} className="text-nexus-accent" />
                 <span>Task Trend (Weekly)</span>
+                <ChevronRight size={14} className="ml-auto text-nexus-muted" />
               </div>
             }
           >
@@ -612,6 +627,7 @@ export default function Dashboard() {
             <div className="flex items-center gap-2">
               <Zap size={16} className="text-amber-400" />
               <span>Weekly Activity Heatmap</span>
+              <ChevronRight size={14} className="ml-auto text-nexus-muted" />
             </div>
           }
         >

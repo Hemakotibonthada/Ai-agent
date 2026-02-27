@@ -35,7 +35,13 @@ import {
   CheckCircle2,
   ChevronRight,
   Info,
-  HardDrive,
+  Bot,
+  Camera,
+  Monitor,
+  Layers,
+  ShieldCheck,
+  Sun,
+  Moon,
 } from 'lucide-react';
 
 import Card from '@/components/ui/Card';
@@ -64,9 +70,13 @@ const fadeIn = {
 const settingsTabs = [
   { value: 'profile', label: 'Profile', icon: User },
   { value: 'ai', label: 'AI & Models', icon: Brain },
+  { value: 'agents', label: 'Agents', icon: Bot },
   { value: 'voice', label: 'Voice', icon: Mic },
   { value: 'home', label: 'Home / IoT', icon: Home },
+  { value: 'vision', label: 'Vision / Camera', icon: Camera },
+  { value: 'network', label: 'Network Security', icon: ShieldCheck },
   { value: 'notifications', label: 'Notifications', icon: Bell },
+  { value: 'appearance', label: 'Appearance', icon: Palette },
   { value: 'privacy', label: 'Privacy', icon: Shield },
   { value: 'system', label: 'System', icon: SettingsIcon },
 ];
@@ -156,6 +166,44 @@ export default function Settings() {
   const [autoStart, setAutoStart] = useState(true);
   const [debugMode, setDebugMode] = useState(false);
   const [cpuLimit, setCpuLimit] = useState([80]);
+
+  /* Agents */
+  const [agentAutoRestart, setAgentAutoRestart] = useState(true);
+  const [agentLogLevel, setAgentLogLevel] = useState('info');
+  const [agentMaxConcurrent, setAgentMaxConcurrent] = useState([5]);
+  const [agentToggles, setAgentToggles] = useState<Record<string, boolean>>({
+    orchestrator: true, personal: true, home: true, task: true,
+    health: true, finance: true, security: true, voice: true,
+    learning: true, report: true, communication: true, automation: true,
+    work: true, memory: true, vision: true,
+  });
+
+  /* Vision / Camera */
+  const [cameraEnabled, setCameraEnabled] = useState(true);
+  const [cameraResolution, setCameraResolution] = useState('1280x720');
+  const [cameraFps, setCameraFps] = useState([15]);
+  const [motionDetection, setMotionDetection] = useState(true);
+  const [faceRecognition, setFaceRecognition] = useState(true);
+  const [objectDetection, setObjectDetection] = useState(true);
+  const [cameraRetention, setCameraRetention] = useState('7');
+  const [esp32CamIp, setEsp32CamIp] = useState('192.168.1.50');
+
+  /* Network Security */
+  const [firewallEnabled, setFirewallEnabled] = useState(true);
+  const [anomalyDetection, setAnomalyDetection] = useState(true);
+  const [intrusionPrevention, setIntrusionPrevention] = useState(true);
+  const [scanInterval, setScanInterval] = useState([30]);
+  const [threatLevel, setThreatLevel] = useState('medium');
+  const [autoBlock, setAutoBlock] = useState(true);
+  const [vpnEnabled, setVpnEnabled] = useState(false);
+
+  /* Appearance */
+  const [accentColor, setAccentColor] = useState('#3B82F6');
+  const [fontSize, setFontSize] = useState('default');
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [animationsEnabled, setAnimationsEnabled] = useState(true);
+  const [glassEffect, setGlassEffect] = useState(true);
+  const [compactMode, setCompactMode] = useState(false);
 
   useEffect(() => {
     setCurrentPage('/settings');
@@ -272,6 +320,62 @@ export default function Settings() {
             </Section>
           )}
 
+          {/* ═══════════════════════════ AGENTS ═══════════════════════════ */}
+          {activeTab === 'agents' && (
+            <Section title="Agent Management" description="Enable, disable, and configure individual AI agents">
+              <Card>
+                <div className="space-y-3">
+                  <SettingRow label="Auto-Restart Failed Agents" description="Automatically restart agents that crash or become unresponsive">
+                    <Switch checked={agentAutoRestart} onCheckedChange={setAgentAutoRestart} />
+                  </SettingRow>
+
+                  <Slider
+                    value={agentMaxConcurrent}
+                    onValueChange={setAgentMaxConcurrent}
+                    min={1}
+                    max={15}
+                    step={1}
+                    label="Max Concurrent Agents"
+                    showValue
+                  />
+
+                  <div>
+                    <label className="text-xs font-medium uppercase tracking-wider text-nexus-muted">Agent Log Level</label>
+                    <select
+                      value={agentLogLevel}
+                      onChange={(e) => setAgentLogLevel(e.target.value)}
+                      className="mt-1.5 w-full rounded-lg border border-nexus-border bg-nexus-surface/60 px-3 py-2 text-sm text-nexus-text focus-ring"
+                    >
+                      <option value="debug">Debug (Verbose)</option>
+                      <option value="info">Info (Standard)</option>
+                      <option value="warning">Warning Only</option>
+                      <option value="error">Error Only</option>
+                    </select>
+                  </div>
+                </div>
+              </Card>
+
+              <Card header={<div className="flex items-center gap-2"><Layers size={16} className="text-nexus-accent" /><span>Agent Toggle</span></div>}>
+                <div className="space-y-2">
+                  {Object.entries(agentToggles).map(([key, enabled]) => (
+                    <SettingRow
+                      key={key}
+                      label={key.charAt(0).toUpperCase() + key.slice(1) + ' Agent'}
+                      description={enabled ? 'Running' : 'Disabled'}
+                    >
+                      <Switch
+                        checked={enabled}
+                        onCheckedChange={(v) => setAgentToggles((prev) => ({ ...prev, [key]: v }))}
+                      />
+                    </SettingRow>
+                  ))}
+                </div>
+              </Card>
+
+              <Button variant="primary" icon={Save}>Save Agent Settings</Button>
+            </Section>
+          )}
+
           {/* ═══════════════════════════ VOICE ═══════════════════════════ */}
           {activeTab === 'voice' && (
             <Section title="Voice" description="Configure text-to-speech and voice control">
@@ -380,6 +484,156 @@ export default function Settings() {
             </Section>
           )}
 
+          {/* ═══════════════════════════ VISION / CAMERA ═══════════════ */}
+          {activeTab === 'vision' && (
+            <Section title="Vision / Camera" description="Configure ESP32-CAM and AI vision processing">
+              <Card>
+                <div className="space-y-4">
+                  <SettingRow label="Camera System" description="Enable ESP32-CAM monitoring and streaming">
+                    <Switch checked={cameraEnabled} onCheckedChange={setCameraEnabled} />
+                  </SettingRow>
+
+                  <Input
+                    label="ESP32-CAM IP Address"
+                    value={esp32CamIp}
+                    onChange={(e) => setEsp32CamIp(e.target.value)}
+                    prefixIcon={Camera}
+                    placeholder="192.168.1.50"
+                  />
+
+                  <div>
+                    <label className="text-xs font-medium uppercase tracking-wider text-nexus-muted">Resolution</label>
+                    <select
+                      value={cameraResolution}
+                      onChange={(e) => setCameraResolution(e.target.value)}
+                      className="mt-1.5 w-full rounded-lg border border-nexus-border bg-nexus-surface/60 px-3 py-2 text-sm text-nexus-text focus-ring"
+                    >
+                      <option value="640x480">640×480 (VGA)</option>
+                      <option value="800x600">800×600 (SVGA)</option>
+                      <option value="1024x768">1024×768 (XGA)</option>
+                      <option value="1280x720">1280×720 (HD)</option>
+                      <option value="1920x1080">1920×1080 (Full HD)</option>
+                    </select>
+                  </div>
+
+                  <Slider
+                    value={cameraFps}
+                    onValueChange={setCameraFps}
+                    min={5}
+                    max={30}
+                    step={5}
+                    label="Frame Rate (FPS)"
+                    showValue
+                  />
+
+                  <SettingRow label="Motion Detection" description="Alert on detected motion in camera zones">
+                    <Switch checked={motionDetection} onCheckedChange={setMotionDetection} />
+                  </SettingRow>
+
+                  <SettingRow label="Face Recognition" description="Identify known faces from camera feed">
+                    <Switch checked={faceRecognition} onCheckedChange={setFaceRecognition} />
+                  </SettingRow>
+
+                  <SettingRow label="Object Detection" description="Detect and classify objects in camera view">
+                    <Switch checked={objectDetection} onCheckedChange={setObjectDetection} />
+                  </SettingRow>
+
+                  <div>
+                    <label className="text-xs font-medium uppercase tracking-wider text-nexus-muted">Recording Retention</label>
+                    <select
+                      value={cameraRetention}
+                      onChange={(e) => setCameraRetention(e.target.value)}
+                      className="mt-1.5 w-full rounded-lg border border-nexus-border bg-nexus-surface/60 px-3 py-2 text-sm text-nexus-text focus-ring"
+                    >
+                      <option value="1">1 day</option>
+                      <option value="3">3 days</option>
+                      <option value="7">7 days</option>
+                      <option value="14">14 days</option>
+                      <option value="30">30 days</option>
+                    </select>
+                  </div>
+
+                  <div className="rounded-lg border border-nexus-border bg-nexus-bg/60 p-4">
+                    <h4 className="text-sm font-semibold text-nexus-text mb-2 flex items-center gap-2">
+                      <Info size={14} className="text-nexus-accent" />
+                      Vision Detection Zones
+                    </h4>
+                    <p className="text-xs text-nexus-muted">
+                      Configure detection zones on the Vision page. Zones allow you to define specific areas of interest for motion detection and alerts.
+                    </p>
+                  </div>
+
+                  <Button variant="primary" icon={Save}>Save Vision Settings</Button>
+                </div>
+              </Card>
+            </Section>
+          )}
+
+          {/* ═══════════════════════════ NETWORK SECURITY ═══════════════ */}
+          {activeTab === 'network' && (
+            <Section title="Network Security" description="Configure firewall, anomaly detection, and intrusion prevention">
+              <Card>
+                <div className="space-y-4">
+                  <SettingRow label="Firewall" description="Enable network firewall with AI-based rules">
+                    <Switch checked={firewallEnabled} onCheckedChange={setFirewallEnabled} />
+                  </SettingRow>
+
+                  <SettingRow label="Anomaly Detection" description="AI-powered detection of unusual network patterns">
+                    <Switch checked={anomalyDetection} onCheckedChange={setAnomalyDetection} />
+                  </SettingRow>
+
+                  <SettingRow label="Intrusion Prevention" description="Auto-block detected intrusion attempts">
+                    <Switch checked={intrusionPrevention} onCheckedChange={setIntrusionPrevention} />
+                  </SettingRow>
+
+                  <SettingRow label="Auto-Block Threats" description="Automatically block IPs flagged as threats">
+                    <Switch checked={autoBlock} onCheckedChange={setAutoBlock} />
+                  </SettingRow>
+
+                  <SettingRow label="VPN Tunnel" description="Route traffic through encrypted VPN">
+                    <Switch checked={vpnEnabled} onCheckedChange={setVpnEnabled} />
+                  </SettingRow>
+
+                  <Slider
+                    value={scanInterval}
+                    onValueChange={setScanInterval}
+                    min={5}
+                    max={120}
+                    step={5}
+                    label="Scan Interval (seconds)"
+                    showValue
+                  />
+
+                  <div>
+                    <label className="text-xs font-medium uppercase tracking-wider text-nexus-muted">Threat Sensitivity</label>
+                    <select
+                      value={threatLevel}
+                      onChange={(e) => setThreatLevel(e.target.value)}
+                      className="mt-1.5 w-full rounded-lg border border-nexus-border bg-nexus-surface/60 px-3 py-2 text-sm text-nexus-text focus-ring"
+                    >
+                      <option value="low">Low — Only critical threats</option>
+                      <option value="medium">Medium — Suspicious + critical</option>
+                      <option value="high">High — All anomalies flagged</option>
+                    </select>
+                  </div>
+
+                  <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-4">
+                    <h4 className="text-sm font-semibold text-amber-400 mb-1 flex items-center gap-2">
+                      <AlertTriangle size={14} />
+                      Network Shield Status
+                    </h4>
+                    <p className="text-xs text-nexus-muted">
+                      Active protection is monitoring all network interfaces. 
+                      View detailed traffic analysis on the Network page.
+                    </p>
+                  </div>
+
+                  <Button variant="primary" icon={Save}>Save Network Settings</Button>
+                </div>
+              </Card>
+            </Section>
+          )}
+
           {/* ═══════════════════════════ NOTIFICATIONS ═══════════════════ */}
           {activeTab === 'notifications' && (
             <Section title="Notifications" description="Control how you receive alerts">
@@ -456,7 +710,95 @@ export default function Settings() {
               </Card>
             </Section>
           )}
+          {/* ═══════════════════════════ APPEARANCE ═══════════════════ */}
+          {activeTab === 'appearance' && (
+            <Section title="Appearance" description="Customize the look and feel of Nexus AI">
+              <Card>
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-xs font-medium uppercase tracking-wider text-nexus-muted">Theme</label>
+                    <div className="flex gap-3 mt-2">
+                      {[
+                        { value: 'dark', label: 'Dark', icon: Moon, desc: 'Default dark theme' },
+                        { value: 'light', label: 'Light', icon: Sun, desc: 'Light mode' },
+                        { value: 'system', label: 'System', icon: Monitor, desc: 'Follow OS setting' },
+                      ].map((t) => (
+                        <button
+                          key={t.value}
+                          onClick={() => setTheme(t.value as any)}
+                          className={`flex-1 rounded-lg border p-3 text-center transition-all ${
+                            theme === t.value
+                              ? 'border-nexus-primary bg-nexus-primary/10 text-nexus-primary'
+                              : 'border-nexus-border bg-nexus-card/40 text-nexus-muted hover:border-nexus-primary/40'
+                          }`}
+                        >
+                          <t.icon size={18} className="mx-auto mb-1" />
+                          <p className="text-xs font-medium">{t.label}</p>
+                          <p className="text-[10px] text-nexus-muted mt-0.5">{t.desc}</p>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
+                  <div>
+                    <label className="text-xs font-medium uppercase tracking-wider text-nexus-muted">Accent Color</label>
+                    <div className="flex gap-2 mt-2">
+                      {[
+                        { color: '#3B82F6', name: 'Blue' },
+                        { color: '#8B5CF6', name: 'Purple' },
+                        { color: '#06B6D4', name: 'Cyan' },
+                        { color: '#10B981', name: 'Emerald' },
+                        { color: '#F59E0B', name: 'Amber' },
+                        { color: '#EC4899', name: 'Pink' },
+                        { color: '#EF4444', name: 'Red' },
+                      ].map((c) => (
+                        <button
+                          key={c.color}
+                          onClick={() => setAccentColor(c.color)}
+                          className={`h-8 w-8 rounded-full border-2 transition-transform hover:scale-110 ${
+                            accentColor === c.color ? 'border-white scale-110' : 'border-transparent'
+                          }`}
+                          style={{ backgroundColor: c.color }}
+                          title={c.name}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-medium uppercase tracking-wider text-nexus-muted">Font Size</label>
+                    <select
+                      value={fontSize}
+                      onChange={(e) => setFontSize(e.target.value)}
+                      className="mt-1.5 w-full rounded-lg border border-nexus-border bg-nexus-surface/60 px-3 py-2 text-sm text-nexus-text focus-ring"
+                    >
+                      <option value="small">Small</option>
+                      <option value="default">Default</option>
+                      <option value="large">Large</option>
+                    </select>
+                  </div>
+
+                  <SettingRow label="UI Animations" description="Enable smooth transitions and motion effects">
+                    <Switch checked={animationsEnabled} onCheckedChange={setAnimationsEnabled} />
+                  </SettingRow>
+
+                  <SettingRow label="Glass Effect" description="Apply backdrop blur and transparency effects">
+                    <Switch checked={glassEffect} onCheckedChange={setGlassEffect} />
+                  </SettingRow>
+
+                  <SettingRow label="Compact Mode" description="Reduce padding and spacing for more content">
+                    <Switch checked={compactMode} onCheckedChange={setCompactMode} />
+                  </SettingRow>
+
+                  <SettingRow label="Sidebar Default Collapsed" description="Start with sidebar collapsed on load">
+                    <Switch checked={sidebarCollapsed} onCheckedChange={setSidebarCollapsed} />
+                  </SettingRow>
+
+                  <Button variant="primary" icon={Save}>Save Appearance</Button>
+                </div>
+              </Card>
+            </Section>
+          )}
           {/* ═══════════════════════════ SYSTEM ═══════════════════════ */}
           {activeTab === 'system' && (
             <Section title="System" description="System configuration and diagnostics">

@@ -19,6 +19,7 @@ const Settings   = lazy(() => import('./pages/Settings'));
 const Voice      = lazy(() => import('./pages/Voice'));
 const Vision     = lazy(() => import('./pages/Vision'));
 const Network    = lazy(() => import('./pages/Network'));
+const Agents     = lazy(() => import('./pages/Agents'));
 
 /* ------------------------------------------------------------------ */
 /*  Loading fallback                                                   */
@@ -106,6 +107,7 @@ export default function App() {
               <Route path="/voice"    element={<AnimatedPage><Voice /></AnimatedPage>} />
               <Route path="/vision"   element={<AnimatedPage><Vision /></AnimatedPage>} />
               <Route path="/network"  element={<AnimatedPage><Network /></AnimatedPage>} />
+              <Route path="/agents"   element={<AnimatedPage><Agents /></AnimatedPage>} />
             </Routes>
           </AnimatePresence>
         </Suspense>
