@@ -73,6 +73,21 @@ const TeamChat           = lazy(() => import('./pages/TeamChat'));
 const DataExplorer       = lazy(() => import('./pages/DataExplorer'));
 const CommandCenter      = lazy(() => import('./pages/CommandCenter'));
 const UptimeMonitor      = lazy(() => import('./pages/UptimeMonitor'));
+const GitManager         = lazy(() => import('./pages/GitManager'));
+const ContainerManager   = lazy(() => import('./pages/ContainerManager'));
+const SecretsVault       = lazy(() => import('./pages/SecretsVault'));
+const RateLimiter        = lazy(() => import('./pages/RateLimiter'));
+const QueueMonitor       = lazy(() => import('./pages/QueueMonitor'));
+const EnvironmentManager = lazy(() => import('./pages/EnvironmentManager'));
+const EmailComposer      = lazy(() => import('./pages/EmailComposer'));
+const CodeEditor         = lazy(() => import('./pages/CodeEditor'));
+const ResourceMonitor    = lazy(() => import('./pages/ResourceMonitor'));
+const ChatbotBuilder     = lazy(() => import('./pages/ChatbotBuilder'));
+const FormBuilder        = lazy(() => import('./pages/FormBuilder'));
+const APIDocumentation   = lazy(() => import('./pages/APIDocumentation'));
+const SSHTerminal        = lazy(() => import('./pages/SSHTerminal'));
+const ServiceMesh        = lazy(() => import('./pages/ServiceMesh'));
+const CacheManager       = lazy(() => import('./pages/CacheManager'));
 
 /* ------------------------------------------------------------------ */
 /*  Loading fallback                                                   */
@@ -214,6 +229,21 @@ export default function App() {
               <Route path="/data-explorer"   element={<AnimatedPage><DataExplorer /></AnimatedPage>} />
               <Route path="/command-center"  element={<AnimatedPage><CommandCenter /></AnimatedPage>} />
               <Route path="/uptime"          element={<AnimatedPage><UptimeMonitor /></AnimatedPage>} />
+              <Route path="/git"             element={<AnimatedPage><GitManager /></AnimatedPage>} />
+              <Route path="/containers"      element={<AnimatedPage><ContainerManager /></AnimatedPage>} />
+              <Route path="/secrets"         element={<AnimatedPage><SecretsVault /></AnimatedPage>} />
+              <Route path="/rate-limits"     element={<AnimatedPage><RateLimiter /></AnimatedPage>} />
+              <Route path="/queues"          element={<AnimatedPage><QueueMonitor /></AnimatedPage>} />
+              <Route path="/environments"    element={<AnimatedPage><EnvironmentManager /></AnimatedPage>} />
+              <Route path="/email"           element={<AnimatedPage><EmailComposer /></AnimatedPage>} />
+              <Route path="/code-editor"     element={<AnimatedPage><CodeEditor /></AnimatedPage>} />
+              <Route path="/resources"       element={<AnimatedPage><ResourceMonitor /></AnimatedPage>} />
+              <Route path="/chatbot-builder" element={<AnimatedPage><ChatbotBuilder /></AnimatedPage>} />
+              <Route path="/form-builder"    element={<AnimatedPage><FormBuilder /></AnimatedPage>} />
+              <Route path="/api-docs"        element={<AnimatedPage><APIDocumentation /></AnimatedPage>} />
+              <Route path="/ssh"             element={<AnimatedPage><SSHTerminal /></AnimatedPage>} />
+              <Route path="/service-mesh"    element={<AnimatedPage><ServiceMesh /></AnimatedPage>} />
+              <Route path="/cache"           element={<AnimatedPage><CacheManager /></AnimatedPage>} />
             </Routes>
           </AnimatePresence>
         </Suspense>

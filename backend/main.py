@@ -280,6 +280,12 @@ from api.routes.backups import router as backups_router
 from api.routes.api_keys import router as api_keys_router
 from api.routes.users import router as users_router
 from api.routes.snippets import router as snippets_router
+from api.routes.git import router as git_router
+from api.routes.containers import router as containers_router
+from api.routes.secrets import router as secrets_router
+from api.routes.rate_limits import router as rate_limits_router
+from api.routes.queues import router as queues_router
+from api.routes.environments import router as environments_router
 from api.websocket import ws_router
 
 app.include_router(chat_router)
@@ -311,6 +317,12 @@ app.include_router(backups_router)
 app.include_router(api_keys_router)
 app.include_router(users_router)
 app.include_router(snippets_router)
+app.include_router(git_router)
+app.include_router(containers_router)
+app.include_router(secrets_router)
+app.include_router(rate_limits_router)
+app.include_router(queues_router)
+app.include_router(environments_router)
 app.include_router(ws_router)
 
 
