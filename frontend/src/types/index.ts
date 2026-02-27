@@ -292,13 +292,29 @@ export interface SystemInfo {
 
 export interface SystemResources {
   cpu_percent: number;
-  memory_used_mb: number;
-  memory_total_mb: number;
+  memory_percent: number;
+  memory_used_gb: number;
+  memory_total_gb: number;
+  memory_used_mb?: number;
+  memory_total_mb?: number;
+  disk_percent: number;
   disk_used_gb: number;
   disk_total_gb: number;
-  network_sent_mb: number;
-  network_recv_mb: number;
+  network: {
+    bytes_sent: number;
+    bytes_recv: number;
+    packets_sent: number;
+    packets_recv: number;
+    speed_mbps?: number;
+  };
+  network_speed_mbps: number;
+  network_speed_percent: number;
+  network_link_speed_mbps: number;
+  network_sent_mb?: number;
+  network_recv_mb?: number;
   gpu_percent?: number;
+  process_count?: number;
+  timestamp?: string;
 }
 
 export type NotificationType = 'info' | 'success' | 'warning' | 'error';

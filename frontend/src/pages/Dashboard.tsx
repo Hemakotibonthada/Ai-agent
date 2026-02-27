@@ -271,9 +271,9 @@ export default function Dashboard() {
   const disk = resources
     ? Math.round(resources.disk_percent ?? ((resources.disk_used_gb / resources.disk_total_gb) * 100))
     : 44;
-  const net = resources
-    ? Math.min(100, Math.round((resources.network?.bytes_recv ?? 0) / (1024 * 1024 * 100)))
-    : 12;
+  const net = resources?.network_speed_percent
+    ? Math.round(resources.network_speed_percent)
+    : (resources ? Math.min(100, Math.round((resources.network?.bytes_recv ?? 0) / (1024 * 1024 * 100))) : 12);
 
   return (
     <motion.div
@@ -326,7 +326,7 @@ export default function Dashboard() {
             <SystemGauge label="CPU" value={cpu} icon={Cpu} color="#3B82F6" />
             <SystemGauge label="RAM" value={ram} icon={MemoryStick} color="#8B5CF6" />
             <SystemGauge label="Disk" value={disk} icon={HardDrive} color="#06B6D4" />
-            <SystemGauge label="Network" value={net} icon={Wifi} color="#10B981" />
+            <SystemGauge label="Speed" value={net} icon={Wifi} color="#10B981" />
           </div>
         </Card>
       </motion.div>

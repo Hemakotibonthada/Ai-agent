@@ -51,6 +51,9 @@ class SystemResourcesResponse(BaseModel):
     disk_used_gb: float = 0.0
     disk_total_gb: float = 0.0
     network: Dict[str, Any] = {}
+    network_speed_mbps: float = 0.0
+    network_speed_percent: float = 0.0
+    network_link_speed_mbps: float = 0.0
     process_count: int = 0
     timestamp: str
 
@@ -160,13 +163,35 @@ async def get_system_resources():
         mem = psutil.virtual_memory()
         disk = psutil.disk_usage("/")
 
-        # Network
-        net = psutil.net_io_counters()
+        # Network — measure speed over a short interval
+        net_before = psutil.net_io_counters()
+        import asyncio
+        await asyncio.sleep(0.3)
+        net_after = psutil.net_io_counters()
+
+        bytes_sent_sec = (net_after.bytes_sent - net_before.bytes_sent) / 0.3
+        bytes_recv_sec = (net_after.bytes_recv - net_before.bytes_recv) / 0.3
+        speed_mbps = round((bytes_sent_sec + bytes_recv_sec) * 8 / (1024 * 1024), 2)
+
+        # Get NIC link speed (Mbps) for percentage calculation
+        link_speed_mbps = 1000.0  # default 1 Gbps
+        try:
+            nic_stats = psutil.net_if_stats()
+            for name, stat in nic_stats.items():
+                if stat.isup and stat.speed > 0:
+                    link_speed_mbps = float(stat.speed)
+                    break
+        except Exception:
+            pass
+
+        speed_percent = round(min(100.0, (speed_mbps / link_speed_mbps) * 100), 1)
+
         network = {
-            "bytes_sent": net.bytes_sent,
-            "bytes_recv": net.bytes_recv,
-            "packets_sent": net.packets_sent,
-            "packets_recv": net.packets_recv,
+            "bytes_sent": net_after.bytes_sent,
+            "bytes_recv": net_after.bytes_recv,
+            "packets_sent": net_after.packets_sent,
+            "packets_recv": net_after.packets_recv,
+            "speed_mbps": speed_mbps,
         }
 
         return SystemResourcesResponse(
@@ -178,6 +203,9 @@ async def get_system_resources():
             disk_used_gb=round(disk.used / (1024**3), 2),
             disk_total_gb=round(disk.total / (1024**3), 2),
             network=network,
+            network_speed_mbps=speed_mbps,
+            network_speed_percent=speed_percent,
+            network_link_speed_mbps=link_speed_mbps,
             process_count=len(psutil.pids()),
             timestamp=datetime.utcnow().isoformat(),
         )
