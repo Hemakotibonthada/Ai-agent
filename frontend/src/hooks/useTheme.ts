@@ -65,12 +65,12 @@ export const THEMES: ThemeDef[] = [
     mode: 'dark',
     description: 'Warm amber and crimson desert tones',
     colors: {
-      surface: '36 25 24', bg: '20 14 13', card: '44 32 30', border: '68 44 40',
+      surface: '48 30 24', bg: '32 18 14', card: '60 42 34', border: '88 56 44',
       text: '242 224 216', muted: '176 140 128',
       primary: '249 115 22', secondary: '239 68 68', accent: '251 191 36',
       success: '132 204 22', warning: '251 191 36', error: '239 68 68',
     },
-    preview: { bg: '#140e0d', card: '#2c201e', primary: '#F97316', secondary: '#EF4444', accent: '#FBBF24' },
+    preview: { bg: '#20120e', card: '#3c2a22', primary: '#F97316', secondary: '#EF4444', accent: '#FBBF24' },
   },
   {
     id: 'forest',
@@ -78,12 +78,12 @@ export const THEMES: ThemeDef[] = [
     mode: 'dark',
     description: 'Serene emerald greens from deep woods',
     colors: {
-      surface: '22 36 28', bg: '12 22 16', card: '28 44 34', border: '40 64 48',
+      surface: '22 46 28', bg: '14 30 18', card: '28 56 35', border: '44 78 52',
       text: '220 237 222', muted: '134 176 142',
       primary: '16 185 129', secondary: '34 197 94', accent: '45 212 191',
       success: '34 197 94', warning: '250 204 21', error: '248 113 113',
     },
-    preview: { bg: '#0c1610', card: '#1c2c22', primary: '#10B981', secondary: '#22C55E', accent: '#2DD4BF' },
+    preview: { bg: '#0e1e12', card: '#1c3823', primary: '#10B981', secondary: '#22C55E', accent: '#2DD4BF' },
   },
   {
     id: 'ocean',
@@ -91,12 +91,12 @@ export const THEMES: ThemeDef[] = [
     mode: 'dark',
     description: 'Deep sea blues and coastal teals',
     colors: {
-      surface: '18 30 48', bg: '10 18 32', card: '24 38 58', border: '36 56 84',
+      surface: '18 34 58', bg: '12 22 42', card: '24 44 72', border: '38 64 100',
       text: '210 228 246', muted: '128 164 198',
       primary: '56 189 248', secondary: '99 102 241', accent: '34 211 238',
       success: '52 211 153', warning: '251 191 36', error: '251 113 133',
     },
-    preview: { bg: '#0a1220', card: '#18263a', primary: '#38BDF8', secondary: '#6366F1', accent: '#22D3EE' },
+    preview: { bg: '#0c162a', card: '#182c48', primary: '#38BDF8', secondary: '#6366F1', accent: '#22D3EE' },
   },
   {
     id: 'rose',
@@ -117,12 +117,12 @@ export const THEMES: ThemeDef[] = [
     mode: 'dark',
     description: 'Neon matrix vibes with electric greens',
     colors: {
-      surface: '16 8 28', bg: '8 4 18', card: '24 14 40', border: '52 24 76',
+      surface: '28 12 48', bg: '16 6 30', card: '38 18 62', border: '62 30 90',
       text: '232 220 255', muted: '160 130 200',
       primary: '0 255 136', secondary: '255 0 200', accent: '0 240 255',
       success: '0 255 136', warning: '255 240 0', error: '255 60 100',
     },
-    preview: { bg: '#08041c', card: '#180e28', primary: '#00FF88', secondary: '#FF00C8', accent: '#00F0FF' },
+    preview: { bg: '#10061e', card: '#26123e', primary: '#00FF88', secondary: '#FF00C8', accent: '#00F0FF' },
   },
   {
     id: 'nord',
