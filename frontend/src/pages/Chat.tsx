@@ -239,7 +239,9 @@ export default function Chat() {
 
   /* Load conversations */
   useEffect(() => {
-    chatApi.conversations().then(setConversations).catch(() => {});
+    chatApi.conversations()
+      .then((data) => { if (Array.isArray(data)) setConversations(data); })
+      .catch(() => {});
   }, [setConversations]);
 
   /* Load history when conversation changes */
@@ -248,7 +250,7 @@ export default function Chat() {
     setLoading(true);
     chatApi
       .history(activeConversationId)
-      .then(setMessages)
+      .then((data) => { if (Array.isArray(data)) setMessages(data); })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, [activeConversationId, setMessages]);
@@ -280,8 +282,8 @@ export default function Chat() {
         message: text,
         conversation_id: activeConversationId ?? undefined,
       });
-      addMessage(res.message);
-      if (!activeConversationId) {
+      if (res?.message) addMessage(res.message);
+      if (!activeConversationId && res?.conversation_id) {
         setActiveConversation(res.conversation_id);
       }
     } catch {

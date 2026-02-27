@@ -400,7 +400,9 @@ export default function Reports() {
 
   useEffect(() => {
     setCurrentPage('/reports');
-    reportsApi.list().then(setReports).catch(() => {});
+    reportsApi.list()
+      .then((data) => { if (Array.isArray(data)) setReports(data); })
+      .catch(() => {});
   }, [setCurrentPage]);
 
   const filtered = reports.filter((r) =>

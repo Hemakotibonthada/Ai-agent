@@ -325,9 +325,9 @@ export default function Home() {
   useEffect(() => {
     setCurrentPage('/home');
     Promise.allSettled([
-      homeApi.rooms().then(setRooms),
-      homeApi.devices().then(setDevices),
-      homeApi.sensors().then(setSensors),
+      homeApi.rooms().then((data) => { if (Array.isArray(data)) setRooms(data); }),
+      homeApi.devices().then((data) => { if (Array.isArray(data)) setDevices(data); }),
+      homeApi.sensors().then((data) => { if (Array.isArray(data)) setSensors(data); }),
     ]).finally(() => setLoading(false));
   }, [setCurrentPage, setRooms, setDevices, setSensors]);
 

@@ -262,16 +262,21 @@ function SystemGauge({
   value,
   icon: Icon,
   color,
+  unit = '%',
+  maxValue = 100,
 }: {
   label: string;
   value: number;
   icon: React.ElementType;
   color: string;
+  unit?: string;
+  maxValue?: number;
 }) {
   const size = 80;
   const stroke = 6;
   const radius = (size - stroke) / 2;
   const circ = 2 * Math.PI * radius;
+  const fillRatio = Math.min(1, value / maxValue);
 
   return (
     <motion.div
@@ -298,14 +303,15 @@ function SystemGauge({
             style={{ filter: `drop-shadow(0 0 6px ${color})` }}
             strokeDasharray={circ}
             initial={{ strokeDashoffset: circ }}
-            animate={{ strokeDashoffset: circ * (1 - value / 100) }}
+            animate={{ strokeDashoffset: circ * (1 - fillRatio) }}
             transition={{ duration: 1, ease: 'easeOut' }}
           />
         </svg>
         <div className="absolute flex flex-col items-center">
           <Icon size={16} style={{ color }} />
           <span className="text-xs font-bold text-nexus-text mt-0.5">
-            <AnimatedNumber value={value} format="none" className="text-xs" />%
+            <AnimatedNumber value={value} format="none" className="text-xs" />
+            {unit}
           </span>
         </div>
       </div>
@@ -404,9 +410,10 @@ export default function Dashboard() {
   const disk = resources
     ? Math.round(resources.disk_percent ?? ((resources.disk_used_gb / resources.disk_total_gb) * 100))
     : 44;
-  const net = resources?.network_speed_percent
-    ? Math.round(resources.network_speed_percent)
-    : (resources ? Math.min(100, Math.round((resources.network?.bytes_recv ?? 0) / (1024 * 1024 * 100))) : 12);
+  const netMbps = resources?.network_speed_mbps
+    ? Math.round(resources.network_speed_mbps)
+    : 0;
+  const linkSpeed = resources?.network_link_speed_mbps ?? 1000;
 
   return (
     <motion.div
@@ -459,7 +466,7 @@ export default function Dashboard() {
             <SystemGauge label="CPU" value={cpu} icon={Cpu} color="#3B82F6" />
             <SystemGauge label="RAM" value={ram} icon={MemoryStick} color="#8B5CF6" />
             <SystemGauge label="Disk" value={disk} icon={HardDrive} color="#06B6D4" />
-            <SystemGauge label="Speed" value={net} icon={Wifi} color="#10B981" />
+            <SystemGauge label="Wifi" value={netMbps} icon={Wifi} color="#10B981" unit=" Mb" maxValue={linkSpeed} />
           </div>
         </Card>
       </motion.div>
@@ -621,6 +628,32 @@ export default function Dashboard() {
                 <p className="text-sm font-semibold text-nexus-text">Great</p>
                 <p className="text-[10px] text-nexus-muted">3-day streak</p>
               </div>
+            </div>
+          </Card>
+
+          {/* Agents Overview */}
+          <Card size="sm" hoverable>
+            <div className="flex items-center justify-between mb-2 cursor-pointer" onClick={() => navigate('/agents')}>
+              <span className="text-xs font-semibold text-nexus-muted uppercase tracking-wider">AI Agents</span>
+              <Bot size={14} className="text-nexus-secondary" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="text-center rounded-lg bg-nexus-surface/50 border border-nexus-border/30 p-2">
+                <p className="text-lg font-bold text-emerald-400">
+                  {agents.filter((a) => a.status === 'active').length || 10}
+                </p>
+                <p className="text-[9px] text-nexus-muted uppercase">Active</p>
+              </div>
+              <div className="text-center rounded-lg bg-nexus-surface/50 border border-nexus-border/30 p-2">
+                <p className="text-lg font-bold text-nexus-text">
+                  {agents.length || 15}
+                </p>
+                <p className="text-[9px] text-nexus-muted uppercase">Total</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-1 mt-2">
+              <StatusIndicator status="active" size="sm" />
+              <span className="text-[10px] text-nexus-muted">All systems operational</span>
             </div>
           </Card>
         </motion.div>

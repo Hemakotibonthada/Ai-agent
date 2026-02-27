@@ -20,12 +20,17 @@ class AgentInfo(BaseModel):
     """Summary information about a single agent."""
     name: str
     agent_id: str
+    display_name: str = ""
     description: str
     status: str
     capabilities: List[str] = []
+    icon: str = "bot"
     action_count: int = 0
     success_count: int = 0
     error_count: int = 0
+    tasks_completed: int = 0
+    uptime_seconds: float = 0.0
+    error_rate: float = 0.0
     avg_processing_time_ms: float = 0.0
     last_action_at: Optional[str] = None
     created_at: str
@@ -86,24 +91,69 @@ class AgentListResponse(BaseModel):
 router = APIRouter(prefix="/api/agents", tags=["Agents"])
 
 
+# Icon mapping for agent names
+_ICON_MAP = {
+    "orchestrator": "brain", "personal": "user", "home": "home",
+    "task": "list-todo", "health": "heart", "finance": "dollar-sign",
+    "security": "shield-check", "voice": "mic", "learning": "book-open",
+    "report": "file-text", "communication": "message-square",
+    "automation": "zap", "work": "briefcase", "memory": "database",
+    "vision": "camera",
+}
+
+
+def _display_name(name: str) -> str:
+    """Convert agent name to a human-friendly display name."""
+    words = name.replace("_", " ").replace("-", " ").split()
+    return " ".join(w.capitalize() for w in words)
+
+
 def _build_agent_info(agent) -> AgentInfo:
     """Build AgentInfo from an agent instance."""
     avg_time = 0.0
-    if hasattr(agent, "_action_count") and agent._action_count > 0:
-        avg_time = agent._total_processing_time_ms / agent._action_count
+    action_count = getattr(agent, "_action_count", 0)
+    success_count = getattr(agent, "_success_count", 0)
+    error_count = getattr(agent, "_error_count", 0)
+
+    if action_count > 0:
+        avg_time = getattr(agent, "_total_processing_time_ms", 0.0) / action_count
+
+    # Compute uptime
+    uptime = 0.0
+    if hasattr(agent, "_created_at") and agent._created_at:
+        uptime = (datetime.utcnow() - agent._created_at).total_seconds()
+
+    # tasks_completed = success_count (real metric)
+    tasks_completed = success_count
+
+    # error_rate = error_count / max(action_count,1) * 100
+    error_rate = round((error_count / max(action_count, 1)) * 100, 2)
+
+    # Determine icon
+    agent_name = agent.name.lower()
+    icon = _ICON_MAP.get(agent_name, "bot")
+    for key, val in _ICON_MAP.items():
+        if key in agent_name:
+            icon = val
+            break
 
     return AgentInfo(
         name=agent.name,
         agent_id=getattr(agent, "agent_id", ""),
+        display_name=getattr(agent, "display_name", _display_name(agent.name)),
         description=getattr(agent, "description", ""),
         status=agent.status.value if hasattr(agent.status, "value") else str(agent.status),
         capabilities=[
             c.value if hasattr(c, "value") else str(c)
             for c in (agent.get_capabilities() if hasattr(agent, "get_capabilities") else [])
         ],
-        action_count=getattr(agent, "_action_count", 0),
-        success_count=getattr(agent, "_success_count", 0),
-        error_count=getattr(agent, "_error_count", 0),
+        icon=icon,
+        action_count=action_count,
+        success_count=success_count,
+        error_count=error_count,
+        tasks_completed=tasks_completed,
+        uptime_seconds=round(uptime, 2),
+        error_rate=error_rate,
         avg_processing_time_ms=round(avg_time, 2),
         last_action_at=(
             agent._last_action_at.isoformat()

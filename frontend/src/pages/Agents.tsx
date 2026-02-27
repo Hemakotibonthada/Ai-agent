@@ -223,6 +223,27 @@ const chartTooltipStyle = {
 };
 
 /* ------------------------------------------------------------------ */
+/*  Normalize agent data from API                                      */
+/* ------------------------------------------------------------------ */
+function normalizeAgent(raw: Record<string, unknown>): Agent {
+  const name = (raw.name as string) ?? 'unknown';
+  const actionCount = (raw.action_count as number) ?? 0;
+  const errorCount = (raw.error_count as number) ?? 0;
+  const successCount = (raw.success_count as number) ?? 0;
+  return {
+    name,
+    display_name: (raw.display_name as string) ?? name.replace(/[_-]/g, ' ').replace(/\\b\\w/g, c => c.toUpperCase()),
+    description: (raw.description as string) ?? '',
+    status: ((raw.status as string) ?? 'idle') as AgentStatus,
+    capabilities: (raw.capabilities as string[]) ?? [],
+    icon: (raw.icon as string) ?? 'bot',
+    tasks_completed: (raw.tasks_completed as number) ?? successCount,
+    uptime_seconds: (raw.uptime_seconds as number) ?? 0,
+    error_rate: (raw.error_rate as number) ?? (actionCount > 0 ? +((errorCount / actionCount) * 100).toFixed(2) : 0),
+  };
+}
+
+/* ------------------------------------------------------------------ */
 /*  Main Component                                                     */
 /* ------------------------------------------------------------------ */
 export default function Agents() {
@@ -241,8 +262,9 @@ export default function Agents() {
       const result = await agentsApi.list();
       const list = Array.isArray(result) ? result : [];
       if (list.length > 0) {
-        setAgentData(list as Agent[]);
-        setAgents(list);
+        const normalized = list.map((a: Record<string, unknown>) => normalizeAgent(a as Record<string, unknown>));
+        setAgentData(normalized);
+        setAgents(normalized);
       } else {
         setAgentData(MOCK_AGENTS);
       }
@@ -275,11 +297,11 @@ export default function Agents() {
     () =>
       agents
         .slice()
-        .sort((a, b) => b.tasks_completed - a.tasks_completed)
+        .sort((a, b) => (b.tasks_completed ?? 0) - (a.tasks_completed ?? 0))
         .map((a) => ({
-          name: a.display_name,
-          tasks: a.tasks_completed,
-          fill: STATUS_COLORS[a.status],
+          name: a.display_name ?? a.name ?? 'Agent',
+          tasks: a.tasks_completed ?? 0,
+          fill: STATUS_COLORS[a.status] ?? '#6B7280',
         })),
     [agents],
   );
@@ -287,8 +309,8 @@ export default function Agents() {
   const pieData = useMemo(
     () =>
       agents.map((a, i) => ({
-        name: a.display_name,
-        value: a.tasks_completed,
+        name: a.display_name ?? a.name ?? 'Agent',
+        value: a.tasks_completed ?? 0,
         color: CHART_COLORS[i % CHART_COLORS.length],
       })),
     [agents],
@@ -297,10 +319,10 @@ export default function Agents() {
   const radarData = useMemo(
     () =>
       agents.map((a) => ({
-        agent: a.display_name.split(' ')[0],
-        performance: Math.min(100, Math.round((a.tasks_completed / 100) * (100 - a.error_rate))),
-        uptime: Math.round((a.uptime_seconds / 864000) * 100),
-        reliability: Math.round(100 - a.error_rate * 10),
+        agent: (a.display_name ?? a.name ?? 'Agent').split(' ')[0],
+        performance: Math.min(100, Math.round(((a.tasks_completed ?? 0) / 100) * (100 - (a.error_rate ?? 0)))),
+        uptime: Math.round(((a.uptime_seconds ?? 0) / 864000) * 100),
+        reliability: Math.round(100 - (a.error_rate ?? 0) * 10),
       })),
     [agents],
   );
@@ -501,12 +523,12 @@ export default function Agents() {
                       <p className="text-[9px] text-nexus-muted uppercase tracking-wider">Tasks</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-xs font-bold text-nexus-text">{formatUptime(agent.uptime_seconds)}</p>
+                      <p className="text-xs font-bold text-nexus-text">{formatUptime(agent.uptime_seconds ?? 0)}</p>
                       <p className="text-[9px] text-nexus-muted uppercase tracking-wider">Uptime</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-xs font-bold" style={{ color: getHealthColor(agent.error_rate) }}>
-                        {agent.error_rate.toFixed(1)}%
+                      <p className="text-xs font-bold" style={{ color: getHealthColor(agent.error_rate ?? 0) }}>
+                        {(agent.error_rate ?? 0).toFixed(1)}%
                       </p>
                       <p className="text-[9px] text-nexus-muted uppercase tracking-wider">Errors</p>
                     </div>
@@ -516,14 +538,14 @@ export default function Agents() {
                   <div className="mt-3">
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-[10px] text-nexus-muted">Success Rate</span>
-                      <span className="text-[10px] font-medium" style={{ color: getHealthColor(agent.error_rate) }}>
+                      <span className="text-[10px] font-medium" style={{ color: getHealthColor(agent.error_rate ?? 0) }}>
                         {successRate.toFixed(1)}%
                       </span>
                     </div>
                     <div className="h-1.5 w-full rounded-full bg-nexus-border/30 overflow-hidden">
                       <motion.div
                         className="h-full rounded-full"
-                        style={{ backgroundColor: getHealthColor(agent.error_rate) }}
+                        style={{ backgroundColor: getHealthColor(agent.error_rate ?? 0) }}
                         initial={{ width: 0 }}
                         animate={{ width: `${successRate}%` }}
                         transition={{ duration: 0.8, delay: idx * 0.04 }}
@@ -545,19 +567,19 @@ export default function Agents() {
                           <div className="flex items-center justify-between">
                             <span className="text-[11px] text-nexus-muted">Uptime %</span>
                             <span className="text-[11px] font-medium text-nexus-text">
-                              {((agent.uptime_seconds / 864000) * 100).toFixed(1)}%
+                              {(((agent.uptime_seconds ?? 0) / 864000) * 100).toFixed(1)}%
                             </span>
                           </div>
                           <div className="flex items-center justify-between">
                             <span className="text-[11px] text-nexus-muted">Avg Tasks / Day</span>
                             <span className="text-[11px] font-medium text-nexus-text">
-                              {Math.round(agent.tasks_completed / Math.max(1, agent.uptime_seconds / 86400))}
+                              {Math.round((agent.tasks_completed ?? 0) / Math.max(1, (agent.uptime_seconds ?? 1) / 86400))}
                             </span>
                           </div>
                           <div className="flex items-center justify-between">
                             <span className="text-[11px] text-nexus-muted">Health Score</span>
-                            <Badge variant={STATUS_BADGE_VARIANT[agent.error_rate < 1 ? 'active' : agent.error_rate < 2 ? 'idle' : 'error']}>
-                              {getHealthLabel(agent.error_rate)}
+                            <Badge variant={STATUS_BADGE_VARIANT[(agent.error_rate ?? 0) < 1 ? 'active' : (agent.error_rate ?? 0) < 2 ? 'idle' : 'error']}>
+                              {getHealthLabel(agent.error_rate ?? 0)}
                             </Badge>
                           </div>
                           <Button
@@ -895,9 +917,9 @@ export default function Agents() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {agents.map((agent) => {
               const Icon = getAgentIcon(agent.name);
-              const healthColor = getHealthColor(agent.error_rate);
-              const uptimePercent = ((agent.uptime_seconds / 864000) * 100).toFixed(1);
-              const healthScore = Math.round(100 - agent.error_rate * 10);
+              const healthColor = getHealthColor(agent.error_rate ?? 0);
+              const uptimePercent = (((agent.uptime_seconds ?? 0) / 864000) * 100).toFixed(1);
+              const healthScore = Math.round(100 - (agent.error_rate ?? 0) * 10);
 
               return (
                 <motion.div
@@ -952,7 +974,7 @@ export default function Agents() {
                       <div className="flex items-center justify-between">
                         <span className="text-[9px] text-nexus-muted">Error Rate</span>
                         <span className="text-[9px] font-medium" style={{ color: healthColor }}>
-                          {agent.error_rate.toFixed(1)}%
+                          {(agent.error_rate ?? 0).toFixed(1)}%
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
@@ -962,7 +984,7 @@ export default function Agents() {
                       <div className="flex items-center justify-between">
                         <span className="text-[9px] text-nexus-muted">Health</span>
                         <span className="text-[9px] font-medium" style={{ color: healthColor }}>
-                          {getHealthLabel(agent.error_rate)}
+                          {getHealthLabel(agent.error_rate ?? 0)}
                         </span>
                       </div>
                     </div>

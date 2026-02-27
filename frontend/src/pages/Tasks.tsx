@@ -442,7 +442,9 @@ export default function Tasks() {
 
   useEffect(() => {
     setCurrentPage('/tasks');
-    tasksApi.list().then(setTasks).catch(() => setTasks(mockTasks));
+    tasksApi.list()
+      .then((data) => { if (Array.isArray(data) && data.length > 0) setTasks(data); })
+      .catch(() => setTasks(mockTasks));
   }, [setCurrentPage, setTasks]);
 
   /* Filtered tasks */
