@@ -6,7 +6,7 @@ router = APIRouter()
 
 
 def _get_service():
-    from ...services.audit_log_service import get_audit_log_service
+    from services.audit_log_service import get_audit_log_service
     return get_audit_log_service()
 
 
@@ -19,7 +19,7 @@ async def list_audit_entries(
     limit: int = Query(default=100, le=500),
     offset: int = 0,
 ):
-    from ...services.audit_log_service import AuditFilter, AuditSeverity, AuditCategory
+    from services.audit_log_service import AuditFilter, AuditSeverity, AuditCategory
     svc = _get_service()
     f = AuditFilter(
         severity=AuditSeverity(severity) if severity else None,

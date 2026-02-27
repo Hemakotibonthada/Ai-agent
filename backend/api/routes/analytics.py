@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
-from ...services.analytics_service import (
+from services.analytics_service import (
     AnalyticsEngine, get_analytics_engine,
     EventCategory, MetricType, TimeGranularity
 )

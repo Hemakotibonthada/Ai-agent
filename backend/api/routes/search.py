@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
-from ...services.search_service import (
+from services.search_service import (
     SearchService, get_search_service,
     SearchFilter, SearchIndex, SortOrder,
 )
@@ -132,7 +132,7 @@ async def get_search_stats():
 @router.post("/index")
 async def index_document(data: IndexDocumentRequest):
     """Add a document to the search index."""
-    from ...services.search_service import SearchDocument
+    from services.search_service import SearchDocument
 
     service = get_search_service()
     try:

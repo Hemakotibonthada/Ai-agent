@@ -7,7 +7,7 @@ router = APIRouter()
 
 
 def _get_service():
-    from ...services.cron_job_service import get_cron_job_service
+    from services.cron_job_service import get_cron_job_service
     return get_cron_job_service()
 
 
@@ -42,7 +42,7 @@ async def list_cron_jobs(
     status: Optional[str] = None,
     search: Optional[str] = None,
 ):
-    from ...services.cron_job_service import CronJobStatus
+    from services.cron_job_service import CronJobStatus
     svc = _get_service()
     job_status = CronJobStatus(status) if status else None
     return svc.list_jobs(category=category, status=job_status, search=search)

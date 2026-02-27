@@ -7,7 +7,7 @@ router = APIRouter()
 
 
 def _get_service():
-    from ...services.integration_service import get_integration_service
+    from services.integration_service import get_integration_service
     return get_integration_service()
 
 
@@ -46,7 +46,7 @@ async def list_integrations(
     enabled: Optional[bool] = None,
     search: Optional[str] = None,
 ):
-    from ...services.integration_service import IntegrationCategory, IntegrationStatus
+    from services.integration_service import IntegrationCategory, IntegrationStatus
     svc = _get_service()
     cat = IntegrationCategory(category) if category else None
     st = IntegrationStatus(status) if status else None

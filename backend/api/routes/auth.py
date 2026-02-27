@@ -9,7 +9,7 @@ from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, HTTPException, Header, Request, Depends
 from pydantic import BaseModel
 
-from ...services.auth_service import (
+from services.auth_service import (
     AuthService, get_auth_service, UserCreate, UserLogin,
     UserProfile, TokenResponse, UserRole, TwoFactorSetup,
 )
@@ -205,5 +205,5 @@ class PasswordCheckRequest(BaseModel):
 @router.post("/check-password")
 async def check_password_strength(data: PasswordCheckRequest):
     """Check password strength without registering."""
-    from ...services.auth_service import PasswordHasher
+    from services.auth_service import PasswordHasher
     return PasswordHasher.check_strength(data.password)

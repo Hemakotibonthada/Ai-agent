@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
-from ...services.data_pipeline_service import (
+from services.data_pipeline_service import (
     DataPipelineService, get_data_pipeline_service,
     Pipeline, PipelineStep, PipelineStatus,
 )
@@ -99,7 +99,7 @@ async def create_pipeline(data: CreatePipelineRequest):
     service = get_data_pipeline_service()
     steps = []
     for i, step_data in enumerate(data.steps):
-        from ...services.data_pipeline_service import StepType
+        from services.data_pipeline_service import StepType
         steps.append(PipelineStep(
             id=step_data.get("id", f"step-{i}"),
             name=step_data.get("name", f"Step {i + 1}"),

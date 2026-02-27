@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
-from ...services.plugin_service import (
+from services.plugin_service import (
     PluginService, get_plugin_service,
     PluginCategory, PluginState,
 )

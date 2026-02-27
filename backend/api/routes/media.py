@@ -7,7 +7,7 @@ router = APIRouter()
 
 
 def _get_service():
-    from ...services.media_service import get_media_service
+    from services.media_service import get_media_service
     return get_media_service()
 
 
@@ -60,7 +60,7 @@ async def list_media(
     limit: int = Query(default=50, le=200),
     offset: int = 0,
 ):
-    from ...services.media_service import MediaType
+    from services.media_service import MediaType
     svc = _get_service()
     media_type = MediaType(type) if type else None
     items, total = svc.list_items(media_type, folder, None, starred, search, sort_by, sort_order, limit, offset)

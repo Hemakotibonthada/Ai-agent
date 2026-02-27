@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
-from ...services.feature_flag_service import (
+from services.feature_flag_service import (
     FeatureFlagService, get_feature_flag_service,
     FlagType, FlagStatus, FeatureFlag,
 )

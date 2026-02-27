@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
-from ...services.workflow_service import (
+from services.workflow_service import (
     WorkflowEngine, get_workflow_engine,
 )
 
