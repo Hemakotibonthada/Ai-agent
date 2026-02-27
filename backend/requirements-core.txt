@@ -1,0 +1,47 @@
+# NEXUS AI - Core Dependencies (lightweight, no GPU/ML packages)
+# Use requirements.txt for full install with ML models
+
+# Core Framework
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic==2.9.2
+pydantic-settings==2.5.2
+python-dotenv==1.0.1
+
+# Database
+sqlalchemy==2.0.35
+aiosqlite==0.20.0
+
+# HTTP Client
+aiohttp==3.10.8
+httpx==0.27.2
+
+# Security
+cryptography==43.0.1
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# System Monitoring
+psutil==6.0.0
+
+# Scheduling
+apscheduler==3.10.4
+
+# Report Generation
+reportlab==4.2.4
+openpyxl==3.1.5
+markdown==3.7
+jinja2==3.1.4
+
+# Home Automation
+paho-mqtt==2.1.0
+
+# Utilities
+loguru==0.7.2
+rich==13.9.1
+tenacity==9.0.0
+cachetools==5.5.0
+python-dateutil==2.9.0
+python-multipart==0.0.12
+numpy==1.26.4
+beautifulsoup4==4.12.3

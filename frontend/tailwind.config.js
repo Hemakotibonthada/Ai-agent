@@ -1,0 +1,111 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
+  ],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'nexus-primary': {
+          DEFAULT: '#3B82F6',
+          50: '#EBF2FE',
+          100: '#D7E6FD',
+          200: '#AFCDFB',
+          300: '#87B4F9',
+          400: '#5F9BF7',
+          500: '#3B82F6',
+          600: '#0B61EE',
+          700: '#084BB8',
+          800: '#063583',
+          900: '#041F4E',
+        },
+        'nexus-secondary': {
+          DEFAULT: '#8B5CF6',
+          50: '#F1ECFE',
+          100: '#E3D9FD',
+          200: '#C7B3FB',
+          300: '#AB8DF9',
+          400: '#8F67F7',
+          500: '#8B5CF6',
+          600: '#6B2CF3',
+          700: '#5211D4',
+          800: '#3D0D9E',
+          900: '#280968',
+        },
+        'nexus-accent': {
+          DEFAULT: '#06B6D4',
+          50: '#E8FAFE',
+          100: '#B8F0FA',
+          200: '#72E1F5',
+          300: '#2CD2F0',
+          400: '#0FC5E5',
+          500: '#06B6D4',
+          600: '#05909F',
+          700: '#046A76',
+          800: '#03444D',
+          900: '#011E24',
+        },
+        'nexus-surface': '#1E1E2E',
+        'nexus-bg': '#0F0F1A',
+        'nexus-card': '#252538',
+        'nexus-border': '#2E2E45',
+        'nexus-text': '#E2E8F0',
+        'nexus-muted': '#94A3B8',
+        'nexus-success': '#10B981',
+        'nexus-warning': '#F59E0B',
+        'nexus-error': '#EF4444',
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+      },
+      animation: {
+        'glow': 'glow 2s ease-in-out infinite alternate',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'slide-in': 'slideIn 0.3s ease-out',
+        'fade-in': 'fadeIn 0.4s ease-out',
+        'scale-in': 'scaleIn 0.2s ease-out',
+        'spin-slow': 'spin 3s linear infinite',
+        'shimmer': 'shimmer 2s linear infinite',
+      },
+      keyframes: {
+        glow: {
+          '0%': { boxShadow: '0 0 5px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.2)' },
+          '100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.4)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+        slideIn: {
+          '0%': { transform: 'translateX(-100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        scaleIn: {
+          '0%': { opacity: '0', transform: 'scale(0.9)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+      },
+      backdropBlur: {
+        xs: '2px',
+      },
+      boxShadow: {
+        'nexus': '0 0 15px rgba(59, 130, 246, 0.3)',
+        'nexus-lg': '0 0 30px rgba(59, 130, 246, 0.4)',
+        'nexus-violet': '0 0 15px rgba(139, 92, 246, 0.3)',
+      },
+    },
+  },
+  plugins: [],
+};

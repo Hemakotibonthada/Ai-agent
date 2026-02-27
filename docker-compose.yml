@@ -1,0 +1,153 @@
+# ============================================================
+# NEXUS AI OS - Docker Compose Configuration
+# ============================================================
+# Usage:
+#   docker-compose up -d          # Start all services
+#   docker-compose logs -f        # Follow logs
+#   docker-compose down           # Stop all services
+#   docker-compose up -d --build  # Rebuild and start
+# ============================================================
+
+version: "3.9"
+
+services:
+  # -----------------------------------------------------------
+  # Backend - FastAPI Python Application
+  # -----------------------------------------------------------
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: nexus-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - nexus-data:/app/data
+      - nexus-logs:/app/logs
+      - nexus-models:/app/models
+      - nexus-reports:/app/reports
+      - nexus-backups:/app/data/backups
+    environment:
+      - NEXUS_ENV=production
+      - NEXUS_HOST=0.0.0.0
+      - NEXUS_PORT=8000
+      - NEXUS_DB_PATH=/app/data/nexus.db
+      - NEXUS_VECTOR_DB_PATH=/app/data/chromadb
+      - NEXUS_BACKUP_PATH=/app/data/backups
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - MQTT_BROKER_HOST=mosquitto
+      - MQTT_BROKER_PORT=1883
+      - LOG_FILE_PATH=/app/logs/nexus.log
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+      ollama:
+        condition: service_started
+    networks:
+      - nexus-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; r = httpx.get('http://localhost:8000/health'); assert r.status_code == 200"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # -----------------------------------------------------------
+  # Frontend - React + Vite served by Nginx
+  # -----------------------------------------------------------
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: nexus-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - nexus-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # -----------------------------------------------------------
+  # Mosquitto - MQTT Broker for IoT Communication
+  # -----------------------------------------------------------
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: nexus-mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-log:/mosquitto/log
+    command: >
+      sh -c "echo 'listener 1883
+      allow_anonymous true
+      listener 9001
+      protocol websockets' > /mosquitto/config/mosquitto.conf &&
+      mosquitto -c /mosquitto/config/mosquitto.conf"
+    networks:
+      - nexus-network
+    healthcheck:
+      test: ["CMD-SHELL", "mosquitto_sub -t '$$SYS/#' -C 1 -W 3 || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  # -----------------------------------------------------------
+  # Ollama - Local AI Inference Server
+  # -----------------------------------------------------------
+  ollama:
+    image: ollama/ollama:latest
+    container_name: nexus-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    networks:
+      - nexus-network
+
+# -----------------------------------------------------------
+# Networks
+# -----------------------------------------------------------
+networks:
+  nexus-network:
+    driver: bridge
+    name: nexus-ai-network
+
+# -----------------------------------------------------------
+# Volumes - Persistent Data Storage
+# -----------------------------------------------------------
+volumes:
+  nexus-data:
+    name: nexus-ai-data
+  nexus-logs:
+    name: nexus-ai-logs
+  nexus-models:
+    name: nexus-ai-models
+  nexus-reports:
+    name: nexus-ai-reports
+  nexus-backups:
+    name: nexus-ai-backups
+  mosquitto-data:
+    name: nexus-mosquitto-data
+  mosquitto-log:
+    name: nexus-mosquitto-log
+  ollama-data:
+    name: nexus-ollama-data

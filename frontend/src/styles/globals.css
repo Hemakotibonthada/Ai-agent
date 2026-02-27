@@ -1,0 +1,361 @@
+/* ===================================================================
+   Nexus AI OS — Global Styles
+   Futuristic dark UI with neon accents, glassmorphism & particles
+   =================================================================== */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ */
+/*  Base resets & defaults                                             */
+/* ------------------------------------------------------------------ */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    @apply transition-colors duration-200 ease-in-out;
+  }
+
+  html {
+    @apply scroll-smooth antialiased;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply m-0 bg-nexus-bg font-sans text-nexus-text;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    @apply bg-nexus-primary/40 text-white;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Custom Scrollbar  (thin, neon-blue)                                */
+/* ------------------------------------------------------------------ */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.45) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.45);
+  border-radius: 9999px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.7);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Glassmorphism                                                      */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .glass {
+    @apply border border-white/10 bg-white/5 shadow-lg;
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+  }
+
+  .glass-heavy {
+    @apply border border-white/15 bg-white/10 shadow-xl;
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Neon Glow Effects                                                  */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .neon-blue {
+    box-shadow:
+      0 0 5px rgba(59, 130, 246, 0.5),
+      0 0 20px rgba(59, 130, 246, 0.25),
+      0 0 40px rgba(59, 130, 246, 0.1);
+  }
+  .neon-blue-strong {
+    box-shadow:
+      0 0 8px rgba(59, 130, 246, 0.7),
+      0 0 30px rgba(59, 130, 246, 0.4),
+      0 0 60px rgba(59, 130, 246, 0.15);
+  }
+
+  .neon-violet {
+    box-shadow:
+      0 0 5px rgba(139, 92, 246, 0.5),
+      0 0 20px rgba(139, 92, 246, 0.25),
+      0 0 40px rgba(139, 92, 246, 0.1);
+  }
+  .neon-violet-strong {
+    box-shadow:
+      0 0 8px rgba(139, 92, 246, 0.7),
+      0 0 30px rgba(139, 92, 246, 0.4),
+      0 0 60px rgba(139, 92, 246, 0.15);
+  }
+
+  .neon-cyan {
+    box-shadow:
+      0 0 5px rgba(6, 182, 212, 0.5),
+      0 0 20px rgba(6, 182, 212, 0.25),
+      0 0 40px rgba(6, 182, 212, 0.1);
+  }
+  .neon-cyan-strong {
+    box-shadow:
+      0 0 8px rgba(6, 182, 212, 0.7),
+      0 0 30px rgba(6, 182, 212, 0.4),
+      0 0 60px rgba(6, 182, 212, 0.15);
+  }
+
+  /* Text neon glow */
+  .neon-text-blue {
+    text-shadow:
+      0 0 7px rgba(59, 130, 246, 0.7),
+      0 0 20px rgba(59, 130, 246, 0.4);
+  }
+  .neon-text-violet {
+    text-shadow:
+      0 0 7px rgba(139, 92, 246, 0.7),
+      0 0 20px rgba(139, 92, 246, 0.4);
+  }
+  .neon-text-cyan {
+    text-shadow:
+      0 0 7px rgba(6, 182, 212, 0.7),
+      0 0 20px rgba(6, 182, 212, 0.4);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Gradient Text                                                      */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
+  }
+
+  .gradient-text-warm {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #f59e0b, #ef4444, #ec4899);
+  }
+
+  .gradient-text-cool {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #06b6d4, #3b82f6, #8b5cf6);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Animated Border                                                    */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .animated-border {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.75rem;
+  }
+  .animated-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: conic-gradient(
+      from 0deg,
+      #3b82f6,
+      #8b5cf6,
+      #06b6d4,
+      #3b82f6
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: border-rotate 4s linear infinite;
+    pointer-events: none;
+  }
+}
+
+@keyframes border-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Particle Background                                                */
+/* ------------------------------------------------------------------ */
+.particle-bg {
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 20%, rgba(59, 130, 246, 0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 15%, rgba(139, 92, 246, 0.2) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 45% 80%, rgba(6, 182, 212, 0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 65%, rgba(59, 130, 246, 0.15) 0%, transparent 100%),
+    radial-gradient(2px 2px at 25% 55%, rgba(139, 92, 246, 0.12) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 45%, rgba(6, 182, 212, 0.15) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 55% 35%, rgba(59, 130, 246, 0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 90%, rgba(139, 92, 246, 0.18) 0%, transparent 100%);
+  animation: particle-drift 30s ease-in-out infinite alternate;
+}
+
+@keyframes particle-drift {
+  0% {
+    background-position:
+      0% 0%, 100% 0%, 50% 100%, 70% 60%,
+      20% 50%, 90% 40%, 55% 35%, 15% 90%;
+  }
+  100% {
+    background-position:
+      5% 5%, 95% 8%, 48% 92%, 65% 55%,
+      25% 58%, 85% 48%, 60% 30%, 10% 85%;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Pulse & Glow Animations                                            */
+/* ------------------------------------------------------------------ */
+@keyframes neon-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+.animate-neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-ring {
+  0% { box-shadow: 0 0 2px rgba(59, 130, 246, 0.4); }
+  50% { box-shadow: 0 0 12px rgba(59, 130, 246, 0.7), 0 0 24px rgba(139, 92, 246, 0.3); }
+  100% { box-shadow: 0 0 2px rgba(59, 130, 246, 0.4); }
+}
+.animate-glow-ring {
+  animation: glow-ring 3s ease-in-out infinite;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Custom Focus Rings                                                 */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .focus-ring {
+    @apply outline-none;
+  }
+  .focus-ring:focus-visible {
+    box-shadow:
+      0 0 0 2px #0f0f1a,
+      0 0 0 4px rgba(59, 130, 246, 0.7),
+      0 0 12px rgba(59, 130, 246, 0.35);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Futuristic Card Styles                                             */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .nexus-card {
+    @apply rounded-xl border border-nexus-border bg-nexus-card/80 p-5;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+  }
+  .nexus-card:hover {
+    @apply border-nexus-primary/40;
+    box-shadow:
+      0 0 12px rgba(59, 130, 246, 0.15),
+      0 4px 24px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .nexus-card-interactive {
+    @apply nexus-card cursor-pointer;
+  }
+  .nexus-card-interactive:hover {
+    @apply border-nexus-primary/50;
+    box-shadow:
+      0 0 20px rgba(59, 130, 246, 0.25),
+      0 8px 32px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px);
+  }
+  .nexus-card-interactive:active {
+    transform: translateY(0px);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Custom Range / Slider Inputs                                       */
+/* ------------------------------------------------------------------ */
+@layer components {
+  input[type='range'].nexus-range {
+    @apply h-1.5 w-full cursor-pointer appearance-none rounded-full bg-nexus-border;
+  }
+  input[type='range'].nexus-range::-webkit-slider-thumb {
+    @apply h-4 w-4 appearance-none rounded-full bg-nexus-primary;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+    transition: box-shadow 0.2s;
+  }
+  input[type='range'].nexus-range::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 14px rgba(59, 130, 246, 0.9);
+  }
+  input[type='range'].nexus-range::-moz-range-thumb {
+    @apply h-4 w-4 rounded-full border-0 bg-nexus-primary;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Skeleton Loading Animation                                         */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .skeleton {
+    @apply relative overflow-hidden rounded-lg bg-nexus-border/40;
+  }
+  .skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(59, 130, 246, 0.08) 40%,
+      rgba(139, 92, 246, 0.08) 60%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  .skeleton-text {
+    @apply skeleton h-4 w-3/4;
+  }
+  .skeleton-heading {
+    @apply skeleton h-6 w-1/2;
+  }
+  .skeleton-avatar {
+    @apply skeleton h-10 w-10 rounded-full;
+  }
+  .skeleton-card {
+    @apply skeleton h-32 w-full rounded-xl;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Misc Utilities                                                     */
+/* ------------------------------------------------------------------ */
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
