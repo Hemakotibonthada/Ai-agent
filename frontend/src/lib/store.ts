@@ -31,7 +31,7 @@ import type {
 interface UISlice {
   sidebarOpen: boolean;
   sidebarCollapsed: boolean;
-  theme: 'dark' | 'light' | 'system';
+  theme: string;
   currentPage: string;
   commandPaletteOpen: boolean;
   helpOpen: boolean;
@@ -39,7 +39,7 @@ interface UISlice {
 
   toggleSidebar: () => void;
   collapseSidebar: (collapsed: boolean) => void;
-  setTheme: (theme: 'dark' | 'light' | 'system') => void;
+  setTheme: (theme: string) => void;
   setCurrentPage: (page: string) => void;
   openCommandPalette: () => void;
   closeCommandPalette: () => void;

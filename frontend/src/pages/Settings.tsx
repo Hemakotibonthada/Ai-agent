@@ -53,6 +53,7 @@ import Slider from '@/components/ui/Slider';
 import Tabs from '@/components/ui/Tabs';
 import Avatar from '@/components/ui/Avatar';
 import useStore from '@/lib/store';
+import { useTheme, THEMES } from '@/hooks/useTheme';
 import { systemApi, voiceApi } from '@/lib/api';
 
 /* ------------------------------------------------------------------ */
@@ -128,7 +129,8 @@ function SettingRow({
 /*  Main Component                                                     */
 /* ------------------------------------------------------------------ */
 export default function Settings() {
-  const { setCurrentPage, theme, setTheme } = useStore();
+  const { setCurrentPage } = useStore();
+  const { theme, setTheme } = useTheme();
   const [activeTab, setActiveTab] = useState('profile');
 
   /* Profile state */
@@ -712,70 +714,77 @@ export default function Settings() {
           )}
           {/* ═══════════════════════════ APPEARANCE ═══════════════════ */}
           {activeTab === 'appearance' && (
-            <Section title="Appearance" description="Customize the look and feel of Nexus AI">
+            <Section title="Appearance" description="Choose a theme that suits your style">
               <Card>
-                <div className="space-y-4">
+                <div className="space-y-6">
                   <div>
-                    <label className="text-xs font-medium uppercase tracking-wider text-nexus-muted">Theme</label>
-                    <div className="flex gap-3 mt-2">
-                      {[
-                        { value: 'dark', label: 'Dark', icon: Moon, desc: 'Default dark theme' },
-                        { value: 'light', label: 'Light', icon: Sun, desc: 'Light mode' },
-                        { value: 'system', label: 'System', icon: Monitor, desc: 'Follow OS setting' },
-                      ].map((t) => (
-                        <button
-                          key={t.value}
-                          onClick={() => setTheme(t.value as any)}
-                          className={`flex-1 rounded-lg border p-3 text-center transition-all ${
-                            theme === t.value
-                              ? 'border-nexus-primary bg-nexus-primary/10 text-nexus-primary'
-                              : 'border-nexus-border bg-nexus-card/40 text-nexus-muted hover:border-nexus-primary/40'
-                          }`}
-                        >
-                          <t.icon size={18} className="mx-auto mb-1" />
-                          <p className="text-xs font-medium">{t.label}</p>
-                          <p className="text-[10px] text-nexus-muted mt-0.5">{t.desc}</p>
-                        </button>
-                      ))}
+                    <label className="text-xs font-medium uppercase tracking-wider text-nexus-muted mb-3 block">
+                      Theme — {THEMES.find((t) => t.id === theme)?.name ?? 'Midnight'}
+                    </label>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      {THEMES.map((t) => {
+                        const active = theme === t.id;
+                        return (
+                          <button
+                            key={t.id}
+                            onClick={() => setTheme(t.id)}
+                            className={`group relative rounded-xl border-2 p-0.5 transition-all duration-300 ${
+                              active
+                                ? 'border-nexus-primary shadow-lg shadow-nexus-primary/20 scale-[1.02]'
+                                : 'border-transparent hover:border-nexus-border hover:scale-[1.01]'
+                            }`}
+                          >
+                            {/* Mini preview */}
+                            <div
+                              className="relative rounded-lg overflow-hidden h-24"
+                              style={{ backgroundColor: t.preview.bg }}
+                            >
+                              {/* Fake sidebar */}
+                              <div
+                                className="absolute left-0 top-0 bottom-0 w-8"
+                                style={{ backgroundColor: t.preview.card, opacity: 0.8 }}
+                              >
+                                <div className="mt-3 mx-1.5 space-y-1.5">
+                                  {[t.preview.primary, t.preview.secondary, t.preview.accent].map((c, i) => (
+                                    <div key={i} className="h-1 rounded-full" style={{ backgroundColor: c, opacity: 0.8 }} />
+                                  ))}
+                                </div>
+                              </div>
+                              {/* Fake content area */}
+                              <div className="ml-10 mt-3 mr-2 space-y-1.5">
+                                <div className="h-2 w-16 rounded" style={{ backgroundColor: t.preview.primary, opacity: 0.9 }} />
+                                <div className="flex gap-1.5">
+                                  <div className="h-8 flex-1 rounded-md" style={{ backgroundColor: t.preview.card, opacity: 0.7 }} />
+                                  <div className="h-8 flex-1 rounded-md" style={{ backgroundColor: t.preview.card, opacity: 0.7 }} />
+                                </div>
+                              </div>
+                              {/* Active check */}
+                              {active && (
+                                <div className="absolute top-1.5 right-1.5 h-4 w-4 rounded-full flex items-center justify-center"
+                                     style={{ backgroundColor: t.preview.primary }}>
+                                  <CheckCircle2 size={10} className="text-white" />
+                                </div>
+                              )}
+                            </div>
+                            {/* Label */}
+                            <div className="px-2 py-2">
+                              <div className="flex items-center gap-1.5">
+                                <div className="flex gap-0.5">
+                                  {[t.preview.primary, t.preview.secondary, t.preview.accent].map((c, i) => (
+                                    <span key={i} className="h-2 w-2 rounded-full" style={{ backgroundColor: c }} />
+                                  ))}
+                                </div>
+                                <span className="text-xs font-semibold text-nexus-text">{t.name}</span>
+                                <span className="ml-auto text-[9px] uppercase tracking-wider text-nexus-muted">
+                                  {t.mode}
+                                </span>
+                              </div>
+                              <p className="text-[10px] text-nexus-muted mt-0.5 leading-tight">{t.description}</p>
+                            </div>
+                          </button>
+                        );
+                      })}
                     </div>
-                  </div>
-
-                  <div>
-                    <label className="text-xs font-medium uppercase tracking-wider text-nexus-muted">Accent Color</label>
-                    <div className="flex gap-2 mt-2">
-                      {[
-                        { color: '#3B82F6', name: 'Blue' },
-                        { color: '#8B5CF6', name: 'Purple' },
-                        { color: '#06B6D4', name: 'Cyan' },
-                        { color: '#10B981', name: 'Emerald' },
-                        { color: '#F59E0B', name: 'Amber' },
-                        { color: '#EC4899', name: 'Pink' },
-                        { color: '#EF4444', name: 'Red' },
-                      ].map((c) => (
-                        <button
-                          key={c.color}
-                          onClick={() => setAccentColor(c.color)}
-                          className={`h-8 w-8 rounded-full border-2 transition-transform hover:scale-110 ${
-                            accentColor === c.color ? 'border-white scale-110' : 'border-transparent'
-                          }`}
-                          style={{ backgroundColor: c.color }}
-                          title={c.name}
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="text-xs font-medium uppercase tracking-wider text-nexus-muted">Font Size</label>
-                    <select
-                      value={fontSize}
-                      onChange={(e) => setFontSize(e.target.value)}
-                      className="mt-1.5 w-full rounded-lg border border-nexus-border bg-nexus-surface/60 px-3 py-2 text-sm text-nexus-text focus-ring"
-                    >
-                      <option value="small">Small</option>
-                      <option value="default">Default</option>
-                      <option value="large">Large</option>
-                    </select>
                   </div>
 
                   <SettingRow label="UI Animations" description="Enable smooth transitions and motion effects">
@@ -789,12 +798,6 @@ export default function Settings() {
                   <SettingRow label="Compact Mode" description="Reduce padding and spacing for more content">
                     <Switch checked={compactMode} onCheckedChange={setCompactMode} />
                   </SettingRow>
-
-                  <SettingRow label="Sidebar Default Collapsed" description="Start with sidebar collapsed on load">
-                    <Switch checked={sidebarCollapsed} onCheckedChange={setSidebarCollapsed} />
-                  </SettingRow>
-
-                  <Button variant="primary" icon={Save}>Save Appearance</Button>
                 </div>
               </Card>
             </Section>

@@ -54,7 +54,7 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-nexus-primary hover:text-nexus-primary-400 underline underline-offset-2 transition-colors"
+              className="text-nexus-primary hover:text-nexus-primary/70 underline underline-offset-2 transition-colors"
             >
               {children}
             </a>

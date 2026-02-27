@@ -162,14 +162,14 @@ function AnimatedPage({ children }: { children: React.ReactNode }) {
 /* ------------------------------------------------------------------ */
 export default function App() {
   const location = useLocation();
-  const { theme } = useTheme();
+  const { isDark } = useTheme();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   useKeyboard();
 
   // Show login/register pages when not authenticated
   if (!isAuthenticated) {
     return (
-      <div className={theme === 'dark' ? 'dark' : ''}>
+      <div className="min-h-screen bg-nexus-bg text-nexus-text">
         <Routes>
           <Route path="/register" element={<RegisterPage />} />
           <Route path="*" element={<LoginPage />} />
@@ -179,7 +179,6 @@ export default function App() {
           toastOptions={{
             className: 'glass !bg-nexus-card !text-nexus-text !border !border-nexus-border',
             duration: 4000,
-            style: { background: '#252538', color: '#E2E8F0', border: '1px solid #2E2E45' },
           }}
         />
       </div>
@@ -187,7 +186,7 @@ export default function App() {
   }
 
   return (
-    <div className={theme === 'dark' ? 'dark' : ''}>
+    <div className="min-h-screen bg-nexus-bg text-nexus-text">
       <Layout>
         <Suspense fallback={<NexusLoader />}>
           <AnimatePresence mode="wait">

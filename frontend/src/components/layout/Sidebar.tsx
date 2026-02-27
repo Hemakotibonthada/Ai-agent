@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthStore } from '../../lib/stores';
+import { useTheme } from '../../hooks/useTheme';
 import {
   LayoutDashboard,
   MessageSquare,
@@ -230,6 +231,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
+  const { theme, themeDef, toggleTheme } = useTheme();
 
   const handleLogout = () => {
     logout();
@@ -306,8 +308,7 @@ export default function Sidebar() {
                   {active && (
                     <motion.span
                       layoutId="sidebar-active"
-                      className="absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full bg-nexus-primary"
-                      style={{ boxShadow: '0 0 8px rgba(59,130,246,.6)' }}
+                      className="absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full bg-nexus-primary shadow-nexus"
                       transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                     />
                   )}
@@ -315,7 +316,7 @@ export default function Sidebar() {
                   <Icon
                     size={18}
                     className={`shrink-0 transition-all duration-200 ${
-                      active ? 'text-nexus-primary drop-shadow-[0_0_6px_rgba(59,130,246,.6)]' : 'group-hover:text-nexus-text'
+                      active ? 'text-nexus-primary drop-shadow-[0_0_6px_rgb(var(--nexus-primary)/0.6)]' : 'group-hover:text-nexus-text'
                     }`}
                   />
 
@@ -344,10 +345,8 @@ export default function Sidebar() {
 
                   {/* Hover glow */}
                   <span
-                    className="absolute inset-0 rounded-lg opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none"
-                    style={{
-                      background: 'radial-gradient(ellipse at center, rgba(59,130,246,.06) 0%, transparent 70%)',
-                    }}
+                    className="absolute inset-0 rounded-lg opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none
+                               bg-[radial-gradient(ellipse_at_center,_rgb(var(--nexus-primary)/0.06)_0%,_transparent_70%)]"
                   />
                 </NavLink>
               );
@@ -363,6 +362,37 @@ export default function Sidebar() {
           </div>
         ))}
       </nav>
+
+      {/* ---- Quick theme toggle ---- */}
+      <div className="border-t border-nexus-border/30 px-3 py-2">
+        {collapsed ? (
+          <Tooltip content={`Theme: ${themeDef.name}`} side="right">
+            <button
+              onClick={toggleTheme}
+              className="mx-auto flex h-8 w-8 items-center justify-center rounded-lg
+                         text-nexus-muted transition-all duration-200
+                         hover:bg-nexus-primary/10 hover:text-nexus-primary"
+            >
+              <Palette size={16} />
+            </button>
+          </Tooltip>
+        ) : (
+          <button
+            onClick={toggleTheme}
+            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm
+                       text-nexus-muted transition-all duration-200
+                       hover:bg-nexus-primary/10 hover:text-nexus-primary"
+          >
+            <Palette size={16} className="shrink-0" />
+            <span className="flex-1 text-left text-xs font-medium">{themeDef.name}</span>
+            <div className="flex gap-0.5">
+              {[themeDef.preview.primary, themeDef.preview.secondary, themeDef.preview.accent].map((c, i) => (
+                <span key={i} className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: c }} />
+              ))}
+            </div>
+          </button>
+        )}
+      </div>
 
       {/* ---- User profile ---- */}
       <div className="border-t border-nexus-border/30 p-3">
