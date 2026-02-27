@@ -262,6 +262,24 @@ from api.routes.voice import router as voice_router
 from api.routes.reports import router as reports_router
 from api.routes.vision import router as vision_router
 from api.routes.network import router as network_router
+from api.routes.auth import router as auth_router
+from api.routes.analytics import router as analytics_router
+from api.routes.workflows import router as workflows_router
+from api.routes.plugins import router as plugins_router
+from api.routes.search import router as search_router
+from api.routes.feature_flags import router as feature_flags_router
+from api.routes.pipelines import router as pipelines_router
+from api.routes.experiments import router as experiments_router
+from api.routes.deployments import router as deployments_router
+from api.routes.notifications import router as notifications_router
+from api.routes.audit_log import router as audit_log_router
+from api.routes.media import router as media_router
+from api.routes.cron_jobs import router as cron_jobs_router
+from api.routes.integrations import router as integrations_router
+from api.routes.backups import router as backups_router
+from api.routes.api_keys import router as api_keys_router
+from api.routes.users import router as users_router
+from api.routes.snippets import router as snippets_router
 from api.websocket import ws_router
 
 app.include_router(chat_router)
@@ -275,6 +293,24 @@ app.include_router(voice_router)
 app.include_router(reports_router)
 app.include_router(vision_router)
 app.include_router(network_router)
+app.include_router(auth_router)
+app.include_router(analytics_router)
+app.include_router(workflows_router)
+app.include_router(plugins_router)
+app.include_router(search_router)
+app.include_router(feature_flags_router)
+app.include_router(pipelines_router)
+app.include_router(experiments_router)
+app.include_router(deployments_router)
+app.include_router(notifications_router)
+app.include_router(audit_log_router)
+app.include_router(media_router)
+app.include_router(cron_jobs_router)
+app.include_router(integrations_router)
+app.include_router(backups_router)
+app.include_router(api_keys_router)
+app.include_router(users_router)
+app.include_router(snippets_router)
 app.include_router(ws_router)
 
 
