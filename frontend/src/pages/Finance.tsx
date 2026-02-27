@@ -32,19 +32,33 @@ import {
   Zap,
   ChevronRight,
   Receipt,
+  Building,
+  Bitcoin,
+  Landmark,
+  Banknote,
 } from 'lucide-react';
 import {
+  LineChart,
+  Line,
   BarChart,
   Bar,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip as RechartsTooltip,
   ResponsiveContainer,
+  RadarChart,
+  Radar,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
   PieChart,
   Pie,
   Cell,
   Legend,
+  ComposedChart,
 } from 'recharts';
 
 import Card from '@/components/ui/Card';
@@ -89,6 +103,16 @@ const categoryIcons: Record<string, { icon: React.ElementType; color: string }> 
 };
 
 const pieColors = ['#3B82F6', '#8B5CF6', '#F59E0B', '#EC4899', '#06B6D4', '#10B981', '#F97316', '#EF4444'];
+
+/* ------------------------------------------------------------------ */
+/*  Tooltip style                                                      */
+/* ------------------------------------------------------------------ */
+const tooltipStyle = {
+  backgroundColor: '#1E1E2E',
+  border: '1px solid rgba(255,255,255,0.1)',
+  borderRadius: 8,
+  fontSize: 12,
+};
 
 /* ------------------------------------------------------------------ */
 /*  Mock data                                                          */
@@ -137,6 +161,93 @@ const mockGoals = [
   { name: 'Emergency Fund', current: 8500, target: 15000, color: '#3B82F6' },
   { name: 'Vacation', current: 2200, target: 5000, color: '#8B5CF6' },
   { name: 'New Laptop', current: 950, target: 1500, color: '#06B6D4' },
+];
+
+/* ------------------------------------------------------------------ */
+/*  New mock data — Cash Flow Waterfall                                */
+/* ------------------------------------------------------------------ */
+const cashFlowData = [
+  { month: 'Mar', income: 5400, expense: 3100, cumulative: 2300 },
+  { month: 'Apr', income: 5700, expense: 3400, cumulative: 4600 },
+  { month: 'May', income: 5200, expense: 3600, cumulative: 6200 },
+  { month: 'Jun', income: 6100, expense: 3800, cumulative: 8500 },
+  { month: 'Jul', income: 5900, expense: 4200, cumulative: 10200 },
+  { month: 'Aug', income: 6300, expense: 3500, cumulative: 13000 },
+  { month: 'Sep', income: 5800, expense: 3200, cumulative: 15600 },
+  { month: 'Oct', income: 6100, expense: 3800, cumulative: 17900 },
+  { month: 'Nov', income: 5500, expense: 3100, cumulative: 20300 },
+  { month: 'Dec', income: 7200, expense: 4500, cumulative: 23000 },
+  { month: 'Jan', income: 5900, expense: 3400, cumulative: 25500 },
+  { month: 'Feb', income: 6000, expense: 3600, cumulative: 27900 },
+];
+
+/* ------------------------------------------------------------------ */
+/*  New mock data — Investment Portfolio                                */
+/* ------------------------------------------------------------------ */
+const investmentPortfolio = [
+  { name: 'Stocks', value: 40, amount: 28400, change: 12.4, icon: TrendingUp, color: '#3B82F6' },
+  { name: 'Bonds', value: 25, amount: 17750, change: 3.2, icon: Landmark, color: '#8B5CF6' },
+  { name: 'Crypto', value: 15, amount: 10650, change: -5.8, icon: Bitcoin, color: '#F59E0B' },
+  { name: 'Real Estate', value: 12, amount: 8520, change: 7.1, icon: Building, color: '#10B981' },
+  { name: 'Cash', value: 8, amount: 5680, change: 0.5, icon: Banknote, color: '#06B6D4' },
+];
+
+const investmentPieData = investmentPortfolio.map((p) => ({ name: p.name, value: p.value }));
+const investmentColors = investmentPortfolio.map((p) => p.color);
+
+/* ------------------------------------------------------------------ */
+/*  New mock data — Spending by Day of Week                            */
+/* ------------------------------------------------------------------ */
+const spendingByDay = [
+  { day: 'Mon', amount: 62 },
+  { day: 'Tue', amount: 48 },
+  { day: 'Wed', amount: 75 },
+  { day: 'Thu', amount: 53 },
+  { day: 'Fri', amount: 91 },
+  { day: 'Sat', amount: 110 },
+  { day: 'Sun', amount: 68 },
+];
+
+/* ------------------------------------------------------------------ */
+/*  New mock data — Net Worth Trend                                    */
+/* ------------------------------------------------------------------ */
+const netWorthData = [
+  { month: 'Mar', value: 45000 },
+  { month: 'Apr', value: 46800 },
+  { month: 'May', value: 47200 },
+  { month: 'Jun', value: 49500 },
+  { month: 'Jul', value: 51200 },
+  { month: 'Aug', value: 53800 },
+  { month: 'Sep', value: 55100 },
+  { month: 'Oct', value: 57400 },
+  { month: 'Nov', value: 59200 },
+  { month: 'Dec', value: 62000 },
+  { month: 'Jan', value: 64500 },
+  { month: 'Feb', value: 67000 },
+];
+
+/* ------------------------------------------------------------------ */
+/*  New mock data — Expense Category Comparison (Radar)                */
+/* ------------------------------------------------------------------ */
+const expenseRadarData = [
+  { category: 'Housing', current: 1200, previous: 1200 },
+  { category: 'Food', current: 480, previous: 520 },
+  { category: 'Transport', current: 220, previous: 280 },
+  { category: 'Shopping', current: 350, previous: 190 },
+  { category: 'Utilities', current: 170, previous: 155 },
+  { category: 'Entertainment', current: 130, previous: 210 },
+];
+
+/* ------------------------------------------------------------------ */
+/*  New mock data — Monthly Savings Rate                               */
+/* ------------------------------------------------------------------ */
+const savingsRateData = [
+  { month: 'Sep', income: 5800, savingsRate: 45 },
+  { month: 'Oct', income: 6100, savingsRate: 38 },
+  { month: 'Nov', income: 5500, savingsRate: 44 },
+  { month: 'Dec', income: 7200, savingsRate: 38 },
+  { month: 'Jan', income: 5900, savingsRate: 42 },
+  { month: 'Feb', income: 6000, savingsRate: 40 },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -374,12 +485,7 @@ export default function Finance() {
                 <XAxis dataKey="month" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
                 <YAxis tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
                 <RechartsTooltip
-                  contentStyle={{
-                    backgroundColor: '#1E1E2E',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: 8,
-                    fontSize: 12,
-                  }}
+                  contentStyle={tooltipStyle}
                   formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
                 />
                 <Bar dataKey="income" fill="#10B981" radius={[4, 4, 0, 0]} name="Income" />
@@ -416,12 +522,7 @@ export default function Finance() {
                   ))}
                 </Pie>
                 <RechartsTooltip
-                  contentStyle={{
-                    backgroundColor: '#1E1E2E',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: 8,
-                    fontSize: 12,
-                  }}
+                  contentStyle={tooltipStyle}
                   formatter={(value: number) => [`$${value}`, '']}
                 />
                 <Legend
@@ -435,6 +536,272 @@ export default function Finance() {
                   )}
                 />
               </PieChart>
+            </ResponsiveContainer>
+          </Card>
+        </motion.div>
+      </div>
+
+      {/* ── NEW: Cash Flow Waterfall + Net Worth Trend ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Cash Flow Waterfall */}
+        <motion.div variants={item}>
+          <Card
+            header={
+              <div className="flex items-center gap-2">
+                <Banknote size={16} className="text-emerald-400" />
+                <span>Cash Flow Waterfall</span>
+              </div>
+            }
+          >
+            <ResponsiveContainer width="100%" height={240}>
+              <AreaChart data={cashFlowData}>
+                <defs>
+                  <linearGradient id="cashFlowGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#10B981" stopOpacity={0.35} />
+                    <stop offset="100%" stopColor="#10B981" stopOpacity={0.02} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <XAxis dataKey="month" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
+                <YAxis tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
+                <RechartsTooltip
+                  contentStyle={tooltipStyle}
+                  formatter={(value: number, name: string) => [
+                    `$${value.toLocaleString()}`,
+                    name === 'cumulative' ? 'Cumulative' : name === 'income' ? 'Income' : 'Expense',
+                  ]}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="cumulative"
+                  stroke="#10B981"
+                  fill="url(#cashFlowGrad)"
+                  strokeWidth={2}
+                  name="cumulative"
+                />
+                <Line type="monotone" dataKey="income" stroke="#3B82F6" strokeWidth={1.5} dot={false} name="income" strokeDasharray="4 4" />
+                <Line type="monotone" dataKey="expense" stroke="#EF4444" strokeWidth={1.5} dot={false} name="expense" strokeDasharray="4 4" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </Card>
+        </motion.div>
+
+        {/* Net Worth Trend */}
+        <motion.div variants={item}>
+          <Card
+            header={
+              <div className="flex items-center gap-2">
+                <TrendingUp size={16} className="text-blue-400" />
+                <span>Net Worth Trend</span>
+              </div>
+            }
+          >
+            <ResponsiveContainer width="100%" height={240}>
+              <AreaChart data={netWorthData}>
+                <defs>
+                  <linearGradient id="netWorthGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#6366F1" stopOpacity={0.4} />
+                    <stop offset="100%" stopColor="#6366F1" stopOpacity={0.02} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <XAxis dataKey="month" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
+                <YAxis
+                  tick={{ fill: '#888', fontSize: 10 }}
+                  axisLine={false}
+                  tickFormatter={(v: number) => `$${(v / 1000).toFixed(0)}K`}
+                />
+                <RechartsTooltip
+                  contentStyle={tooltipStyle}
+                  formatter={(value: number) => [`$${value.toLocaleString()}`, 'Net Worth']}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#6366F1"
+                  fill="url(#netWorthGrad)"
+                  strokeWidth={2.5}
+                  dot={{ fill: '#6366F1', r: 3, strokeWidth: 0 }}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </Card>
+        </motion.div>
+      </div>
+
+      {/* ── NEW: Investment Portfolio ── */}
+      <motion.div variants={item}>
+        <Card
+          header={
+            <div className="flex items-center gap-2">
+              <Briefcase size={16} className="text-blue-400" />
+              <span>Investment Portfolio</span>
+            </div>
+          }
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Pie chart */}
+            <ResponsiveContainer width="100%" height={220}>
+              <PieChart>
+                <Pie
+                  data={investmentPieData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={50}
+                  outerRadius={85}
+                  paddingAngle={3}
+                  dataKey="value"
+                  strokeWidth={0}
+                >
+                  {investmentPieData.map((_, i) => (
+                    <Cell key={i} fill={investmentColors[i]} />
+                  ))}
+                </Pie>
+                <RechartsTooltip
+                  contentStyle={tooltipStyle}
+                  formatter={(value: number) => [`${value}%`, '']}
+                />
+                <Legend
+                  verticalAlign="bottom"
+                  iconType="circle"
+                  iconSize={8}
+                  formatter={(value: string) => (
+                    <span className="text-xs text-nexus-muted">{value}</span>
+                  )}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+
+            {/* Investment cards */}
+            <div className="grid grid-cols-1 gap-2">
+              {investmentPortfolio.map((inv) => {
+                const isUp = inv.change >= 0;
+                return (
+                  <div
+                    key={inv.name}
+                    className="flex items-center gap-3 rounded-lg border border-nexus-border/50 bg-nexus-surface/30 px-3 py-2.5"
+                  >
+                    <span
+                      className="flex h-8 w-8 items-center justify-center rounded-lg shrink-0"
+                      style={{ backgroundColor: `${inv.color}20`, color: inv.color }}
+                    >
+                      <inv.icon size={16} />
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-nexus-text">{inv.name}</p>
+                      <p className="text-[10px] text-nexus-muted">{inv.value}% of portfolio</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-semibold text-nexus-text tabular-nums">
+                        ${inv.amount.toLocaleString()}
+                      </p>
+                      <p className={`text-[10px] flex items-center justify-end gap-0.5 ${isUp ? 'text-emerald-400' : 'text-red-400'}`}>
+                        {isUp ? <ArrowUpRight size={10} /> : <ArrowDownRight size={10} />}
+                        {isUp ? '+' : ''}{inv.change}%
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </Card>
+      </motion.div>
+
+      {/* ── NEW: Spending by Day + Expense Radar + Savings Rate ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Spending by Day of Week */}
+        <motion.div variants={item}>
+          <Card
+            header={
+              <div className="flex items-center gap-2">
+                <Calendar size={16} className="text-amber-400" />
+                <span>Spending by Day</span>
+              </div>
+            }
+          >
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={spendingByDay}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <XAxis dataKey="day" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
+                <YAxis tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
+                <RechartsTooltip
+                  contentStyle={tooltipStyle}
+                  formatter={(value: number) => [`$${value}`, 'Avg Spend']}
+                />
+                <Bar dataKey="amount" radius={[4, 4, 0, 0]} name="Avg Spend">
+                  {spendingByDay.map((entry, i) => (
+                    <Cell
+                      key={i}
+                      fill={entry.amount >= 90 ? '#EF4444' : entry.amount >= 70 ? '#F59E0B' : '#10B981'}
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </Card>
+        </motion.div>
+
+        {/* Expense Category Comparison Radar */}
+        <motion.div variants={item}>
+          <Card
+            header={
+              <div className="flex items-center gap-2">
+                <Target size={16} className="text-violet-400" />
+                <span>Expense Comparison</span>
+              </div>
+            }
+          >
+            <ResponsiveContainer width="100%" height={200}>
+              <RadarChart data={expenseRadarData} cx="50%" cy="50%" outerRadius="70%">
+                <PolarGrid stroke="rgba(255,255,255,0.1)" />
+                <PolarAngleAxis dataKey="category" tick={{ fill: '#888', fontSize: 9 }} />
+                <PolarRadiusAxis tick={{ fill: '#666', fontSize: 8 }} axisLine={false} />
+                <Radar name="This Month" dataKey="current" stroke="#8B5CF6" fill="#8B5CF6" fillOpacity={0.25} strokeWidth={2} />
+                <Radar name="Last Month" dataKey="previous" stroke="#3B82F6" fill="#3B82F6" fillOpacity={0.15} strokeWidth={1.5} />
+                <RechartsTooltip
+                  contentStyle={tooltipStyle}
+                  formatter={(value: number) => [`$${value}`, '']}
+                />
+                <Legend
+                  verticalAlign="bottom"
+                  iconType="circle"
+                  iconSize={6}
+                  formatter={(value: string) => (
+                    <span className="text-[10px] text-nexus-muted">{value}</span>
+                  )}
+                />
+              </RadarChart>
+            </ResponsiveContainer>
+          </Card>
+        </motion.div>
+
+        {/* Monthly Savings Rate */}
+        <motion.div variants={item}>
+          <Card
+            header={
+              <div className="flex items-center gap-2">
+                <PiggyBank size={16} className="text-cyan-400" />
+                <span>Savings Rate</span>
+              </div>
+            }
+          >
+            <ResponsiveContainer width="100%" height={200}>
+              <ComposedChart data={savingsRateData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <XAxis dataKey="month" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
+                <YAxis yAxisId="left" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
+                <YAxis yAxisId="right" orientation="right" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} unit="%" />
+                <RechartsTooltip
+                  contentStyle={tooltipStyle}
+                  formatter={(value: number, name: string) => [
+                    name === 'savingsRate' ? `${value}%` : `$${value.toLocaleString()}`,
+                    name === 'savingsRate' ? 'Savings Rate' : 'Income',
+                  ]}
+                />
+                <Bar yAxisId="left" dataKey="income" fill="#3B82F6" radius={[4, 4, 0, 0]} opacity={0.6} name="income" />
+                <Line yAxisId="right" type="monotone" dataKey="savingsRate" stroke="#10B981" strokeWidth={2.5} dot={{ fill: '#10B981', r: 3, strokeWidth: 0 }} name="savingsRate" />
+              </ComposedChart>
             </ResponsiveContainer>
           </Card>
         </motion.div>

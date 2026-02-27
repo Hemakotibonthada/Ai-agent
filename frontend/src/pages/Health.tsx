@@ -10,6 +10,7 @@ import {
   Brain,
   Activity,
   Moon,
+  Moon as MoonIcon,
   Footprints,
   Flame,
   Droplets,
@@ -34,6 +35,11 @@ import {
   CheckCircle2,
   BarChart3,
   Zap,
+  Apple,
+  Scale,
+  Timer,
+  ArrowUpRight,
+  ArrowDownRight,
 } from 'lucide-react';
 import {
   LineChart,
@@ -50,7 +56,15 @@ import {
   RadarChart,
   PolarGrid,
   PolarAngleAxis,
+  PolarRadiusAxis,
   Radar,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  ComposedChart,
+  ReferenceLine,
+  ReferenceArea,
 } from 'recharts';
 
 import Card from '@/components/ui/Card';
@@ -74,6 +88,16 @@ const container = {
 const item = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { duration: 0.35 } },
+};
+
+/* ------------------------------------------------------------------ */
+/*  Shared tooltip style                                               */
+/* ------------------------------------------------------------------ */
+const tooltipStyle = {
+  backgroundColor: '#1E1E2E',
+  border: '1px solid rgba(255,255,255,0.1)',
+  borderRadius: 8,
+  fontSize: 12,
 };
 
 /* ------------------------------------------------------------------ */
@@ -124,6 +148,59 @@ const mentalHealthData = [
   { metric: 'Energy', value: 70 },
   { metric: 'Calm', value: 75 },
   { metric: 'Social', value: 60 },
+];
+
+/* -- Heart Rate (24-hour, hourly) ---------------------------------- */
+const heartRateData = Array.from({ length: 24 }, (_, i) => {
+  const base = i >= 0 && i < 6 ? 62 : i < 9 ? 70 : i < 12 ? 78 : i < 14 ? 74 : i < 18 ? 82 : i < 21 ? 76 : 68;
+  return { hour: `${String(i).padStart(2, '0')}:00`, bpm: base + Math.round(Math.random() * 8 - 4) };
+});
+
+/* -- Nutrition Breakdown ------------------------------------------- */
+const macroData = [
+  { name: 'Protein', value: 30, color: '#3B82F6' },
+  { name: 'Carbs', value: 45, color: '#F59E0B' },
+  { name: 'Fat', value: 20, color: '#EF4444' },
+  { name: 'Fiber', value: 5, color: '#10B981' },
+];
+
+const dailyCalorieData = [
+  { day: 'Mon', calories: 1950 },
+  { day: 'Tue', calories: 2100 },
+  { day: 'Wed', calories: 1850 },
+  { day: 'Thu', calories: 2200 },
+  { day: 'Fri', calories: 1980 },
+  { day: 'Sat', calories: 2350 },
+  { day: 'Sun', calories: 1900 },
+];
+
+/* -- Exercise Intensity (Composed) --------------------------------- */
+const exerciseIntensityData = [
+  { day: 'Mon', cardio: 30, strength: 0, flexibility: 0, total: 30 },
+  { day: 'Tue', cardio: 0, strength: 0, flexibility: 45, total: 45 },
+  { day: 'Wed', cardio: 20, strength: 35, flexibility: 5, total: 60 },
+  { day: 'Thu', cardio: 0, strength: 0, flexibility: 0, total: 0 },
+  { day: 'Fri', cardio: 40, strength: 0, flexibility: 0, total: 40 },
+  { day: 'Sat', cardio: 45, strength: 0, flexibility: 0, total: 45 },
+  { day: 'Sun', cardio: 15, strength: 0, flexibility: 10, total: 25 },
+];
+
+/* -- Body Metrics (12 weeks) --------------------------------------- */
+const bodyMetricsData = Array.from({ length: 12 }, (_, i) => ({
+  week: `W${i + 1}`,
+  weight: 78 - i * 0.3 + Math.round(Math.random() * 6) / 10,
+  bodyFat: 22 - i * 0.2 + Math.round(Math.random() * 4) / 10,
+}));
+
+/* -- Sleep Stages (7 days) ----------------------------------------- */
+const sleepStagesData = [
+  { day: 'Mon', deep: 1.8, light: 3.2, rem: 1.5, awake: 0.7 },
+  { day: 'Tue', deep: 1.4, light: 3.0, rem: 1.2, awake: 0.9 },
+  { day: 'Wed', deep: 2.2, light: 3.5, rem: 1.6, awake: 0.7 },
+  { day: 'Thu', deep: 1.6, light: 3.1, rem: 1.4, awake: 0.9 },
+  { day: 'Fri', deep: 1.0, light: 2.5, rem: 1.2, awake: 0.8 },
+  { day: 'Sat', deep: 2.4, light: 3.6, rem: 1.8, awake: 0.7 },
+  { day: 'Sun', deep: 2.0, light: 3.4, rem: 1.6, awake: 0.8 },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -500,12 +577,7 @@ export default function Health() {
                   axisLine={false}
                 />
                 <RechartsTooltip
-                  contentStyle={{
-                    backgroundColor: '#1E1E2E',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: 8,
-                    fontSize: 12,
-                  }}
+                  contentStyle={tooltipStyle}
                   formatter={(value: number) => {
                     const m = moodEmojis.find((e) => e.level === value);
                     return [`${m?.emoji ?? ''} ${m?.label ?? value}`, 'Mood'];
@@ -532,20 +604,224 @@ export default function Health() {
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
                 <XAxis dataKey="day" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
                 <YAxis tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
-                <RechartsTooltip
-                  contentStyle={{
-                    backgroundColor: '#1E1E2E',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: 8,
-                    fontSize: 12,
-                  }}
-                />
+                <RechartsTooltip contentStyle={tooltipStyle} />
                 <Bar dataKey="hours" fill="#8B5CF6" radius={[4, 4, 0, 0]} name="Hours" />
               </BarChart>
             </ResponsiveContainer>
           </Card>
         </motion.div>
       </div>
+
+      {/* ── Heart Rate Monitor ── */}
+      <motion.div variants={item}>
+        <Card
+          header={
+            <div className="flex items-center gap-2">
+              <Activity size={16} className="text-rose-400" />
+              <span>Heart Rate Monitor (24h)</span>
+              <Badge variant="info" className="ml-auto">Current: 72 bpm</Badge>
+            </div>
+          }
+        >
+          <ResponsiveContainer width="100%" height={240}>
+            <LineChart data={heartRateData}>
+              <defs>
+                <linearGradient id="hrGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#F43F5E" stopOpacity={0.3} />
+                  <stop offset="100%" stopColor="#F43F5E" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+              <XAxis dataKey="hour" tick={{ fill: '#888', fontSize: 9 }} axisLine={false} interval={2} />
+              <YAxis domain={[50, 110]} tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
+              <RechartsTooltip contentStyle={tooltipStyle} formatter={(v: number) => [`${v} bpm`, 'Heart Rate']} />
+              <ReferenceArea y1={60} y2={100} fill="#10B981" fillOpacity={0.06} label={{ value: 'Resting Zone', fill: '#10B981', fontSize: 10, position: 'insideTopRight' }} />
+              <Area type="monotone" dataKey="bpm" stroke="transparent" fill="url(#hrGradient)" />
+              <Line type="monotone" dataKey="bpm" stroke="#F43F5E" strokeWidth={2} dot={{ r: 2, fill: '#F43F5E' }} activeDot={{ r: 5 }} name="BPM" />
+            </LineChart>
+          </ResponsiveContainer>
+        </Card>
+      </motion.div>
+
+      {/* ── Nutrition Breakdown ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Macros PieChart (donut) */}
+        <motion.div variants={item}>
+          <Card
+            header={
+              <div className="flex items-center gap-2">
+                <Apple size={16} className="text-green-400" />
+                <span>Macro Breakdown</span>
+              </div>
+            }
+          >
+            <ResponsiveContainer width="100%" height={240}>
+              <PieChart>
+                <Pie
+                  data={macroData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={55}
+                  outerRadius={85}
+                  paddingAngle={4}
+                  strokeWidth={0}
+                >
+                  {macroData.map((entry) => (
+                    <Cell key={entry.name} fill={entry.color} />
+                  ))}
+                </Pie>
+                <RechartsTooltip contentStyle={tooltipStyle} formatter={(v: number, name: string) => [`${v}%`, name]} />
+                <Legend iconType="circle" wrapperStyle={{ fontSize: 11 }} />
+              </PieChart>
+            </ResponsiveContainer>
+          </Card>
+        </motion.div>
+
+        {/* Daily Calorie BarChart */}
+        <motion.div variants={item}>
+          <Card
+            header={
+              <div className="flex items-center gap-2">
+                <Flame size={16} className="text-orange-400" />
+                <span>Daily Calorie Intake</span>
+              </div>
+            }
+          >
+            <ResponsiveContainer width="100%" height={240}>
+              <BarChart data={dailyCalorieData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <XAxis dataKey="day" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
+                <YAxis domain={[1500, 2500]} tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
+                <RechartsTooltip contentStyle={tooltipStyle} formatter={(v: number) => [`${v} kcal`, 'Calories']} />
+                <ReferenceLine y={2000} stroke="#10B981" strokeDasharray="6 3" label={{ value: 'Target 2000', fill: '#10B981', fontSize: 10, position: 'right' }} />
+                <Bar dataKey="calories" fill="#F59E0B" radius={[4, 4, 0, 0]} name="Calories" />
+              </BarChart>
+            </ResponsiveContainer>
+          </Card>
+        </motion.div>
+      </div>
+
+      {/* ── Activity / Exercise Intensity (ComposedChart) ── */}
+      <motion.div variants={item}>
+        <Card
+          header={
+            <div className="flex items-center gap-2">
+              <Dumbbell size={16} className="text-amber-400" />
+              <span>Exercise Intensity (7 Days)</span>
+              <div className="ml-auto flex items-center gap-3 text-[10px] text-nexus-muted">
+                <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-rose-400 inline-block" /> Cardio</span>
+                <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-blue-400 inline-block" /> Strength</span>
+                <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-emerald-400 inline-block" /> Flexibility</span>
+              </div>
+            </div>
+          }
+        >
+          <ResponsiveContainer width="100%" height={240}>
+            <ComposedChart data={exerciseIntensityData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+              <XAxis dataKey="day" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
+              <YAxis tick={{ fill: '#888', fontSize: 10 }} axisLine={false} label={{ value: 'min', angle: -90, position: 'insideLeft', fill: '#888', fontSize: 10 }} />
+              <RechartsTooltip contentStyle={tooltipStyle} />
+              <Bar dataKey="cardio" stackId="ex" fill="#F43F5E" radius={[0, 0, 0, 0]} name="Cardio" />
+              <Bar dataKey="strength" stackId="ex" fill="#3B82F6" name="Strength" />
+              <Bar dataKey="flexibility" stackId="ex" fill="#10B981" radius={[4, 4, 0, 0]} name="Flexibility" />
+              <Line type="monotone" dataKey="total" stroke="#FBBF24" strokeWidth={2} dot={{ r: 3, fill: '#FBBF24' }} name="Total min" />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </Card>
+      </motion.div>
+
+      {/* ── Body Metrics Trend (dual Y-axis) ── */}
+      <motion.div variants={item}>
+        <Card
+          header={
+            <div className="flex items-center gap-2">
+              <Scale size={16} className="text-cyan-400" />
+              <span>Body Metrics (12 Weeks)</span>
+              <div className="ml-auto flex items-center gap-3 text-[10px] text-nexus-muted">
+                <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-cyan-400 inline-block" /> Weight</span>
+                <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-amber-400 inline-block" /> Body Fat %</span>
+              </div>
+            </div>
+          }
+        >
+          <ResponsiveContainer width="100%" height={260}>
+            <LineChart data={bodyMetricsData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+              <XAxis dataKey="week" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
+              <YAxis
+                yAxisId="left"
+                domain={[72, 82]}
+                tick={{ fill: '#06B6D4', fontSize: 10 }}
+                axisLine={false}
+                label={{ value: 'kg', angle: -90, position: 'insideLeft', fill: '#06B6D4', fontSize: 10 }}
+              />
+              <YAxis
+                yAxisId="right"
+                orientation="right"
+                domain={[16, 24]}
+                tick={{ fill: '#F59E0B', fontSize: 10 }}
+                axisLine={false}
+                label={{ value: '%', angle: 90, position: 'insideRight', fill: '#F59E0B', fontSize: 10 }}
+              />
+              <RechartsTooltip contentStyle={tooltipStyle} />
+              <Line yAxisId="left" type="monotone" dataKey="weight" stroke="#06B6D4" strokeWidth={2} dot={{ r: 3, fill: '#06B6D4' }} name="Weight (kg)" />
+              <Line yAxisId="right" type="monotone" dataKey="bodyFat" stroke="#F59E0B" strokeWidth={2} dot={{ r: 3, fill: '#F59E0B' }} name="Body Fat (%)" />
+            </LineChart>
+          </ResponsiveContainer>
+        </Card>
+      </motion.div>
+
+      {/* ── Sleep Stages (stacked AreaChart) ── */}
+      <motion.div variants={item}>
+        <Card
+          header={
+            <div className="flex items-center gap-2">
+              <MoonIcon size={16} className="text-indigo-400" />
+              <span>Sleep Stages (7 Days)</span>
+              <div className="ml-auto flex items-center gap-3 text-[10px] text-nexus-muted">
+                <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-indigo-400 inline-block" /> Deep</span>
+                <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-sky-300 inline-block" /> Light</span>
+                <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-violet-300 inline-block" /> REM</span>
+                <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-rose-300 inline-block" /> Awake</span>
+              </div>
+            </div>
+          }
+        >
+          <ResponsiveContainer width="100%" height={240}>
+            <AreaChart data={sleepStagesData}>
+              <defs>
+                <linearGradient id="deepG" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#818CF8" stopOpacity={0.6} />
+                  <stop offset="100%" stopColor="#818CF8" stopOpacity={0.1} />
+                </linearGradient>
+                <linearGradient id="lightG" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#7DD3FC" stopOpacity={0.6} />
+                  <stop offset="100%" stopColor="#7DD3FC" stopOpacity={0.1} />
+                </linearGradient>
+                <linearGradient id="remG" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#C4B5FD" stopOpacity={0.6} />
+                  <stop offset="100%" stopColor="#C4B5FD" stopOpacity={0.1} />
+                </linearGradient>
+                <linearGradient id="awakeG" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#FDA4AF" stopOpacity={0.6} />
+                  <stop offset="100%" stopColor="#FDA4AF" stopOpacity={0.1} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+              <XAxis dataKey="day" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
+              <YAxis tick={{ fill: '#888', fontSize: 10 }} axisLine={false} label={{ value: 'hrs', angle: -90, position: 'insideLeft', fill: '#888', fontSize: 10 }} />
+              <RechartsTooltip contentStyle={tooltipStyle} />
+              <Area type="monotone" dataKey="deep" stackId="sleep" stroke="#818CF8" fill="url(#deepG)" strokeWidth={1.5} name="Deep" />
+              <Area type="monotone" dataKey="light" stackId="sleep" stroke="#7DD3FC" fill="url(#lightG)" strokeWidth={1.5} name="Light" />
+              <Area type="monotone" dataKey="rem" stackId="sleep" stroke="#C4B5FD" fill="url(#remG)" strokeWidth={1.5} name="REM" />
+              <Area type="monotone" dataKey="awake" stackId="sleep" stroke="#FDA4AF" fill="url(#awakeG)" strokeWidth={1.5} name="Awake" />
+            </AreaChart>
+          </ResponsiveContainer>
+        </Card>
+      </motion.div>
 
       {/* ── Exercise Log + Hydration ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

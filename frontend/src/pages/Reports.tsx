@@ -1,18 +1,15 @@
 /* ===================================================================
    Nexus AI OS — Reports Page
-   Templates, generation, history, preview, export
+   Templates, generation, history, preview, export & analytics
    =================================================================== */
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FileText,
   Download,
   Calendar,
   Clock,
-  Plus,
-  Filter,
-  Search,
   Sparkles,
   BarChart3,
   Heart,
@@ -21,25 +18,49 @@ import {
   Zap,
   Settings,
   Eye,
-  Trash2,
   FileJson,
   FileCode,
   FileSpreadsheet,
   RefreshCw,
-  ChevronRight,
   CheckCircle2,
-  Loader2,
+  TrendingUp,
+  Target,
+  Layers,
+  ArrowUpRight,
 } from 'lucide-react';
+import {
+  BarChart,
+  Bar,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip as RechartsTooltip,
+  ResponsiveContainer,
+  RadarChart,
+  Radar,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  ScatterChart,
+  Scatter,
+  ZAxis,
+} from 'recharts';
 
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Badge from '@/components/ui/Badge';
 import Modal from '@/components/ui/Modal';
-import Skeleton from '@/components/ui/Skeleton';
+
 import useStore from '@/lib/store';
 import { reportsApi } from '@/lib/api';
-import type { Report, ReportTemplate, ReportFormat, ReportType } from '@/types';
+import type { Report, ReportFormat, ReportType } from '@/types';
 
 /* ------------------------------------------------------------------ */
 /*  Animations                                                         */
@@ -52,6 +73,21 @@ const container = {
 const item = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { duration: 0.35 } },
+};
+
+/* ------------------------------------------------------------------ */
+/*  Color palette & tooltip style                                      */
+/* ------------------------------------------------------------------ */
+const COLORS = [
+  '#3B82F6', '#8B5CF6', '#06B6D4', '#10B981', '#F59E0B',
+  '#EC4899', '#EF4444', '#F97316', '#14B8A6', '#A855F7',
+];
+
+const tooltipStyle = {
+  backgroundColor: '#1E1E2E',
+  border: '1px solid rgba(255,255,255,0.1)',
+  borderRadius: 8,
+  fontSize: 12,
 };
 
 /* ------------------------------------------------------------------ */
@@ -123,6 +159,102 @@ const mockReportHistory: Report[] = [
   { id: 'rpt3', title: 'Health & Wellness — Jan', type: 'monthly', format: 'pdf', created_at: '2026-02-01T10:00:00Z', sections: ['mood', 'sleep', 'exercise'], size_bytes: 180_000 },
   { id: 'rpt4', title: 'Home Energy Analysis', type: 'monthly', format: 'html', created_at: '2026-01-30T16:00:00Z', sections: ['power', 'efficiency'], size_bytes: 78_000 },
   { id: 'rpt5', title: 'Daily Report — Feb 24', type: 'daily', format: 'json', created_at: '2026-02-24T23:59:00Z', sections: ['tasks', 'agents', 'mood'], size_bytes: 5_600 },
+];
+
+/* ------------------------------------------------------------------ */
+/*  Chart mock data                                                    */
+/* ------------------------------------------------------------------ */
+
+/* Analytics stats */
+const analyticsStats = [
+  { label: 'Total Reports Generated', value: 156, icon: FileText, color: '#3B82F6', change: '+12%' },
+  { label: 'Reports This Week', value: 12, icon: TrendingUp, color: '#10B981', change: '+3' },
+  { label: 'Avg Generation Time', value: '2.3s', icon: Clock, color: '#F59E0B', change: '-0.4s' },
+  { label: 'Auto-Generated', value: '67%', icon: Zap, color: '#8B5CF6', change: '+5%' },
+];
+
+/* Report generation trend — 12 months */
+const generationTrendData = [
+  { month: 'Mar', reports: 8 },
+  { month: 'Apr', reports: 12 },
+  { month: 'May', reports: 10 },
+  { month: 'Jun', reports: 15 },
+  { month: 'Jul', reports: 18 },
+  { month: 'Aug', reports: 14 },
+  { month: 'Sep', reports: 20 },
+  { month: 'Oct', reports: 17 },
+  { month: 'Nov', reports: 22 },
+  { month: 'Dec', reports: 19 },
+  { month: 'Jan', reports: 25 },
+  { month: 'Feb', reports: 21 },
+];
+
+/* Report type distribution — PieChart */
+const reportTypeDistribution = [
+  { name: 'Financial', value: 30, color: '#10B981' },
+  { name: 'Health', value: 22, color: '#EC4899' },
+  { name: 'Home Energy', value: 18, color: '#F59E0B' },
+  { name: 'Activity', value: 15, color: '#3B82F6' },
+  { name: 'Custom', value: 15, color: '#8B5CF6' },
+];
+
+/* Avg pages per report type — BarChart */
+const avgPagesData = [
+  { type: 'Financial', pages: 12 },
+  { type: 'Health', pages: 8 },
+  { type: 'Home Energy', pages: 6 },
+  { type: 'Activity', pages: 10 },
+  { type: 'Custom', pages: 14 },
+];
+
+/* Quality metrics — RadarChart */
+const qualityMetrics = [
+  { metric: 'Accuracy', score: 92 },
+  { metric: 'Completeness', score: 87 },
+  { metric: 'Timeliness', score: 95 },
+  { metric: 'Formatting', score: 89 },
+  { metric: 'Relevance', score: 91 },
+  { metric: 'Actionability', score: 84 },
+];
+
+/* Report size analysis — ScatterChart */
+const reportSizeData = [
+  { genTime: 1.2, size: 24, type: 'Financial' },
+  { genTime: 2.1, size: 180, type: 'Financial' },
+  { genTime: 3.4, size: 245, type: 'Financial' },
+  { genTime: 1.8, size: 120, type: 'Health' },
+  { genTime: 2.5, size: 160, type: 'Health' },
+  { genTime: 0.8, size: 12, type: 'Activity' },
+  { genTime: 1.5, size: 56, type: 'Activity' },
+  { genTime: 2.9, size: 210, type: 'Home Energy' },
+  { genTime: 1.1, size: 35, type: 'Home Energy' },
+  { genTime: 3.8, size: 320, type: 'Custom' },
+  { genTime: 4.2, size: 410, type: 'Custom' },
+  { genTime: 2.0, size: 145, type: 'Financial' },
+  { genTime: 1.6, size: 78, type: 'Health' },
+  { genTime: 0.9, size: 5, type: 'Activity' },
+  { genTime: 3.1, size: 280, type: 'Home Energy' },
+  { genTime: 2.7, size: 195, type: 'Custom' },
+  { genTime: 1.3, size: 42, type: 'Financial' },
+  { genTime: 2.3, size: 155, type: 'Health' },
+  { genTime: 3.6, size: 300, type: 'Custom' },
+  { genTime: 1.9, size: 98, type: 'Activity' },
+];
+
+const scatterColorMap: Record<string, string> = {
+  Financial: '#10B981',
+  Health: '#EC4899',
+  'Home Energy': '#F59E0B',
+  Activity: '#3B82F6',
+  Custom: '#8B5CF6',
+};
+
+/* Format usage — PieChart */
+const formatUsageData = [
+  { name: 'PDF', value: 45, color: '#3B82F6' },
+  { name: 'Markdown', value: 25, color: '#10B981' },
+  { name: 'JSON', value: 18, color: '#F59E0B' },
+  { name: 'HTML', value: 12, color: '#EC4899' },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -260,7 +392,7 @@ function GenerateReportModal({
 export default function Reports() {
   const { setCurrentPage } = useStore();
   const [reports, setReports] = useState<Report[]>(mockReportHistory);
-  const [loading, setLoading] = useState(false);
+
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState<typeof templateCards[0] | null>(null);
   const [showGenerateModal, setShowGenerateModal] = useState(false);
@@ -300,6 +432,14 @@ export default function Reports() {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   }
 
+  /* Group scatter data by type for colored rendering */
+  const scatterByType = Object.entries(
+    reportSizeData.reduce<Record<string, typeof reportSizeData>>((acc, d) => {
+      (acc[d.type] ??= []).push(d);
+      return acc;
+    }, {}),
+  );
+
   return (
     <motion.div
       variants={container}
@@ -319,6 +459,38 @@ export default function Reports() {
         <Button variant="ghost" size="sm" icon={RefreshCw}>
           Refresh
         </Button>
+      </motion.div>
+
+      {/* ══════════════════════════════════════════════════════════════
+          1. ANALYTICS OVERVIEW — 4 stat cards
+         ══════════════════════════════════════════════════════════════ */}
+      <motion.div variants={item}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {analyticsStats.map((stat) => (
+            <motion.div
+              key={stat.label}
+              whileHover={{ scale: 1.03, y: -2 }}
+              className="rounded-2xl border border-nexus-border bg-nexus-card/60 backdrop-blur-sm p-5 flex flex-col gap-3"
+            >
+              <div className="flex items-center justify-between">
+                <span
+                  className="flex h-10 w-10 items-center justify-center rounded-xl"
+                  style={{ backgroundColor: `${stat.color}18`, color: stat.color }}
+                >
+                  <stat.icon size={20} />
+                </span>
+                <span className="flex items-center gap-0.5 text-xs font-medium text-emerald-400">
+                  <ArrowUpRight size={12} />
+                  {stat.change}
+                </span>
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-nexus-text">{stat.value}</p>
+                <p className="text-[11px] text-nexus-muted mt-0.5">{stat.label}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </motion.div>
 
       {/* ── Template Cards ── */}
@@ -344,6 +516,294 @@ export default function Reports() {
             </motion.button>
           ))}
         </div>
+      </motion.div>
+
+      {/* ══════════════════════════════════════════════════════════════
+          2. REPORT GENERATION TREND — AreaChart (12 months)
+         ══════════════════════════════════════════════════════════════ */}
+      <motion.div variants={item}>
+        <Card
+          header={
+            <div className="flex items-center gap-2">
+              <TrendingUp size={16} className="text-nexus-primary" />
+              <span>Report Generation Trend</span>
+              <Badge variant="info">12 months</Badge>
+            </div>
+          }
+        >
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart data={generationTrendData} margin={{ top: 10, right: 20, bottom: 0, left: 0 }}>
+              <defs>
+                <linearGradient id="reportTrendGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.35} />
+                  <stop offset="95%" stopColor="#3B82F6" stopOpacity={0.02} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+              <XAxis dataKey="month" tick={{ fill: '#888', fontSize: 11 }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fill: '#888', fontSize: 11 }} axisLine={false} tickLine={false} />
+              <RechartsTooltip contentStyle={tooltipStyle} />
+              <Area
+                type="monotone"
+                dataKey="reports"
+                stroke="#3B82F6"
+                strokeWidth={2.5}
+                fill="url(#reportTrendGradient)"
+                dot={{ r: 3, fill: '#3B82F6', strokeWidth: 0 }}
+                activeDot={{ r: 5, stroke: '#3B82F6', strokeWidth: 2, fill: '#1E1E2E' }}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </Card>
+      </motion.div>
+
+      {/* ══════════════════════════════════════════════════════════════
+          3. REPORT TYPE DISTRIBUTION — PieChart + BarChart side by side
+         ══════════════════════════════════════════════════════════════ */}
+      <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* LEFT: PieChart donut */}
+        <Card
+          header={
+            <div className="flex items-center gap-2">
+              <Layers size={16} className="text-nexus-accent" />
+              <span>Report Type Distribution</span>
+            </div>
+          }
+        >
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={reportTypeDistribution}
+                cx="50%"
+                cy="50%"
+                innerRadius={65}
+                outerRadius={110}
+                paddingAngle={3}
+                dataKey="value"
+                stroke="none"
+              >
+                {reportTypeDistribution.map((entry) => (
+                  <Cell key={entry.name} fill={entry.color} />
+                ))}
+              </Pie>
+              <RechartsTooltip
+                contentStyle={tooltipStyle}
+                formatter={(value: number) => [`${value}%`, 'Share']}
+              />
+              <Legend
+                verticalAlign="bottom"
+                iconType="circle"
+                iconSize={8}
+                formatter={(value: string) => (
+                  <span style={{ color: '#ccc', fontSize: 11 }}>{value}</span>
+                )}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        </Card>
+
+        {/* RIGHT: Horizontal BarChart — avg pages */}
+        <Card
+          header={
+            <div className="flex items-center gap-2">
+              <BarChart3 size={16} className="text-nexus-secondary" />
+              <span>Avg Pages per Report Type</span>
+            </div>
+          }
+        >
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={avgPagesData} layout="vertical" margin={{ top: 10, right: 30, bottom: 0, left: 20 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
+              <XAxis type="number" tick={{ fill: '#888', fontSize: 11 }} axisLine={false} tickLine={false} />
+              <YAxis
+                type="category"
+                dataKey="type"
+                tick={{ fill: '#ccc', fontSize: 11 }}
+                axisLine={false}
+                tickLine={false}
+                width={85}
+              />
+              <RechartsTooltip contentStyle={tooltipStyle} />
+              <Bar dataKey="pages" radius={[0, 6, 6, 0]} barSize={24}>
+                {avgPagesData.map((entry, idx) => (
+                  <Cell
+                    key={entry.type}
+                    fill={reportTypeDistribution.find((r) => r.name === entry.type)?.color ?? COLORS[idx]}
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </Card>
+      </motion.div>
+
+      {/* ══════════════════════════════════════════════════════════════
+          4. QUALITY METRICS — RadarChart
+          5. REPORT SIZE ANALYSIS — ScatterChart
+         ══════════════════════════════════════════════════════════════ */}
+      <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* RadarChart */}
+        <Card
+          header={
+            <div className="flex items-center gap-2">
+              <Target size={16} className="text-nexus-primary" />
+              <span>Quality Metrics</span>
+              <Badge variant="success">Avg 89.7</Badge>
+            </div>
+          }
+        >
+          <ResponsiveContainer width="100%" height={320}>
+            <RadarChart data={qualityMetrics} outerRadius="70%">
+              <PolarGrid stroke="rgba(255,255,255,0.08)" />
+              <PolarAngleAxis
+                dataKey="metric"
+                tick={{ fill: '#aaa', fontSize: 11 }}
+              />
+              <PolarRadiusAxis
+                angle={30}
+                domain={[0, 100]}
+                tick={{ fill: '#666', fontSize: 10 }}
+                axisLine={false}
+              />
+              <Radar
+                name="Score"
+                dataKey="score"
+                stroke="#8B5CF6"
+                fill="#8B5CF6"
+                fillOpacity={0.25}
+                strokeWidth={2}
+                dot={{ r: 3, fill: '#8B5CF6' }}
+              />
+              <RechartsTooltip contentStyle={tooltipStyle} />
+            </RadarChart>
+          </ResponsiveContainer>
+        </Card>
+
+        {/* ScatterChart */}
+        <Card
+          header={
+            <div className="flex items-center gap-2">
+              <Activity size={16} className="text-nexus-accent" />
+              <span>Report Size Analysis</span>
+              <Badge variant="neutral">20 reports</Badge>
+            </div>
+          }
+        >
+          <ResponsiveContainer width="100%" height={320}>
+            <ScatterChart margin={{ top: 10, right: 20, bottom: 10, left: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+              <XAxis
+                type="number"
+                dataKey="genTime"
+                name="Gen Time"
+                unit="s"
+                tick={{ fill: '#888', fontSize: 11 }}
+                axisLine={false}
+                tickLine={false}
+                label={{ value: 'Generation Time (s)', position: 'insideBottom', offset: -5, fill: '#666', fontSize: 10 }}
+              />
+              <YAxis
+                type="number"
+                dataKey="size"
+                name="File Size"
+                unit=" KB"
+                tick={{ fill: '#888', fontSize: 11 }}
+                axisLine={false}
+                tickLine={false}
+                label={{ value: 'File Size (KB)', angle: -90, position: 'insideLeft', offset: 10, fill: '#666', fontSize: 10 }}
+              />
+              <ZAxis range={[50, 200]} />
+              <RechartsTooltip
+                contentStyle={tooltipStyle}
+                formatter={(value: number, name: string) => {
+                  if (name === 'Gen Time') return [`${value}s`, name];
+                  if (name === 'File Size') return [`${value} KB`, name];
+                  return [value, name];
+                }}
+              />
+              {scatterByType.map(([typeName, data]) => (
+                <Scatter
+                  key={typeName}
+                  name={typeName}
+                  data={data}
+                  fill={scatterColorMap[typeName] ?? '#888'}
+                />
+              ))}
+              <Legend
+                verticalAlign="top"
+                iconType="circle"
+                iconSize={8}
+                formatter={(value: string) => (
+                  <span style={{ color: '#ccc', fontSize: 11 }}>{value}</span>
+                )}
+              />
+            </ScatterChart>
+          </ResponsiveContainer>
+        </Card>
+      </motion.div>
+
+      {/* ══════════════════════════════════════════════════════════════
+          6. FORMAT USAGE — small PieChart + Legend
+         ══════════════════════════════════════════════════════════════ */}
+      <motion.div variants={item}>
+        <Card
+          header={
+            <div className="flex items-center gap-2">
+              <FileText size={16} className="text-nexus-secondary" />
+              <span>Format Usage</span>
+            </div>
+          }
+        >
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <ResponsiveContainer width="100%" height={220} className="max-w-[280px]">
+              <PieChart>
+                <Pie
+                  data={formatUsageData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={50}
+                  outerRadius={85}
+                  paddingAngle={4}
+                  dataKey="value"
+                  stroke="none"
+                >
+                  {formatUsageData.map((entry) => (
+                    <Cell key={entry.name} fill={entry.color} />
+                  ))}
+                </Pie>
+                <RechartsTooltip
+                  contentStyle={tooltipStyle}
+                  formatter={(value: number) => [`${value}%`, 'Usage']}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+
+            {/* Legend breakdown */}
+            <div className="flex-1 grid grid-cols-2 gap-4 w-full">
+              {formatUsageData.map((fmt) => (
+                <div
+                  key={fmt.name}
+                  className="flex items-center gap-3 rounded-xl border border-nexus-border/50 bg-nexus-card/30 p-3"
+                >
+                  <span
+                    className="h-3 w-3 rounded-full shrink-0"
+                    style={{ backgroundColor: fmt.color }}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-nexus-text">{fmt.name}</p>
+                    <div className="mt-1 h-1.5 w-full rounded-full bg-white/5 overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all"
+                        style={{ width: `${fmt.value}%`, backgroundColor: fmt.color }}
+                      />
+                    </div>
+                  </div>
+                  <span className="text-sm font-bold text-nexus-text">{fmt.value}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Card>
       </motion.div>
 
       {/* ── Report History ── */}

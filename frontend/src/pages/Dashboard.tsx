@@ -40,19 +40,38 @@ import {
   AlertCircle,
   CheckCircle2,
   BarChart3,
+  GraduationCap,
+  Gauge,
+  Target,
+  Network,
+  Timer,
+  Database,
+  GitBranch,
+  Layers,
+  ArrowUpRight,
+  ArrowDownRight,
 } from 'lucide-react';
 import {
   LineChart,
   Line,
   BarChart,
   Bar,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip as RechartsTooltip,
   ResponsiveContainer,
-  Area,
-  AreaChart,
+  RadarChart,
+  Radar,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
 } from 'recharts';
 
 import Card from '@/components/ui/Card';
@@ -120,6 +139,120 @@ const activityLog = [
   { id: '5', text: 'Afternoon mood logged: 4/5', agent: 'Health Agent', time: '1 hr ago', type: 'success' as const },
   { id: '6', text: 'Security scan completed', agent: 'Security Agent', time: '2 hr ago', type: 'success' as const },
 ];
+
+/* -- New mock data -- */
+
+// Model performance over time
+const modelPerf = Array.from({ length: 12 }, (_, i) => ({
+  month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][i],
+  nexus7b: 88 + Math.random() * 7,
+  visionCnn: 86 + Math.random() * 8,
+  voiceTransformer: 90 + Math.random() * 6,
+  sentimentBert: 83 + Math.random() * 9,
+  anomalyDetector: 92 + Math.random() * 5,
+  recommendation: 80 + Math.random() * 10,
+}));
+
+// Agent radar data
+const agentRadar = [
+  { metric: 'Speed', orchestrator: 90, personal: 85, security: 95, task: 88, home: 82 },
+  { metric: 'Accuracy', orchestrator: 92, personal: 88, security: 94, task: 86, home: 90 },
+  { metric: 'Reliability', orchestrator: 95, personal: 90, security: 97, task: 91, home: 93 },
+  { metric: 'Throughput', orchestrator: 88, personal: 82, security: 90, task: 85, home: 80 },
+  { metric: 'Efficiency', orchestrator: 91, personal: 87, security: 93, task: 89, home: 85 },
+];
+
+// Agent response times
+const agentResponseTimes = [
+  { agent: 'Security', time: 12 },
+  { agent: 'Orchestrator', time: 18 },
+  { agent: 'Task', time: 22 },
+  { agent: 'Home', time: 28 },
+  { agent: 'Personal', time: 35 },
+  { agent: 'Voice', time: 42 },
+  { agent: 'Finance', time: 48 },
+  { agent: 'Health', time: 55 },
+].sort((a, b) => a.time - b.time);
+
+// Sparkline data for inference metrics
+const genSparkline = (base: number, variance: number) =>
+  Array.from({ length: 12 }, () => ({ v: base + (Math.random() - 0.5) * variance }));
+
+// Training progress data
+const trainingJobs = [
+  { name: 'Nexus-7B Fine-tuning', progress: 78, eta: '2h 14m', status: 'running' },
+  { name: 'Vision-CNN Retraining', progress: 45, eta: '5h 30m', status: 'running' },
+  { name: 'Voice Model Update', progress: 92, eta: '18m', status: 'completing' },
+];
+
+// Pipeline flow
+const pipelineStages = [
+  { stage: 'Raw Data', count: 125000, rate: 100, color: '#3B82F6' },
+  { stage: 'Preprocessed', count: 118750, rate: 95, color: '#8B5CF6' },
+  { stage: 'Embedded', count: 113000, rate: 90.4, color: '#06B6D4' },
+  { stage: 'Inference', count: 110000, rate: 88, color: '#10B981' },
+  { stage: 'Response', count: 108900, rate: 87.1, color: '#F59E0B' },
+];
+
+// Inference metric cards data
+const inferenceMetrics = [
+  {
+    label: 'Avg Latency',
+    value: '23ms',
+    sparkline: genSparkline(23, 8),
+    trend: 'down' as const,
+    trendValue: '-4%',
+    icon: Timer,
+    color: '#3B82F6',
+  },
+  {
+    label: 'Requests/min',
+    value: '847',
+    sparkline: genSparkline(847, 120),
+    trend: 'up' as const,
+    trendValue: '+12%',
+    icon: Activity,
+    color: '#8B5CF6',
+  },
+  {
+    label: 'Token/sec',
+    value: '1,240',
+    sparkline: genSparkline(1240, 200),
+    trend: 'up' as const,
+    trendValue: '+8%',
+    icon: Zap,
+    color: '#06B6D4',
+  },
+  {
+    label: 'Cache Hit',
+    value: '94%',
+    sparkline: genSparkline(94, 6),
+    trend: 'up' as const,
+    trendValue: '+2%',
+    icon: Database,
+    color: '#10B981',
+  },
+];
+
+const radarColors = [
+  { key: 'orchestrator', name: 'Orchestrator', color: '#3B82F6' },
+  { key: 'personal', name: 'Personal', color: '#8B5CF6' },
+  { key: 'security', name: 'Security', color: '#06B6D4' },
+  { key: 'task', name: 'Task', color: '#10B981' },
+  { key: 'home', name: 'Home', color: '#F59E0B' },
+];
+
+const responseBarColors = ['#3B82F6', '#8B5CF6', '#06B6D4', '#10B981', '#F59E0B', '#EC4899', '#EF4444', '#F97316'];
+
+/* ------------------------------------------------------------------ */
+/*  Tooltip style constant                                             */
+/* ------------------------------------------------------------------ */
+const tooltipStyle = {
+  backgroundColor: '#1E1E2E',
+  border: '1px solid rgba(255,255,255,0.1)',
+  borderRadius: 8,
+  fontSize: 12,
+};
 
 /* ------------------------------------------------------------------ */
 /*  Circular Gauge Component                                           */
@@ -282,7 +415,7 @@ export default function Dashboard() {
       animate="show"
       className="space-y-6 pb-8"
     >
-      {/* ── Greeting ── */}
+      {/* -- Greeting -- */}
       <motion.div
         variants={item}
         className="relative overflow-hidden rounded-2xl border border-nexus-border bg-gradient-to-br from-nexus-primary/10 via-nexus-surface to-nexus-secondary/10 p-6"
@@ -310,7 +443,7 @@ export default function Dashboard() {
         </div>
       </motion.div>
 
-      {/* ── System Health Gauges ── */}
+      {/* -- System Health Gauges -- */}
       <motion.div variants={item}>
         <Card
           variant="glow"
@@ -331,7 +464,7 @@ export default function Dashboard() {
         </Card>
       </motion.div>
 
-      {/* ── Quick Actions ── */}
+      {/* -- Quick Actions -- */}
       <motion.div variants={item}>
         <h2 className="text-sm font-semibold text-nexus-muted uppercase tracking-wider mb-3">Quick Actions</h2>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
@@ -355,7 +488,7 @@ export default function Dashboard() {
         </div>
       </motion.div>
 
-      {/* ── Middle row: Activity Timeline + Mini Widgets ── */}
+      {/* -- Middle row: Activity Timeline + Mini Widgets -- */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Activity Timeline */}
         <motion.div variants={item} className="lg:col-span-2">
@@ -420,7 +553,7 @@ export default function Dashboard() {
               <div className="flex items-center gap-2">
                 <Thermometer size={14} className="text-orange-400" />
                 <div>
-                  <p className="text-lg font-bold text-nexus-text">24°C</p>
+                  <p className="text-lg font-bold text-nexus-text">24C</p>
                   <p className="text-[10px] text-nexus-muted">Temperature</p>
                 </div>
               </div>
@@ -493,7 +626,7 @@ export default function Dashboard() {
         </motion.div>
       </div>
 
-      {/* ── Agent Status Panel ── */}
+      {/* -- Agent Status Panel -- */}
       <motion.div variants={item}>
         <Card
           header={
@@ -545,7 +678,7 @@ export default function Dashboard() {
         </Card>
       </motion.div>
 
-      {/* ── Charts Row ── */}
+      {/* -- Charts Row: System Resources & Task Trend -- */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Resource Usage Line Chart */}
         <motion.div variants={item}>
@@ -573,14 +706,7 @@ export default function Dashboard() {
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
                 <XAxis dataKey="time" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
                 <YAxis tick={{ fill: '#888', fontSize: 10 }} axisLine={false} domain={[0, 100]} />
-                <RechartsTooltip
-                  contentStyle={{
-                    backgroundColor: '#1E1E2E',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: 8,
-                    fontSize: 12,
-                  }}
-                />
+                <RechartsTooltip contentStyle={tooltipStyle} />
                 <Area type="monotone" dataKey="cpu" stroke="#3B82F6" fill="url(#cpuG)" strokeWidth={2} name="CPU%" />
                 <Area type="monotone" dataKey="ram" stroke="#8B5CF6" fill="url(#ramG)" strokeWidth={2} name="RAM%" />
               </AreaChart>
@@ -604,14 +730,7 @@ export default function Dashboard() {
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
                 <XAxis dataKey="day" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
                 <YAxis tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
-                <RechartsTooltip
-                  contentStyle={{
-                    backgroundColor: '#1E1E2E',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: 8,
-                    fontSize: 12,
-                  }}
-                />
+                <RechartsTooltip contentStyle={tooltipStyle} />
                 <Bar dataKey="completed" fill="#3B82F6" radius={[4, 4, 0, 0]} name="Completed" />
                 <Bar dataKey="created" fill="#8B5CF6" radius={[4, 4, 0, 0]} name="Created" />
               </BarChart>
@@ -620,7 +739,365 @@ export default function Dashboard() {
         </motion.div>
       </div>
 
-      {/* ── Weekly Activity Heatmap ── */}
+      {/* -- A. AI Model Performance Overview -- */}
+      <motion.div variants={item}>
+        <Card
+          header={
+            <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/ai-models')}>
+              <Brain size={16} className="text-purple-400" />
+              <span>AI Model Performance</span>
+              <Badge variant="info" className="ml-2">6 models</Badge>
+              <ChevronRight size={14} className="ml-auto text-nexus-muted" />
+            </div>
+          }
+        >
+          <ResponsiveContainer width="100%" height={280}>
+            <LineChart data={modelPerf}>
+              <defs>
+                <linearGradient id="nexusLineG" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.15} />
+                  <stop offset="100%" stopColor="#3B82F6" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+              <XAxis dataKey="month" tick={{ fill: '#888', fontSize: 10 }} axisLine={false} />
+              <YAxis
+                tick={{ fill: '#888', fontSize: 10 }}
+                axisLine={false}
+                domain={[75, 100]}
+                tickFormatter={(v: number) => `${v}%`}
+              />
+              <RechartsTooltip
+                contentStyle={tooltipStyle}
+                formatter={(value: number) => [`${value.toFixed(1)}%`]}
+              />
+              <Legend
+                wrapperStyle={{ fontSize: 11, paddingTop: 8 }}
+                iconType="circle"
+                iconSize={8}
+              />
+              <Line type="monotone" dataKey="nexus7b" stroke="#3B82F6" strokeWidth={2} dot={false} name="Nexus-7B" />
+              <Line type="monotone" dataKey="visionCnn" stroke="#8B5CF6" strokeWidth={2} dot={false} name="Vision-CNN" />
+              <Line type="monotone" dataKey="voiceTransformer" stroke="#06B6D4" strokeWidth={2} dot={false} name="Voice-Transformer" />
+              <Line type="monotone" dataKey="sentimentBert" stroke="#10B981" strokeWidth={2} dot={false} name="Sentiment-BERT" />
+              <Line type="monotone" dataKey="anomalyDetector" stroke="#F59E0B" strokeWidth={2} dot={false} name="Anomaly-Detector" />
+              <Line type="monotone" dataKey="recommendation" stroke="#EC4899" strokeWidth={2} dot={false} name="Recommendation" />
+            </LineChart>
+          </ResponsiveContainer>
+        </Card>
+      </motion.div>
+
+      {/* -- B. Agent Performance Radar + Response Times -- */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Radar Chart */}
+        <motion.div variants={item}>
+          <Card
+            header={
+              <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/agents')}>
+                <Target size={16} className="text-cyan-400" />
+                <span>Agent Performance Radar</span>
+                <ChevronRight size={14} className="ml-auto text-nexus-muted" />
+              </div>
+            }
+          >
+            <ResponsiveContainer width="100%" height={280}>
+              <RadarChart data={agentRadar} cx="50%" cy="50%" outerRadius="70%">
+                <PolarGrid stroke="rgba(255,255,255,0.08)" />
+                <PolarAngleAxis
+                  dataKey="metric"
+                  tick={{ fill: '#888', fontSize: 10 }}
+                />
+                <PolarRadiusAxis
+                  angle={90}
+                  domain={[60, 100]}
+                  tick={{ fill: '#666', fontSize: 9 }}
+                  axisLine={false}
+                />
+                {radarColors.map((rc) => (
+                  <Radar
+                    key={rc.key}
+                    name={rc.name}
+                    dataKey={rc.key}
+                    stroke={rc.color}
+                    fill={rc.color}
+                    fillOpacity={0.1}
+                    strokeWidth={2}
+                  />
+                ))}
+                <Legend
+                  wrapperStyle={{ fontSize: 10, paddingTop: 4 }}
+                  iconType="circle"
+                  iconSize={7}
+                />
+                <RechartsTooltip contentStyle={tooltipStyle} />
+              </RadarChart>
+            </ResponsiveContainer>
+          </Card>
+        </motion.div>
+
+        {/* Agent Response Times */}
+        <motion.div variants={item}>
+          <Card
+            header={
+              <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/agents')}>
+                <Timer size={16} className="text-amber-400" />
+                <span>Agent Response Times</span>
+                <ChevronRight size={14} className="ml-auto text-nexus-muted" />
+              </div>
+            }
+          >
+            <ResponsiveContainer width="100%" height={280}>
+              <BarChart data={agentResponseTimes} layout="vertical" barSize={16}>
+                <defs>
+                  <linearGradient id="respBarG" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.9} />
+                    <stop offset="100%" stopColor="#8B5CF6" stopOpacity={0.9} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
+                <XAxis
+                  type="number"
+                  tick={{ fill: '#888', fontSize: 10 }}
+                  axisLine={false}
+                  tickFormatter={(v: number) => `${v}ms`}
+                />
+                <YAxis
+                  type="category"
+                  dataKey="agent"
+                  tick={{ fill: '#aaa', fontSize: 11 }}
+                  axisLine={false}
+                  width={80}
+                />
+                <RechartsTooltip
+                  contentStyle={tooltipStyle}
+                  formatter={(value: number) => [`${value}ms`, 'Avg Response']}
+                />
+                <Bar dataKey="time" radius={[0, 6, 6, 0]} name="Avg Response">
+                  {agentResponseTimes.map((_, idx) => (
+                    <Cell key={idx} fill={responseBarColors[idx % responseBarColors.length]} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </Card>
+        </motion.div>
+      </div>
+
+      {/* -- C. Real-Time Inference Metrics (Sparklines) -- */}
+      <motion.div variants={item}>
+        <h2 className="text-sm font-semibold text-nexus-muted uppercase tracking-wider mb-3">Real-Time Inference Metrics</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {inferenceMetrics.map((m) => (
+            <motion.div
+              key={m.label}
+              whileHover={{ scale: 1.02, y: -2 }}
+              className="relative overflow-hidden rounded-xl border border-nexus-border bg-nexus-card/60 backdrop-blur-sm p-4"
+            >
+              <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full opacity-10" style={{ backgroundColor: m.color }} />
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[11px] text-nexus-muted font-medium uppercase tracking-wider">{m.label}</span>
+                <m.icon size={14} style={{ color: m.color }} />
+              </div>
+              <div className="flex items-baseline gap-2 mb-2">
+                <span className="text-2xl font-bold text-nexus-text">{m.value}</span>
+                <span
+                  className={`flex items-center gap-0.5 text-[11px] font-medium ${
+                    m.trend === 'up'
+                      ? m.label === 'Avg Latency' ? 'text-red-400' : 'text-emerald-400'
+                      : m.label === 'Avg Latency' ? 'text-emerald-400' : 'text-red-400'
+                  }`}
+                >
+                  {m.trend === 'up' ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
+                  {m.trendValue}
+                </span>
+              </div>
+              <div className="h-10">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={m.sparkline}>
+                    <defs>
+                      <linearGradient id={`spark-${m.label}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={m.color} stopOpacity={0.3} />
+                        <stop offset="100%" stopColor={m.color} stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <Area
+                      type="monotone"
+                      dataKey="v"
+                      stroke={m.color}
+                      fill={`url(#spark-${m.label})`}
+                      strokeWidth={1.5}
+                      dot={false}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* -- D. Training Progress Overview -- */}
+      <motion.div variants={item}>
+        <Card
+          header={
+            <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/ai-models')}>
+              <GraduationCap size={16} className="text-indigo-400" />
+              <span>Training Progress</span>
+              <Badge variant="warning" className="ml-2">{trainingJobs.length} active</Badge>
+              <ChevronRight size={14} className="ml-auto text-nexus-muted" />
+            </div>
+          }
+        >
+          <div className="space-y-5">
+            {trainingJobs.map((job) => {
+              const barColor =
+                job.progress >= 90
+                  ? '#10B981'
+                  : job.progress >= 60
+                  ? '#3B82F6'
+                  : '#F59E0B';
+              const statusColor =
+                job.status === 'completing'
+                  ? 'text-emerald-400'
+                  : 'text-blue-400';
+              const statusBg =
+                job.status === 'completing'
+                  ? 'bg-emerald-400/10 border-emerald-400/20'
+                  : 'bg-blue-400/10 border-blue-400/20';
+
+              return (
+                <div key={job.name}>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-nexus-text">{job.name}</span>
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full border ${statusBg} ${statusColor} font-medium capitalize`}>
+                        {job.status}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[11px] text-nexus-muted">ETA: {job.eta}</span>
+                      <span className="text-sm font-bold text-nexus-text">{job.progress}%</span>
+                    </div>
+                  </div>
+                  <div className="relative h-2.5 rounded-full bg-nexus-border/30 overflow-hidden">
+                    <motion.div
+                      className="absolute inset-y-0 left-0 rounded-full"
+                      style={{
+                        background: `linear-gradient(90deg, ${barColor}CC, ${barColor})`,
+                        boxShadow: `0 0 12px ${barColor}40`,
+                      }}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${job.progress}%` }}
+                      transition={{ duration: 1.2, ease: 'easeOut' }}
+                    />
+                    {job.status === 'running' && (
+                      <motion.div
+                        className="absolute inset-y-0 rounded-full"
+                        style={{
+                          width: '20%',
+                          background: `linear-gradient(90deg, transparent, ${barColor}30, transparent)`,
+                        }}
+                        animate={{ left: ['0%', '80%'] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                      />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Card>
+      </motion.div>
+
+      {/* -- E. AI Pipeline Flow -- */}
+      <motion.div variants={item}>
+        <Card
+          header={
+            <div className="flex items-center gap-2">
+              <Layers size={16} className="text-teal-400" />
+              <span>AI Pipeline Flow</span>
+              <Badge variant="success" className="ml-2">Live</Badge>
+            </div>
+          }
+        >
+          {/* Pipeline funnel visualization */}
+          <div className="space-y-4">
+            {/* Stage bars */}
+            <div className="relative">
+              {pipelineStages.map((s, idx) => {
+                const widthPct = (s.count / pipelineStages[0].count) * 100;
+                return (
+                  <div key={s.stage} className="mb-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="h-2.5 w-2.5 rounded-full"
+                          style={{ backgroundColor: s.color }}
+                        />
+                        <span className="text-xs font-medium text-nexus-text">{s.stage}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[11px] text-nexus-muted">
+                          {s.count.toLocaleString()} items
+                        </span>
+                        <span
+                          className="text-[11px] font-semibold"
+                          style={{ color: s.color }}
+                        >
+                          {s.rate}%
+                        </span>
+                      </div>
+                    </div>
+                    <div className="relative h-3 rounded-full bg-nexus-border/20 overflow-hidden">
+                      <motion.div
+                        className="absolute inset-y-0 left-0 rounded-full"
+                        style={{
+                          background: `linear-gradient(90deg, ${s.color}99, ${s.color})`,
+                          boxShadow: `0 0 8px ${s.color}30`,
+                        }}
+                        initial={{ width: 0 }}
+                        animate={{ width: `${widthPct}%` }}
+                        transition={{ duration: 1, delay: idx * 0.15, ease: 'easeOut' }}
+                      />
+                    </div>
+                    {/* Connector arrow between stages */}
+                    {idx < pipelineStages.length - 1 && (
+                      <div className="flex justify-center my-1">
+                        <div className="flex flex-col items-center">
+                          <div className="w-px h-2 bg-nexus-border/30" />
+                          <ChevronRight size={10} className="text-nexus-muted/40 rotate-90" />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Summary stats */}
+            <div className="grid grid-cols-3 gap-4 pt-3 border-t border-nexus-border/20">
+              <div className="text-center">
+                <p className="text-lg font-bold text-nexus-text">
+                  {((pipelineStages[pipelineStages.length - 1].count / pipelineStages[0].count) * 100).toFixed(1)}%
+                </p>
+                <p className="text-[10px] text-nexus-muted uppercase tracking-wider">Overall Throughput</p>
+              </div>
+              <div className="text-center">
+                <p className="text-lg font-bold text-nexus-text">
+                  {(pipelineStages[0].count - pipelineStages[pipelineStages.length - 1].count).toLocaleString()}
+                </p>
+                <p className="text-[10px] text-nexus-muted uppercase tracking-wider">Filtered Items</p>
+              </div>
+              <div className="text-center">
+                <p className="text-lg font-bold text-emerald-400">Healthy</p>
+                <p className="text-[10px] text-nexus-muted uppercase tracking-wider">Pipeline Status</p>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </motion.div>
+
+      {/* -- Weekly Activity Heatmap -- */}
       <motion.div variants={item}>
         <Card
           header={

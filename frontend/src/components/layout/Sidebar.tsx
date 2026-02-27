@@ -54,6 +54,7 @@ const sections: NavSection[] = [
       { label: 'Tasks',      path: '/tasks',    icon: ListTodo,      badge: 5 },
       { label: 'Voice',      path: '/voice',    icon: Mic },
       { label: 'Agents',     path: '/agents',   icon: Bot },
+      { label: 'AI Models',  path: '/ai-models', icon: Brain },
     ],
   },
   {
