@@ -1,7 +1,8 @@
 #pragma once
 // ============================================================
 // Nexus AI OS - ESP32 Home Automation
-// Web Server Header
+// Web Server Header — Enhanced v2.0
+// Rate limiting, diagnostics, EEPROM & timer endpoints
 // ============================================================
 
 #ifndef WEB_SERVER_H
@@ -21,5 +22,9 @@ void       webserver_ws_send_sensor_update();
 
 // Config
 void       webserver_set_auth(const String& user, const String& pass);
+
+// v2.0 — Rate limiting stats
+uint32_t   webserver_get_request_count();
+uint32_t   webserver_get_rejected_count();
 
 #endif // WEB_SERVER_H

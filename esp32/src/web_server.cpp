@@ -1,6 +1,7 @@
 // ============================================================
 // Nexus AI OS - ESP32 Home Automation
-// Local Web Server Implementation
+// Local Web Server Implementation — Enhanced v2.0
+// Rate limiting, diagnostics, EEPROM, timers, preferences
 // ============================================================
 
 #include "web_server.h"
@@ -11,6 +12,7 @@
 #include "power_monitor.h"
 #include "mqtt_handler.h"
 #include "wifi_manager.h"
+#include "eeprom_manager.h"
 #include <ESPAsyncWebServer.h>
 #include <AsyncTCP.h>
 #include <Update.h>
@@ -21,6 +23,27 @@ static AsyncWebSocket g_ws("/ws");
 static String g_auth_user = WEB_AUTH_USER;
 static String g_auth_pass = WEB_AUTH_PASS;
 static unsigned long g_ws_last_broadcast = 0;
+
+// ---- Rate Limiting (v2.0) ----
+static uint32_t g_req_count = 0;
+static uint32_t g_req_rejected = 0;
+static uint32_t g_req_window_count = 0;
+static unsigned long g_req_window_start = 0;
+
+static bool rate_limit_check() {
+    unsigned long now = millis();
+    if (now - g_req_window_start > 60000) {
+        g_req_window_start = now;
+        g_req_window_count = 0;
+    }
+    g_req_count++;
+    g_req_window_count++;
+    if (g_req_window_count > WEB_RATE_LIMIT) {
+        g_req_rejected++;
+        return false;
+    }
+    return true;
+}
 
 // ---- Auth check ----
 static bool check_auth(AsyncWebServerRequest* request) {
@@ -45,7 +68,6 @@ static void on_ws_event(AsyncWebSocket* server, AsyncWebSocketClient* client,
         case WS_EVT_CONNECT:
             LOG_I("WEB", "WS client #%u connected from %s", client->id(),
                   client->remoteIP().toString().c_str());
-            // Send current sensor data on connect
             client->text(sensors_get_json_string());
             break;
         case WS_EVT_DISCONNECT:
@@ -58,16 +80,15 @@ static void on_ws_event(AsyncWebSocket* server, AsyncWebSocketClient* client,
                 for (size_t i = 0; i < len; i++) msg += (char)data[i];
                 LOG_D("WEB", "WS received: %s", msg.c_str());
 
-                // Parse command
                 JsonDocument doc;
                 if (deserializeJson(doc, msg) == DeserializationError::Ok) {
                     const char* cmd = doc["command"];
                     if (cmd) {
-                        if (String(cmd) == "get_sensors") {
-                            client->text(sensors_get_json_string());
-                        } else if (String(cmd) == "get_power") {
-                            client->text(power_get_json_string());
-                        }
+                        String c = String(cmd);
+                        if (c == "get_sensors")     client->text(sensors_get_json_string());
+                        else if (c == "get_power")  client->text(power_get_json_string());
+                        else if (c == "get_devices") client->text(actuators_get_state_json());
+                        else if (c == "get_health") client->text(sensors_get_health_json());
                     }
                 }
             }
@@ -178,6 +199,12 @@ static const char INDEX_HTML[] PROGMEM = R"rawliteral(
             <div class="row"><span class="label">Free Heap</span><span id="heap">--</span></div>
             <div class="row"><span class="label">WiFi RSSI</span><span id="rssi">--</span> dBm</div>
             <div class="row"><span class="label">MQTT</span><span id="mqtt">--</span></div>
+            <div class="row"><span class="label">Boot Count</span><span id="boots">--</span></div>
+            <div class="row"><span class="label">EEPROM Writes</span><span id="nvs_writes">--</span></div>
+            <div class="controls" style="margin-top:8px;">
+                <button class="btn" onclick="apiAction('reboot')">Reboot</button>
+                <button class="btn off" onclick="if(confirm('Factory reset?'))apiAction('factory-reset')">Factory Reset</button>
+            </div>
             <div id="log"></div>
         </div>
     </div>
@@ -228,9 +255,16 @@ static const char INDEX_HTML[] PROGMEM = R"rawliteral(
             log.innerHTML += '<div>['+t+'] '+msg+'</div>';
             log.scrollTop = log.scrollHeight;
         }
+        function apiAction(action) {
+            fetch('/api/'+action, {method:'POST'}).then(r=>r.json()).then(d=>addLog(action+': '+(d.message||'ok'))).catch(e=>addLog('Error: '+e));
+        }
         connect();
         setInterval(()=>{ fetch('/api/sensors').then(r=>r.json()).then(update).catch(()=>{}); }, 5000);
-        setInterval(()=>{ fetch('/api/status').then(r=>r.json()).then(update).catch(()=>{}); }, 10000);
+        setInterval(()=>{ fetch('/api/status').then(r=>r.json()).then(d=>{
+            update(d);
+            if(d.boot_count) document.getElementById('boots').textContent=d.boot_count;
+            if(d.nvs_writes) document.getElementById('nvs_writes').textContent=d.nvs_writes;
+        }).catch(()=>{}); }, 10000);
     </script>
 </body>
 </html>
@@ -301,6 +335,7 @@ static void setup_routes() {
 
     // ---- API: Get sensor data ----
     g_server.on("/api/sensors", HTTP_GET, [](AsyncWebServerRequest* request) {
+        if (!rate_limit_check()) { request->send(429, "application/json", "{\"error\":\"Rate limited\"}"); return; }
         AsyncWebServerResponse* response = request->beginResponse(200, "application/json",
             sensors_get_json_string());
         add_cors(response);
@@ -309,38 +344,18 @@ static void setup_routes() {
 
     // ---- API: Get power data ----
     g_server.on("/api/power", HTTP_GET, [](AsyncWebServerRequest* request) {
+        if (!rate_limit_check()) { request->send(429, "application/json", "{\"error\":\"Rate limited\"}"); return; }
         AsyncWebServerResponse* response = request->beginResponse(200, "application/json",
             power_get_json_string());
         add_cors(response);
         request->send(response);
     });
 
-    // ---- API: Get device states ----
+    // ---- API: Get device states (v2.0 — uses actuators_get_state_json) ----
     g_server.on("/api/devices", HTTP_GET, [](AsyncWebServerRequest* request) {
-        JsonDocument doc;
-
-        JsonArray lights = doc["lights"].to<JsonArray>();
-        for (int i = 0; i < 4; i++) {
-            JsonObject l = lights.add<JsonObject>();
-            l["channel"] = i + 1;
-            l["state"]   = light_get_state(i) ? "ON" : "OFF";
-            l["brightness"] = light_get_brightness(i);
-        }
-
-        JsonObject fan = doc["fan"].to<JsonObject>();
-        fan["state"] = fan_get_state() ? "ON" : "OFF";
-        fan["speed"] = fan_get_speed();
-
-        JsonObject ac = doc["ac"].to<JsonObject>();
-        ac["state"] = ac_get_state() ? "ON" : "OFF";
-        ac["temperature"] = ac_get_set_temp();
-        ac["mode"] = ac_get_mode();
-
-        doc["scene"] = scene_get_active();
-
-        String output;
-        serializeJson(doc, output);
-        AsyncWebServerResponse* response = request->beginResponse(200, "application/json", output);
+        if (!rate_limit_check()) { request->send(429, "application/json", "{\"error\":\"Rate limited\"}"); return; }
+        AsyncWebServerResponse* response = request->beginResponse(200, "application/json",
+            actuators_get_state_json());
         add_cors(response);
         request->send(response);
     });
@@ -403,13 +418,16 @@ static void setup_routes() {
         request->send(response);
     });
 
-    // ---- API: System status ----
+    // ---- API: System status (enhanced v2.0) ----
     g_server.on("/api/status", HTTP_GET, [](AsyncWebServerRequest* request) {
+        if (!rate_limit_check()) { request->send(429, "application/json", "{\"error\":\"Rate limited\"}"); return; }
+
         JsonDocument doc;
         doc["device_id"]   = DEVICE_ID;
         doc["firmware"]    = String(FW_VERSION_MAJOR) + "." + String(FW_VERSION_MINOR) + "." + String(FW_VERSION_PATCH);
         doc["uptime"]      = get_uptime_string();
         doc["heap"]        = get_free_heap();
+        doc["heap_min"]    = ESP.getMinFreeHeap();
         doc["rssi"]        = wifi_get_rssi();
         doc["wifi_ssid"]   = wifi_get_ssid();
         doc["ip"]          = wifi_get_ip();
@@ -417,11 +435,199 @@ static void setup_routes() {
         doc["mqtt"]        = mqtt_is_connected();
         doc["mqtt_sent"]   = mqtt_get_messages_sent();
         doc["mqtt_recv"]   = mqtt_get_messages_received();
+        doc["boot_count"]  = eeprom_get_boot_count();
+        doc["nvs_writes"]  = eeprom_get_write_count();
+        doc["nvs_free"]    = eeprom_get_free_entries();
+        doc["requests"]    = g_req_count;
+        doc["ws_clients"]  = g_ws.count();
         doc["timestamp"]   = get_timestamp();
 
         String output;
         serializeJson(doc, output);
         AsyncWebServerResponse* response = request->beginResponse(200, "application/json", output);
+        add_cors(response);
+        request->send(response);
+    });
+
+    // ---- API: Diagnostics (v2.0) ----
+    g_server.on("/api/diagnostics", HTTP_GET, [](AsyncWebServerRequest* request) {
+        if (!check_auth(request)) return;
+
+        JsonDocument doc;
+        doc["heap_free"]       = get_free_heap();
+        doc["heap_min"]        = ESP.getMinFreeHeap();
+        doc["heap_total"]      = ESP.getHeapSize();
+        doc["psram_free"]      = ESP.getFreePsram();
+        doc["chip_model"]      = ESP.getChipModel();
+        doc["chip_revision"]   = ESP.getChipRevision();
+        doc["cpu_freq_mhz"]    = ESP.getCpuFreqMHz();
+        doc["flash_size"]      = ESP.getFlashChipSize();
+        doc["sketch_size"]     = ESP.getSketchSize();
+        doc["sketch_free"]     = ESP.getFreeSketchSpace();
+        doc["uptime_seconds"]  = get_uptime_seconds();
+        doc["boot_count"]      = eeprom_get_boot_count();
+
+        // EEPROM stats
+        JsonObject nvs = doc["nvs"].to<JsonObject>();
+        nvs["write_count"]     = eeprom_get_write_count();
+        nvs["free_entries"]    = eeprom_get_free_entries();
+
+        // Sensor health
+        doc["sensor_health"]   = serialized(sensors_get_health_json());
+
+        // Relay stats
+        doc["relay_stats"]     = serialized(actuators_get_stats_json());
+
+        // WiFi stats
+        doc["wifi_stats"]      = serialized(wifi_get_stats_json());
+
+        // MQTT stats
+        doc["mqtt_stats"]      = serialized(mqtt_get_stats_json());
+
+        // Rate limiting
+        doc["web_requests"]    = g_req_count;
+        doc["web_rejected"]    = g_req_rejected;
+
+        String output;
+        serializeJson(doc, output);
+        AsyncWebServerResponse* response = request->beginResponse(200, "application/json", output);
+        add_cors(response);
+        request->send(response);
+    });
+
+    // ---- API: EEPROM Stats (v2.0) ----
+    g_server.on("/api/eeprom-stats", HTTP_GET, [](AsyncWebServerRequest* request) {
+        AsyncWebServerResponse* response = request->beginResponse(200, "application/json",
+            eeprom_get_stats_json());
+        add_cors(response);
+        request->send(response);
+    });
+
+    // ---- API: Reboot (v2.0) ----
+    g_server.on("/api/reboot", HTTP_POST, [](AsyncWebServerRequest* request) {
+        if (!check_auth(request)) return;
+        AsyncWebServerResponse* response = request->beginResponse(200, "application/json",
+            "{\"message\":\"Rebooting in 2 seconds...\"}");
+        add_cors(response);
+        request->send(response);
+        delay(2000);
+        ESP.restart();
+    });
+
+    // ---- API: Factory Reset (v2.0) ----
+    g_server.on("/api/factory-reset", HTTP_POST, [](AsyncWebServerRequest* request) {
+        if (!check_auth(request)) return;
+        eeprom_factory_reset();
+        AsyncWebServerResponse* response = request->beginResponse(200, "application/json",
+            "{\"message\":\"Factory reset done. Rebooting...\"}");
+        add_cors(response);
+        request->send(response);
+        delay(2000);
+        ESP.restart();
+    });
+
+    // ---- API: Timers GET (v2.0) ----
+    g_server.on("/api/timers", HTTP_GET, [](AsyncWebServerRequest* request) {
+        JsonDocument doc;
+        JsonArray arr = doc["timers"].to<JsonArray>();
+        for (int i = 0; i < MAX_SCHEDULED_TIMERS; i++) {
+            ScheduledTimer t = eeprom_get_timer(i);
+            if (!t.active) continue;
+            JsonObject o = arr.add<JsonObject>();
+            o["index"]        = i;
+            o["hour"]         = t.hour;
+            o["minute"]       = t.minute;
+            o["device_type"]  = t.device_type;
+            o["channel"]      = t.channel;
+            o["target_state"] = t.target_state;
+            o["days_mask"]    = t.days_mask;
+            o["one_shot"]     = t.one_shot;
+        }
+        String output;
+        serializeJson(doc, output);
+        AsyncWebServerResponse* response = request->beginResponse(200, "application/json", output);
+        add_cors(response);
+        request->send(response);
+    });
+
+    // ---- API: Timers POST — add/update (v2.0) ----
+    g_server.on("/api/timers", HTTP_POST, [](AsyncWebServerRequest* request) {},
+        NULL,
+        [](AsyncWebServerRequest* request, uint8_t* data, size_t len, size_t index, size_t total) {
+        if (!check_auth(request)) return;
+
+        String body;
+        for (size_t i = 0; i < len; i++) body += (char)data[i];
+
+        JsonDocument doc;
+        if (deserializeJson(doc, body) != DeserializationError::Ok) {
+            request->send(400, "application/json", "{\"error\":\"Invalid JSON\"}");
+            return;
+        }
+
+        ScheduledTimer t = {};
+        t.hour         = doc["hour"] | 0;
+        t.minute       = doc["minute"] | 0;
+        t.device_type  = doc["device_type"] | 0;
+        t.channel      = doc["channel"] | 0;
+        t.target_state = doc["target_state"] | 0;
+        t.days_mask    = doc["days_mask"] | 0x7F;
+        t.one_shot     = doc["one_shot"] | false;
+        t.active       = true;
+
+        int idx = doc["index"] | -1;
+        if (idx < 0) {
+            // Find free slot
+            for (int i = 0; i < MAX_SCHEDULED_TIMERS; i++) {
+                ScheduledTimer existing = eeprom_get_timer(i);
+                if (!existing.active) { idx = i; break; }
+            }
+        }
+
+        if (idx >= 0 && idx < MAX_SCHEDULED_TIMERS) {
+            eeprom_save_timer(idx, t);
+            AsyncWebServerResponse* response = request->beginResponse(200, "application/json",
+                "{\"status\":\"ok\",\"index\":" + String(idx) + "}");
+            add_cors(response);
+            request->send(response);
+        } else {
+            request->send(400, "application/json", "{\"error\":\"No free timer slots\"}");
+        }
+    });
+
+    // ---- API: Delete timer (v2.0) ----
+    g_server.on("/api/timer/delete", HTTP_POST, [](AsyncWebServerRequest* request) {},
+        NULL,
+        [](AsyncWebServerRequest* request, uint8_t* data, size_t len, size_t index, size_t total) {
+        if (!check_auth(request)) return;
+
+        String body;
+        for (size_t i = 0; i < len; i++) body += (char)data[i];
+
+        JsonDocument doc;
+        if (deserializeJson(doc, body) == DeserializationError::Ok) {
+            int idx = doc["index"] | -1;
+            if (idx >= 0 && idx < MAX_SCHEDULED_TIMERS) {
+                eeprom_remove_timer(idx);
+                request->send(200, "application/json", "{\"status\":\"ok\"}");
+                return;
+            }
+        }
+        request->send(400, "application/json", "{\"error\":\"Invalid timer index\"}");
+    });
+
+    // ---- API: Device state dump (v2.0) ----
+    g_server.on("/api/device-states", HTTP_GET, [](AsyncWebServerRequest* request) {
+        AsyncWebServerResponse* response = request->beginResponse(200, "application/json",
+            actuators_get_state_json());
+        add_cors(response);
+        request->send(response);
+    });
+
+    // ---- API: Sensor health (v2.0) ----
+    g_server.on("/api/sensor-health", HTTP_GET, [](AsyncWebServerRequest* request) {
+        AsyncWebServerResponse* response = request->beginResponse(200, "application/json",
+            sensors_get_health_json());
         add_cors(response);
         request->send(response);
     });
@@ -611,3 +817,9 @@ void webserver_set_auth(const String& user, const String& pass) {
     g_auth_user = user;
     g_auth_pass = pass;
 }
+
+// ============================================================
+// Rate Limiting Stats (v2.0)
+// ============================================================
+uint32_t webserver_get_request_count() { return g_req_count; }
+uint32_t webserver_get_rejected_count() { return g_req_rejected; }

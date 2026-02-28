@@ -1,7 +1,8 @@
 #pragma once
 // ============================================================
 // Nexus AI OS - ESP32 Home Automation
-// Utilities Header
+// Utilities Header — Enhanced v2.0
+// Ring buffer logger, heap monitoring, crash dump
 // ============================================================
 
 #ifndef UTILS_H
@@ -23,16 +24,30 @@ enum LogLevel {
     LOG_NONE  = 4
 };
 
+// Ring buffer log entry (v2.0)
+struct LogEntry {
+    unsigned long timestamp_ms;
+    LogLevel      level;
+    char          tag[8];
+    char          message[128];
+};
+
 void utils_init();
 void utils_loop();
 
 // Logging
 void log_set_level(LogLevel level);
+LogLevel log_get_level();
 void log_msg(LogLevel level, const char* tag, const char* fmt, ...);
 #define LOG_D(tag, fmt, ...) log_msg(LOG_DEBUG, tag, fmt, ##__VA_ARGS__)
 #define LOG_I(tag, fmt, ...) log_msg(LOG_INFO,  tag, fmt, ##__VA_ARGS__)
 #define LOG_W(tag, fmt, ...) log_msg(LOG_WARN,  tag, fmt, ##__VA_ARGS__)
 #define LOG_E(tag, fmt, ...) log_msg(LOG_ERROR, tag, fmt, ##__VA_ARGS__)
+
+// v2.0 — Ring buffer log access
+int      log_get_count();
+LogEntry log_get_entry(int index);
+String   log_get_recent_json(int count = 20);
 
 // Time
 void     ntp_init();
@@ -40,6 +55,9 @@ void     ntp_update();
 String   get_timestamp();
 String   get_date_string();
 unsigned long get_epoch_time();
+int      get_current_hour();
+int      get_current_minute();
+int      get_day_of_week();
 
 // Preferences storage
 void     prefs_init();
@@ -58,11 +76,14 @@ void     watchdog_feed();
 
 // System info
 uint32_t get_free_heap();
+uint32_t get_min_free_heap();
+float    get_heap_fragmentation();
 String   get_uptime_string();
 unsigned long get_uptime_seconds();
 String   get_mac_address();
 String   get_ip_address();
 String   format_bytes(size_t bytes);
+String   get_system_info_json();
 
 // String helpers
 String   json_escape(const String& input);

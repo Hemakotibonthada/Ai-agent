@@ -1,7 +1,7 @@
 #pragma once
 // ============================================================
 // Nexus AI OS - ESP32 Home Automation Firmware
-// Configuration Header
+// Configuration Header — v2.0 Enhanced
 // ============================================================
 
 #ifndef CONFIG_H
@@ -10,7 +10,7 @@
 #include <Arduino.h>
 
 // ---------- Firmware Info ----------
-#define FW_VERSION_MAJOR  1
+#define FW_VERSION_MAJOR  2
 #define FW_VERSION_MINOR  0
 #define FW_VERSION_PATCH  0
 #define DEVICE_ID         "nexus-home-001"
@@ -24,6 +24,11 @@
 #define WIFI_CONNECT_TIMEOUT_MS 15000
 #define WIFI_RECONNECT_INTERVAL 30000
 #define WIFI_MAX_RETRIES        20
+#define WIFI_MAX_SAVED_NETWORKS 3       // Multi-network support
+#define WIFI_BACKOFF_BASE_MS    5000    // Exponential backoff base
+#define WIFI_BACKOFF_MAX_MS     300000  // Max 5 minutes between retries
+#define WIFI_RSSI_MIN           -85     // Minimum signal strength to connect
+#define WIFI_HOSTNAME           "nexus-home"
 
 // ---------- MQTT Settings ----------
 #define MQTT_BROKER_DEFAULT     "192.168.1.100"
@@ -34,6 +39,11 @@
 #define MQTT_KEEPALIVE          60
 #define MQTT_RECONNECT_INTERVAL 5000
 #define MQTT_BUFFER_SIZE        2048
+#define MQTT_QOS_SENSOR         0       // QoS for sensor data
+#define MQTT_QOS_ALERT          1       // QoS for alerts (at-least-once)
+#define MQTT_QOS_CONTROL        1       // QoS for control commands
+#define MQTT_OFFLINE_QUEUE_SIZE 20      // Queue messages when offline
+#define MQTT_MAX_RECONNECT_BACKOFF 60000 // Max 60s between reconnects
 
 // ---------- MQTT Topics ----------
 #define TOPIC_PREFIX            "home"
@@ -52,6 +62,9 @@
 #define TOPIC_ALERT             "home/alert"
 #define TOPIC_SCENE             "home/scene/activate"
 #define TOPIC_CONTROL_SUB       "home/+/control"
+#define TOPIC_COMMAND           "home/command"           // Remote commands
+#define TOPIC_DIAGNOSTIC        "home/diagnostic"        // Diagnostic data
+#define TOPIC_TIMER             "home/timer/set"         // Timer scheduling
 
 // ---------- Pin Definitions: Sensors ----------
 #define PIN_DHT22           4     // DHT22 data pin
@@ -104,14 +117,25 @@
 #define VOLTAGE_SUPPLY       220.0f   // AC voltage (110 or 220)
 #define POWER_COST_PER_KWH   0.12f    // Electricity cost per kWh
 
+// ---------- Sensor Health Monitoring ----------
+#define SENSOR_FAIL_COUNT_MAX    5     // Consecutive failures before marking bad
+#define SENSOR_TEMP_MIN_VALID   -40.0f // Valid temperature range
+#define SENSOR_TEMP_MAX_VALID   80.0f
+#define SENSOR_HUM_MIN_VALID    0.0f
+#define SENSOR_HUM_MAX_VALID    100.0f
+#define SENSOR_OUTLIER_SIGMA    3.0f   // Reject readings > 3 sigma from mean
+
 // ---------- Alert Thresholds ----------
 #define TEMP_HIGH_THRESHOLD  40.0f
 #define TEMP_LOW_THRESHOLD   5.0f
 #define HUMIDITY_HIGH        85.0f
+#define HUMIDITY_LOW         20.0f
 #define AIR_QUALITY_BAD      300      // PPM threshold
 #define GAS_LEAK_THRESHOLD   400
 #define WATER_LEVEL_LOW      15.0f    // Percentage
+#define WATER_LEVEL_CRITICAL 5.0f     // Critical percentage
 #define POWER_SPIKE_WATTS    3000.0f
+#define ALERT_COOLDOWN_MS    60000    // Min time between repeat alerts
 
 // ---------- NeoPixel ----------
 #define NEOPIXEL_COUNT       16
@@ -122,17 +146,49 @@
 #define WEB_AUTH_USER        "admin"
 #define WEB_AUTH_PASS        "nexus"
 #define OTA_PASSWORD         "nexus_ota_pass"
+#define WEB_RATE_LIMIT       30       // Max requests per minute per IP
+#define WEB_SESSION_TIMEOUT  3600     // Session timeout in seconds
 
 // ---------- NTP ----------
 #define NTP_SERVER           "pool.ntp.org"
+#define NTP_SERVER_BACKUP    "time.google.com"
 #define NTP_OFFSET_SEC       0       // UTC offset in seconds
 #define NTP_UPDATE_INTERVAL  60000   // ms
 
 // ---------- Deep Sleep ----------
 #define DEEP_SLEEP_ENABLED   false
 #define DEEP_SLEEP_DURATION  300     // seconds
+#define DEEP_SLEEP_NO_CONN_TIMEOUT 180 // Enter sleep after N sec without connectivity
 
-// ---------- Moving Average ----------
+// ---------- Moving Average / Signal Processing ----------
 #define MOVING_AVG_SIZE      10
+#define MEDIAN_FILTER_SIZE   5       // Median filter window for outlier rejection
+
+// ---------- Relay Protection ----------
+#define RELAY_MIN_SWITCH_INTERVAL_MS  500   // Prevent rapid relay switching
+#define RELAY_MAX_DAILY_CYCLES        500   // Alert if relay cycles exceed this
+
+// ---------- Watchdog ----------
+#define WDT_TIMEOUT_SEC      30      // Watchdog timer timeout
+#define WDT_EARLY_WARNING_MS 25000   // Log warning before WDT fires
+
+// ---------- EEPROM / State Persistence ----------
+#define EEPROM_AUTO_SAVE_INTERVAL_MS  300000  // Auto-save state every 5 min
+#define EEPROM_SAVE_ON_CHANGE         true    // Save state on actuator changes
+#define EEPROM_MAX_BOOT_CRASHES       3       // Max crashes before safe mode
+#define EEPROM_SAFE_MODE_DURATION     300     // Safe mode duration in seconds
+
+// ---------- Ring Buffer Logger ----------
+#define LOG_RING_BUFFER_SIZE  50      // Store last N log messages in RAM
+#define LOG_PERSIST_ON_CRASH  true    // Save ring buffer to NVS on crash
+
+// ---------- Task Scheduling ----------
+#define MAX_SCHEDULED_TIMERS  8       // Max persistent scheduled timers
+#define TIMER_CHECK_INTERVAL  30000   // Check timers every 30 seconds
+
+// ---------- Diagnostics ----------
+#define HEAP_WARNING_THRESHOLD  20000  // Warn if free heap drops below
+#define HEAP_CRITICAL_THRESHOLD 10000  // Critical heap level
+#define DIAG_REPORT_INTERVAL    300000 // Full diagnostic report every 5 min
 
 #endif // CONFIG_H
